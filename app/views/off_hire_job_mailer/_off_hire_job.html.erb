@@ -1,0 +1,182 @@
+<table border="0" cellpadding="3" cellspacing="0" class="email_off_hire_job_details">
+  <tr>
+    <td colspan="2"><h3>Off Hire Job:</h3></td>
+  </tr>
+  <tr>
+    <td>Ref Name:</td>
+    <td><%= @off_hire_job.name %></td>
+  </tr>
+  <tr>
+    <td>Status:</td>
+    <td><%= @off_hire_job.status.capitalize %></td>
+  </tr>
+
+  <tr>
+    <td>Scheduled:</td>
+    <td><%= @off_hire_job.sched_date_field %> - <%= @off_hire_job.sched_time_field %></td>
+  </tr>
+  <tr>
+    <td>Est Complete:</td>
+    <td><%= @off_hire_job.etc_date_field %> - <%= @off_hire_job.etc_time_field %></td>
+  </tr>
+
+  <% if @off_hire_job.invoice_company %>
+    <tr>
+      <td colspan="2"><h3>Invoice To:</h3></td>
+    </tr>
+    <tr>
+      <td>Company:</td>
+      <td><%= @off_hire_job.invoice_company.name %></td>
+    </tr>
+    <% if @off_hire_job.invoice_company.abn.present? %>
+      <tr>
+        <td>ABN:</td>
+        <td><%= @off_hire_job.invoice_company.abn %></td>
+      </tr>
+    <% end %>
+    <% if @off_hire_job.invoice_company.acn.present? %>
+      <tr>
+        <td>ACN:</td>
+        <td><%= @off_hire_job.invoice_company.acn %></td>
+      </tr>
+    <% end %>
+    <% if @off_hire_job.invoice_company.phone.present? %>
+      <tr>
+        <td>Phone:</td>
+        <td><%= @off_hire_job.invoice_company.phone %></td>
+      </tr>
+    <% end %>
+    <% if @off_hire_job.invoice_company.fax.present? %>
+      <tr>
+        <td>Fax:</td>
+        <td><%= @off_hire_job.invoice_company.fax %></td>
+      </tr>
+    <% end %>
+    <% if @off_hire_job.invoice_company.address_line_1.present? || @off_hire_job.invoice_company.address_line_2.present? || @off_hire_job.invoice_company.suburb.present? || @off_hire_job.invoice_company.state.present? || @off_hire_job.invoice_company.postcode.present? || @off_hire_job.invoice_company.country.present? %>
+      <tr>
+        <td>Address:</td>
+        <td>
+          <%= "#{@off_hire_job.invoice_company.address_line_1}<br>".html_safe if @off_hire_job.invoice_company.address_line_1.present? %>
+          <%= "#{@off_hire_job.invoice_company.address_line_2}<br>".html_safe if @off_hire_job.invoice_company.address_line_2.present? %>
+          <%= "#{@off_hire_job.invoice_company.suburb}, ".html_safe if @off_hire_job.invoice_company.suburb.present? %>
+          <%= "#{@off_hire_job.invoice_company.state} ".html_safe if @off_hire_job.invoice_company.state.present? %>
+          <%= "#{@off_hire_job.invoice_company.postcode} ".html_safe if @off_hire_job.invoice_company.postcode.present? %>
+          <%= "<br>#{@off_hire_job.invoice_company.country}".html_safe if @off_hire_job.invoice_company.country.present? %>
+        </td>
+      </tr>
+    <% end %>
+    <% if @off_hire_job.invoice_company.accounts_admin %>
+      <tr>
+        <td>Accounts Person:</td>
+        <td>
+          <%= @off_hire_job.invoice_company.accounts_admin.ref_name %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+
+  <tr>
+    <td colspan="2"><h3>Vehicle Details:</h3></td>
+  </tr>
+
+  <tr>
+    <td>Name:</td>
+    <td><%= @off_hire_report.hire_agreement.vehicle.name %> <%= "##{@off_hire_report.hire_agreement.vehicle.number}" if @off_hire_report.hire_agreement.vehicle.number %></td>
+  </tr>
+  <tr>
+    <td>Vin:</td>
+    <td><%= @off_hire_report.hire_agreement.vehicle.vin_number unless @off_hire_report.hire_agreement.vehicle.vin_number.blank? %></td>
+  </tr>
+  <tr>
+    <td>Rego No:</td>
+    <td><%= @off_hire_report.hire_agreement.vehicle.rego_number unless @off_hire_report.hire_agreement.vehicle.rego_number.blank? %></td>
+  </tr>
+
+  <% unless @user == @off_hire_job.service_provider %>
+    <tr>
+      <td colspan="2"><h3>Service Provider:</h3></td>
+    </tr>
+
+    <% unless @off_hire_job.service_provider.name == @off_hire_job.service_provider.email %>
+      <tr>
+        <td>Name:</td>
+        <td><%= @off_hire_job.service_provider.name %></td>
+      </tr>
+    <% end %>
+
+    <% if @off_hire_job.service_provider.company.present? %>
+      <tr>
+        <td>Company:</td>
+        <td><%= @off_hire_job.service_provider.company %></td>
+      </tr>
+    <% end %>
+
+    <tr>
+      <td>Email:</td>
+      <td><%= mail_to @off_hire_job.service_provider.email %></td>
+    </tr>
+
+    <% if @off_hire_job.service_provider.phone.present? %>
+      <tr>
+        <td>Phone:</td>
+        <td><%= @off_hire_job.service_provider.phone %></td>
+      </tr>
+    <% end %>
+
+    <% if @off_hire_job.service_provider.mobile.present? %>
+      <tr>
+        <td>Mobile:</td>
+        <td><%= @off_hire_job.service_provider.mobile %></td>
+      </tr>
+    <% end %>
+  <% end %>
+
+  <% if @off_hire_job.manager.present? %>
+    <tr>
+      <td colspan="2"><h3>Manager:</h3></td>
+    </tr>
+    <% unless @off_hire_job.manager.name == @off_hire_job.manager.email %>
+      <tr>
+        <td>Name:</td>
+        <td><%= @off_hire_job.manager.name %></td>
+      </tr>
+    <% end %>
+
+    <tr>
+      <td>Email:</td>
+      <td><%= mail_to @off_hire_job.manager.email %></td>
+    </tr>
+
+    <% if @off_hire_job.manager.phone.present? %>
+      <tr>
+        <td>Phone:</td>
+        <td><%= @off_hire_job.manager.phone %></td>
+      </tr>
+    <% end %>
+
+    <% if @off_hire_job.manager.mobile.present? %>
+      <tr>
+        <td>Mobile:</td>
+        <td><%= @off_hire_job.manager.mobile %></td>
+      </tr>
+    <% end %>
+
+    <% if @off_hire_job.manager.website.present? %>
+      <tr>
+        <td>Website:</td>
+        <td><%= @off_hire_job.manager.website %></td>
+      </tr>
+    <% end %>
+  <% end %>
+
+</table>
+
+<br />
+
+Link: <%= off_hire_job_url(@off_hire_job) %><br />
+
+<% unless @off_hire_job.uploads.empty? %>
+  This off hire job has file attachments. <br />
+<% end %>
+
+<br />

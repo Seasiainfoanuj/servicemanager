@@ -1,0 +1,33 @@
+- if @image.image_type == Image::DOCUMENT
+  - images = DocumentType.all
+  - subject_name = 'Document'
+- else
+  - images = PhotoCategory.all
+  - subject_name = 'Photo'
+
+== render 'layouts/left'
+#main
+  .container-fluid
+    == render :partial => 'layouts/notice'
+    .page-header
+      .pull-left
+        h1 = "Edit #{subject_name.downcase}, #{@image.name}"
+      .pull-right
+        br
+        - if @subject.is_a? Vehicle
+          = link_to vehicle_images_path(@subject), { :title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom" } do
+            i.icon-list-alt
+
+    = render partial: 'shared/crumbs'
+
+    .image
+      p
+        a href = @image.image.url(:original) target="_blank"
+          = image_tag @image.image.url(:medium)
+
+    = form_for([@subject, @image], html: { multipart: true, class: "form-horizontal", id: "images-form" }) do |f|
+      = render 'fields', f: f, images: images, image_type: @image_type
+
+      .actions
+        = f.submit "Update #{subject_name}", class: 'btn btn-green submit-btn'
+

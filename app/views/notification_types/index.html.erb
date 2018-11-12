@@ -1,0 +1,60 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Notification Types</h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if can? :create, NotificationType %>
+          <%= link_to '<i class="icon-plus-sign"></i> Add New Notification Type'.html_safe, new_notification_type_path, {:class => 'btn btn-grey'} %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon glyphicon-flag"></i>Notification Types</h3><%= manual_link('notification_types') %>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-hover table-nomargin dataTable dataTable-tools dataTable-colvis dataTable-scroll-x table-bordered">
+              <thead>
+                <tr>
+                  <th>Event</th>
+                  <th>Recurring</th>
+                  <th>Emails required?</th>
+                  <th>Notify periods</th>
+                  <th width="100">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @notification_types.each do |ntype| %>
+                  <tr>
+                    <td><%= link_to(notification_type_label(ntype, {content: :event_full_name}), notification_type_path(ntype)) %></td>
+                    <td><%= ntype.recurring ? "Yes" : "No" %></td>
+                    <td><%= ntype.emails_required ? 'Yes' : 'No' %></td>
+                    <td><%= ntype.notification_period_list %></td>
+                    <td>
+                      <% if can? :update, NotificationType %>
+                        <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_notification_type_path(ntype), {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip'} %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

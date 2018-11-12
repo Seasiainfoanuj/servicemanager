@@ -1,0 +1,33 @@
+<%= form_for(@document_type, :html => {:id => "document-type-form", :class => "form-horizontal"}) do |f| %>
+  <% if @document_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@document_type.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+        <% @document_type.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="box-title">
+    <h3><i class="glyphicon-notes"></i>Document Type Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :name, "Name", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name, :class => "input-xlarge" %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :label_color, "Colour", :class => "control-label" %>
+      <div class="controls">
+        <div class="input-append color colorpick" data-color="<%= @document_type.label_color.downcase if @document_type.label_color %>" data-color-format="hex">
+          <%= f.text_field :label_color, :class => "input-small" %>
+          <span class="add-on"><i style="margin-top: 2px;"></i></span>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

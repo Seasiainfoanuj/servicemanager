@@ -1,0 +1,38 @@
+<footer id="schedule-footer">
+  <div class="row-fluid">
+    <div class="span3">
+      <h5>Hire Agreements <a href="#" class="filter-link hide_hire_agreements"><span>hide</span> hire agreements</a></h5>
+      <span class="label" style="background-color: #51a541;">H/A - Pending <input type="checkbox" class="filter-checkbox hire_agreement_filter" name="hire_agreement_pending" checked></span>
+      <span class="label" style="background-color: #51a541;">H/A - Awaiting Confirmation <input type="checkbox" class="filter-checkbox hire_agreement_filter" name="hire_agreement_awaiting_confirmation" checked></span>
+      <span class="label" style="background-color: #51a541;">H/A - Confirmed <input type="checkbox" class="filter-checkbox hire_agreement_filter" name="hire_agreement_confirmed" checked></span>
+      <span class="label" style="background-color: #51a541;">H/A - Booked <input type="checkbox" class="filter-checkbox hire_agreement_filter" name="hire_agreement_booked" checked></span>
+      <span class="label" style="background-color: #51a541;">H/A - On Hire <input type="checkbox" class="filter-checkbox hire_agreement_filter" name="hire_agreement_on_hire" checked></span>
+      <span class="label" style="background-color: #51a541;">H/A - Returned <input type="checkbox" class="filter-checkbox hire_agreement_filter" name="hire_agreement_returned" checked></span>
+      <span class="label" style="background-color: #e63a3a;">H/A - Cancelled <input type="checkbox" class="filter-checkbox hire_agreement_filter" name="hire_agreement_cancelled" checked></span>
+    </div>
+    <div class="span5">
+      <h5>Workorders <a href="#" class="filter-link hide_workorders"><span>hide</span> workorders</a></h5>
+      <% WorkorderType.all.each do |workorder_type| %>
+        <span class="label" style="background-color: <%= workorder_type.label_color %>;">W/O - <%= workorder_type.name %> <input type="checkbox" class="filter-checkbox workorder_filter" name="workorder_<%= workorder_type.name.parameterize(sep = '_') %>" checked></span>
+      <% end %>
+    </div>
+    <div class="span2">
+      <h5>Build Orders <a href="#" class="filter-link hide_build_orders"><span>hide</span> build orders</a></h5>
+      <span class="label" style="background-color: #000000;">B/O - Pending <input type="checkbox" class="filter-checkbox build_order_filter" name="build_order_pending" checked></span>
+      <span class="label" style="background-color: #000000;">B/O - Confirmed <input type="checkbox" class="filter-checkbox build_order_filter" name="build_order_confirmed" checked></span>
+      <span class="label" style="background-color: #000000;">B/O - Complete <input type="checkbox" class="filter-checkbox build_order_filter" name="build_order_complete" checked></span>
+      <span class="label" style="background-color: #e63a3a;">B/O - Cancelled <input type="checkbox" class="filter-checkbox build_order_filter" name="build_order_cancelled" checked></span>
+    </div>
+    <div class="span2">
+      <h5>Off Hire Jobs <a href="#" class="filter-link hide_off_hire_jobs"><span>hide</span> off hire jobs</a></h5>
+      <span class="label" style="background-color: #2f7f9f;">H/J - Pending <input type="checkbox" class="filter-checkbox off_hire_job_filter" name="off_hire_job_pending" checked></span>
+      <span class="label" style="background-color: #2f7f9f;">H/J - Confirmed <input type="checkbox" class="filter-checkbox off_hire_job_filter" name="off_hire_job_confirmed" checked></span>
+      <span class="label" style="background-color: #2f7f9f;">H/J - Complete <input type="checkbox" class="filter-checkbox off_hire_job_filter" name="off_hire_job_complete" checked></span>
+      <span class="label" style="background-color: #e63a3a;">H/J - Cancelled <input type="checkbox" class="filter-checkbox off_hire_job_filter" name="off_hire_job_cancelled" checked></span>
+    </div>
+  </div>
+
+  <div id="filter-links">
+
+  </div>
+</footer>

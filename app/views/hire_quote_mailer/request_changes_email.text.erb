@@ -1,0 +1,17 @@
+Hi <%= @manager.first_name %>,
+
+<%= @sender.name %> requested that changes be made to quote <%= @quote.reference %>.
+
+<% unless @message.nil? || @message.blank? %>
+Requested Changes:
+-----------------------------------------
+<%= @message %>
+<% end %>
+
+Contact Details:
+-----------------------------------------
+Name:  <%= @sender.name %>
+Email: <%= @sender.email %>
+<%= "Mobile: #{@sender.mobile}" if @sender.mobile.present? %>
+<%= "Phone: #{@sender.phone}" if @sender.phone.present? %>
+<%= "Website: #{@sender.website}" if @sender.website.present? %>

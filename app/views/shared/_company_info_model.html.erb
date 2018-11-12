@@ -1,0 +1,50 @@
+<div id="modal-<%= model_name %>" class="modal hide" role="dialog" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="company-infos"><%= company.name %></h3>
+  </div>
+  <div class="modal-body">
+    <div class="row-fluid">
+      <div class="span12">
+        <dl class="dl-horizontal" style="margin-top:0;">
+          <dt>Company name:</dt>
+          <dd><%= company.name %></dd>
+          <% if company.trading_name.present? %>
+            <dt>Trading name:</dt>
+            <dd><%= company.trading_name %></dd>
+          <% end %>
+          <% if company.abn.present? %>
+            <dt>ABN:</dt>
+            <dd><%= company.abn %></dd>
+          <% end %>
+          <% if company.website.present? %>
+            <dt>Website:</dt>
+            <dd><%= company.website %></dd>
+          <% end %>
+          <% if company.vendor_number.present? %>
+            <dt>Vendor number:</dt>
+            <dd><%= company.vendor_number %></dd>
+          <% end %>
+          <hr>
+          <% company.addresses.each do |addr| %>
+            <br>
+            <dt><%= addr.address_type_display %>:</dt>
+            <dd>
+              <address>
+                <%= "#{addr.line_1}<br>".html_safe if addr.line_1.present? %>
+                <%= "#{addr.line_2}<br>".html_safe if addr.line_2.present? %>
+                <%= "#{addr.suburb}, ".html_safe if addr.suburb.present? %>
+                <%= "#{addr.state} ".html_safe if addr.state.present? %>
+                <%= "#{addr.postcode}".html_safe if addr.postcode.present? %>
+                <%= "<br>#{addr.country}".html_safe if addr.country.present? %>
+              </address>
+            </dd>
+          <% end %>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">Close</button>
+  </div>
+</div>

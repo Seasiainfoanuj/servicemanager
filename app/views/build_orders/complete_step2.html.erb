@@ -1,0 +1,63 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Submit Invoice for Build Order <span class="label"><%= "REF# #{@build_order.uid}" %></span></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <%= link_to 'Skip / Submit Later', @build_order, :class => 'btn' %>
+        <a href="#" class="btn btn-green submit-btn">Submit & Finish</a>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <%= form_for(@build_order, :url => submit_sp_invoice_build_order_path(@build_order), :html => {:class => "form-horizontal form-validate", :id => "build-order-form", :multipart => true}) do |f| %>
+            <% if @build_order.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@build_order.errors.count, "error") %> prohibited this page from being saved:</h2>
+                <ul>
+                <% @build_order.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <%= f.fields_for :sp_invoice do |builder| %>
+              <div class="box-title">
+                <h3><i class="glyphicon-notes"></i>Would you like to submit an invoice for build order #<%= @build_order.uid %>?</h3>
+              </div>
+              <div class="box-content">
+                <div class="control-group">
+                  <%= builder.label :invoice_number, "Invoice Number", :class => "control-label" %>
+                  <div class="controls">
+                    <%= builder.text_field :invoice_number, :class => 'input-medium', 'data-rule-required' => true %> <br>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <%= builder.label :upload, "Attach Invoice", :class => "control-label" %>
+                  <div class="controls" style="padding: 5px;">
+                    <%= builder.file_field :upload, 'data-rule-required' => true %> <br>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+          <div class="actions">
+            <a href="#" class="btn btn-green submit-btn">Submit & Finish</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

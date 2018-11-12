@@ -1,0 +1,32 @@
+= render(partial: 'layouts/left')
+#main.image-table
+  .container-fluid
+    == render :partial => 'layouts/notice'
+
+    .page-header
+      .pull-left
+        h1 Documents
+      .pull-right
+        br
+        - if can? :create, Image
+          - if @subject.is_a? Vehicle
+            = link_to vehicle_document_path(@subject), { class: 'btn btn-grey' } do
+              i.icon-plus-sign
+              |  New document
+
+    == render partial: 'shared/crumbs'
+
+    = render 'documents'
+
+    .page-header
+      .pull-left
+        h1 Photos
+      .pull-right
+        br
+        - if can? :create, Image
+          - if @subject.is_a? Vehicle
+            = link_to vehicle_photo_path(@subject), { class: 'btn btn-grey' } do
+              i.icon-plus-sign
+              |  New photo
+
+    = render 'photos'

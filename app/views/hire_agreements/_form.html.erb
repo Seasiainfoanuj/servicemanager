@@ -1,0 +1,303 @@
+<%= form_for(@hire_agreement, :html => {:class => "form-horizontal form-validate", :id => "hire-agreement-form"}) do |f| %>
+  <% if @hire_agreement.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@hire_agreement.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @hire_agreement.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="box-title">
+    <h3><i class="icon-cogs"></i>Configure Hire Agreement</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :hire_agreement_type_id, "Type", :class => "control-label" %>
+      <div class="controls">
+        <%= collection_select(:hire_agreement, :hire_agreement_type_id, HireAgreementType.all, :id, :name, {prompt: true}, {:class=>'select2-me span4', 'data-rule-required' => true}) %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <%= f.label :manager_id, "Assign to", :class => "control-label" %>
+      <div class="controls">
+        <%= collection_select(:hire_agreement, :manager_id, User.filter_by_admin, :id, :name, {prompt: true}, {:class=>'select2-me span4'}) %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :quote_id, "Link Quote", :class => "control-label" %>
+      <div class="controls">
+        <%= collection_select(:hire_agreement, :quote_id, Quote.all, :id, :ref_name, {prompt: true}, {:class=>'select2-me span4'}) %>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <%= f.label :status, "Status", :class => "control-label" %>
+      <div class="controls">
+        <div class="check-line">
+          <%= radio_button(:hire_agreement, :status, "pending", {:class => "icheck-me", "data-skin" => "square", "data-color" => "orange", :checked => true}) %>
+          <%= f.label :status_pending, "Pending", :class => "inline" %>
+        </div>
+        <div class="check-line">
+          <%= radio_button(:hire_agreement, :status, "awaiting confirmation", {:class => "icheck-me", "data-skin" => "square", "data-color" => "orange"}) %>
+          <%= f.label :status_confirmed, "Awaiting Confirmation", :class => "inline" %>
+        </div>
+        <div class="check-line">
+          <%= radio_button(:hire_agreement, :status, "confirmed", {:class => "icheck-me", "data-skin" => "square", "data-color" => "blue"}) %>
+          <%= f.label :status_confirmed, "Confirmed", :class => "inline" %>
+        </div>
+        <div class="check-line">
+          <%= radio_button(:hire_agreement, :status, "booked", {:class => "icheck-me", "data-skin" => "square", "data-color" => "blue"}) %>
+          <%= f.label :status_confirmed, "Booked", :class => "inline" %>
+        </div>
+        <div class="check-line">
+          <%= radio_button(:hire_agreement, :status, "on hire", {:class => "icheck-me", "data-skin" => "square", "data-color" => "green"}) %>
+          <%= f.label :status_cancelled, "On Hire", :class => "inline" %>
+        </div>
+        <div class="check-line">
+          <%= radio_button(:hire_agreement, :status, "returned", {:class => "icheck-me", "data-skin" => "square", "data-color" => "green"}) %>
+          <%= f.label :status_complete, "Returned", :class => "inline" %>
+        </div>
+        <div class="check-line">
+          <%= radio_button(:hire_agreement, :status, "cancelled", {:class => "icheck-me", "data-skin" => "square", "data-color" => "red"}) %>
+          <%= f.label :status_cancelled, "Cancelled", :class => "inline" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-title">
+    <h3><i class="icon-user"></i>Invoice Company Details</h3>
+  </div>
+  <div id="advanced-customer-select" class="box-content">
+    <div class="control-group">
+      <%= f.label :invoice_company_id, "Invoice Company", :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select :invoice_company_id, InvoiceCompany.all, :id, :name, {prompt: true}, {:class=>'select2-me span6', 'data-rule-required' => true} %>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-title">
+    <h3><i class="icon-user"></i>Customer/Hirer Details</h3>
+  </div>
+  <div id="advanced-customer-select" class="box-content">
+    <div class="control-group">
+      <%= f.label :customer_id, "Hirer", :class => "control-label" %>
+      <div class="controls">
+        <%= collection_select(:hire_agreement, :customer_id, User.with_roles(:customer, :service_provider), :id, :company_name, {prompt: true}, {:id => 'customer-select', :class=>'select2-me span4'}) %>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-title">
+    <h3><i class="icon-calendar"></i>Hire Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :date_range, "Hire Period", :class => "control-label" %>
+      <div class="controls">
+        <div class="input-append span12">
+          <%= f.text_field :date_range, {:class => "span4 daterangepick", :placeholder => 'Select the hire period', 'data-rule-required' => true} %>
+          <span class='add-on'><i class='icon-calendar'></i></span>
+        </div>
+      </div>
+
+      <div id="display_date_range" data-pickup-datetime="<%= @hire_agreement.pickup_datetime if @hire_agreement %>" data-return-datetime="<%= @hire_agreement.return_datetime if @hire_agreement %>" style="display: none;">
+        <span id="display_date_range_days"></span>
+        <span id="display_date_range_weeks"></span>
+        <span id="display_date_range_months"></span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :pickup_location, "Pickup Location", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :pickup_location, :class => "input-large" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :return_location, "Return Location", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :return_location, :class => "input-large" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-title">
+    <h3><i class="icon-signout"></i>Demurrage</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <div class="input-append span12">
+        <%= f.text_field :demurrage_date_range, {:class => "span4 daterangepick", :placeholder => 'Select demurrage period'} %>
+        <span class='add-on'><i class='icon-calendar'></i></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :daily_rate, "Demurrage Rate", :class => "control-label" %>
+      <div class="controls">
+        <div class="input-append input-prepend">
+          <span class="add-on">$</span>
+           <%= f.text_field :demurrage_rate, :value => (number_with_precision(@hire_agreement.demurrage_rate, :precision => 2)), :id => "demurrage_rate", :class => "input-small" %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="box-title">
+    <h3><i class="glyphicon-car"></i>Vehicle Details</h3>
+  </div>
+  <div id="advanced-vehicle-select" class="box-content">
+    <div class="control-group">
+      <%= f.label :seating_requirement, "Seating Requirement", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :seating_requirement, {:id => 'seating-requirement', :class => "span1", :placeholder => 'e.g. 12'} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= collection_select(:hire_agreement, :vehicle_id,  Vehicle.joins(:hire_details).where('active'), :id, :ref_name, {prompt: true}, {:id => 'vehicle-select', :class=>'select2-me span7'}) %>
+    </div>
+    <div id="vehicle-details">
+    </div>
+    <div id="vehicle-notices" style="margin-top:20px">
+    </div>
+  </div>
+
+  <div class="box-title">
+    <h3><i class="glyphicon-coins"></i>Cost Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :daily_rate, "Daily Rate", :class => "control-label" %>
+      <div class="controls">
+        <div class="input-append input-prepend">
+          <span class="add-on">$</span>
+           <%= f.text_field :daily_rate, :value => (number_with_precision(@hire_agreement.daily_rate, :precision => 2)), :id => "daily_rate", :class => "input-small" %>
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :daily_km_allowance, "Daily KM Allowance", :class => "control-label" %>
+      <div class="controls">
+        <div class="input-append">
+          <%= f.text_field :daily_km_allowance, :id => "daily_km_allowance", :class => "input-small" %>
+          <span class="add-on">KM</span>
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :excess_km_rate, "Excess Km Rate", :class => "control-label" %>
+      <div class="controls">
+        <div class="input-append input-prepend">
+          <span class="add-on">$</span>
+           <%= f.text_field :excess_km_rate, :value => (number_with_precision(@hire_agreement.excess_km_rate, :precision => 2)), :id => "excess_km_rate", :class => "input-mini" %>
+           <span class="add-on">Per Km</span>
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :fuel_service_fee, "Fuel Service Fee", :class => "control-label" %>
+      <div class="controls">
+        <div class="input-append input-prepend">
+          <span class="add-on">$</span>
+           <%= f.text_field :fuel_service_fee, :value => (number_with_precision(@hire_agreement.fuel_service_fee, :precision => 2)||@hire_agreement.type.fuel_service_fee), :class => "input-mini" %>
+           <span class="add-on">Per Litre</span>
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :damage_recovery_fee, "Damage Recovery Fee", :class => "control-label" %>
+      <div class="controls">
+        <div class="input-append input-prepend">
+          <span class="add-on">$</span>
+           <%= f.text_field :damage_recovery_fee, :value => (number_with_precision(@hire_agreement.damage_recovery_fee, :precision => 2)||@hire_agreement.type.damage_recovery_fee), :class => "input-small" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-title">
+    <h3><i class="glyphicon-coins"></i>Charges</h3>
+  </div>
+  <div class="box-content">
+    <%= f.fields_for :hire_charges do |builder| %>
+      <%= render 'hire_charge_fields', f: builder %>
+    <% end %>
+
+    <%= link_to_add_fields '<i class="icon-plus-sign"></i> Add Charge', f, :hire_charges %>
+  </div>
+
+  <div class="box-title">
+    <h3><i class="glyphicon-notes"></i>Additional Notes</h3>
+  </div>
+  <div class="box-content">
+    <%= f.text_area :details, {:class => "editor span12", 'rows' => 5} %>
+  </div>
+  <div>
+    <% if mode == 'update' %>
+      <%= f.submit 'Update Hire Agreement', class: "form-submit-btn" %>
+    <% end %>
+  </div>  
+<% end %>
+
+<div class="box-title">
+  <h3><i class="glyphicon-paperclip"></i>Attachments</h3>
+</div>
+<% if @hire_agreement.id %>
+  <div class="box-content" style="padding: 30px 50px;">
+    <div id="file-uploads-container">
+      <%= form_for HireUpload.new, :html => { :multipart => true, :id => "hireupload", :class => "form-validate", "data-hire-agreement-id" => @hire_agreement.id  } do |f| %>
+        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+        <div class="row fileupload-buttonbar">
+          <div class="span7">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+            <span class="btn btn-success fileinput-button">
+              <i class="icon-plus icon-white"></i>
+              <span>Add files...</span>
+              <%= f.file_field :upload %>
+              <%= f.hidden_field :hire_agreement_id, :value => @hire_agreement.id, :id => "hire_agreement_id" %>
+            </span>
+            <button type="submit" class="btn btn-primary start">
+              <i class="icon-upload icon-white"></i>
+              <span>Start upload</span>
+            </button>
+            <button type="reset" class="btn btn-orange cancel">
+              <i class="icon-ban-circle icon-white"></i>
+              <span>Cancel upload</span>
+            </button>
+          </div>
+          <div class="span5">
+            <!-- The global progress bar -->
+            <div class="progress progress-success progress-striped active fade">
+              <div class="bar" style="width:0%;"></div>
+            </div>
+          </div>
+        </div>
+        <!-- The loading indicator is shown during image processing -->
+        <div class="fileupload-loading"></div>
+        <br>
+        <!-- The table listing the files available for upload/download -->
+        <table class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+        </table>
+      <% end %>
+
+      <%= render 'shared/form_upload' %>
+      <%= render 'shared/form_download' %>
+    </div>
+  </div>
+<% else %>
+  <div class="box-content">
+    <span class="alert alert-warning"><i class="icon-warning-sign" style="margin-right:3px"></i> Create agreement to enable file attachments.</span>
+  </div>
+<% end %>

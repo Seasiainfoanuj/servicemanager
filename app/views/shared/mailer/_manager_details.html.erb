@@ -1,0 +1,35 @@
+<tr>
+  <td colspan="2"><h3>Manager:</h3></td>
+</tr>
+<% unless object.manager.name == object.manager.email %>
+  <tr>
+    <td>Name:</td>
+    <td><%= object.manager.name %></td>
+  </tr>
+<% end %>
+
+<tr>
+  <td>Email:</td>
+  <td><%= mail_to object.manager.email %></td>
+</tr>
+
+<% if object.manager.phone.present? %>
+  <tr>
+    <td>Phone:</td>
+    <td><%= object.manager.phone %></td>
+  </tr>
+<% end %>
+
+<% if object.manager.mobile.present? %>
+  <tr>
+    <td>Mobile:</td>
+    <td><%= object.manager.mobile %></td>
+  </tr>
+<% end %>
+
+<% if object.manager.website.present? %>
+  <tr>
+    <td>Website:</td>
+    <td><%= object.manager.website %></td>
+  </tr>
+<% end %>

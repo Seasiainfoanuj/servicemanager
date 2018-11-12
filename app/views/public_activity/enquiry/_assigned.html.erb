@@ -1,0 +1,6 @@
+<% activity.trackable ? uid = activity.parameters[:uid] || activity.trackable.uid || activity.trackable.id : uid = activity.parameters[:uid] || "[now deleted]" %>
+<% if activity.recipient.nil? %>
+  <%= render 'public_activity/shared/activity.html.erb', activity: activity, display: display, action: "Assigned to a manager", uid: uid %>
+<% else %>
+  <%= render 'public_activity/shared/activity.html.erb', activity: activity, display: display, action: "Assigned to #{activity.recipient.email}", uid: uid %>
+<% end %>

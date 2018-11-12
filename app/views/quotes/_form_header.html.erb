@@ -1,0 +1,76 @@
+<% present(@quote) do |quote| %>
+
+    <div class="row-fluid">
+      <div class="span4">
+        <div class="control-group" style="margin-bottom:10px">
+          <%= f.label :invoice_company_id, "From", :class => "control-label" %>
+          <%= collection_select(:quote, :invoice_company_id, InvoiceCompany.all, :id, :name, {prompt: false}, {:class=>'select2-me span11', 'data-rule-required' => true, :style => "margin-left:0"}) %>
+          <div style="clear:both"></div>
+        </div>
+        <div class="control-group">
+          <%= f.label :manager_id, "Manager", :class => "control-label" %>
+          <% if params[:action] == "new" %>
+            <%= f.select :manager_id, options_for_select(admin_managers, current_user.id), {include_blank: 'Assign to a manager'}, {class: "select2-me span11", :style => "margin-left:0"} %>
+          <% else %>
+            <%= f.select :manager_id, options_for_select(admin_managers, quote.manager.id), {include_blank: 'Assign to a manager'}, {class: "select2-me span11", :style => "margin-left:0"} %>
+          <% end %>
+          <div style="clear:both"></div>
+        </div>
+      </div>
+
+      <div class="span4">
+        <div class="control-group">
+          <%= f.label :customer_id, "Customer", :class => "control-label" %>
+          <% if params[:customer] %>
+            <%= f.select :customer_id, options_for_select(options_for_customers, params[:customer]), {include_blank: 'Choose customer'}, {class: "select2-me span11", 'data-rule-required' => true, :style => "margin-left:0"} %>
+          <% elsif params[:customer_id] %>
+            <%= f.select :customer_id, options_for_select(options_for_customers, params[:customer_id]), {include_blank: 'Choose customer'}, {class: "select2-me span11", 'data-rule-required' => true, :style => "margin-left:0"} %>
+          <% else %>
+            <%= f.select :customer_id, options_for_select(options_for_customers, quote.selected_customer), {include_blank: 'Choose customer'}, {class: "select2-me span11", 'data-rule-required' => true, :style => "margin-left:0"} %>
+          <% end %>
+          <div style="clear:both"></div>
+        </div>
+      </div>
+
+      <div class="span4" style="padding-top:30px">
+        <div class="control-group span12" style="margin: 0 0 10px 0">
+          <div class="span6">
+            <%= f.label :number, "Quote Number", :class => "control-label" %>
+          </div>
+          <div class="span6">
+            <%= f.text_field :number, {:class => "span12", 'data-rule-required' => true} %>
+          </div>
+        </div>
+
+        <div class="control-group span12" style="margin: 0 0 10px 0">
+          <div class="span6">
+            <%= f.label :date_field, "Quote Date", :class => "control-label" %>
+          </div>
+          <div class="span6">
+            <%= f.text_field :date_field, {:class => "datepick span12", 'data-rule-required' => true} %>
+          </div>
+        </div>
+
+        <div class="control-group span12" style="margin: 0 0 10px 0">
+          <div class="span6">
+            <%= f.label :po_number, "PO Number/File", :class => "control-label" %>
+          </div>
+          <div class="span6">
+            <%= f.text_field :po_number, {:class => "span12"} %> <br>
+            <% if quote.po_upload.present? %>
+
+              <%= link_to quote.po_upload_file_name, quote.po_upload.url(:original), id: "po_upload_link" %>
+
+              <div id="po-upload-box" class="pull-right">
+                <%= f.label :delete_po_upload, "remove" %>
+                <%= f.check_box :delete_po_upload %>
+              </div>
+            <% else %>
+              <%= f.file_field :po_upload %> <br>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<% end %>

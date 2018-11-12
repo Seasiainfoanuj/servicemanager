@@ -1,0 +1,33 @@
+<div class="box-title">
+  <h3><i class="glyphicon-car"></i>Vehicle</h3>
+</div>
+<div class="box-content nopadding">
+  <table class="table table-bordered vehicle" style="clear: both;">
+    <tbody>
+      <% if @view_contract.vehicle.present? %>
+        <tr>
+          <td>Year, Make & Model</td>
+          <td><%= @view_contract.vehicle_name %></td>
+          <td>Transmission</td>
+          <td><%= @view_contract.vehicle.transmission %></td>
+        </tr>
+        <tr>
+          <td>Vehicle Number</td>
+          <td><%= @view_contract.vehicle.vehicle_number %></td>
+          <td>Seating Capacity</td>
+          <td><%= @view_contract.vehicle.seating_capacity %></td>
+        </tr>
+        <tr>
+          <td>VIN Number</td>
+          <td><%= @view_contract.vehicle.vin_number %></td>
+          <td>Rego Number</td>
+          <td><%= @view_contract.vehicle.rego_number %></td>
+        </tr>
+      <% else %>  
+        <tr>
+          <td>Vehicle details not yet available.</td>
+        </tr>
+      <% end %>  
+    </tbody>
+  </table>
+</div>

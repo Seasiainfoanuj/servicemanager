@@ -1,0 +1,9 @@
+<% present(@hire_quote) do |quote| %>
+  <div class="invoice-from">
+    <span>From:</span><br>
+    <strong><%= quote.quoting_company_name %></strong>
+    <address>
+      <%= quote.quoting_company_address({phone: true, fax: true, usage: :html}) %>
+    </address>
+  </div>
+<% end %>

@@ -1,0 +1,57 @@
+<div id="send-workorder-model" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Send Workorder</h3>
+  </div>
+  <div class="modal-body">
+    <div class="row-fluid">
+      <div style="padding: 20px; background: #fbfbfb; border: 1px dashed #DDDDDD">
+        <div class="control-group">
+          <label for="textfield" id="send_to_label" class="control-label"><b>Send to</b></label>
+          <div class="controls">
+            <div class="recipients-col" style="margin: 10px 20px;">
+              <% if @workorder.customer %>
+                <div class="check-line">
+                  <input type="checkbox" id="c_customer" class='icheck-me' data-skin="square" data-color="blue" data-customer_id="<%= @workorder.customer.id %>"> <label class='inline' for="c_customer">Customer - <%= @workorder.customer.company_name_short unless @workorder.customer.company_name_short == "[#{@workorder.customer.email}]" %> (<%= @workorder.customer.email %>)</label>
+                </div>
+              <% end %>
+              <% if @workorder.service_provider %>
+                <div class="check-line">
+                  <input type="checkbox" id="c_service_provider" class='icheck-me' data-skin="square" data-color="blue" data-service_provider_id="<%= @workorder.service_provider.id %>"> <label class='inline' for="c_service_provider">Service Provider - <%= @workorder.service_provider.company_name_short unless @workorder.service_provider.company_name_short == "[#{@workorder.service_provider.email}]" %> (<%= @workorder.service_provider.email %>)</label>
+                </div>
+              <% end %>
+              <% if @workorder.manager %>
+                <div class="check-line">
+                  <input type="checkbox" id="c_manager" class='icheck-me' data-skin="square" data-color="blue" data-admin_id="<%= @workorder.manager.id %>"> <label class='inline' for="c_manager">Manager - <%= @workorder.manager.company_name_short unless @workorder.manager.company_name_short == "[#{@workorder.manager.email}]" %> (<%= @workorder.manager.email %>)</label>
+                </div>
+              <% end %>
+              <% @workorder.subscribers.each do |subscriber| %>
+                <div class="check-line">
+                  <input type="checkbox" id="c_subscriber_<%= subscriber.id %>" class='icheck-me subscriber' data-skin="square" data-color="blue" data-subscriber_id="<%= subscriber.id %>"> <label class='inline' for="c_subscriber_<%= subscriber.id %>">Subscriber - <%= subscriber.company_name_short unless subscriber.company_name_short == "[#{subscriber.email}]" %> (<%= subscriber.email %>)</label>
+                </div>
+              <% end %>
+              <div class="check-line">
+                <div style="float: left; margin-right: 15px;">
+                  <input type="checkbox" id="c_others" class='icheck-me' data-skin="square" data-color="blue" />
+                </div>
+                <input id="other_recipients" class="input-xlarge" type="text" style="float: left;" placeholder="Other recipient(s) separated by comma" title="Separate multiple emails with a comma" />
+                <br>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="control-group">
+          <label for="email_message" id="message_label" class="control-label"><b>Message</b></label>
+          <div class="controls">
+            <textarea name="email_message" id="email_message" class="span12" rows="5">Please review the following workorder.</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-grey" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <%= link_to "Send", {:action => 'send_notifications', :workorder_id => @workorder.id}, {:class => 'btn btn-satblue', :id => 'email_send_button'} %>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+#user-guide
+  .panel.panel-default
+    .panel-body
+      h1 Service Manager User Guide
+      h2 
+        i.glyphicon-group
+        |  Clients
+
+  section.definition
+    h3 Definition
+    p.main-definition A client is any person or company that is important for our business. It could be a customer, service provider or supplier. Customers receive quotations for buying or hiring our vehicles. Suppliers provide us with products and services. Service Providers service our vehicles.
+    dl.dl-horizontal
+      dt Reference Number
+      dd This is a unique client reference number. It is possible that two clients may have the same names, but they would still have different reference numbers.
+      dt Client type
+      dd This tells if a client is a person or a company.
+      dt User id
+      dd When the client is a person, this contains a reference to the user record.
+      dt Company id
+      dd When the client is a company, this contains a reference to the company record.
+
+  = link_to '<span class="label label-info">back to Index</span>'.html_safe, user_guides_path
+
+  section
+    h3 Why does the system have Users, Companies ánd Clients.
+    p Our business transactions are associated with customers, service_providers or suppliers. These transactions are things like quotations, work orders or contracts that are in some way related to a client. 
+    p Until recently the system assumed that we only deal with individual people and we did not consider the companies they represent. We therefore want to know who the users in our database are that represent significant companies. We want to know who the people are that work for those companies. In fact, our clients expect us to remember our conversations with them, regardless of who we talked to.
+    p Since we are sending out email notifications to clients, we want to make sure we do not contact a person that has left the company. If someone tells us they will be on vacation for some period we want to be flexible enough to contact the right person during this period.
+
+  section
+    h3 How a client can access Service Manager
+    p Any person with an email address and password can login to Service Manager and see enquiries, quotes, contracts, workorders, etc. provided they are the service provider or customer. However, this is not normally how people gain access. The reason is that clients normally do not know their passwords. 
+    p A client normally gains access to Service Manager when they click on a link in an email. A person who submitted an enquiry may receive an email from the manager containing a link to their quote. The link contains a personal token that allows the person to access the quote. No login is required - they just click the link.
+
+  section
+    h3 Company Contacts
+    p When we visit a company page we may see a list of contact people. A contact person may be created in Service Manager when a manager decides to do so, but they can also be created by the application. This happens when a new enquiry arrives. When the enquiry form includes a company name, the person is automatically linked to that company. If such a company is not yet in our database, a new company record will be created.
+    p By default, the contact who views a quote may click a button to accept the quote and any contact of the same company will be to do the same if they are able to log in. 
+
+  section.change-history
+    h4 Change History
+    p Created by Francois van der Hoven on 7 July 2016

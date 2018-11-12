@@ -1,0 +1,66 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Companies</h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if can? :create, Company %>
+          <%= link_to '<i class="icon-plus-sign"></i> Add New Company'.html_safe, {:controller => 'companies', :action => 'new'}, {:class => 'btn'} %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="icon-group"></i>Companies</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-hover table-nomargin dataTable dataTable-tools dataTable-colvis dataTable-scroll-x table-bordered">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Trading name</th>
+                  <th>ABN</th>
+                  <th>Vendor number</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @companies.each do |company| %>
+                  <tr>
+                    <td><%= company.name %></td>
+                    <td><%= company.trading_name %></td>
+                    <td><%= company.abn %></td>
+                    <td><%= company.vendor_number %></td>
+                    <td>
+                      <% if can? :view, Company %>
+                        <%= link_to '<i class="icon-search"></i>'.html_safe, company_path(company), {:title => 'View', :class => 'btn', 'rel' => 'tooltip'} %>
+                      <% end %>
+                      <% if can? :update, Company %>
+                        <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_company_path(company), {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip'} %>
+                      <% end %>
+                      <% if can? :destroy, Company %>
+                        <%= link_to '<i class="icon-ban-circle"></i>'.html_safe, company, method: :delete, :class => 'btn', :title => 'Destroy', 'rel' => 'tooltip', data: {confirm: "You are about to permanently delete the company, #{company.name}. You cannot reverse this action. Are you sure you want to proceed?"} %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

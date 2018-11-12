@@ -1,0 +1,9 @@
+<% if display == "simple" %>
+  Created by <%= link_to activity.owner.name, activity.owner if activity.owner %>
+<% else %>
+  <% unless Note.where(id: activity.trackable_id).blank? then note = Note.find(activity.trackable_id) %>
+    <%= link_to "#{note.resource_type.titleize} Note", note.resource, :class => 'btn btn-mini' %> added by <%= link_to activity.owner.name, activity.owner if activity.owner %>
+  <% else %>
+    A note that has been deleted was created by <%= link_to activity.owner.name, activity.owner if activity.owner %>
+  <% end %>
+<% end %>

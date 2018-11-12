@@ -1,0 +1,96 @@
+<section class="price-and-settlement">
+  <h1>E - PRICE AND TERMS OF SETTLEMENT </h1>
+  <div class="row-fluid">
+    <div class="span12">
+      <table>
+        <thead>
+          <tr>
+            <td>PRICE OF THE MOTOR VEHICLE</td>
+            <td>$</td>
+            <td>TERMS OF SETTLEMENT</td>
+            <td>$</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sale Price of Motor Vehicle</td>
+            <td><%= @view_contract.sale_price_vehicle_alone %></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Accessories, add-ons and other items as per Section C</td>
+            <td><%= @view_contract.extras_only_total %></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Packaged items as per Section C</td>
+            <td><%= @view_contract.packaged_items_total %></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><b>PURCHASE PRICE</b></td>
+            <td class="subtotal"><b><%= @view_contract.sale_price_before_registration %></b></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>GST</td>
+            <td class="subtotal"><%= @view_contract.total_gst %></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>FEES:</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;&nbsp; Registration</td>
+            <td><%= @view_contract.registration_total %></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;&nbsp; Stamp Duty</td>
+            <td><%= @view_contract.stamp_duty_total %></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>&nbsp;&nbsp;&nbsp; CTP Insurance</td>
+            <td><%= @view_contract.ctp_insurance_total %></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><b>CONTRACT AMOUNT</b> (Purchase Price + GST + Fees)</td>
+            <td class="subtotal"><b><%= @view_contract.total_amount_payable %></b></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>minus: Deposit amount paid</td>
+            <td><%= number_to_currency(@view_contract.vehicle_contract.deposit_received) %></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><b>BALANCE DUE</b> (Contract Amount - Deposit Paid)</td>
+            <td class="subtotal"><b><%= @view_contract.balance_due %></b></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td colspan="2"><i>Variations to the contract are subject to 20% surcharge on costs</i></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,5 @@
+Hi<%= " #{@user.first_name}" %>,
+
+The following off hire job has been <%= @action_type %>. You can login and view this job here: <%= off_hire_job_url(@off_hire_job) %>
+
+<%= render 'off_hire_job' %>

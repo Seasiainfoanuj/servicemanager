@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= render 'layouts/head', title: BUS4X4_ADMIN_APPL_NAME %>
+  <script type="text/javascript">
+    var $buoop = {}
+    $buoop.ol = window.onload;
+    window.onload=function(){
+     try {if ($buoop.ol) $buoop.ol();}catch (e) {}
+     var e = document.createElement("script");
+     e.setAttribute("type", "text/javascript");
+     e.setAttribute("src", "http://browser-update.org/update.js");
+     document.body.appendChild(e);
+    }
+  </script>
+</head>
+<body class="theme-grey clean-page" data-layout="fixed">
+  <% if current_user && current_user.has_role?(:admin) %>
+    <div id="navigation" class="navbar-fixed-top">
+      <%= render 'layouts/navigation' %>
+    </div>
+    <br><br>
+  <% end %>
+  <div class="container-fluid" id="content">
+    <%= yield %>
+  </div>
+  <br><br>
+  <div id="footer">
+    <p>
+      Cloud Software developed in-house by Bus4x4
+    </p>
+    <a href="#" class="gototop"><i class="icon-arrow-up"></i></a>
+  </div>
+</body>
+</html>

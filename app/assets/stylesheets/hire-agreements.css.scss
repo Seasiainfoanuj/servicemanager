@@ -1,0 +1,44 @@
+#main #hire-agreement-review .page-header {
+  margin: 30px 0 0;
+}
+
+#hire-agreement-review #branding {
+  display: block;
+  width: 220px;
+  height: 22px;
+  margin: 0 0 10px;
+  background: image-url('logo-black.png') no-repeat;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  #hire-agreement-review #branding {
+    background: image-url('logo-black@2x.png') no-repeat;
+    background-size: 220px 22px;
+  }
+}
+
+#hire-agreement-review .title {
+  display: block;
+  clear: both;
+  font-size: 21px;
+  line-height: 21px;
+  margin: 0;
+}
+
+#review-notice-model ol li {
+  margin-bottom: 20px;
+}
+
+#hire-agreement-review .hire-company-details {
+  margin-top: 20px;
+}
+
+.hire-charge {
+  background: #eee;
+  padding: 20px 20px 5px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.hire-charge .select2-container {
+  margin-right: 5px;
+}

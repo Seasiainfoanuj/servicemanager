@@ -1,0 +1,82 @@
+<% present(@enquiry) do |enquiry| %>
+
+  <%= f.fields_for :hire_enquiry do |f_hire| %>
+
+    <div class="control-group">
+      <%= f_hire.label :hire_start_date_field, "Hire Start Date*", :class => "control-label right" %>
+      <div class="controls" id="datepick">
+        <div class="input-append">
+          <%= f_hire.text_field :hire_start_date_field, {:class => "input-small datepick mask_date", 'data-rule-hire-required' => true} %>
+          <span class='add-on'><i class='icon-calendar'></i></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f_hire.label :ongoing_contract, "Ongoing contract?", class: "control-label right" %>
+      <div class="controls">
+        <div class="span1">
+          <%= f_hire.check_box :ongoing_contract, { class: "icheck-me", id: "ongoing-contract", data: {skin: "square", color: "blue" }} %>
+        </div>
+        <div class="span4">
+          <span> (no end date forseen)</span>
+        </div>
+      </div>
+    </div>  
+
+    <div class="control-group hire-period">
+      <%= f_hire.label :units, "Hire Period*", :class => "control-label right" %>
+      <div class="controls">
+        <%= f_hire.text_field :units, class: "input-small numeric", id: "units", 'data-rule-hire-required' => true %>
+        <%= f_hire.select :duration_unit, options_for_select(enquiry.options_for_duration_units, enquiry.hire.duration_unit), {include_blank: false}, class: "span2" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f_hire.label :number_of_vehicles, "Number of vehicles*", :class => "control-label right" %>
+      <div class="controls" id="counts">
+        <%= f_hire.text_field :number_of_vehicles, class: "input-small numeric", 'data-rule-hire-required' => true %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f_hire.label :minimum_seats, "Minimum Seats", :class => "control-label right" %>
+      <div class="controls" id="counts">
+        <%= f_hire.text_field :minimum_seats, :class => "input-small numeric" %>
+        <span class='add-on'> (optional)</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f_hire.label :delivery_required, "Delivery required?", class: "control-label right" %>
+      <div class="controls">
+        <div class="span2">
+          <%= f_hire.check_box :delivery_required, { :class => "icheck-me mobilisation", "data-skin" => "square", "data-color" => "orange", :id => "delivery-required" } %>
+        </div>
+        <div id="dropoff-location" class="span10">
+          <div class="span2">
+            <%= f_hire.label :delivery_location, "Location*", class: "control-label mobilisation pull-right", id: "location-label" %>
+          </div>
+          <div class="span9">  
+            <%= f_hire.text_field :delivery_location, class: "input-small mobilisation", id: "delivery-location", 'dropoff-location-required' => true, placeholder: "State, City, Suburb ..." %>
+          </div>  
+        </div>
+      </div>  
+    </div>
+
+    <div class="control-group">
+      <%= f_hire.label :transmission_preference, "Transmission", :class => "control-label right" %>
+      <div class="controls">
+        <%= f_hire.select :transmission_preference, options_for_select(enquiry.transmission_preferences, enquiry.hire.transmission_preference), {include_blank: false}, class: "span4" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f_hire.label :special_requirements, "Special Requirements", :class => "control-label right" %>
+      <div class="controls">
+        <%= f_hire.text_area :special_requirements, {:id => 'special-requirements', :class => "span12", placeholder: 'Any special accessories like wheelchair access, mining, seating, high-low range, etc. (max of 255 letters)', 'rows' => 2} %>
+      </div>
+    </div>
+
+  <% end %>  
+<% end %>

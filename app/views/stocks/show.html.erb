@@ -1,0 +1,106 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1><%= "#{@stock.name}" %> <span class="label"><%= "VIN# #{@stock.vin_number}" %></span></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+
+        <%= link_to '<i class="icon-list-alt"></i>'.html_safe, stocks_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+
+        <% if can? :update, Stock %>
+          <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_stock_path, {:title => 'Edit', :class => 'btn', "data-placement" => "bottom", 'rel' => 'tooltip'} %>
+        <% end %>
+
+        <% if current_user.has_role? :admin %>
+          <a href="#convert_to_vehicle_model" title="Receive Stock" data-placement="bottom" rel="tooltip" role="button" class="btn" data-toggle="modal"><i class="icon-barcode"></i></a>
+
+          <div id="convert_to_vehicle_model" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">Receive Stock</h3>
+            </div>
+            <div class="modal-body">
+              <p>You are about to convert this <b>Stock Item</b> into a <b>Vehicle</b> and remove it from the allocated stock list. You cannot reverse this action. Are you sure you want to proceed?</p>
+            </div>
+            <div class="modal-footer">
+              <%= link_to "Cancel", '', {:class => 'btn btn-lightgrey', 'data-dismiss' => 'model'} %>
+              <%= link_to "Convert to vehicle", {:action => 'convert_to_vehicle'}, {:class => 'btn btn-satblue', 'data-dismiss' => 'model'} %>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <% unless current_user.has_role? :supplier %>
+            <div class="box-title">
+              <h3><i class="glyphicon-group" style="position:relative; top:-3px;"></i>Supplier Information</h3>
+            </div>
+            <div class="box-content nopadding">
+                <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+                <tbody>
+                  <tr>
+                    <td width="15%">Supplier</td>
+                    <td width="80%"><%= @stock.supplier.company_name_short if @stock.supplier %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+          <div class="box-title">
+            <h3><i class="glyphicon-barcode"></i>Stock Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="stock-details" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td width="15%">Stock Number</td>
+                  <td width="80%"><%= @stock.stock_number %></td>
+                </tr>
+                <tr>
+                  <td width="15%">Year, Make &amp; Model</td>
+                  <td width="80%"><%= @stock.name %></td>
+                </tr>
+                <tr>
+                  <td width="15%">VIN Number</td>
+                  <td width="80%"><%= @stock.vin_number %></td>
+                </tr>
+                <tr>
+                  <td width="15%">Engine Number</td>
+                  <td width="80%"><%= @stock.engine_number %></td>
+                </tr>
+                <tr>
+                  <td width="15%">Transmission</td>
+                  <td width="80%"><%= @stock.transmission %></td>
+                </tr>
+                <tr>
+                  <td width="15%">Colour</td>
+                  <td width="80%"><%= @stock.colour %></td>
+                </tr>
+                <tr>
+                  <td width="15%">ETA</td>
+                  <td width="80%"><%= @stock.eta_date_field %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <%= render 'shared/notes/list', resource: @stock %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

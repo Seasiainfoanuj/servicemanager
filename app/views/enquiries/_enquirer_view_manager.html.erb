@@ -1,0 +1,81 @@
+<% present(@enquiry) do |enquiry| %>
+  <% if enquiry.new_customer_details_reported? %>
+    <div class="alert alert-warning" style="margin-top:20px">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <i class="icon icon-warning-sign"></i> It appears that new customer contact details have been reported in this enquiry. Please update the Enquirer details and verify when this is done. 
+    </div>
+  <% end %>  
+  <div class="box-title">
+    <h3 style="width: 100%"><i class="glyphicon-user" style="position:relative; top:-3px;"></i>Enquirer
+    </h3>
+  </div>
+  <div class="box-content nopadding">
+    <table id="enquiry-user" class="table table-bordered table-force-topborder manager-view" style="clear: both">
+      <tbody>
+        <tr>
+          <td colspan="3">
+           
+              <%= link_to "<i class='icon-search'></i> View Profile".html_safe, @enquiry.user, :class => "btn" if @enquiry.user %>
+               <% if @enquiry.user.present? %>
+              <%= link_to 'Update Enquirer Details..', "/users/#{@enquiry.user.id}/edit", {id: 'update-enquirer-details', class: 'btn btn-satblue'} %>
+              <% unless @enquiry.customer_details_verified %>
+                <%= form_for @enquiry, url: verify_customer_info_enquiry_path(@enquiry), html: {id: "verify-enquiry-customer-info"}  do |f| %>
+                  <%= f.submit 'I verify that the customer details on record are correct!', {:class => "btn btn-green"} %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Currently on record</td>
+          <td>As per new enquiry</td>
+        </tr>
+        <tr>
+          <td>Name</td>
+          <td><%= enquiry.customer_name %></td>
+          <td><%= "#{enquiry.first_name} #{enquiry.last_name}" %></td>
+        </tr>
+        <tr>
+          <td>Company</td>
+          <td><%= enquiry.customer_company_name %></td>
+          <td><%= enquiry.company %></td>
+        </tr>
+        <tr>
+          <td>Job Title</td>
+          <td><%= enquiry.customer_job_title %></td>
+          <td><%= enquiry.job_title %></td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td><%= enquiry.customer_email %></td>
+          <td><%= enquiry.email %></td>
+        </tr>
+        <tr>
+          <td>Phone</td>
+          <td><%= enquiry.customer_phone %></td>
+          <td><%= enquiry.phone %></td>
+        </tr>
+        <tr>
+          <td>Address</td>
+          <td>
+            <% if enquiry.company_address %>
+              <%= enquiry.company_address.line_1 %> <br>
+              <%= "#{enquiry.company_address.line_2}<br>" if enquiry.company_address.line_2.present? %>
+              <%= enquiry.company_address.suburb %>, <%= enquiry.company_address.state %>
+              <%= enquiry.company_address.postcode %> <%= enquiry.company_address.country %>
+            <% end %>
+          </td>
+          <td>
+            <% if @enquiry.address %>
+              <%= @enquiry.address.line_1 %> <br>
+              <%= "#{@enquiry.address.line_2}<br>" if @enquiry.address.line_2.present? %>
+              <%= @enquiry.address.suburb %>, <%= @enquiry.address.state %>
+              <%= @enquiry.address.postcode %> <%= @enquiry.address.country %>
+            <% end %>  
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<% end %>

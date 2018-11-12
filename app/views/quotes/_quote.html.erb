@@ -1,0 +1,22 @@
+<tr>
+  <td><%= link_to(quote.number, quote_path(quote.number)) %></td>
+  <td><%= quote.quote_date %></td>
+  <% if current_user.admin? %>
+    <td>
+      <%= link_to("#{quote.customer_first_name} #{quote.customer_last_name}", user_path(quote.customer_id)) %>
+      <%= " (#{quote.customer_email})" %>
+      <%= link_to(" - #{quote.customer_company_name}", company_path(quote.customer_company_id)) if quote.customer_company_id %>
+    </td>
+  <% else %>
+    <td><%= "#{quote.customer_first_name} #{quote.customer_last_name} (#{quote.customer_email})" %></td>  
+  <% end %>  
+  <td><%= number_to_currency((quote.total_cents / 100), precision: 0, separator: ',', unit: '') if quote.total_cents %></td>
+  <% if current_user.admin? %>
+    <td><%= quote_status_label(quote.status) %></td>
+    <td><%= quote.tag_names %></td>
+  <% else %>
+    <td></td>  
+    <td></td>  
+  <% end %>  
+  <td><%= quote_action_links(quote.quote_id) %></td>
+</tr>

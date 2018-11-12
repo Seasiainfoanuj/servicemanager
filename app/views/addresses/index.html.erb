@@ -1,0 +1,71 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Addresses</h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if can? :create, Address %>
+          <%= link_to '<i class="icon-plus-sign"></i> Add New Address'.html_safe, {:controller => 'addresses', :action => 'new'}, {:class => 'btn'} %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="icon-group"></i>Addresses</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-hover table-nomargin dataTable dataTable-tools dataTable-colvis dataTable-scroll-x table-bordered">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Address type</th>
+                  <th style="width: 80px;">Line 1</th>
+                  <th style="width: 80px;">Line 2</th>
+                  <th>Suburb</th>
+                  <th>State</th>
+                  <th>Postal code</th>
+                  <th>Country</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @addresses.each do |addr| %>
+                  <tr>
+                    <td><%= addr.id %></td>
+                    <td><%= addr.address_type %></td>
+                    <td style="width: 80px;"><%= addr.line_1 %></td>
+                    <td style="width: 80px;"><%= addr.line_2 %></td>
+                    <td><%= addr.suburb %></td>
+                    <td><%= addr.state %></td>
+                    <td><%= addr.postcode %></td>
+                    <td><%= addr.country %></td>
+                    <td>
+                      <% if can? :update, Address %>
+                        <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_address_path(addr), {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip'} %>
+                      <% end %>
+                      <% if can? :destroy, Address %>
+                        <%= link_to '<i class="icon-ban-circle"></i>'.html_safe, addr, method: :delete, :class => 'btn', :title => 'Destroy', 'rel' => 'tooltip', data: {confirm: "You are about to permanently delete this address. You cannot reverse this action. Are you sure you want to proceed?"} %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

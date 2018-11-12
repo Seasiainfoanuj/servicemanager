@@ -1,0 +1,23 @@
+<% present(@quote) do |quote| %>
+
+  <div class="invoice-to">
+    <span>Quoted For</span><br>
+    <strong><%= quote.customer_name %></strong><br>
+    <%= "<strong>#{quote.customer_company_name}</strong><br>".html_safe %>
+    <%= "#{quote.customer_email}<br>".html_safe if quote.customer_name != "[#{quote.customer_email}]" %>
+    <% if quote.customer_postal_address.present? %>
+      
+        <%= quote.customer_postal_address_line_1 %>
+        <%= quote.customer_postal_address_line_2 %>
+        <%= quote.customer_postal_address_suburb %>
+        <%= quote.customer_postal_address_state %>
+        <%= quote.customer_postal_address_postcode %>
+        <%= quote.customer_postal_address_country %>
+     
+    <% end %>
+    <br>
+    <%= "Phone: #{quote.customer_phone }".html_safe if quote.customer_phone.present? %>
+    <%= "Mobile: #{quote.customer_mobile}".html_safe if quote.customer_mobile.present? %>
+  </div>
+
+<% end %>

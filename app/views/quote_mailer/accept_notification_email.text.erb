@@ -1,0 +1,21 @@
+Hi <%= @quote.manager.first_name %>,
+
+<%= @quote.customer.name %> has accepted quote <%= @quote.number %>.
+
+Link: <%= quote_url(@quote) %>
+
+Contact Details:
+-----------------------------------------
+Name: <%= @quote.customer.name %>
+Email: <%= @quote.customer.email %>
+<% if @quote.customer.mobile %>
+Mobile: <%= @quote.customer.mobile %>
+<% end %>
+<% if @quote.customer.phone %>
+Phone: <%= @quote.customer.phone %>
+<% end %>
+<% if @quote.customer.website %>
+Website: <%= @quote.customer.website %>
+<% end %>
+
+

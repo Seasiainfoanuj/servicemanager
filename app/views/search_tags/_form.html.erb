@@ -1,0 +1,31 @@
+<%= form_for(@search_tag, :html => {:id => "search-tag-form", :class => "form-horizontal"}) do |f| %>
+  <% if @search_tag.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@search_tag.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+        <% @search_tag.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="box-title">
+    <h3><i class="icon-tag"></i>Search Tag Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= label_tag :tag_type, "Tag Type", class: "control-label" %>
+      <div class="controls">
+        <%= f.select :tag_type, options_for_select(SearchTag::TAG_TYPES.collect { |typ| [typ.to_s.humanize.titleize, typ] }, @search_tag.tag_type), prompt: 'Select Search Tag' %>
+      </div>
+    </div>    
+
+    <div class="control-group">
+      <%= f.label :name, "Tag Name", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name, :class => "input-large" %>
+      </div>
+    </div>
+  </div>
+<% end %>

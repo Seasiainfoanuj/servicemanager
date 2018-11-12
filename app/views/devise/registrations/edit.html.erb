@@ -1,0 +1,60 @@
+<div id="left">
+</div>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1><%= "#{@user.name}" %></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <%= link_to '<i class="icon-list-alt"></i>'.html_safe, users_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+
+          <h2>Edit <%= resource_name.to_s.humanize %></h2>
+
+          <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+            <%= devise_error_messages! %>
+
+            <div><%= f.label :email %><br />
+            <%= f.email_field :email, :autofocus => true %></div>
+
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+            <% end %>
+
+            <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+            <%= f.password_field :password, :autocomplete => "off" %></div>
+
+            <div><%= f.label :password_confirmation %><br />
+            <%= f.password_field :password_confirmation %></div>
+
+            <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+            <%= f.password_field :current_password %></div>
+
+            <div><%= f.submit "Update" %></div>
+          <% end %>
+
+          <h3>Cancel my account</h3>
+
+          <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %></p>
+
+          <%= link_to "Back", :back %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

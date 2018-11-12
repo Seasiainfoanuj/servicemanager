@@ -1,0 +1,62 @@
+#user-guide
+  .panel.panel-default
+    .panel-body
+      h1 Service Manager User Guide
+      h2 
+        i.glyphicon-notes
+        | Enquiries
+
+  section.definition
+    h3 Definition
+    p.main-definition 
+      | An Enquiry record collects of all the information gathered from a person showing interest in one of our product offerings. This includes contact details of the enquirer and information about the product or service they want.
+
+    dl.dl-horizontal
+      dt Enquiry Type.
+      dd Examples of enquiry types are #{EnquiryType.all.map(&:name).join(', ')}.
+      dt Enquiry Date
+      dd The date when the Customer submitted the enquiry. 
+      dt Customer 
+      dd This is the customer who initiated the enquiry.
+      dt Manager
+      dd An enquiry may be assigned to a manager. The manager takes ownership of the customer's enquiry, by contacting the customer and assessing their specific needs. The manager endevours to provide the customer with a quote.
+      dt REF (uid)
+      dd A unique identification number for the enquiry. The customer could use this as reference when referring to a previous enquiry.
+      dt First & Last Name
+      dd The enquirer's preferred name.
+      dt Email
+      dd This identifies the customer making the enquiry.
+      dt Phone
+      dd The customer's preferred phone number.
+      dt Company
+      dd When the customer enquires on behalf of a company, a record is kept of the company. When the enquiry is submitted, the name of the company can be seen on the customer record and the customer can also be seen on the company record.
+      dt Job title (optional)
+      dd The customer's position in the company.
+      dt Enquiry has been read?
+      dd On list list window, a red circle to the left of the enquiry shows if a manager has read the new enquiry.
+      dt Flagged
+      dd The manager may flag the enquiry for special attention. All flagged enquiry on the List window are identified by a flag on the left.
+      dt Status
+      dd Categorises an Enquiry as #{Enquiry::STATUSES.join(', ')}.
+      dt Origin
+      dd The website from where the enquiry was filled in and submitted.
+
+  = link_to '<span class="label label-info">back to Index</span>'.html_safe, user_guides_path
+  br
+  = link_to '<span class="label label-info">also see Hire Enquiries</span>'.html_safe, '/user_guides/hire_enquiries'
+
+  section
+    h3 How to respond to a new enquiry
+    ul 
+      li New enquiries appear on top of the Enquiry List. Open the enquiry by clicking on the magnifying glass.
+      li If you want to assign the enquiry to a manager (the manager can be yourself!), click on the Assign button and fill in the correct details. 
+      li Also assign an Internal Company to this enquiry.
+      li Pay attention to the enquiry type selected by the customer. Once the needs of the customer have been assessed, a more appropriate enquiry type may be assigned. 
+      li Read the enquiry details and take note of the origin website where the customer filled in the enquiry form.
+      li You can tell from the enquirer section if the user details on our database is different from the new enquiry details received. You may want to update our database after checking with the customer. Do not underestimate the value of accurate customer information in the database.
+      li The Enquiry Message at the bottom is important. When you contact the customer, they may expect you to have read their message.
+
+  section.change-history
+    h4 Change History
+    p Created by Francois van der Hoven on 26 May 2016
+

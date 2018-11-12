@@ -1,0 +1,29 @@
+.box.box-condensed.box-color.box-bordered
+  .box-title
+    h3
+      - if image_type == Image::DOCUMENT
+        i.glyphicon-notes
+          |  Document
+      - else
+        i.glyphicon-camera
+          |  Photo
+
+  .box-content.nopadding
+    table#document.table.table-bordered.table-force-topborder style="clear: both"
+      tbody
+        tr
+          td = image_type == Image::DOCUMENT ? 'Document type' : 'Photo type'
+          - if image_type == Image::DOCUMENT
+            td = f.collection_select :document_type_id, images, :id, :name, {id: 'document-type-select'}
+          - else
+            td = f.collection_select :photo_category_id, images, :id, :name, {id: 'photo-category_select'}  
+        tr
+          td Image name
+          td = f.text_field :name
+        tr
+          td Description
+          td = f.text_field :description
+        tr
+          td Attachment
+          td = f.file_field :image
+

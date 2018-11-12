@@ -1,0 +1,13 @@
+<div class= "container-fluid">
+  <div id="notifications-menu">
+    <% unless current_user.has_role? :dealer %>
+      <div class="notifications">
+        <%= link_to "Notifications #{overdue_count_label}".html_safe, notifications_path %>
+        <%= link_to "Enquiries #{new_enquiries_label(new_enquiries_count)}".html_safe, enquiries_path %>
+        <%= link_to "Jobs #{new_po_requests_label(new_po_requests_count)}".html_safe, po_requests_path %>
+        <%= link_to "PO Requests #{new_po_requests_label(new_po_requests_count)}".html_safe, po_requests_path %>
+        <%= link_to "Accounts #{new_sp_invoices_label(new_sp_invoices_count)}".html_safe, "#" %>
+      </div>
+    <% end %>
+  </div>
+</div>

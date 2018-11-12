@@ -1,0 +1,77 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Hire Quotes</h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if can? :create, HireQuote %>
+          <%= link_to '<i class="icon-plus-sign"></i> New Hire Quote'.html_safe, new_hire_quote_path, {:class => 'btn btn-satgreen'} %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-list" style="position:relative; top: -3px;"></i>Hire Quotes</h3>
+            <%= manual_link('hire_quotes') %>
+          </div>
+          <div class="box-content nopadding hire-quotes">
+
+            <%= render('search_form') if current_user.admin? %>
+
+            <table id="hire-quotes-table" class="table">
+              <thead>
+                <tr>
+                  <th>REF</th>
+                  <th>Customer</th>
+                  <th>Manager</th>
+                  <th>Status</th>
+                  <th>Hire Status Date</th>
+                  <th>Tags</th>
+                  <th data-orderable="false">Actions</th>
+                </tr>
+              </thead>  
+              <tbody>
+                <% if @hire_quotes.total_entries > 0 %>
+                  <%= render @hire_quotes %>
+                <% else %>
+                  <tr><td colspan="10" style="text-align: center;">No records matched your search criteria.</td></tr>
+                <% end %>
+              </tbody>
+            </table>
+
+            <% if @hire_quotes.total_entries > 0 %>
+              <table id="quotes-table-footer">
+                <thead>
+                  <tr>
+                    <th><%= query_totals(@hire_quotes.total_entries, params[:page].to_i, @search.per_page.to_i) %></th>
+                  </tr>
+                </thead>
+              </table>  
+            <% end %>  
+
+            <%= will_paginate @hire_quotes unless @hire_quotes.none? %>
+
+
+          </div>
+        </div>
+      </div>
+    </div> 
+
+  </div>
+</div>    
+

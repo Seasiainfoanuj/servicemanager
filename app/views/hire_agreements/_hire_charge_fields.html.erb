@@ -1,0 +1,30 @@
+<div class="hire-charge">
+  <div class="pull-right">
+    <%= f.hidden_field :_destroy %>
+    <%= link_to '<i class="icon-ban-circle"></i> Remove'.html_safe, '#', class: "remove_fields btn" %>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :name, "Name", :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :name, :class => "input-xlarge name-field", 'data-rule-required' => true %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :amount, "Amount (Exc. Tax)", :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :amount, :class => "input-medium", 'data-rule-required' => true %>
+      <%= f.collection_select :tax_id, Tax.all, :id, :name, {prompt: false}, :class=>'select2-me input-small' %>
+      <%= f.select :calculation_method, HireCharge::CALCULATION_METHODS, {prompt: false}, :class => 'select2-me input-medium calculation_method_field', 'data-rule-required' => true %>
+      <div style="clear:both"></div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :quantity, "Quantity", :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :quantity, :class => "input-mini quantity-field", 'data-rule-required' => true %>
+    </div>
+  </div>
+</div>

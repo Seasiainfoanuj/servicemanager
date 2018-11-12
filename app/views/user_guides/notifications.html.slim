@@ -1,0 +1,75 @@
+#user-guide
+  .panel.panel-default
+    .panel-body
+      h1 Service Manager User Guide
+      h2 
+        i.glyphicon-flag
+        |  Notifications
+
+  section.definition
+    h3 Definition
+    p.main-definition Notifications intend to remind someone to perform a specific task before the due date. If the due date is not met the company may experience financial loss or customer dissatisfaction.
+    dl.dl-horizontal
+      dt Internal Company
+      dd Also called Invoice Company. This is the business division within Bus4x4.
+      dt Business Owner
+      dd The person who oversees and delegates the related tasks. This person must be informed when required tasks cannot be completed in time.
+      dt Resource Type
+      dd We are launching Notifications with one resource type, Vehicle. Over time, other resource types such as Build or Hire Agreement could also be introduced.
+      dt Resource
+      dd This is a specific resource, i.e. a specific Vehicle (JTFST22PX00017160  2013 Toyota Hiace Commuter) or a specific Hire Agreement (Hire Agreement HI-XX6518). Notifications require that tasks are completed for this item.
+      dt Event Name
+      dd A description of the task to complete. It may require that a document is obtained and uploaded. It may also be a service, an inspection or any action supporting our business.
+      dt Due Date
+      dd This is your last change to do what you need to do!
+      dt Completed Date
+      dd The date when the task is finalised.
+      dt Document uploaded
+      dd Has the document been uploaded?
+      dt Send Emails
+      dd This tells Service Manager to notify someone by email.
+      dt Email Message
+      dd This is the message sent to the nominated recipients. A default message is provided by the Notification Type and may be customised when the Notification is created.
+      dt Comments
+      dd Any notes to serve as documentation about the notification. This could contain procedural instructions from management or information about the work carried out. 
+      dt Recipients
+      dd These people are selected when creating the Notification. To change this list, just update the notification.
+
+  = link_to '<span class="label label-info">back to Index</span>'.html_safe, user_guides_path
+
+  section
+    h3 How Service Manager helps you to manage Notifications
+    p 
+      | Every day all the due Notifications are retrieved and emails are sent to the recipients. Refer to 
+      span.term 
+        |  Notify Periods 
+      | in the Guide on
+      span.glossary 
+        |  Notification Types. 
+      | When someone 
+      span.term
+        |  completes  
+      | a notification, all recipients, as well as the 
+      span.term 
+        |  business owner
+      |  receive an email as confirmation. To make personnel aware of upcoming tasks, two counts are shown in the menu. (Nothing is shown if the count is zero.) The count in blue refers to actions due within 30 days and the count in red refers to overdue notifications.
+
+  section
+    h3 Completing a Notification
+    p 
+      | A Notification may be 
+      span.term
+        |  completed
+      |  by a staff member after all the work has been carried out. If a document must be uploaded, it can be done on the Complete Notification Page. After completion the business owner will receive a confirmation email. The system will detect if this is a recurring Notification. If so, a new notification is created automatically and the user is taken to the Edit window of the new notification so that any changes can be made, if necessary.
+    p Completed notifications are no longer show in the Notification list. Click on Show All if you need to see all notifications.  
+
+  section
+    h3 Tips
+    ul
+      li Notifications may be created either from the Notifications List page, or from item that requires a notification, for example the details page of vehicle, 2013 Toyota Hiace Commuter.
+      li To see a list of notifications already completed, select the Show-all button.
+      li To see notifications for a specific resource, find the Show Page for that resource. If the resource is a Vehicle, click on Notifications under Related Links on the left. This will list all notifications for that vehicle only.
+
+  section.change-history
+    h4 Change History
+    p Created by Francois van der Hoven on 22 April 2016

@@ -1,0 +1,356 @@
+<div class="box-title">
+  <h3>
+    <i class="icon-user"></i>
+    <% if @user == current_user %>
+      My Profile
+    <% else %>
+      Profile
+    <% end %>
+  </h3>
+</div>
+<div class="box-content nopadding">
+  <ul class="tabs tabs-inline tabs-top">
+    <% if params[:action] == 'edit' %>
+      <li class='active'>
+        <a href="#profile" data-toggle='tab'><i class="icon-user"></i> Profile</a>
+      </li>
+      <li>
+        <a href="#licence" data-toggle='tab'><i style="position: relative; top: -2px;" class="glyphicon-nameplate"></i> Licence Details</a>
+      </li>
+      <li>
+        <a href="#security" data-toggle='tab'><i class="icon-lock"></i> Security</a>
+      </li>
+    <% end %>
+  </ul>
+  <div class="tab-content padding tab-content-inline tab-content-bottom">
+    <div class="tab-pane active" id="profile">
+      <%= form_for(@user, :html => {:id => 'user-form', :class => "form-horizontal form-validate", :multipart => true}) do |f| %>
+        <% if @user.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@user.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+            <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+            </ul>
+          </div>
+          <br><br>
+        <% end %>
+        <div class="row-fluid">
+          <div class="span2">
+            <div class="thumbnail" style="max-width: 200px; max-height: 200px;">
+              <%= image_tag @user.avatar.url(:large) %>
+            </div>
+            <div style="margin-top:20px">
+              <div class="control-group">
+                <%= f.label :avatar, "New Profile Image", :class => "control-label" %>
+                <%= f.file_field :avatar %>
+              </div>
+            </div>
+          </div>
+          <div class="span10">
+            <br>
+            <!--- http://edgeapi.rubyonrails.org/classes/ActionView/Helpers/FormOptionsHelper.html#method-i-collection_check_boxes -->
+            <!--- http://stackoverflow.com/questions/30766766/how-to-pre-populate-collection-check-boxes-in-an-edit-form -->
+            <% if current_user.has_role? :admin %>
+              <div class="control-group all-roles">
+                <%= f.label :roles, "Role", :class => "control-label right" %>
+                <div class="controls">
+                  
+                <% User.valid_roles.each do |role| %>
+                 <% next if role.to_s.humanize == "Service provider" %>
+                 <% next if role.to_s.humanize == "Quote customer" %>
+                 <% unless current_user.has_role? :masteradmin %>
+                    <% next if role.to_s.humanize == "Superadmin" %>
+                    <% next if role.to_s.humanize == "Masteradmin" %>
+                 <%end%>
+                   <% if current_user.has_role? :employee %>
+                     <% next if role.to_s.humanize == "Admin" %>
+                   <% end  %>
+                   <% if current_user.has_role? :dealer %>
+                     <% next if role.to_s.humanize == "Admin" %>
+                     <% next if role.to_s.humanize == "Supplier" %>
+                     <% next if role.to_s.humanize == "Customer" %>
+                     <% next if role.to_s.humanize == "Employee" %>
+                   <% end  %>
+                  <span>
+                    <%= check_box_tag role.to_sym, role, @user.roles.include?(role), :id => ['user', 'roles', role].join('_'), :name => "user[roles][#{role}]" %>
+                    <%= label_tag ['user', 'roles', role].join('_'), role.to_s.humanize %>
+                  </span>
+                  <% end %>
+
+                </div>
+                
+              </div>
+            <% end %>
+
+            <h4>Personal Details</h4>
+            <div class="control-group">
+              <%= f.label :job_title, "Job Title", :class => "control-label right" %>
+              <div class="controls">
+                <%= f.text_field :job_title, :class => "input-large" %>
+              </div>
+            </div>
+            <div class="control-group">
+              <%= f.label :first_name, "First Name", :class => "control-label right" %>
+              <div class="controls">
+                <%= f.text_field :first_name, {:class => "input-large"} %>
+              </div>
+            </div>
+            <div class="control-group">
+              <%= f.label :last_name, "Last Name", :class => "control-label right" %>
+              <div class="controls">
+                <%= f.text_field :last_name, {:class => "input-large"} %>
+              </div>
+            </div>
+            <div class="control-group">
+              <%= f.label :dob_field, "Date of Birth", :class => "control-label right" %>
+              <div class="controls">
+                <%= f.text_field :dob_field, :class => "input-small mask_date" %>
+              </div>
+            </div>
+
+            <hr>
+
+            <h4>Personal Contact Details</h4>
+            <div class="control-group">
+              <%= f.label :email, "Email", :class => "control-label right" %>
+              <div class="controls">
+                <%= f.email_field :email, {:class => "input-large", 'data-rule-required' => true, 'data-rule-email' => true} %>
+              </div>
+            </div>
+            <div class="control-group">
+              <%= f.label :phone, "Phone", :class => "control-label right" %>
+              <div class="controls">
+                <%= f.text_field :phone, :class => "input-large" %>
+              </div>
+            </div>
+            <div class="control-group">
+              <%= f.label :fax, "Fax", :class => "control-label right" %>
+              <div class="controls">
+                <%= f.text_field :fax, :class => "input-large" %>
+              </div>
+            </div>
+            <div class="control-group">
+              <%= f.label :mobile, "Mobile", :class => "control-label right" %>
+              <div class="controls">
+                <%= f.text_field :mobile, :class => "input-large" %>
+              </div>
+            </div>
+            <div class="control-group">
+              <%= f.label :website, "Website", :class => "control-label right" %>
+              <div class="controls">
+                <%= f.text_field :website, :class => "input-large" %>
+              </div>
+            </div>
+
+            <hr>
+             
+            <%= f.fields_for :addresses do |builder| %>
+              <% address_id = "address-#{builder.object.address_type.to_s}" %>
+              <div id="<%= address_id %>" class="person-address">
+                <%= render 'shared/error_messages', object: builder.object %>
+                <%= builder.hidden_field :address_type %>
+                <div class="control-group">
+                  <%= label_tag :address_type_display, "Address Type", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= text_field_tag :address_type_display, builder.object.address_type_display, :class => "input-large", :readonly => true %>
+                  </div>
+                </div>
+                <br>
+                <div class="control-group">
+                  <%= builder.label :line_1, "Line 1", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= builder.text_field :line_1, :class => "input-large" %>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <%= builder.label :line_2, "Line 2", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= builder.text_field :line_2, :class => "input-large" %>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <%= builder.label :suburb, "Suburb", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= builder.text_field :suburb, :class => "input-large" %>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <%= builder.label :state, "State", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= builder.text_field :state, :class => "input-large" %>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <%= builder.label :postcode, "Postcode", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= builder.text_field :postcode, :class => "input-large" %>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <%= builder.label :country, "Country", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= builder.text_field :country, :class => "input-large" %>
+                  </div>
+                </div>
+              </div>
+              <hr>
+            <% end %>
+
+            <h4>Company Details</h4>
+            <div class="control-group company">
+              <%= f.label :representing_company_id, "Company", :class => "control-label right" %>
+              <div class="controls">
+                <%= f.collection_select(:representing_company_id, Company.all, :id, :name, {prompt: true, :selected => @user.representing_company_id}, {:id => 'company_select', :class=>'select2-me span5'}) %>
+              </div>
+              <% if mode == 'update' && @user.representing_company_id.present? %>
+                <%= link_to '<i class="icon-search"></i>'.html_safe, company_path(@user.representing_company), {:title => 'View company', :class => 'btn', 'rel' => 'tooltip'} %>
+              <% end %>
+            </div>
+
+            <% if @user.admin? %>
+              <h4>Employer Details (Staff only)</h4>
+              <div class="control-group company">
+                <%= f.label :employer_id, "Internal Company", :class => "control-label right" %>
+                <div class="controls">
+                  <%= f.collection_select(:employer_id, InvoiceCompany.all, :id, :name, {prompt: true, :selected => @user.employer_id}, {:id => 'employer_select', :class=>'select2-me span5'}) %>
+                </div>
+              </div>  
+            <% end %>  
+
+            <% if mode == 'create' %>
+              <button id="add-company" class="btn">Add company</button>
+              <div id="new-company-details">
+                <div class="control-group">
+                  <%= label_tag :new_company, "New company", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= text_field_tag :new_company, nil, :class => "input-large" %>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <%= label_tag :trading_name, "Trading name", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= text_field_tag :trading_name, nil, :class => "input-large" %>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <%= label_tag :company_abn, "Company ABN", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= text_field_tag :company_abn, nil, :class => "input-large" %>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <%= label_tag :company_website, "Company Website", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= text_field_tag :company_website, nil, :class => "input-large" %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+
+            <% unless params[:action] == 'edit' %>
+              <hr>
+              <div class="control-group">
+                <%= f.label :password, "Password", :class => "control-label right" %>
+                <div class="controls">
+                  <%= f.password_field :password, {:class => "input-large", :autocomplete => "off"} %>
+                </div>
+              </div>
+              <div class="control-group">
+                <%= f.label :password_confirmation, "Confirm Password", :class => "control-label right" %>
+                <div class="controls">
+                  <%= f.password_field :password_confirmation, {:class => "input-large"} %>
+                </div>
+              </div>
+            <% end %>
+
+            <div class="form-actions">
+              <% if params[:referrer] == "duplicate_quote" %>
+                <%= hidden_field_tag 'quote_id', params[:quote_id] %>
+                <%= f.submit "Save", :name => "duplicate_quote", :class => "btn btn-green" %>
+              <% else %>
+                <%= f.submit "Save", :class => "btn btn-green" %>
+              <% end %>
+              <input type="reset" class='btn' value="Discard changes">
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <% if params[:action] == 'edit' %>
+      <div class="tab-pane" id="licence">
+        <%= form_for(@user, :html => {:id => "licence-details-form", :class => "form-horizontal form-validate"}) do |f| %>
+          <%= f.fields_for :licence do |builder| %>
+            <div class="row-fluid">
+              <div class="span2">
+                <div class="thumbnail" style="max-width: 200px; max-height: 200px;">
+                  <%= link_to((image_tag @user.licence.upload.url(:large)), @user.licence.upload.url(:original)) %>
+                </div>
+                <div style="margin-top:20px">
+                  <div class="control-group">
+                    <%= builder.label :upload, "Scanned Image", :class => "control-label" %>
+                    <%= builder.file_field :upload %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="span10">
+
+                <br><br>
+                <div class="control-group">
+                  <%= builder.label :number, "Licence Number", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= builder.text_field :number, :class => "input-large" %>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <%= builder.label :state_of_issue, "State Of Issue", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= builder.text_field :state_of_issue, :class => "input-large" %>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <%= builder.label :expiry_date_field, "Expiry Date", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= builder.text_field :expiry_date_field, :class => "input-small mask_date" %>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <%= f.submit "Update", :class => "btn btn-green" %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="tab-pane" id="security">
+        <%= form_for(@user, :html => {:class => "form-horizontal form-validate"}) do |f| %>
+
+          <br>
+
+          <div class="control-group">
+            <% params[:action] == 'edit' ? pw_label = "New Password" : pw_label = "Password" %>
+            <%= f.label :password, pw_label, :class => "control-label right" %>
+            <div class="controls">
+              <%= f.password_field :password, {:class => "input-large", 'data-rule-required' => true, :autocomplete => "off"} %>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <%= f.label :password_confirmation, "Confirm Password", :class => "control-label right" %>
+            <div class="controls">
+              <%= f.password_field :password_confirmation, {:class => "input-large", 'data-rule-required' => true} %>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <%= f.submit "Update", :class => "btn btn-green" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

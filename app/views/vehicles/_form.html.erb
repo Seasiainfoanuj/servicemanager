@@ -1,0 +1,250 @@
+<% present(@vehicle) do |vehicle| %>
+
+  <%= form_for(@vehicle, :html => {:class => "form-horizontal", :id => "vehicle-form"}) do |f| %>
+    <% if vehicle.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(vehicle.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+        <ul>
+        <% vehicle.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="box-title">
+      <h3><i class="glyphicon-car"></i>Vehicle Details</h3>
+    </div>
+    <div class="box-content">
+      <div class="control-group">
+        <%= f.label :vehicle_model_id, "Make / Model", :class => "control-label" %>
+        <div class="controls">
+          <%= f.select :vehicle_model_id, options_for_select(vehicle.makes_and_models, vehicle.selected_model), {include_blank: 'Select Vehicle Model'}, class: "select2-me span6" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :model_year, "Year", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :model_year, :class => "input-small" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :class_type, "Class/Type", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :class_type, :class => "input-medium" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :vehicle_number, "Vehicle Number", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :vehicle_number, :class => "input-medium" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :call_sign, "Call Sign", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :call_sign, :class => "input-medium" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :vin_number, "VIN Number", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :vin_number, :class => "input-large" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :engine_number, "Engine Number", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :engine_number, :class => "input-large" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :transmission, "Transmission", :class => "control-label" %>
+        <div class="controls">
+          <%= f.select(:transmission, vehicle.transmission_types, {include_blank: 'Please select'}, {:class=>'input-medium'}) %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :odometer_reading, "Last Known Odometer Reading", :class => "control-label" %>
+        <div class="controls">
+          <div class="input-append">
+            <%= f.text_field :odometer_reading, :class => "input-small", :disabled => true %>
+            <span class="add-on">km</span>
+          </div>
+          <div class="help-block">Last odometer reading is automatically updated from logbook entries and on/off hire reports.</div>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :rego_number, "Rego Number", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :rego_number, :class => "input-medium" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :rego_due_date_field, "Rego Due Date", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :rego_due_date_field, :class => "input-medium datepick" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :seating_capacity, "Seating Capacity", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :seating_capacity, :class => "input-small" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :license_required, "License Required", :class => "control-label" %>
+        <div class="controls">
+          <div class="input-large">
+            <%= f.text_field :license_required, {:class => "tagsinput licensetypes", "data-default" => "Add License Type"} %>
+          </div>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :body_type, "Body type", class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :body_type, :class => "input-large", placeholder: "e.g. Bus, Autobus" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :colour, "Colour", class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :colour, :class => "input-large" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :engine_type, "Engine type", class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :engine_type, :class => "input-large" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :build_date, "Build Date", class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :build_date, class: "input-small mask_date" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :tags, "Tags", :class => "control-label" %>
+        <div class="controls vehicle-tags">
+          <%= f.text_field :tags, :class => "input-xlarge" %>
+          <%= select_tag :all_tags, options_for_select(SearchTag.vehicle.map { |tag| tag.name.titleize }), prompt: 'Append Tag' %>
+          <%= button_tag "+", id: 'add-tag', class: "btn" %>
+        </div>
+      </div>
+      
+      <% if vehicle.persisted? %> 
+      <div class="control-group">
+        <%= f.label :status, "Status", class: "control-label" %>
+        <div class="controls">
+          <%= f.select :status, options_for_select(vehicle.options_for_statuses, vehicle.status), class: "span3" %>
+          <div class="help-block">Indicates the vehicle's availability.</div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+
+    <div id="exclude_notice" class="box-content">
+      <span class="alert alert-warning"><i class="icon-warning-sign"></i> This vehicle will not show on schedule views</span>
+    </div>
+    <%= f.fields_for :hire_details do |builder| %>
+      <div class="box-title">
+        <h3><span style="display:block; float:left; margin: 2px 10px 0 3px;"><%= builder.check_box :active, {:id => "hire_check", :class => "icheck-me", "data-skin" => "square", "data-color" => "grey"} %></span> Available for Hire</h3>
+      </div>
+      <div id="hire_details" class="box-content">
+        <div class="control-group">
+          <%= builder.label :daily_rate, "Daily Hire Rate", :class => "control-label" %>
+          <div class="controls">
+            <div class="input-append input-prepend">
+              <span class="add-on">$</span>
+              <%= builder.text_field :daily_rate, value: vehicle.daily_rate, class: "input-mini align-right" %>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= builder.label :daily_km_allowance, "Daily KM Allowance", :class => "control-label" %>
+          <div class="controls">
+            <div class="input-append">
+              <%= builder.text_field :daily_km_allowance, class: "input-small" %>
+              <span class="add-on">KM</span>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= builder.label :excess_km_rate, "Excess Km Rate", :class => "control-label" %>
+          <div class="controls">
+            <div class="input-append input-prepend">
+              <span class="add-on">$</span>
+              <%= builder.text_field :excess_km_rate, value: vehicle.excess_km_rate, class: "input-mini align-right" %>
+              <span class="add-on">Per Km</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <div class="box-title">
+      <h3><i class="glyphicon-group" style="position:relative; top:-3px;"></i>Supplier Information</h3>
+    </div>
+    <div class="box-content">
+      <div class="control-group">
+        <%= f.label :supplier_id, "Supplier", :class => "control-label" %>
+        <div class="controls">
+          <%= f.select :supplier_id, options_for_select(vehicle.options_for_suppliers, vehicle.selected_supplier), {include_blank: 'Select Supplier'}, class: "select2-me span8" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :stock_number, "Stock Number", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :stock_number, :class => "input-medium" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :build_number, "Build Number", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :build_number, :class => "input-medium" %>
+        </div>
+      </div>
+    </div>
+    <div class="box-title">
+      <h3><i class="glyphicon-barcode"></i>KIT Details</h3>
+    </div>
+    <div class="box-content">
+      <div class="control-group">
+        <%= f.label :kit_number, "KIT Number", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :kit_number, :class => "input-medium" %>
+        </div>
+      </div>
+    </div>
+    <div class="box-title">
+      <h3><i class="glyphicon-group" style="position:relative; top:-5px;"></i>Ownership Details</h3>
+    </div>
+    <div class="box-content">
+      <div class="control-group">
+        <%= f.label :owner_id, "Owner", :class => "control-label" %>
+        <div class="controls">
+          <%= f.select :owner_id, options_for_select(vehicle.options_for_owners, vehicle.selected_owner), {include_blank: 'Select Owner'}, class: "select2-me span8" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :order_number, "Order Number", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :order_number, :class => "input-medium" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :invoice_number, "Invoice Number", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :invoice_number, :class => "input-medium" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :delivery_date_field, "Delivery Date", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :delivery_date_field, :class => "input-medium datepick" %>
+        </div>
+      </div>
+    </div>
+    <%= f.submit :class => "hidden" %>
+  <% end %>
+<% end %>

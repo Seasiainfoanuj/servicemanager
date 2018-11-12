@@ -1,0 +1,111 @@
+<%= form_for([@vehicle_contract], :url => vehicle_contract_url(@vehicle_contract), :html => {:id => "vehicle-contract-form", :class => "form-horizontal"}) do |f| %>
+  <% if @vehicle_contract.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@vehicle_contract.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+        <% @vehicle_contract.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="box-title">
+    <h3><i class="icon-truck"></i>Vehicle Contract (<%= @view_contract.display_status %>)</h3>
+  </div>
+  <div class="box-content">
+    <% if params[:action] == 'edit' %>
+      <%= f.fields_for :signed_contract do |builder| %>
+        <div class="control-group">
+          <div class="thumbnail" style="max-width: 200px; max-height: 200px;">
+            <%= link_to((image_tag @vehicle_contract.signed_contract.upload.url(:large)), @vehicle_contract.signed_contract.upload.url(:original)) %>
+          </div>
+          <div style="margin-top:20px">
+            <div class="control-group">
+              <%= builder.label :upload, "Scanned contract", :class => "control-label" %>
+              <%= builder.file_field :upload %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+    <div class="control-group">
+      <%= f.label :customer_id, "Customer name", :class => "control-label" %>
+      <div class="controls">
+        <%= f.select :customer_id, options_for_select(options_for_customers, @view_contract.selected_customer), {include_blank: 'Choose customer'}, {class: "select2-me span10", id: "vehicle-contract-customer-id", "data-rule-required" => true, :style => "margin-left:0"} %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :quote_id, "Quote number", :class => "control-label" %>
+      <div class="controls">
+        <%= f.hidden_field :quote_id %>
+        <%= text_field_tag :quote_number, nil, class: "input-small", value: @view_contract.quote_number, readonly: true %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :manager_id, "Manager", :class => "control-label" %>
+      <div class="controls">
+        <%= f.select :manager_id, options_for_select(options_for_admin_users, @view_contract.selected_manager), {include_blank: 'Select Manager'}, class: "select2-me span5" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :invoice_company_id, "Invoice Company", :class => "control-label" %>
+      <div class="controls">
+        <%= f.select :invoice_company_id, options_for_select(options_for_invoice_company_names, @view_contract.selected_invoice_company), {include_blank: 'Select Invoice Company'}, class: "select2-me span5" %>
+      </div>
+    </div>
+
+    <% if VehicleContractManager.may_select_allocated_stock?(@vehicle_contract, current_user) %>
+      <div class="control-group">
+        <%= f.label :allocated_stock_id, "Receive Stock", :class => "control-label" %>
+        <div class="controls">
+          <%= f.select :allocated_stock_id, options_for_select(@view_contract.stock_and_models, @view_contract.selected_stock), {include_blank: 'Select stock'}, class: "select2-me span10" %>
+          <div style="clear:both"></div>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="control-group">
+      <%= f.label :vehicle_id, "Vehicle", :class => "control-label" %>
+      <div class="controls vehicle-selection">
+        <%= f.select :vehicle_id, options_for_select(@view_contract.vehicles_and_models, @view_contract.selected_vehicle), {include_blank: 'Select vehicle'}, class: "select2-me span10" %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :deposit_received, "Deposit received", class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field :deposit_received, class: "input-medium" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :deposit_received_date_field, "Deposit received on", class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field :deposit_received_date_field, class: "input-small mask_date" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :special_conditions, "Special conditions", class: "control-label" %>
+      <div class="controls">
+        <%= f.text_area :special_conditions, {id: 'special-conditions', class: "editor span12", 'rows' => 5} %>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <% if @vehicle_contract.persisted? %>
+      <%= f.submit "Update Vehicle Contract", :class => "btn btn-grey" %>
+    <% else %>
+      <%= f.submit "Create Vehicle Contract", :class => "btn btn-grey" %>
+    <% end %>  
+  </div>
+
+<% end %>
+

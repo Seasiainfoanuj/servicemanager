@@ -1,0 +1,17 @@
+<div id="quote-po-form">
+  <h4>Would you like to submit a purchase order?</h4>
+  <br>
+
+  <%= form_for @quote, :url => update_po_quote_path(@quote, :user_email => params[:user_email], :user_token => params[:user_token]) do |f| %>
+    <div class="control-group" style="margin: 0 0 10px 0">
+      <%= f.label :po_number, "PO Number", :class => "control-label" %>
+      <div class="">
+        <%= f.text_field :po_number %>
+        <br>
+        <%= f.file_field :po_upload %>
+      </div>
+    </div>
+    <br>
+    <%= f.submit 'Submit', {:class => "btn btn-green"} %>
+  <% end %>
+</div>

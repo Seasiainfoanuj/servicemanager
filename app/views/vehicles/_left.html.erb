@@ -1,0 +1,61 @@
+<div class="subnav">
+  <div class="subnav-title">
+    <a href="#" class='toggle-subnav'><i class="icon-angle-down"></i><span>Related Links</span></a>
+  </div>
+  <ul class="subnav-menu">
+    <li class="<%= 'active' if params[:controller] == 'vehicles' && params[:action] == 'show' || params[:controller] == 'vehicles' && params[:action] == 'edit' %>">
+      <%= link_to 'Vehicle Details', {:controller => 'vehicles', :action => 'show', :id => @vehicle.id} %>
+    </li>
+    <% if can? :read, Workorder %>
+      <li class="<%= 'active' if params[:controller] == 'vehicles' && params[:action] == 'schedule' %>">
+        <%= link_to 'Schedule', {:controller => 'vehicles', :action => 'schedule', :vehicle_id => @vehicle.id} %>
+      </li>
+    <% end %>
+    <% if @vehicle.build %>
+      <li>
+        <%= link_to 'Build', @vehicle.build %>
+      </li>
+    <% end %>
+    <% if can? :read_schedule, @vehicle %>
+      <li class="<%= 'active' if params[:controller] == 'workorders' %>">
+        <%= link_to 'Workorders', {:controller => 'workorders', :action => 'index', :vehicle_id => @vehicle.id} %>
+      </li>
+    <% end %>
+    <% if can? :read, OffHireJob %>
+      <li class="<%= 'active' if params[:controller] == 'off_hire_jobs' %>">
+        <%= link_to 'Off Hire Jobs', {:controller => 'off_hire_jobs', :action => 'index', :vehicle_id => @vehicle.id} %>
+      </li>
+    <% end %>
+    <% if can? :read, HireAgreement %>
+      <li class="<%= 'active' if params[:controller] == 'hire_agreements' %>">
+        <%= link_to 'Hire Agreements', {:controller => 'hire_agreements', :action => 'index', :vehicle_id => @vehicle.id} %>
+      </li>
+    <% end %>
+    <% if can? :read, Notification %>
+      <li class="<%= 'active' if params[:controller] == 'notifications' %>">
+        <% due_soon_label = due_soon_count_label( {notifiable: @vehicle} ) || "" %>
+        <% overdue_label = overdue_count_label( {notifiable: @vehicle} ) || "" %>
+        <% label_title = "Notifications #{due_soon_label} #{overdue_label}" %>
+        <%= link_to label_title.html_safe, {:controller => 'notifications', :action => 'index', :vehicle_id => @vehicle.id} %>
+      </li>
+    <% end %>
+    <% if can? :read, VehicleLog %>
+      <li class="<%= 'active' if params[:controller] == 'vehicle_logs' %>">
+        <% flagged_log_entries = @vehicle.log_entries.where(flagged: true).count %>
+        <% if flagged_log_entries > 0 %>
+          <%= link_to "Logbook <span class='badge badge-important square-badge'>#{flagged_log_entries}</span>".html_safe, {:controller => 'vehicle_logs', :action => 'index', :vehicle_id => @vehicle.id} %>
+        <% else %>
+          <%= link_to "Logbook", {:controller => 'vehicle_logs', :action => 'index', :vehicle_id => @vehicle.id} %>
+        <% end %>
+      </li>
+    <% end %>
+    <% if can? :read, Image %>
+      <li class="<%= 'active' if params[:controller] == 'images' %>">
+        <%= link_to 'Documents and photos', {:controller => 'images', :vehicle_id => @vehicle.id} %>
+      </li>
+    <% end %>
+    <li class="<%= 'active' if params[:controller] == 'vehicles' && params[:action] == 'notes' %>">
+      <%= link_to 'Notes', {:controller => 'vehicles', :action => 'notes', :vehicle_id => @vehicle.id} %>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,38 @@
+table#documents-table, table#photos-table {
+  tr {
+    td:first-child {
+      width: 120px;
+      padding-top: 14px;
+      height: 100px;
+    }
+    td:last-child {
+      width: 100px;
+      a { margin-right: 5px; }
+    }
+    td:nth-child(2) {
+      width: 25%;
+    }
+  }
+}
+.image {
+  margin-top: 10px;
+  p {
+    a:hover {
+      display: inline-block;
+      padding: 2px;
+      border: 2px solid #0069CC;
+    }
+  }
+}
+.page-header a {
+  margin-left: 10px;
+}
+input#image_name {
+  width: 70%;
+}
+input#image_description {
+  width: 97%;
+}
+#main.image-table .page-header {
+  margin: 20px 0 0 0;
+}

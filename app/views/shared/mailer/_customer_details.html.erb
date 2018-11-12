@@ -1,0 +1,42 @@
+<tr>
+  <td colspan="2"><h3>Customer:</h3></td>
+</tr>
+<% unless object.customer.name == object.customer.email %>
+  <tr>
+    <td>Name:</td>
+    <td><%= object.customer.name %></td>
+  </tr>
+<% end %>
+
+<% if object.customer.company.present? %>
+  <tr>
+    <td>Company:</td>
+    <td><%= object.customer.company %></td>
+  </tr>
+<% end %>
+
+<tr>
+  <td>Email:</td>
+  <td><%= mail_to object.customer.email %></td>
+</tr>
+
+<% if object.customer.phone.present? %>
+  <tr>
+    <td>Phone:</td>
+    <td><%= object.customer.phone %></td>
+  </tr>
+<% end %>
+
+<% if object.customer.mobile.present? %>
+  <tr>
+    <td>Mobile:</td>
+    <td><%= object.customer.mobile %></td>
+  </tr>
+<% end %>
+
+<% if object.customer.website.present? %>
+  <tr>
+    <td>Website:</td>
+    <td><%= object.customer.website %></td>
+  </tr>
+<% end %>

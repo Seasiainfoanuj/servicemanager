@@ -1,0 +1,17 @@
+Hire Agreement Ref# <%= @hire_agreement.uid %>
+------------------------------------------
+Status: <%= @hire_agreement.status.capitalize %>
+
+Vehicle Details
+-------------------
+Name: <%= @hire_agreement.vehicle.name %> <%= "##{@hire_agreement.vehicle.number}" if @hire_agreement.vehicle.number %>
+Vin: <%= @hire_agreement.vehicle.vin_number if @hire_agreement.vehicle.vin_number.present? %>
+Rego No: <%= @hire_agreement.vehicle.rego_number if @hire_agreement.vehicle.rego_number.present? %>
+
+Hire Schedule Details
+--------------------------
+Pickup: <%= @hire_agreement.pickup_datetime %> at <%= @hire_agreement.pickup_location %>
+Return: <%= @hire_agreement.return_datetime %> at <%= @hire_agreement.return_location %>
+
+Would you perhaps like to make changes to this arrangement? Please contact <%= @hire_agreement.manager.name %> at <%= BUS4X4_CONTACT_NUMBER %> and quote Hire Agreement number <%= @hire_agreement.uid %>.
+

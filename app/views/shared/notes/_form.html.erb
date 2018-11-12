@@ -1,0 +1,86 @@
+<%= form_for(note, :html => {:class => "form-vertical form-validate note-form"}) do |f| %>
+
+  <%= f.hidden_field :resource_id %>
+  <%= f.hidden_field :resource_type %>
+  <%= f.hidden_field :author_id, value: current_user.id %>
+
+  <div class="control-group">
+    <div class="controls">
+      <% comments = flash[:note_comments].present? ? flash[:note_comments].to_s : note.comments.to_s.html_safe %>
+      <%= f.text_area :comments, :class => "span12", 'rows' => 5, :value => comments %>
+    </div>
+  </div>
+
+  <%= f.fields_for :uploads do |builder| %>
+    <%= render 'shared/notes/upload_fields', f: builder %>
+  <% end %>
+
+  <%= link_to_add_note_uploads '<i class="icon-plus-sign"></i> Attach File', f, :uploads %>
+  <br><br>
+
+  <% if current_user.admin? %>
+    <div class="row note-details">
+      <div class="public-view">
+      </div>
+      <div class="schedule-note">
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <div class="check-line">
+                  <%= f.check_box :public, {:class => "icheck-me", "data-skin" => "square", "data-color" => "green"} %>
+                  <%= f.label :public, "Anyone can view", :class => "inline" %>
+                </div>
+              </td>
+              <td>Action before</td>
+              <td>
+                <div class="controls">
+                  <div class="input-append">
+                    <% if note.sched_time %>
+                      <%= f.text_field :sched_time, {:class => "input-small datepick mask_date", :value => display_date(note.sched_time)} %>
+                    <% else %>
+                      <%= f.text_field :sched_time, {:class => "input-small datepick mask_date"} %>
+                    <% end %>
+                    <span class='add-on'><i class='icon-calendar'></i></span>
+                  </div>
+                </div>
+              </td>
+              <td></td>
+            </tr>
+            <tr>  
+              <td></td>
+              <td>Recipients</td>
+              <td>
+                <% recipient_list_id = "select-recipient-" + index.to_s %>
+                <%= select_tag :recipient_list, options_for_select(options_for_users), :class => "select2-me span11", :id => recipient_list_id, :prompt => 'Choose user' %>
+               </td>
+              <td> 
+                <% add_recipient_btn_id = "add-recipient-btn-" + index.to_s %>
+                <a id= "<%= add_recipient_btn_id %>" class="btn btn-primary add-recipient"><i class="icon-plus-sign"></i>Add recipient</a>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Selected users</td>
+              <td>
+                <% selected_users_id = "selected-users-" + index.to_s %>
+                <%= select_tag :recipients_attributes, options_for_select(note.recipients.collect {|nr| [nr.user.company_name, nr.user.id]}), class: "input-xlarge selected-users", multiple: true, size: 4, id: selected_users_id %> 
+              </td>
+              <td> 
+                <% remove_recipient_btn_id = "remove-recipient-btn-" + index.to_s %>
+                <a id="<%= remove_recipient_btn_id %>" class="btn btn-primary remove-recipient"><i class="icon-minus-sign"></i>Remove recipient</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% else %>
+    <%= f.hidden_field :public, value: true %>
+  <% end %>
+
+  <div class="actions">
+    <% submit_id = "note-submit-" + index.to_s %>
+    <%= f.submit "Save Note", :class => "btn btn-green note-submit", id: submit_id %>
+  </div>
+<% end %>

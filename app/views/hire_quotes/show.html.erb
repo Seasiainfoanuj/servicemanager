@@ -1,0 +1,106 @@
+<% present(@hire_quote) do |quote| %>
+  <%= render(:partial => 'layouts/left') %>
+  <div id="main">
+    <div class="container-fluid">
+      <%= render(partial: 'shared/page_legend', locals: {actions: [:edit, :list, :amendment, :customer_quote]}) %>
+      <%= render(partial: 'layouts/notice') %>
+
+      <div class="page-header">
+        <div class="pull-left">
+          <h1><%= quote.heading %></h1>
+        </div>
+        <div class="pull-right">
+          <br>
+          <% if (can? :create_amendment, HireQuote) && quote.admin_may_perform_action?(:create_amendment) %>
+            <%= link_to '<i class="icon-paste"></i>'.html_safe, {action: 'create_amendment', id: quote.reference}, title: 'Create Amendment', class: 'btn', 'rel' => 'tooltip', method: 'post', data: {confirm: "You are about to cancel this quote and create an amended copy in draft form. Are you sure you want to do this?", placement: "bottom"} %>
+          <% end %>
+
+          <% if quote.admin_may_perform_action?(:send_quote) %>
+            <a href="#send-hire-quote-model" role="button" class="btn btn-satblue" data-toggle="modal"><i class="icon-envelope"></i>
+              <%= quote.send_resend_text %>
+            </a>
+            <%= render 'send_form' %>
+          <% end %>
+
+          <% if (can? :update, HireQuote) && quote.admin_may_perform_action?(:update) %>
+            <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_hire_quote_path(quote.reference), {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+          <% end %>
+
+          <%= link_to '<i class="icon-list-alt"></i>'.html_safe, hire_quotes_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+
+          <%= link_to '<i class="icon-user"></i>'.html_safe, view_customer_quote_hire_quote_path(@hire_quote), {:title => "Customer Quote",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+
+          <% if current_user.admin? %>
+            <%= link_to '<i class="icon-file"></i> PDF'.html_safe, view_customer_quote_hire_quote_path(@hire_quote, format: "pdf"), {:title => 'Download PDF', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="breadcrumbs">
+        <%= render_crumbs %>
+        <div class="close-bread">
+          <a href="#"><i class="icon-remove"></i></a>
+        </div>
+      </div>
+
+      <div class="row-fluid">
+        <div class="span12">
+
+          <% unless quote.cover_letter.present? %>
+            <div class="alert alert-warning" style="margin-top:20px">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <i class="icon icon-warning-sign"></i> The quote has no cover letter. To write a cover letter, edit the quote and fill in the letter.
+            </div>
+          <% end %>  
+
+          <% if quote.has_missing_details? %>
+            <div class="alert alert-warning" style="margin-top:20px">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <i class="icon icon-warning-sign"></i> Some details are still missing. This quote is not ready to be sent to the customer.
+            </div>
+          <% end %>
+
+          <% if quote.manager.blank? %>
+            <div class="alert alert-warning" style="margin-top:20px">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <i class="icon icon-warning-sign"></i> A manager must be assigned to this quote. 
+            </div>
+          <% end %>
+
+          <%= render 'hire_quote_details', quote: quote %>
+
+          <%= render 'hire_quote_vehicles', quote: quote %>
+
+        </div>
+      </div>
+
+      <div class="row-fluid">
+        <div class="actions">
+          <% if quote.admin_may_perform_action?(:add_quote_vehicle) %>
+            <%= link_to "Add Vehicle Model to Quote", {:controller => "hire_quote_vehicles", :action => 'new', hire_quote_id: quote.reference}, class: 'btn btn-satgreen' %>
+          <% end %>
+        </div>
+      </div>
+
+      <div id="hire-quote-activity">
+        <h3>
+          <i class="icon-rss"></i> Hire Quote History
+        </h3>
+        <div class="activities">
+          <% @activities.each do |activity| %>
+            <div class="activity">
+              <div class="details">
+                <%= render_activity activity, locals: {display: "simple"} %>
+                <span class="time"><%= time_ago_in_words(activity.created_at) + " ago" %></span>
+              </div>
+              <div class="date">
+                <%= activity.created_at.strftime("%e %b %Y, %l:%M %p") %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+<% end %>            

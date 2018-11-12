@@ -1,0 +1,36 @@
+<section class="options-and-accessories">
+  <h1>C - OPTIONS AND ACCESSORIES SUPPLIED AND/OR FITTED</h1>
+
+  <div class="row-fluid">
+    <div class="span12">
+      <table class="item-list">
+        <thead>
+          <tr>
+            <th>Item type</th>
+            <th><b>QUOTE ITEMS</b></th>
+            <th>Price $</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% current_name = "" %>
+          <% @view_contract.visible_items.each do |quote_item| %>
+            <% if current_name == quote_item[:quote_item_type] %>
+              <%= render partial: "contract_item", locals: {item: quote_item, hide_name: true} %>
+            <% else %>
+              <% current_name = quote_item[:quote_item_type] %>
+              <%= render partial: "contract_item", locals: {item: quote_item, hide_name: false} %>
+            <% end %>
+          <% end %>
+          <% @view_contract.hidden_items.each do |quote_item| %>
+            <%= render partial: "contract_item", locals: {item: quote_item, hide_name: true} %>
+          <% end %>
+          <tr>
+            <td></td>
+            <td>Total options and accessories (incl GST)</td>
+            <td><%= @view_contract.extras_only_total %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,60 @@
+<%= form_for(@company, :html => {:class => "form-horizontal form-validate"}) do |f| %>
+  <% if @company.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@company.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @company.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="box-title">
+    <h3><i class="icon-group"></i> Company Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :name, "Company name", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name, {:class => "input-large wide", 'data-rule-required' => true} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :trading_name, "Trading name", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :trading_name, {:class => "input-large wide"} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :website, "Website", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :website, {:class => "input-large wide"} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :abn, "ABN", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :abn, {:class => "input-large"} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :vendor_number, "Vendor number", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :vendor_number, {:class => "input-large"} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :default_contact_id, "Default Contact", class: "control-label" %>
+      <div class="controls">
+        <%= f.select :default_contact_id, options_for_select( @company.contacts.collect { |contact| [contact.name, contact.id] }, @company.default_contact_id ), prompt: 'Select Default Contact' %>
+      </div>
+    </div> 
+
+  </div>
+  <%= render 'addresses', f: f %>
+
+  <div class="actions">
+    <%= f.submit :class => "btn btn-grey" %>
+  </div>
+<% end %>

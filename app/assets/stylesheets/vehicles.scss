@@ -1,0 +1,59 @@
+form#vehicle-form {
+  .check-line {
+    display: inline-block;
+    width: 120px;
+  }
+
+  .add_fields {
+    margin-left: 25px;
+  }
+
+  .control-label {
+    margin-left: 25px;
+  }
+}
+
+#vehicle-details-page {
+  .notifications {
+    table {
+      width: 100%;
+      tbody {
+        tr {
+          border-bottom: 1px solid #DDD;
+          td {
+            padding: 10px;
+            width: 50%;
+          }
+        }
+      }
+    }
+    table.notification-management {
+      margin-bottom: 20px;
+      tr td span.label {
+        margin-right: 5px;
+      }
+    }    
+    table.notification-list {
+      tr {
+        td:nth-of-type(1) {
+          width: 20%;
+        }
+        td:nth-of-type(2) {
+          width: 15%;
+        }
+        td:nth-of-type(3) {
+          width: 15%;
+        }
+        td:nth-of-type(4) {
+          width: 35%;
+        }
+        td:nth-of-type(5) {
+          width: 15%;
+        }
+      }
+    }
+  }
+  hr {
+    margin: 5px 0;
+  }
+}

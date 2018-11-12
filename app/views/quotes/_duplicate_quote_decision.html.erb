@@ -1,0 +1,19 @@
+<% present(@quote) do |quote| %>
+  <% if can? :duplicate, Quote %>
+    <a href="#create_customer_for_duplicate_model" role="button" class="btn" data-toggle="modal" title = "Duplicate" rel = "tooltip" data-placement = "bottom"><i class="icon-copy"></i></a>
+
+    <div id="create_customer_for_duplicate_model" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">New Customer?</h3>
+      </div>
+      <div class="modal-body">
+        <p>To create a quote you must select a pre existing customer. Do you need to create a new customer record first?</p>
+      </div>
+      <div class="modal-footer">
+        <%= link_to 'Existing Customer', {:action => 'duplicate', :quote_id => quote.id}, {:class => 'btn btn-orange'} %>
+        <%= link_to '<i class="icon-plus-sign"></i> New Customer'.html_safe, {:controller => 'users', :action => 'customer', :referrer => 'duplicate_quote', :quote_id => quote.id}, {:class => 'btn btn-satgreen'} %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

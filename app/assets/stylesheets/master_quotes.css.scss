@@ -1,0 +1,186 @@
+#master-quote .invoice-name {
+  line-height: 1.2;
+  margin: 20px 0 80px;
+}
+
+#master-quote .box {
+  min-width: 940px;
+  min-height: 1000px;
+  border: 2px solid #ddd;
+}
+
+#master-quote table td {
+  vertical-align: top;
+}
+
+#master-quote .invoice-infos table th,
+#master-quote .invoice-infos table td {
+  border: none;
+}
+
+#master-quote .invoice-infos table .tbr {
+  border-top: 1px solid #eee;
+}
+
+#master-quote .right {
+  text-align: right;
+}
+
+#master-quote .center {
+  text-align: center;
+}
+
+#master-quote-form table .position,
+#master-quote table .position {
+  width: 15px;
+  padding-left: 0;
+}
+
+#master-quote-form table .position .handle {
+  cursor: move;
+  font-size: 16px;
+  color: #aaa;
+}
+
+#master-quote-form table .name,
+#master-quote table .name {
+  min-width: 80px;
+}
+
+#master-quote-form table td.name { 
+  padding-left: 0; 
+  min-width: 80px; 
+}
+
+#master-quote-form table .description,
+#master-quote table .description {
+  min-width: 300px;
+}
+
+#master-quote-form table .markup { width: 50px; padding-right: 1px; }
+#master-quote-form table .markup_field { width: 30px; }
+#master-quote-form table .markup .input-prepend .add-on {
+  font-size: 11px;
+  border-left: none;
+  padding: 4px 0;
+}
+
+#master-quote-form table .buy-price,
+#master-quote table .buy-price { width: 90px;}
+
+#master-quote-form table .item-type,
+#master-quote table .item-type { width: 100px;}
+
+#master-quote-form table .cost,
+#master-quote table .cost { width: 90px; }
+
+#master-quote-form table .qty,
+#master-quote table .qty { width: 50px; }
+
+#master-quote-form table .tax,
+#master-quote table .tax { width: 150px !important; }
+
+#master-quote-form table .line-total,
+#master-quote table .line-total { width: 120px; }
+
+#master-quote-form table .tax .tax-select {
+  width: 100%;
+}
+
+#master-quote-form textarea {
+  background: #fff
+}
+
+#master-quote-form .line-total .amount {
+  line-height: 30px;
+  font-size: 14px;
+}
+
+#create-quote-form {
+  display: none;
+  margin: 20px 0;
+  padding: 10px 20px 20px;
+  border: 2px solid #ddd;
+}
+
+#master-quote-form table {
+  tr td {
+    padding-top: 10px;
+    padding-bottom: 0;
+  }
+  tr.second td {
+    padding-top: 2px;
+  }
+}
+
+#master-quote-specification-sheet-show {
+  border: 2px solid #333;
+  margin-top: 20px;
+}
+
+#master-quote-specification-sheet-show h3 {
+  margin: 0;
+  padding: 6px 10px;
+  line-height: 24px;
+  font-weight: 400;
+  background: #333;
+  color: #fff;
+  font-size: 20px;
+}
+
+#master-quote-specification-sheet-show h3 i {
+  margin-right: 5px;
+}
+
+#master-quote-specification-sheet-show table {
+  margin-bottom: 0;
+}
+
+#master-quote-attachments {
+  border: 2px solid #333;
+  margin-top: 20px;
+}
+
+#master-quote-attachments h3 {
+  margin: 0;
+  padding: 6px 10px;
+  line-height: 24px;
+  font-weight: 400;
+  background: #333;
+  color: #fff;
+  font-size: 20px;
+}
+
+#master-quote-attachments h3 i {
+  margin-right: 5px;
+}
+
+#master-quote-attachments table {
+  margin-bottom: 0;
+}
+div.international_table table td.gst, div.international_table table th.gst {
+    display: none;
+}
+div.international_table table tr.second td.tax {
+  display: block;
+}
+@media (min-width: 1500px) {
+  #modal-master-quote-items {
+    width: 1000px;
+    left: 35%;
+  }
+  #modal-master-quote-items .modal-body {
+    max-height: 525px;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1500px) {
+  #modal-master-quote-items {
+    width: 800px;
+    left: 38%;
+  }
+  .disabled {
+        &:hover .arr-up {display: none;}
+        a {color: #4b4b4e;}
+  }
+}

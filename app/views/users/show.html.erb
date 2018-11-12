@@ -1,0 +1,331 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1 style="line-height: 40px;">
+          <div class="thumbnail" style="max-width: 40px; max-height: 40px; float: left; margin-right: 15px;">
+            <%= image_tag @user.avatar.url(:small) %>
+          </div>
+
+          <%= @user.name %>  
+          <%= "(Staff)" if @user.employee? %>
+        </h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if @user.has_role? :admin %>
+          <% @list_path = administrators_path %>
+        <% elsif @user.has_role? :supplier %>
+          <% @list_path = suppliers_path %>
+        <% elsif @user.has_role? :service_provider %>
+          <% @list_path = service_providers_path %>
+        <% elsif @user.has_role? :customer %>
+          <% @list_path = customers_path %>
+        <% elsif @user.has_role? :quote_customer %>
+          <% @list_path = quote_customers_path %>
+        <% else %>
+          <% @list_path = users_path %>
+        <% end %>
+        <%= link_to '<i class="icon-list-alt"></i>'.html_safe, @list_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+        <% if can? :update, User %>
+          <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_user_path, {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-user" style="position:relative; top: -2px;"></i>Personal Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td width="15%">Clief Reference</td>
+                  <td width="80%"><%= @user.client.reference_number %></td>
+                </tr>
+                <tr>
+                  <td width="15%">Name</td>
+                  <td width="80%"><%= @user.name %></td>
+                </tr>
+                <tr>
+                  <td width="15%">Roles</td>
+                  <td width="80%"><%= @user.roles.map { |role| role.to_s.humanize }.flatten.join(', ') %></td>
+                </tr>
+                <% if @user.employee? %>
+                  <tr>
+                    <td width="15%">Employed by</td>
+                    <td width="80%"><%= @user.employer.name if @user.employer %></td>
+                  </tr>
+                <% end %>
+                <tr>
+                  <td width="15%">Job Title</td>
+                  <td width="80%"><%= @user.job_title %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box-title">
+            <h3><i class="glyphicon-phone" style="position:relative; top: -2px;"></i>Contact Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td width="15%">Email</td>
+                  <td width="80%"><%= @user.email %></td>
+                </tr>
+                <tr>
+                  <td width="15%">Phone</td>
+                  <td width="80%"><%= @user.phone %></td>
+                </tr>
+                <tr>
+                  <td width="15%">Fax</td>
+                  <td width="80%"><%= @user.fax %></td>
+                </tr>
+                <tr>
+                  <td width="15%">Mobile</td>
+                  <td width="80%"><%= @user.mobile %></td>
+                </tr>
+                <tr>
+                  <td width="15%">Website</td>
+                  <td width="80%"><%= @user.website %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box-title">
+            <h3><i class="glyphicon-equalizer" style="position:relative; top: -2px;"></i>Company Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td width="15%">Company</td>
+                  <td width="80%">
+                    <% if @user.representing_company %>
+                      <%= render 'shared/company_info_model', company: @user.representing_company, model_name: "company" %>
+                      <a href="#modal-company" class="btn btn-mini" data-toggle="modal" style="margin-right:5px"><i class="icon-search"></i></a>
+                      <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_company_path(@user.representing_company), {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+                      <%= link_to(@user.representing_company.name, @user.representing_company) %>
+                    <% end %>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <% if @user.postal_address.present? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-google_maps"></i>Personal Postal Address</h3>
+            </div>
+            <% postal_address = @user.postal_address %>
+            <div class="box-content nopadding">
+              <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+                <tbody>
+                  <tr>
+                    <td width="15%">Address</td>
+                    <td width="80%"><%= postal_address.line_1 %></td>
+                  </tr>
+                  <% if postal_address.line_2.present? %>
+                    <tr>
+                      <td width="15%"></td>
+                      <td width="80%"><%= postal_address.line_2 %></td>
+                    </tr>
+                  <% end %>
+                  <tr>
+                    <td width="15%">Suburb</td>
+                    <td width="80%"><%= postal_address.suburb %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%">State</td>
+                    <td width="80%"><%= postal_address.state %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%">Postcode</td>
+                    <td width="80%"><%= postal_address.postcode %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%">Country</td>
+                    <td width="80%"><%= postal_address.country %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+          <% if @user.physical_address %>
+            <div class="box-title">
+              <h3><i class="glyphicon-google_maps"></i>Personal Physical Address</h3>
+            </div>
+            <% physical_address = @user.physical_address %>
+            <div class="box-content nopadding">
+              <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+                <tbody>
+                  <tr>
+                    <td width="15%">Address</td>
+                    <td width="80%"><%= physical_address.line_1 %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%"></td>
+                    <td width="80%"><%= physical_address.line_2 %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%">Suburb</td>
+                    <td width="80%"><%= physical_address.suburb %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%">State</td>
+                    <td width="80%"><%= physical_address.state %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%">Postcode</td>
+                    <td width="80%"><%= physical_address.postcode %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%">Country</td>
+                    <td width="80%"><%= physical_address.country %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+          <% if @user.billing_address %>
+            <div class="box-title">
+              <h3><i class="glyphicon-google_maps"></i>Personal Billing Address</h3>
+            </div>
+            <% billing_address = @user.billing_address %>
+            <div class="box-content nopadding">
+              <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+                <tbody>
+                  <tr>
+                    <td width="15%">Address</td>
+                    <td width="80%"><%= billing_address.line_1 %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%"></td>
+                    <td width="80%"><%= billing_address.line_2 %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%">Suburb</td>
+                    <td width="80%"><%= billing_address.suburb %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%">State</td>
+                    <td width="80%"><%= billing_address.state %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%">Postcode</td>
+                    <td width="80%"><%= billing_address.postcode %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%">Country</td>
+                    <td width="80%"><%= billing_address.country %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+          <% if @user.delivery_address %>
+            <div class="box-title">
+              <h3><i class="glyphicon-google_maps"></i>Personal Billing Address</h3>
+            </div>
+            <% delivery_address = @user.delivery_address %>
+            <div class="box-content nopadding">
+              <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+                <tbody>
+                  <tr>
+                    <td width="15%">Address</td>
+                    <td width="80%"><%= delivery_address.line_1 %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%"></td>
+                    <td width="80%"><%= delivery_address.line_2 %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%">Suburb</td>
+                    <td width="80%"><%= delivery_address.suburb %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%">State</td>
+                    <td width="80%"><%= delivery_address.state %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%">Postcode</td>
+                    <td width="80%"><%= delivery_address.postcode %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%">Country</td>
+                    <td width="80%"><%= delivery_address.country %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+          <% if @user.licence %>
+            <div class="box-title">
+              <h3><i class="glyphicon-nameplate"></i>Licence Details</h3>
+            </div>
+            <div class="box-content nopadding">
+              <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+                <tbody>
+                  <tr>
+                    <td width="15%">Licence No</td>
+                    <td width="80%"><%= @user.licence.number %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%">State Of Issue</td>
+                    <td width="80%"><%= @user.licence.state_of_issue %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%">Expiry Date</td>
+                    <td width="80%"><%= @user.licence.expiry_date_field %></td>
+                  </tr>
+                  <tr>
+                    <td width="15%">Scanned Image</td>
+                    <td width="80%"><%= link_to((image_tag @user.licence.upload.url(:large)), @user.licence.upload.url(:original)) %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+
+          <%= render 'shared/notes/list', resource: @user %>
+
+          <% if current_user.admin? %>
+            <div class="box-title">
+              <h3><i class="icon-bullhorn"></i>User Activity</h3>
+            </div>
+            <div id="activity-feed" class="box-content scrollable" data-height="300" data-visible="true">
+              <% @activities.each do |activity| %>
+                <div class="activity">
+                  <div class="details">
+                    <% action_performed = activity.key.split(".") %>
+                    <%= "Performed #{action_performed[1].titleize} on #{action_performed[0].titleize}" %>
+                    <span class="time"><%= time_ago_in_words(activity.created_at) + " ago" %></span>
+                  </div>
+                  <div class="date">
+                    <%= activity.created_at.strftime("%e %b %Y, %l:%M %p") %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+
+          <br><br>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<% unless @user.first_name.nil? || @user.first_name.blank? %>
+<%= "Hi #{@user.first_name}," %>
+
+<% end %>
+<% unless @message.nil? || @message.blank? %>
+<%= @message %>
+
+<% end %>
+
+<%= render 'build_order' %>

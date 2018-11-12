@@ -1,0 +1,64 @@
+#user-guide
+  .panel.panel-default
+    .panel-body
+      h1 Service Manager User Guide
+      h2 
+        i.icon-truck
+        | Hire Quote Vehicles
+
+  section.definition
+    h3 Definition
+    p.main-definition A Hire Quote Vehicle is a quote for the rental of a hire product for a given hire period. The hire product is not a specific vehicle, but only a make and model. A quote may include one or more hire quote vehicles. Vehicle add-ons are available and added to the price of renting a vehicle. After the Hire Quote is accepted, specific vehicles are reserved for the customer.
+    dl.dl-horizontal
+      dt Hire Quote
+      dd The Hire Quote Vehicle is an item in a Hire Quote
+      dt Start Date
+      dd The date when the customer receives the vehicle
+      dt End Date
+      dd The data when the hired vehicle is returned to the company.
+      dt On-going Contract
+      dd An on-going arrange to use the vehicle, with no definite hire period.
+      dt Delivery Required
+      dd When the vehicle should be taken to the delivery address.
+      dt Delivery Location
+      dd The physical address for delivering the vehicle.
+      dt Demobilisation required
+      dd When the vehicle should be fetched from the physical address of the customer.
+      dt Pickup Location
+      dd The address of the depot where vehicles are kept until the customer collects them.
+      dt Drop-off Location
+      dd The address of the depot where vehicles are dropped off by the customer.
+      dt Daily Rate
+      dd The daily rate charged to the customer for renting the vehicle. This excludes any add-ons or insurance costs.
+
+  = link_to '<span class="label label-info">back to Index</span>'.html_safe, user_guides_path
+
+  section
+    h3 When the customer receives a hire quote, what is included?
+    ul 
+      li A description of the rental period and cost for each hire product included in the quote.
+      li A brochure of the hire product and some photos.
+      li A description and cost of the addons to be fitted to the vehicle.
+      li Documentation on the selected add-ons.
+      li A summary of the total cost. 
+      li Conditions of acceptance.
+
+  section
+    h3 What happens when the customer requests changes?
+    ul 
+      li When the manager is informed of the requested changes, they select to create an amendment.
+      li The rejected quote is cancelled and a new draft version is created.
+      li The manager negotiates changes with the customer and updates the new version.
+      li A new quote is sent to the customer.
+
+  section
+    h3 Hire Quote Vehicle Fees
+    ul 
+      li When a Hire Product is added to a Hire Quote, default fees are allocated. The same is true for Add-ons. To customise these fees for the customer, select the Hire Quote Vehicle from the Hire Quote and edit the form. 
+      li When the fees are changed, the standard fees for hire products and addons are not affected. The changes only apply to the quote.
+      li When any standard (or default) fees are changed, the fees on the quote are not adjusted at the same time.
+      li When an amended version of the quote is created, the fee values stay intact. In this way the manager can always find the quoted fees of the original quote.
+
+  section.change-history
+    h4 Change History
+    p Created by Francois van der Hoven on 16 July 2016

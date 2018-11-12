@@ -1,0 +1,39 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Edit Master Quote Title Page</h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if can? :update, Quote %>
+          <% if @master_quote.international %>
+            <%= link_to 'Back to Master Quote International', edit_master_quotes_international_path(@master_quote), class: 'btn btn-grey' %>
+          <% else %>
+            <%= link_to 'Back to Master Quote', edit_master_quote_path(@master_quote), class: 'btn btn-grey' %>
+          <% end %>
+        <% end %>
+
+        <a href="#" class="btn btn-green submit-btn">Update Title Page</a>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <%= render 'form' %>
+          <div class="actions">
+            <a href="#" class="btn btn-green submit-btn">Update Title Page</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

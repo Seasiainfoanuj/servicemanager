@@ -1,0 +1,60 @@
+<table border="0" cellpadding="3" cellspacing="0" class="email_workorder_details">
+  <tr>
+    <td colspan="2"><h3>Workorder <%= @workorder.uid %>:</h3></td>
+  </tr>
+  <tr>
+    <td>Type:</td>
+    <td><%= @workorder.type.name %></td>
+  </tr>
+  <tr>
+    <td>Status:</td>
+    <td><%= @workorder.status.capitalize %></td>
+  </tr>
+  <% if @workorder.is_recurring? %>
+    <tr>
+      <td>Recurring:</td>
+      <td><%= "Every #{@workorder.recurring_period} Days" %></td>
+  <% end %>
+  <tr>
+    <td>Scheduled:</td>
+    <td><%= @workorder.sched_date_field %> - <%= @workorder.sched_time_field %></td>
+  </tr>
+  <tr>
+    <td>Est Complete:</td>
+    <td><%= @workorder.etc_date_field %> - <%= @workorder.etc_time_field %></td>
+  </tr>
+
+  <% if @user == @workorder.manager || @user == @workorder.service_provider %>
+    <tr>
+      <td colspan="2"><h3>Invoice To:</h3></td>
+    </tr>
+    <%= render 'shared/mailer/invoice_company_details', object: @workorder %>
+  <% end %>
+
+  <%= render 'shared/mailer/vehicle_details', object: @workorder %>
+
+  <% unless @user == @workorder.service_provider %>
+    <%= render 'shared/mailer/service_provider_details', object: @workorder %>
+  <% end %>
+
+  <% if @workorder.customer.present? %>
+    <% unless @user == @workorder.customer %>
+      <%= render 'shared/mailer/customer_details', object: @workorder %>
+    <% end %>
+  <% end %>
+
+  <% if @workorder.manager.present? %>
+    <%= render 'shared/mailer/manager_details', object: @workorder %>
+  <% end %>
+
+</table>
+
+<br />
+
+Link: <%= workorder_url(@workorder) %><br />
+
+<% unless @workorder.workorder_uploads.empty? %>
+  This workorder has file attachments.<br />
+<% end %>
+
+<br />

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= render 'layouts/head', title: BUS4X4_ADMIN_APPL_NAME %>
+  <script type="text/javascript">
+    var $buoop = {}
+    $buoop.ol = window.onload;
+    window.onload=function(){
+     try {if ($buoop.ol) $buoop.ol();}catch (e) {}
+     var e = document.createElement("script");
+     e.setAttribute("type", "text/javascript");
+     e.setAttribute("src", "https://browser-update.org/update.js");
+     document.body.appendChild(e);
+    }
+  </script>
+  
+</head>
+<body class="theme-grey" data-mobile-sidebar="button" <%= "data-no-turbolink" unless @turbolinks %>>
+  <div id="navigation" class="navbar-fixed-top">
+    <%= render 'layouts/navigation' %>
+    <% if current_user.admin? %>
+      <%= render 'layouts/notifications' %>
+    <% end %>
+  </div>
+  <div class="container-fluid nav-fixed" id="content">
+    <%= yield %>
+  </div>
+</body>
+</html>

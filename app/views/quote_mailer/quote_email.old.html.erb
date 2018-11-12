@@ -1,0 +1,18 @@
+<% unless @quote.customer.first_name.nil? || @quote.customer.first_name.blank? %>
+<p>Hi <%= @quote.customer.first_name %>,</p>
+
+<% end %>
+<% unless @message.nil? || @message.blank? %>
+
+<p><%= @message %></p>
+
+<% end %>
+
+<p>To access your quote from <%= @quote.invoice_company.name %>, go to:</p>
+
+<p><%= link_to quote_url(@quote), quote_url(@quote, :user_email => @quote.customer.email, :user_token => @quote.customer.authentication_token) %></p>
+
+<p>Best Regards,</p>
+
+<p><%= @quote.manager.name if @quote.manager %><br />
+<%= @quote.invoice_company.name %></p>

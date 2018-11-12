@@ -1,0 +1,153 @@
+<% present(@hire_quote_vehicle) do |vehicle| %>
+  <%= form_for([vehicle.hire_quote, @hire_quote_vehicle], :html => {:id => "hire-quote-vehicle-form", :class => "form-horizontal"}) do |f| %>
+    <% if @hire_quote_vehicle.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@hire_quote_vehicle.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+        <ul>
+          <% @hire_quote_vehicle.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <% f.hidden_field :hire_quote_id, :value => vehicle.hire_quote_id %>
+
+    <% unless @hire_quote_vehicle.persisted? %>
+      <div class="alert alert-warning" style="margin-top:20px">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="icon icon-warning-sign"></i> Before creating this Hire Quote Vehicle, check these details: Select a Vehicle Model, choose the correct date from and date until, ensure all enquiry requirements were considered.
+      </div>
+    <% end %>
+
+    <div class="box-title">
+      <h3><i class="glyphicon-list" style="position:relative; top: -2px;"></i>Quote Details</h3>
+    </div>
+    <div class="box-content nopadding">
+      <table id="hire-quote-vehicle-quote-details" class="table table-bordered table-force-topborder" style="clear: both">
+        <tbody>
+          <tr>
+            <td>Hire Quote Reference</td>
+            <td><%= vehicle.quote_reference %></td>
+          </tr>
+          <tr>
+            <td>Customer</td>
+            <td><%= vehicle.customer_description %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <% if vehicle.show_enquiry_details? %>
+      <%= render 'enquiry_details' %>
+    <% end %>
+
+    <div class="box-title">
+      <h3><i class="icon-truck"></i>Hire Quote Vehicle Details</h3>
+    </div>
+    <div class="box-content">
+      <div class="control-group">
+        <%= f.label :vehicle_model_id, "Vehicle Model", class: "control-label" %>
+        <div class="controls">
+          <%= f.select :vehicle_model_id, options_for_select( vehicle.options_for_vehicle_models, vehicle.vehicle_model_id ), prompt: 'Select Vehicle Model' %>
+        </div>
+      </div> 
+
+      <div class="control-group">
+        <%= f.label :start_date, "Required from", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :start_date_field, :class => "input-small datepick" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :end_date, "Until", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :end_date_field, :class => "input-small datepick" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :ongoing_contract, "Ongoing Contract?", :class => "control-label" %>
+        <div class="controls">
+          <%= f.check_box :ongoing_contract, {:class => "icheck-me", "data-skin" => "square", "data-color" => "orange", :id => "ongoing-contract"} %>
+        </div> 
+      </div>
+
+      <div class="control-group">
+        <%= f.label :delivery_required, "Delivery Required?", :class => "control-label" %>
+        <div class="controls">
+          <%= f.check_box :delivery_required, {:class => "icheck-me", "data-skin" => "square", "data-color" => "orange", :id => "delivery-required"} %>
+        </div> 
+      </div>
+
+      <div class="control-group">
+        <%= f.label :demobilisation_required, "Demobilisation Required?", :class => "control-label" %>
+        <div class="controls">
+          <%= f.check_box :demobilisation_required, {:class => "icheck-me", "data-skin" => "square", "data-color" => "orange", :id => "demobilisation-required"} %>
+        </div> 
+      </div>
+
+      <div class="control-group">
+        <%= f.label :delivery_location, "Delivery Location", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :delivery_location, :class => "input-xlarge" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :pickup_location, "Pickup Location", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :pickup_location, :class => "input-xlarge" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :dropoff_location, "Drop-off Location", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :dropoff_location, :class => "input-xlarge" %>
+        </div>
+      </div>
+
+      <% if @hire_quote_vehicle.persisted? %>
+        <div class="control-group">
+          <%= f.label :daily_rate, "Daily Rate", :class => "control-label" %>
+          <div class="controls">
+            <%= f.text_field :daily_rate, :class => "input-small" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <% if @hire_quote_vehicle.persisted? %>
+      <div class="row-fluid">
+        <div class="span6">
+          <div class="box-title">
+            <h3><i class="icon-dollar"></i>Hire Vehicle Fees</h3>
+          </div>
+          <div class="box-content nopadding fees-subform">
+            <%= render 'vehicle_hire_fees', f: f %> 
+          </div>
+        </div>
+        <div class="span6">
+          <div class="box-title">
+            <h3><i class="glyphicon-link"></i>Hire Vehicle Add-ons</h3>
+          </div>
+          <div class="box-content nopadding vehicles-subform">
+            <%= render 'vehicle_addons', f:f %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <br>
+    <div class="actions">
+      <% if @hire_quote_vehicle.persisted? %>
+        <a href="#" class="btn btn-green submit-btn">Update Hire Quote Vehicle</a>
+      <% else %>
+        <a href="#" class="btn btn-green submit-btn">Create Hire Quote Vehicle</a>
+      <% end %>
+    </div>
+
+  <% end %>
+<% end %>

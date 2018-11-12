@@ -1,0 +1,90 @@
+<%= form_for(@master_quote_item, :html => {:class => "form-horizontal form-validate", :id => "master-quote-item-form"}) do |f| %>
+  <% if @master_quote_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@master_quote_item.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @master_quote_item.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="box-title">
+    <h3><i class="glyphicon-notes"></i>Master Quote Item Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :item_type, "Item Type", :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select(:quote_item_type_id, QuoteItemType.all, :id, :name, {:prompt => false}, {:class=>'quote-item-type-select'}) %>
+      </div>
+    </div>  
+    <div class="control-group">
+      <%= f.label :name, "Name", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name, :class => "input-xlarge", 'data-rule-required' => true %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :description, "Description", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_area :description, {:class => "span10", 'rows' => 5, 'data-rule-required' => true} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :supplier_id, "Supplier", :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select :supplier_id, User.filter_by_supplier, :id, :company_name, {prompt: true}, {:id => 'supplier_select', :class=>'select2-me span6'} %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :service_provider_id, "Service Provider", :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select :service_provider_id, User.filter_by_service_provider, :id, :company_name, {prompt: true}, {:id => 'supplier_select', :class=>'select2-me span6'} %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <%= f.label :buy_price, "Buy Price (Exc. Tax)", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :buy_price, :id => "buy_price_field", :class => "input-medium", 'data-rule-required' => true %>
+        <%= f.collection_select :buy_price_tax_id, Tax.all, :id, :name, {prompt: false}, :class=>'select2-me input-small', 'data-rule-required' => true %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= label_tag "markup_field", "Markup", :class => "control-label" %>
+      <div class="controls">
+        <div class="input-prepend">
+          <input type="text" id="markup_field", class="input-mini">
+          <span class="add-on">%</span>
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :cost, "Sell Price (Exc. Tax)", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :cost, :id => "cost_field", :class => "input-medium", 'data-rule-required' => true %>
+        <%= f.collection_select :cost_tax_id, Tax.all, :id, :name, {prompt: false}, :class=>'select2-me input-small', 'data-rule-required' => true %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :quantity, "Quantity", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :quantity, :class => "input-small", 'data-rule-positiveNumber' => true %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :tag_list, "Tags", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :tag_list, :class => "tagsinput", "data-default" => "Add Tags" %>
+      </div>
+    </div>
+  </div>
+<% end %>

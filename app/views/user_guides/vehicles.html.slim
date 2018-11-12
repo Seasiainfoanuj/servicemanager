@@ -1,0 +1,68 @@
+#user-guide
+  .panel.panel-default
+    .panel-body
+      h1 Service Manager User Guide
+      h2 
+        i.glyphicon-cars
+        |  Vehicles
+
+  section.definition
+    h3 Definition
+    p.main-definition 
+      | The vehicles in our Vehicle List page are the vehicles owned by Bus4x4 and are available for purchase or hire.
+
+    dl.dl-horizontal
+      dt Make
+      dd The Manufacturer, for example, Mercedes Benz.
+      dt Model 
+      dd The Brand name of a specific design, e.g. E250D 2D Coupe.
+      dt Year
+      dd The year when the first edition of the Model became available for sale.
+      dt Supplier
+      dd 
+        | (optional) The person from whom the host vehicle is purchased. 
+      dt Owner
+      dd 
+        | (optional) The name of the person in whose name the vehicle is registered.
+      dt Build Number
+      dd 
+        | (optional) The identifier of the Build Order, if the vehicle was built internally.
+      dt Stock Number
+      dd 
+        | (optional) The Stock number of the Supplier from where the vehicle was ordered.
+      dt VIN Number
+      dd The unique Vehicle Identification Number for the vehicle.
+      dt Vehicle Number
+      dd Information needed, ..., please help
+      dt Engine Number
+      dd The vehicle's engine number
+      dt Transmission
+      dd Refers to the gearbox operation: Automatic, Manual, or Automated Manual
+      dt Modification Plate
+      dd No longer used - the field will be removed.
+      dt Odometer Reading
+      dd The odometer reading when (what...) happened?
+      dt Seating Capacity
+      dd The number of seats in the vehicle.
+      dt Call Sign
+      dd The sign displayed on the vehicle
+      dt Bus Number
+      dd A unique number for the vehicle for internal use
+      dt Last Rego Number
+      dd This number is stored on the Vehicle Ownership table and the latest rego number is copied to the Vehicle record to facilitate enquiries. 
+      dt Rego due date
+      dd This field is now redundant, since the introduction of the Notification System.
+      dt Order Number
+      dd (Optional) The order number is allocated by the Supplier that sells the vehicle to us. Our Accounts Department records this number.
+      dt Invoice Number
+      dd (Optional) The invoice number is provided by our Accounts Department to the Customer who bought a vehicle from us.
+      dt Kit Number
+      dd This is the Id Number of the 4x4 Kit.
+      dt Last known odometer reading
+      dd This information is captured when off-hire and on-hire reports, or workorders are completed. It is copied to the vehicle record to facilitate enquiries.
+
+  = link_to '<span class="label label-info">back to Index</span>'.html_safe, user_guides_path
+
+  section.change-history
+    h4 Change History
+    p Created by Francois van der Hoven on 26 August 2016

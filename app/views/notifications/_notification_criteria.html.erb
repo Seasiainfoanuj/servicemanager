@@ -1,0 +1,35 @@
+<% present(@notification) do |notification| %>
+
+  <div class="control-group">
+    <%= label_tag :notifiable_type, "Resource Type", class: "control-label" %>
+    <div class="controls">
+      <%= f.select :notifiable_type, options_for_select(options_for_notification_resource, notification.selected_resource_type), prompt: 'Select Resource Type' %>
+    </div>
+  </div>    
+
+  <div class="control-group">
+    <%= f.label :notifiable_id, 'Resource', class: "control-label" %>
+    <div class="controls notifiable-selection">
+      <% if @notification.notifiable_id.present? %>
+        <%= f.select :notifiable_id, options_for_select(notification.options_for_notifiable, notification.notifiable_id), class: "select2-me span10" %>
+      <% else %>
+        <%= f.select :notifiable_id, "<option value=''>Please select</option>", {}, class: "select2-me span10" %>
+      <% end %>  
+      <%= hidden_field_tag('selected_resource', notification.notifiable_id) %>
+      <div style="clear:both"></div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :notification_type_id, "Event Name", class: "control-label" %>
+    <div class="controls">
+      <% if notification.notification_type_id.present? %>
+        <%= f.select :notification_type_id, options_for_select(options_for_notification_types(notification.notification_type.resource_name), notification.notification_type_id), class: "select2-me span6" %>
+      <% else %>  
+        <%= f.select :notification_type_id, "<option value=''>Please select</option>", { selected: notification.notification_type_id }, class: "select2-me span6" %>
+      <% end %>  
+      <%= hidden_field_tag('selected_notification_type', notification.notification_type_id) %>
+    </div>
+  </div>
+
+<% end %>

@@ -1,0 +1,75 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <% if current_user.has_role? :admin %>
+      <div class="page-header">
+        <div class="pull-left">
+          <h1><%= @user.name %></h1>
+        </div>
+      </div>  
+      <div class="breadcrumbs">
+        <%= render_crumbs %>
+        <div class="close-bread">
+          <a href="#"><i class="icon-remove"></i></a>
+        </div>
+      </div>
+    <% end %>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+
+          <div class="box-title">
+            <h3>
+              <i class="icon-user"></i><%= @user.name %> - Company Details
+            </h3>
+          </div>
+          <div class="box-content">
+            <%= form_for(@user, :url => update_company_profile_user_path(@user), :html => {:id => 'contact-company-profile-form', :class => "form-horizontal form-validate", :multipart => true}) do |f| %>
+              <% if @user.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%= pluralize(@user.errors.count, "error") %> prohibited this page from being saved:</h2>
+                  <ul>
+                  <% @user.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                  <% end %>
+                  </ul>
+                </div>
+                <br><br>
+              <% end %>
+
+              <div class="control-group company">
+                <%= f.label :representing_company_id, "Company", :class => "control-label right" %>
+                <div class="controls">
+                  <%= f.collection_select(:representing_company_id, Company.all, :id, :name, {prompt: true, :selected => @user.representing_company_id}, {:id => 'company_select', :class=>'select2-me span5'}) %>
+                </div>
+                <% if @user.representing_company_id.present? %>
+                  <%= link_to '<i class="icon-search"></i>'.html_safe, company_path(@user.representing_company), {:title => 'View company', :class => 'btn', 'rel' => 'tooltip'} %>
+                <% end %>
+              </div>
+
+              <div class="control-group">
+                <%= f.label :job_title, "Job Title", :class => "control-label right" %>
+                <div class="controls">
+                  <%= f.text_field :job_title, :class => "input-large" %>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <%= f.label :receive_emails, "Receive Emails?", :class => "control-label right" %>
+                <div class="controls">
+                  <%= f.check_box :receive_emails, {:class => "icheck-me", "data-skin" => "square", "data-color" => "orange", :id => "recurring-checkbox"} %>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <%= f.submit "Update", :class => "btn btn-green" %>
+              </div>
+            <% end %>  
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

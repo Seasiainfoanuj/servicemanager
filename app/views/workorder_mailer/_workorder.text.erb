@@ -1,0 +1,94 @@
+To access your workorder from BUS 4x4 Pty Ltd, go to: <%= workorder_url(@workorder, :user_email => @user.email, :user_token => @user.authentication_token) %>
+
+Workorder Ref# <%= @workorder.uid %>
+-----------------------------------------
+Type: <%= @workorder.type.name %>
+Status: <%= @workorder.status.capitalize %>
+<% if @workorder.is_recurring? %>
+Recurring: <%= "Every #{@workorder.recurring_period} Days" %>
+<% end %>
+
+Scheduled: <%= @workorder.sched_date_field %> - <%= @workorder.sched_time_field %>
+Est Complete: <%= @workorder.etc_date_field %> - <%= @workorder.etc_time_field %>
+
+----------------------
+Vehicle Details:
+<%= @workorder.vehicle.name %> <%= "##{@workorder.vehicle.number}" if @workorder.vehicle.number %>
+<%= "Vin: #{@workorder.vehicle.vin_number}" unless @workorder.vehicle.vin_number.blank? %>
+<%= "Rego No: #{@workorder.vehicle.rego_number}" unless @workorder.vehicle.rego_number.blank? %>
+
+<% unless @user == @workorder.service_provider %>
+  ----------------------
+  Service Provider:
+  <%= @workorder.service_provider.company_name %>
+  E: <%= @workorder.service_provider.email %>
+  <% unless @workorder.service_provider.phone.blank? %>
+  P: <%= @workorder.service_provider.phone %>
+  <% end %>
+  <% unless @workorder.service_provider.mobile.blank? %>
+  M: <%= @workorder.service_provider.mobile %>
+  <% end %>
+  <% unless @workorder.service_provider.website.blank? %>
+  W: <%= @workorder.service_provider.website %>
+  <% end %>
+<% end %>
+
+<% unless @user == @workorder.customer %>
+  <% if @workorder.invoice_company %>
+    ----------------------
+    Invoice To:
+    <%= @workorder.invoice_company.name %>
+    <% "ABN: #{@workorder.invoice_company.abn}" if @workorder.invoice_company.abn.present? %>
+    <% "ACN: #{@workorder.invoice_company.acn}" if @workorder.invoice_company.acn.present? %>
+    <% "Phone: #{@workorder.invoice_company.phone}" if @workorder.invoice_company.phone.present? %>
+    <% "Fax: #{@workorder.invoice_company.fax}" if @workorder.invoice_company.fax.present? %>
+    <% if @workorder.invoice_company.address_line_1.present? || @workorder.invoice_company.address_line_2.present? || @workorder.invoice_company.suburb.present? || @workorder.invoice_company.state.present? || @workorder.invoice_company.postcode.present? || @workorder.invoice_company.country.present? %>
+
+      Address:
+      <%= "#{@workorder.invoice_company.address_line_1}" if @workorder.invoice_company.address_line_1.present? %>
+      <%= "#{@workorder.invoice_company.address_line_2}" if @workorder.invoice_company.address_line_2.present? %>
+      <%= "#{@workorder.invoice_company.suburb}, " if @workorder.invoice_company.suburb.present? %><%= "#{@workorder.invoice_company.state} " if @workorder.invoice_company.state.present? %><%= "#{@workorder.invoice_company.postcode} " if @workorder.invoice_company.postcode.present? %>
+      <%= "#{@workorder.invoice_company.country}" if @workorder.invoice_company.country.present? %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% if @workorder.customer %>
+<% unless @user == @workorder.customer %>
+----------------------
+Customer:
+<%= @workorder.customer.company_name %>
+E: <%= @workorder.customer.email %>
+<% unless @workorder.customer.phone.blank? %>
+P: <%= @workorder.customer.phone %>
+<% end %>
+<% unless @workorder.customer.mobile.blank? %>
+M: <%= @workorder.customer.mobile %>
+<% end %>
+<% unless @workorder.customer.website.blank? %>
+W: <%= @workorder.customer.website %>
+<% end %>
+<% end %>
+<% end %>
+<% if @workorder.manager.present? %>
+----------------------
+Manager:
+<% unless @workorder.manager.name == @workorder.manager.email %>
+<%= @workorder.manager.name %>
+<% end %>
+E: <%= @workorder.manager.email %>
+<% if @workorder.manager.phone.present? %>
+P: <%= @workorder.manager.phone %>
+<% end %>
+<% if @workorder.manager.mobile.present? %>
+M: <%= @workorder.manager.mobile %>
+<% end %>
+<% if @workorder.manager.website.present? %>
+W: <%= @workorder.manager.website %>
+<% end %>
+<% end %>
+
+<% unless @workorder.workorder_uploads.empty? %>
+----------------------
+This workorder has file attachments. You can login to view them here: <%= workorder_url(@workorder) %>
+<% end %>

@@ -1,0 +1,23 @@
+<div class="form-table-container">
+  <table id="hire-fee-form-table" class="table vehicle-fees">
+    <thead>
+      <tr>
+        <th>Fee Type</th>
+        <th>Billing Frequency</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= f.fields_for :fees do |fee| %>
+        <%= fee.hidden_field :chargeable_id, value: fee.object.chargeable_id %>
+        <%= fee.hidden_field :chargeable_type, value: fee.object.chargeable_type %>
+        <%= fee.hidden_field :fee_type_id, value: fee.object.fee_type_id %>
+        <tr>
+          <td><%= fee.object.fee_type.name %></td>
+          <td><%= fee.object.fee_type.charge_unit.humanize.titleize %></td>
+          <td><%= fee.text_field :fee, class: "input-small fee" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div> 

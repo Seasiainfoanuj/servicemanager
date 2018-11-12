@@ -1,0 +1,31 @@
+#user-guide
+  .panel.panel-default
+    .panel-body
+      h1 Service Manager User Guide
+      h2 
+        i.glyphicon-notes
+        |  Workorder Types
+
+  section.definition
+    h3 Definition
+    p.main-definition Workorder Types groups workorders according to the type of work required on a vehicle. 
+    dl.dl-horizontal
+      dt Name
+      dd The name for a specific type of Workorder. 
+      dt Label color
+      dd The color that helps to recognise workorders of this type.
+      dt Default notes
+      dd An explanation of the work involved to complete this type of workorder
+
+  = link_to '<span class="label label-info">back to Index</span>'.html_safe, user_guides_path
+
+  section
+    h3 Examples
+    p 
+      | Workorders defines jobs such as   
+      = WorkorderType.all.map(&:name).sort.join(', ')
+      | .
+
+  section.change-history
+    h4 Change History
+    p Created by Francois van der Hoven on 23 April 2016

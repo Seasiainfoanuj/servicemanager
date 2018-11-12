@@ -1,0 +1,162 @@
+<% present(@hire_quote_vehicle) do |vehicle| %>
+  <%= render(:partial => 'layouts/left') %>
+  <div id="main">
+    <div class="container-fluid">
+      <%= render(partial: 'shared/page_legend', locals: {actions: [:edit, :return_to_hire_quote, :delete]}) %>
+      <%= render(:partial => 'layouts/notice') %>
+      <div class="page-header">
+
+        <div class="pull-left">
+          <h1><%= "Quote #{hire_quote_reference_label(vehicle.hire_quote)} for vehicle: #{hire_quote_vehicle_name_label(vehicle)}".html_safe %></h1>
+        </div>
+        <div class="pull-right">
+          <br>
+          <%= link_to '<i class="icon-list-alt"></i>'.html_safe, hire_quote_path(vehicle.hire_quote.reference), {:title => "Return to Hire Quote",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+          <% if vehicle.hire_quote.admin_may_perform_action?(:update) %>
+            <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_hire_quote_hire_quote_vehicle_path(vehicle.hire_quote.reference, @hire_quote_vehicle.id), {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+          <% end %>
+          <% if vehicle.hire_quote.admin_may_perform_action?(:delete_quote_vehicle) %>
+            <%= link_to '<i class="icon-ban-circle"></i>'.html_safe, hire_quote_hire_quote_vehicle_path(vehicle.hire_quote.reference, vehicle.id), :class => 'btn action-link', method: :delete, :title => 'Destroy', 'rel' => 'tooltip', data: {confirm: "You are about to permanently remove this vehicle from the quote. You cannot reverse this action. Are you sure you want to proceed?"} %>
+          <% end %>
+        </div>
+      </div>
+      <div class="breadcrumbs">
+        <%= render_crumbs %>
+        <div class="close-bread">
+          <a href="#"><i class="icon-remove"></i></a>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="span12">
+
+          <% if [nil, 0].include? vehicle.daily_rate_cents %>
+            <div class="alert alert-warning" style="margin-top:20px">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <i class="icon icon-warning-sign"></i> The vehicle rate must be supplied. 
+            </div>
+          <% end %>
+
+          <% if vehicle.show_enquiry_details? %>
+            <%= render 'enquiry_details' %>
+          <% end %>
+          
+          <div class="box box-condensed box-color box-bordered">
+            <div class="box-title">
+              <h3><i class="icon-truck" style="position:relative; top: -2px;"></i>Hire Quote Vehicle Details</h3>
+                  <%= manual_link('hire_quote_vehicles') %>
+            </div>
+            <div class="box-content nopadding">
+              <table id="hire-quote-vehicle-details" class="table table-bordered table-force-topborder" style="clear: both">
+                <tbody>
+                  <tr>
+                    <td>Hire Quote Ref#</td>
+                    <td><%= vehicle.hire_quote.reference %></td>
+                    <td>Vehicle Model</td>
+                    <td><%= link_to(vehicle_model_name_label(vehicle.vehicle_model), vehicle.vehicle_model) %></td>
+                  </tr>
+                  <tr>
+                    <td>Pickup Date</td>
+                    <td><%= display_date(vehicle.start_date) %></td>
+                    <td>Return Date</td>
+                    <td><%= display_date(vehicle.end_date) %></td>
+                  </tr>
+                  <tr>
+                    <td>Pickup Location</td>
+                    <td><%= vehicle.pickup_location_details %></td>
+                    <td>Drop-off Location</td>
+                    <td><%= vehicle.dropoff_location_details %></td>
+                  </tr>
+                  <tr>
+                    <td>Delivery Required?</td>
+                    <td><%= vehicle.delivery_required_details %></td>
+                    <td>Demobilisation Required?</td>
+                    <td><%= vehicle.demobilisation_required_details %></td>
+                  </tr>
+                  <tr>
+                    <td>On-going Contract?</td>
+                    <td><%= vehicle.ongoing_contract_details %></td>
+                    <td>Daily Hire Rate</td>
+                    <td><%= vehicle.daily_rate_display %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <% if vehicle.vehicle_model.images.photos.any? %>
+              <div id="hire-quote-vehicle-images">
+                <% vehicle.vehicle_model.images.photos.each do |photo| %>
+                  <%= image_tag photo.image.url(:large) %>
+                <% end %>
+              </div>  
+            <% end %>
+
+            <%= render 'shared/fees_list', chargeable: vehicle %>
+
+            <div class="row-fluid">
+              <div id="hire-quote-addons" class="span6">
+                <div class="box-title">
+                  <h3><i class="glyphicon-link" style="position:relative; top: -2px;"></i>Selected Addons</h3>
+                  <%= manual_link('hire_addons') %>
+                </div>
+                <div class="box-content nopadding">
+                  <table class="table table-bordered table-force-topborder" style="clear: both">
+                    <thead>
+                      <tr>
+                        <td>Add-on Type/ Model</td>
+                        <td style="text-align:right">Cost</td>
+                        <td>Unit</td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% vehicle.addons.each do |addon| %>
+                        <tr>
+                          <td><%= link_to(addon_name_label(addon.hire_addon), addon.hire_addon) %></td>
+                          <td style="text-align:right"><%= number_to_currency((addon.hire_price_cents.to_f / 100), precision: 2, separator: '.', unit: '$')  %></td>
+                          <td><%= addon.hire_addon.billing_frequency %></td>
+                          <td><%= link_to 'Remove', remove_addon_hire_quote_hire_quote_vehicle_path(vehicle.hire_quote, vehicle, hire_quote_addon_id: addon.id), method: :patch %></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>  
+              </div>  
+
+              <div id="addons-for-hire-product" class="span6">
+                <div class="box-title">
+                  <h3><i class="glyphicon-link" style="position:relative; top: -2px;"></i>Available Addons</h3>
+                  <%= manual_link('hire_addons') %>
+                </div>
+                <div class="box-content nopadding">
+                  <table class="table table-bordered table-force-topborder" style="clear: both">
+                    <thead>
+                      <tr>
+                        <td>Add-on Type</td>
+                        <td>Vehicle Model</td>
+                        <td style="text-align:right">Cost</td>
+                        <td>Unit</td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% vehicle.vehicle_model.hire_addons.each do |addon| %>
+                        <tr>
+                          <td><%= addon.addon_type %></td>
+                          <td><%= addon.model_name %></td>
+                          <td style="text-align:right"><%= number_to_currency((addon.hire_price_cents.to_f / 100), precision: 2, separator: '.', unit: '$')  %></td>
+                          <td><%= addon.billing_frequency %></td>
+                          <td><%= link_to 'Select', add_addon_hire_quote_hire_quote_vehicle_path(vehicle.hire_quote, vehicle, hire_addon_id: addon.id), method: :patch %></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>  
+              </div>
+            </div>  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+

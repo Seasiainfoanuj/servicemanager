@@ -1,0 +1,9 @@
+<tr>
+  <td><%= item.item_type_display.upcase %></td>
+  <td><%= simple_format h item.description %></td>
+  <% if item.hide_cost %>
+    <td>**package**</td>
+  <% else %>
+    <td><%= number_to_currency(item.line_total, precision: 2) %></td>
+  <% end %>
+</tr>

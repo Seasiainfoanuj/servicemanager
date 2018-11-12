@@ -1,0 +1,29 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Off Hire Report <span class="label"><%= "Hire Agreement REF# #{@hire_agreement.uid}" %></span></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <%= link_to "Back to Hire Agreement", hire_agreement_url(@hire_agreement), :class => "btn btn-grey" %>
+        <%= link_to '<i class="icon-search"></i>'.html_safe, {:action => 'show', :id => @off_hire_report.id, hire_agreement_id: @hire_agreement.uid}, {:title => 'View', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <%= render 'form', mode: 'update' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

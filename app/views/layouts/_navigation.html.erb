@@ -1,0 +1,428 @@
+<div class="container-fluid">
+  <a href="#" class="mobile-sidebar-toggle"><i class="icon-list-ul"></i></a>
+  <a href="/" id="brand" style="width:150px; height:15px; padding:0; margin: 13px 30px 0 0"></a>
+  <a href="#" class="toggle-nav" rel="tooltip" data-placement="bottom" title="Toggle navigation"><i class="icon-reorder"></i></a>
+  <ul class='main-nav'>
+    <li class="<%= active_class_for_controller('dashboard') %>">
+      <%= link_to content_tag(:i, "", class: "icon-dashboard"), dashboard_path, {rel: "tooltip", "data-placement" => "bottom", title: "Dashboard"} %>
+    </li>
+   <% unless current_user.has_role? :dealer %>
+    <% if can? :view, ScheduleView %>
+      <li class="<%= active_class_for_controller('schedule_views') %>">
+        <%= link_to 'Schedule', "#", {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} %>
+        <ul class="dropdown-menu">
+          <% if can? :read, ScheduleView %>
+            <li>
+              <%= link_to 'Search', schedule_views_search_path %>
+            </li>
+            <%= schedule_view_subitems %>
+          <% end %>
+          <% if can? :manage, ScheduleView %>
+            <li class='dropdown-submenu'>
+              <a href="#" data-toggle="dropdown" class='dropdown-toggle'>More</a>
+              <ul class="dropdown-menu">
+                <li>
+                  <%= link_to 'Manage Schedules', schedule_views_path %>
+                </li>
+              </ul>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+    <% elsif can? :view, :schedule %>
+      <li class="<%= 'active' if params[:controller] == 'schedule' %>">
+        <%= link_to 'Schedule', schedule_path %>
+      </li>
+    <% end %>
+   <% end %>
+   
+    <% if current_user.has_role?(:admin) || can?(:read, Quote) && current_user.quotes.count > 0 %>
+      <li class="<%= active_class_for_controller('quotes') || active_class_for_controller('master_quotes') || active_class_for_controller('master_quote_items') || active_class_for_controller('master_quote_types') || active_class_for_controller('quote_item_types') %>">
+        <%= link_to 'Quotes <span class="caret"></span>'.html_safe, quotes_path, {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} %>
+        <ul class="dropdown-menu">
+          <%= quotes_link %>
+          <% if can? :read, MasterQuoteItem %>
+            <li class='dropdown-submenu'>
+              <a href="#" data-toggle="dropdown" class='dropdown-toggle'>More</a>
+              <ul class="dropdown-menu">
+                <li class="<%= active_class_for_controller('master_quotes') %>">
+                  <% if can? :create, MasterQuote %>
+                    <%= link_to 'Master Quotes', master_quotes_path %>
+                  <% end %>
+                </li>
+                 
+                 <li class="<%= active_class_for_controller('master_quotes_international') %>">
+                  <% if can? :create, MasterQuote %>
+                    <%= link_to 'Master Quotes International', master_quotes_internationals_path %>
+                  <% end %>
+                </li>
+
+                <% if can? :read, MasterQuoteItem %>
+                  <li class="<%= active_class_for_controller('master_quote_items') %>">
+                    <%= link_to 'Master Quote Items', master_quote_items_path %>
+                  </li>
+                <% end %>
+
+                <% if can? :read, MasterQuoteType %>
+                  <li class="<%= active_class_for_controller('master_quote_types') %>">
+                    <%= link_to 'Master Quote Types', master_quote_types_path %>
+                  </li>
+                <% end %>
+
+                <% if can? :read, QuoteItemType %>
+                  <li class="<%= active_class_for_controller('quote_item_types') %>">
+                    <%= link_to 'Quote Item Types', quote_item_types_path %>
+                  </li>
+                <% end %>
+              </ul>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+    
+   <% unless current_user.has_role? :dealer %> 
+      <% if current_user.has_role?(:admin) || current_user.has_role?(:supplier) || can?(:read, Vehicle) && current_user.vehicles.count > 0 || 
+            current_user.has_role?(:customer) && can?(:read, VehicleContract) && current_user.vehicle_contracts.count > 0 %>
+        <li class="<%= active_class_for_controller('vehicles') || active_class_for_controller('vehicle_contracts') || active_class_for_controller('stock_requests') || active_class_for_controller('stocks') || active_class_for_controller('vehicle_makes') || active_class_for_controller('vehicle_models') || active_class_for_controller('vehicle_logs') || active_class_for_controller('vehicle_contracts') %>">
+
+          <%= link_to 'Vehicles <span class="caret"></span>'.html_safe, vehicles_path, {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} %>
+          <ul class="dropdown-menu">
+            <% if current_user.admin? || can?(:read, VehicleContract) && current_user.vehicle_contracts.count > 0 %>
+              <li class="<%= active_class_for_controller('vehicle_contracts') %>">  
+                <%= link_to 'Vehicle Contracts', vehicle_contracts_path %>
+              </li>
+            <% end %>
+            <% if current_user.has_role?(:admin) || can?(:read, StockRequest) && current_user.stock_requests.count > 0 %>
+              <li class="<%= active_class_for_controller('stock_requests') %>">  
+                <%= link_to 'Stock Requests', stock_requests_path %>
+              </li>
+            <% end %>
+            <% if can? :read, Stock %>
+              <li class="<%= active_class_for_controller('stocks') %>">  
+                <%= link_to 'Allocated Stock', stocks_path %>
+              </li>
+            <% end %>
+            <% if can? :read, Vehicle %>
+              <li class="<%= 'active' if active_class_for_controller_action('vehicles', 'index') %>">
+                <%= link_to 'Vehicles', vehicles_path %>
+              </li>
+            <% end %>
+            <% if can? :view_hire_vehicles, Vehicle %>
+              <li class="<%= 'active' if active_class_for_controller_action('vehicles', 'hire_vehicles') %>">
+                <%= link_to 'Hire Vehicles', hire_vehicles_path %>
+              </li>
+            <% end %>
+            <% if can? :read, VehicleModel %>
+              <li class='dropdown-submenu'>
+                <a href="#" data-toggle="dropdown" class='dropdown-toggle'>More</a>
+                <ul class="dropdown-menu">
+                  <% if can? :read, VehicleMake %>
+                    <li class="<%= active_class_for_controller('vehicle_makes') %>">  
+                      <%= link_to 'Vehicle Makes', vehicle_makes_path %>
+                    </li>
+                  <% end %>
+                  <% if can? :read, VehicleModel %>
+                    <li class="<%= active_class_for_controller('vehicle_models') %>">  
+                      <%= link_to 'Vehicle Models', vehicle_models_path %>
+                    </li>
+                  <% end %>
+                  <% if can? :read, DocumentType %>
+                    <li class="<%= active_class_for_controller('document_types') %>">  
+                      <%= link_to 'Document types', document_types_path %>
+                    </li>
+                  <% end %>
+                  <% if can? :read, PhotoCategory %>
+                    <li class="<%= active_class_for_controller('photo_categories') %>">  
+                      <%= link_to 'Photo categories', photo_categories_path %>
+                    </li>
+                  <% end %>
+                </ul>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+   <% end %>   
+
+  <% unless current_user.has_role? :dealer %>
+    <% if current_user.has_role?(:admin) ||
+          current_user.has_role?(:service_provider) ||
+          current_user.has_role?(:supplier) ||
+          can?(:read, Workorder) && current_user.customer_workorders.count > 0 ||
+          can?(:read, Workorder) && current_user.subscribed_workorders.count > 0 ||
+          can?(:read, BuildOrder) && current_user.subscribed_build_orders.count > 0 ||
+          can?(:read, OffHireJob) && current_user.subscribed_off_hire_jobs.count > 0 ||
+          can?(:read, Build) ||
+          can?(:read, PoRequest)
+    %>
+
+      <li class="<%= 'active' if params[:controller] == 'workorders' && params[:vehicle_id] == nil || params[:controller] == 'builds' || params[:controller] == 'build_orders' && (current_user.has_role? :admin) || params[:controller] == 'workorder_types' || params[:controller] == 'build_orders' || params[:controller] == 'off_hire_jobs' || params[:controller] == 'po_requests' %>">
+
+        <%= link_to 'Jobs <span class="caret"></span>'.html_safe, po_requests_path, {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} %>
+        <ul class="dropdown-menu">
+          <% if can? :read, PoRequest %>
+            <li class="<%= active_class_for_controller('po_requests') %>">
+              <%= link_to "PO Requests", po_requests_path %>
+            </li>
+          <% end %>
+          <% if current_user.has_role?(:admin) ||
+                current_user.has_role?(:service_provider) ||
+                current_user.has_role?(:supplier) ||
+                can?(:read, Workorder) && current_user.customer_workorders.count > 0 ||
+                can?(:read, Workorder) && current_user.subscribed_workorders.count > 0
+          %>
+            <li class="<%= 'active' if params[:controller] == 'workorders' && params[:vehicle_id] == nil %>">
+              <%= link_to 'Workorders', workorders_path %>
+            </li>
+          <% end %>
+          <% if can? :read, Build %>
+            <li class="<%= active_class_for_controller('builds') %>">
+              <%= link_to 'Builds', builds_path %>
+            </li>
+          <% end %>
+          <% if current_user.has_role?(:admin) ||
+                current_user.has_role?(:service_provider) ||
+                can?(:read, BuildOrder) && current_user.subscribed_build_orders.count > 0
+          %>
+            <li class="<%= active_class_for_controller('build_orders') %>">
+              <%= link_to 'Build Orders', build_orders_path %>
+            </li>
+          <% end %>
+          <% if current_user.has_role?(:admin) ||
+                current_user.has_role?(:service_provider) ||
+                can?(:read, OffHireJob) && current_user.subscribed_off_hire_jobs.count > 0
+          %>
+            <li class="<%= active_class_for_controller('off_hire_jobs') %>">
+              <%= link_to 'Off Hire Jobs', off_hire_jobs_path %>
+            </li>
+          <% end %>
+          <% if can? :read, WorkorderType %>
+            <li class='dropdown-submenu'>
+              <a href="#" data-toggle="dropdown" class='dropdown-toggle'>More</a>
+              <ul class="dropdown-menu">
+                <li class="<%= active_class_for_controller('workorder_types') %>">
+                  <%= link_to 'Workorder Types', workorder_types_path %>
+                </li>
+              </ul>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+   <% end %> 
+    
+    <% unless current_user.has_role? :dealer %>
+      <% if current_user.has_role?(:admin) || (can?(:read, HireAgreement) && current_user.hire_agreements.count > 0) || (can?(:read, HireQuote) && HireQuote.exists?(authorised_contact_id: current_user.id)) %>
+        <li class="<%= active_class_for_controller('hire_agreements') || active_class_for_controller('hire_quotes') ||  active_class_for_controller('hire_agreement_types') || active_class_for_controller('hire_addons') || active_class_for_controller('hire_product_types') %>">
+          <%= link_to 'Hire <span class="caret"></span>'.html_safe, '', {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} %>
+          <ul class="dropdown-menu">
+            <li class="<%= active_class_for_controller('hire_quotes') %>">
+              <%= link_to 'Hire Quotes', hire_quotes_path %>
+            </li>
+            <li class="<%= active_class_for_controller('hire_agreements') %>">
+              <%= link_to 'Hire Agreements', hire_agreements_path %>
+            </li>
+            <% if can? :read, HireAddon %>
+              <li class="<%= active_class_for_controller('hire_addons') %>">  
+                <%= link_to 'Hire Addons', hire_addons_path %>
+              </li>
+            <% end %>
+            <% if (can? :read, HireAgreementType) or (can? :read, HireProductType) %>
+              <li class='dropdown-submenu'>
+                <a href="#" data-toggle="dropdown" class='dropdown-toggle'>More</a>
+                <ul class="dropdown-menu">
+                  <li class="<%= active_class_for_controller('hire_agreement_types') %>">
+                    <%= link_to 'Hire Agreement Types', hire_agreement_types_path %>
+                  </li>
+                  <li class="<%= active_class_for_controller('hire_product_types') %>">
+                    <%= link_to 'Hire Product Types', hire_product_types_path %>
+                  </li>
+                </ul>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+    <% end %>   
+
+    <% unless current_user.has_role? :dealer %>
+      <% if current_user.has_role?(:admin) || can?(:read, SalesOrder) && current_user.orders.count > 0 %>
+        <li class="<%= active_class_for_controller('sales_orders') %>">
+          <%= link_to "Orders", sales_orders_path %>
+        </li>
+      <% end %>
+    <% end %>
+
+    <% if can? :read, Enquiry %>
+      <li class="<%= active_class_for_controller('enquiries') || active_class_for_controller('enquiry_types') %>">
+        <%= link_to "Enquiries <span class='caret'></span>".html_safe, enquiries_path, {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} %>
+        <ul class="dropdown-menu">
+          <li class="<%= active_class_for_controller('enquiries') %>">
+            <%= link_to "Enquiries".html_safe, enquiries_path %>
+          </li>
+          <% unless current_user.has_role? :dealer %>
+          <% if can? :read, EnquiryType %>
+            <li class='dropdown-submenu'>
+              <a href="#" data-toggle="dropdown" class='dropdown-toggle'>More</a>
+              <ul class="dropdown-menu">
+                <li class="<%= 'active' if params[:controller] == 'enquiry_types' %>">
+                  <%= link_to 'Enquiry Types', enquiry_types_path %>
+                </li>
+              </ul>
+            </li>
+            <% end %> 
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+    
+    <% unless current_user.has_role? :dealer %>
+      <% if current_user.has_role? :admin %>
+        <li class="<%= active_class_for_controller('sp_invoices') %>">
+          <%= link_to "Accounts <span class='caret'></span>".html_safe, "#", {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} %>
+          <ul class="dropdown-menu">
+            <li class="<%= active_class_for_controller('sp_invoices') %>">
+              <%= link_to "SP Invoices".html_safe, sp_invoices_path %>
+            </li>
+          </ul>
+        </li>
+      <% end %>
+    <% end %>   
+<% unless current_user.has_role? :dealer %> 
+   <% if can? :read, User %>
+  <li class="<%= active_class_for_controller('users') || active_class_for_controller('companies') || active_class_for_controller('clients') %>">
+    <%= link_to 'People <span class="caret"></span>'.html_safe, users_path, {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'} %>
+      <ul class="dropdown-menu">
+   
+        <% if  current_user.has_role? :masteradmin %>
+          <li class="<%= active_class_for_controller_action('users', 'masteradmins') %>">
+            <%= link_to 'Master Admin', masteradmins_path %>
+          </li>
+          <%end%>
+        <% if  (current_user.has_role? :masteradmin) || (current_user.has_role? :superadmin) %>
+          <li class="<%= active_class_for_controller_action('users', 'superadmins') %>">
+            <%= link_to 'Super Admin', superadmins_path %>
+          </li>
+          <%end%>
+
+            <li class="<%= active_class_for_controller_action('users', 'administrators') %>">
+              <%= link_to 'Administrators', administrators_path %>
+            </li>
+            <li class="<%= 'active' if params[:controller] == 'clients' %>">
+              <%= link_to 'Clients', clients_path %>
+            </li>
+            <li class='dropdown-submenu'>
+              <a href="#" data-toggle="dropdown" class='dropdown-toggle'>Customers</a>
+              <ul class="dropdown-menu">
+                <li class="<%= active_class_for_controller_action('users', 'customers') %>">
+                  <%= link_to 'Customers', customers_path %>
+                </li>
+                <li class="<%= active_class_for_controller_action('users', 'quote_customers') %>">
+                  <%= link_to 'Quote Customers', quote_customers_path %>
+                </li>
+              </ul>
+            </li>
+            <li class="<%= active_class_for_controller_action('users', 'employees') %>">
+              <%= link_to 'Employee', employees_path %>
+            </li>
+            <li class="<%= active_class_for_controller_action('users', 'suppliers') %>">
+              <%= link_to 'Suppliers', suppliers_path %>
+            </li>
+             <li class="<%= active_class_for_controller_action('users', 'dealers') %>">
+              <%= link_to 'Dealers', dealers_path %>
+            </li>
+            <li class="<%= active_class_for_controller_action('users', 'index') %>">
+              <%= link_to 'All Users', users_path %>
+            </li>
+            <li class="divider"></li>
+            <li class="<%= active_class_for_controller_action('companies', 'index') %>">
+              <%= link_to 'Companies', companies_path %>
+            </li>
+          
+      </ul>
+  </li>
+  <% end %>
+  <% end %>
+    
+    
+      <% if can?(:read, InvoiceCompany) || can?(:read, Tax) || current_user.has_role?(:admin) %>
+        <li class="<%= 'active' if ['invoice_companies', 'taxes', 'changelog', 'user_guides', 'notifications', 'notification_types', 'fee_types', 'search_tags'].include?(params[:controller]) %>">
+          <%= link_to '<i class="glyphicon-cogwheel"></i>'.html_safe, "#", {:class => 'dropdown-toggle', 'data-toggle' => 'dropdown', rel: "tooltip", "data-placement" => "bottom", title: "Settings"} %>
+          <ul class="dropdown-menu">
+            <% if can? :read, ContactRoleType %>
+              <li class="<%= 'active' if params[:controller] == 'contact_role_types' %>">
+                <%= link_to 'Contact Role Types', contact_role_types_path %>
+              </li>
+            <% end %>
+            <% if can? :read, InvoiceCompany %>
+              <li class="<%= 'active' if params[:controller] == 'invoice_companies' %>">
+                <%= link_to 'Companies', invoice_companies_path %>
+              </li>
+            <% end %>
+            <% if can? :read, Tax %>
+              <li class="<%= 'active' if params[:controller] == 'taxes' %>">
+                <%= link_to 'Taxes', taxes_path %>
+              </li>
+            <% end %>
+            <% if current_user.has_role? :admin %>
+              <li class="<%= active_class_for_controller('notifications') %>">
+                <%= link_to "Notifications", notifications_path %></li>
+              <li class="<%= active_class_for_controller('notification_types') %>">
+                <%= link_to 'Notification Types', notification_types_path %>
+              </li>
+              <li class="<%= active_class_for_controller('fee_types') %>">
+                <%= link_to 'Fee Types', fee_types_path %>
+              </li>
+              <li class="<%= active_class_for_controller('search_tags') %>">
+                <%= link_to 'Search Tags', search_tags_path %>
+              </li>
+              <li class="<%= 'active' if params[:controller] == 'changelog' %>">
+                <%= link_to 'Change log', changelog_path %>
+              </li>
+              <li class="<%= 'active' if params[:controller] == 'user_guides' %>">
+                <%= link_to 'User Guides', user_guides_path %>
+              </li>
+            <% end %>
+            <li class="<%= 'active' if params[:controller] == 'privacy_statement' %>">
+              <%= link_to 'Privacy Statement', privacy_statement_path %>
+            </li>
+          </ul>
+        </li>
+      <% else %>
+        <li><%= link_to 'Privacy Statement', privacy_statement_path %></li>  
+      <% end %>
+    </ul>
+ 
+
+  <div class="user">
+    <% if user_signed_in? %>
+      <div class="dropdown">
+        <a href="#" class='dropdown-toggle' data-toggle="dropdown">
+          <%= image_tag current_user.avatar.url(:thumb) %>
+        </a>
+        <ul class="dropdown-menu pull-right">
+          <li>
+            <%= link_to 'Edit profile', edit_user_path(current_user) %>
+          </li>
+          <li>
+            <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+<% loggedUserRole = "" %> 
+<% if current_user.has_role? :masteradmin %>
+<% loggedUserRole = "masteradmin" %> 
+<% end %>
+<%= hidden_field_tag 'user_loggedin_role' , loggedUserRole %>
+
+<% currentUser = "" %>
+<% if current_user.has_role? :superadmin %>
+<% currentUser = "superadmin" %>
+<%= hidden_field_tag 'loggedRole' ,currentUser %>
+<% end %>

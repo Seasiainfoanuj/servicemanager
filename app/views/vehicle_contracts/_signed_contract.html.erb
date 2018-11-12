@@ -1,0 +1,33 @@
+<% options = {current_status: @vehicle_contract.current_status, current_user: current_user, signed_contract_exists: @vehicle_contract.signed_contract.present?} %>
+<% if VehicleContractStatusManager.action_permitted?(:upload_contract, options) %>
+  <hr class="header">
+  <div class="row-fluid">
+    <div class="span7">      
+      <%= form_for(@vehicle_contract, :user_email => params[:user_email], :user_token => params[:user_token], html: {id: "signed-contract-upload-form", class: "form-horizontal"}, url: {controller: "vehicle_contracts", action: "upload_contract"}) do |f| %>
+        <%= f.fields_for :signed_contract do |builder| %>
+          <div class="control-group">
+            <div class="thumbnail" style="max-width: 200px; max-height: 200px;">
+              <%= link_to((image_tag @vehicle_contract.signed_contract.upload.url(:large)), @vehicle_contract.signed_contract.upload.url(:original)) %>
+            </div>
+            <div style="margin-top:20px">
+              <div class="control-group">
+                <%= builder.label :upload, "Scanned contract", :class => "control-label" %>
+                <%= builder.file_field :upload %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <div class="actions">
+          <%= f.submit "Upload Signed Contract", :class => "btn btn-grey" %>
+        </div>
+      <% end %>
+    </div>
+    <div class="span5">
+      <br/><br/>
+      <% if (can? :review, VehicleContract) && VehicleContractStatusManager.action_permitted?(:accept, { current_status: @vehicle_contract.current_status } ) %>
+        <% action_params, contract_params, html_params = content_tag_for_review_and_sign(@vehicle_contract, current_user) %>
+        <%= link_to action_params.html_safe, contract_params, html_params %>
+      <% end %>
+    </div>
+  </div>
+<% end %>  

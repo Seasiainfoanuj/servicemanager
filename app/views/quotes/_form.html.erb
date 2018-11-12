@@ -1,0 +1,124 @@
+<% present(@quote) do |quote| %>
+  <%= content_tag :div, class: "tax_data", data: {taxes: Tax.all} do %>
+  <% end %>
+
+  <%= form_for(@quote, :html => {:id => "quote_form", :class => "form-horizontal form-validate"}) do |f| %>
+
+    <% if quote.errors.any? %>
+      <div id="error_explanation">
+        <h2>The quote could not be updated. Please check for missing items.</h2>
+        <% if @quote.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@quote.errors.count, "error") %> prohibited this page from being saved:</h2>
+            <ul>
+              <% @quote.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+      </div>
+      <br>
+    <% end %>
+
+    <%= render 'master_quotes/master_quote_items', f: f %>
+
+    <%= render 'form_header', f: f %>
+
+    <div class="form-table-container">
+    <table id="form-table" class="table" style="margin-top:30px;">
+      <thead>
+        <tr>
+          <th class="position"></th>
+          <th class="name">Item / Item type</th>
+          <% if current_user.admin? || current_user == quote.manager %>
+            <th class="description" colspan="2">Description / Buy price</th>
+          <% else %>
+            <th class="description" colspan="2">Description</th>
+          <% end %>
+          <th class="cost right">Cost</th>
+          <th class="qty right">Qty</th>
+          <th class="tax">Tax</th>
+          <th class="line-total right"><i class="hide_all_costs_handle icon-eye-open"></i> Line Total</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <%= f.fields_for :items do |builder| %>
+          <%= render 'item_fields', f: builder %>
+        <% end %>
+
+        <tr id="bottom_anchor"></tr>
+
+      </tbody>
+    </table>
+    </div>
+
+    <table id="form-table-bottom" class="table">
+      <tbody>
+        <tr>
+          <td colspan="4" class="table-left">
+            <%= link_to_add_fields '<i class="icon-plus-sign"></i> Add Line', f, :items %>
+            <a href="#modal-master-quote-items" role="button" id="add_master_quote_items" class="btn btn-lightgrey" data-toggle="modal"><i class="icon-plus-sign"></i> Master Quote Items</a>
+          </td>
+          <td colspan="2" class='taxes'>
+            <div class="subtotal-container">
+              <span>Subtotal</span>
+              <span id="subtotal">$0.00</span>
+            </div>
+            <div class="taxtotal-container">
+              <span id="tax_name">Tax</span>
+              <span id="taxtotal">$0.00</span>
+            </div>
+            <div class="grandtotal-container">
+              <span>Total</span>
+              <span id="grandtotal">$0.00</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="row-fluid">
+      <div class="span6">
+        <%= f.label :terms, "Terms", :class => "control-label" %>
+        <div class="control-group">
+          <%= f.text_area :terms, rows: 5, :class => 'auto-textarea span12' %>
+        </div>
+      </div>
+      <div class="span6">
+        <%= f.label :comments, "Comments (Visible to customer)", {:class => "control-label", 'style' => 'width:100%'} %>
+        <div class="control-group">
+          <%= f.text_area :comments, rows: 5, :class => 'auto-textarea span12' %>
+        </div>
+      </div>
+    </div>
+
+    <br><br>
+
+    <div class="row-fluid actions">
+      <div class="span4" style="padding:5px">
+        <%= f.text_field :tag_list, {:class => "tagsinput span10", "data-default" => "Add Tags"} %>
+      </div>
+      <div class="span4">
+        <% unless quote.status.nil? %>
+          <div class="check-line pull-left" style="width: 120px; padding: 10px;">
+            <%= f.label :status, "Quote Accepted", :class => "inline", :style => "width:100px; padding: 10px;" %>
+            <%= f.check_box :status, {:class => "icheck-me", "data-skin" => "square", "data-color" => "green"}, "accepted", "updated"  %>
+          </div>
+        <% end %>
+      </div>
+      <% if params[:enquiry].present? %>
+        <%= f.hidden_field_tag "enquiry", params[:enquiry] %>
+      <% end %>
+      <div class="span4 align-right">
+        <% if quote.id %>
+          <%= f.submit 'Update', name: 'update_draft', :class => "btn btn-large btn-green", :id => "update-draft-submit" %>
+        <% else %>
+          <%= f.submit 'Create Quote', name: 'save_draft', :class => "btn btn-large btn-green", :id => "create-draft-submit" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,22 @@
+Hi <%= @customer.first_name %>,
+
+<% unless @message.nil? || @message.blank? %>
+  <%= @message %>
+<% end %>
+
+<%= @quote.authorised_contact.name %> has accepted hire quote <%= @quote.reference %>.
+
+Link: <%= hire_quote_url(@quote) %>
+
+Contact Details:
+-----------------------------------------
+Name: <%= @quote.authorised_contact.name %>
+Email: <%= @quote.authorised_contact.email %>
+<% if @quote.authorised_contact.mobile.present? %>
+Mobile: <%= @quote.authorised_contact.mobile %>
+<% elsif @quote.authorised_contact.phone.present? %>
+Phone: <%= @quote.authorised_contact.phone %>
+<% end %>
+<% if @quote.authorised_contact.website.present? %>
+Website: <%= @quote.authorised_contact.website %>
+<% end %>

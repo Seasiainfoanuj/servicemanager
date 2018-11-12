@@ -1,0 +1,67 @@
+<div id="modal-<%= model_name %>" class="modal hide" role="dialog" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="user-infos"><%= user.name %> <%= "#{user.company}" if user.company && user.name.present? %></h3>
+  </div>
+  <div class="modal-body">
+    <div class="row-fluid">
+      <div class="span2">
+        <%= image_tag user.avatar.url(:medium) %> <br><br>
+      </div>
+      <div class="span10">
+        <dl class="dl-horizontal" style="margin-top:0;">
+          <% if user.name.present? %>
+            <dt>Full Name:</dt>
+            <dd><%= user.name %></dd>
+          <% end %>
+          <% if user.representing_company.present? %>
+            <dt>Company:</dt>
+            <dd><%= user.representing_company.name %></dd>
+          <% end %>
+          <% if user.job_title.present? %>
+            <dt>Position:</dt>
+            <dd><%= user.job_title %></dd>
+          <% end %>
+          <br>
+            <dt>Email:</dt>
+            <dd><%= mail_to user.email %></dd>
+          <% if user.phone.present? %>
+            <dt>Phone:</dt>
+            <dd><%= user.phone %></dd>
+          <% end %>
+          <% if user.fax.present? %>
+            <dt>Fax:</dt>
+            <dd><%= user.fax %></dd>
+          <% end %>
+          <% if user.mobile.present? %>
+            <dt>Mobile:</dt>
+            <dd><%= user.mobile %></dd>
+          <% end %>
+          <% if user.website.present? %>
+            <dt>Website:</dt>
+            <dd><%= user.website %></dd>
+          <% end %>
+          <% if user.postal_address.present? %>
+            <% if user.postal_address.line_1.present? || user.postal_address.line_2.present? || user.postal_address.suburb.present? || user.postal_address.state.present? || user.postal_address.postcode.present? || user.postal_address.country.present?  %>
+              <br>
+              <dt>Address:</dt>
+              <dd>
+                <address>
+                  <%= "#{user.postal_address.line_1}<br>".html_safe if user.postal_address.line_1.present? %>
+                  <%= "#{user.postal_address.line_2}<br>".html_safe if user.postal_address.line_2.present? %>
+                  <%= "#{user.postal_address.suburb}, ".html_safe if user.postal_address.suburb.present? %>
+                  <%= "#{user.postal_address.state} ".html_safe if user.postal_address.state.present? %>
+                  <%= "#{user.postal_address.postcode}".html_safe if user.postal_address.postcode.present? %>
+                  <%= "<br>#{user.postal_address.country}".html_safe if user.postal_address.country.present? %>
+                </address>
+              </dd>
+            <% end %>
+          <% end %>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">Close</button>
+  </div>
+</div>

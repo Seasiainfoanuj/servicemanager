@@ -1,0 +1,47 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Edit Enquiry <span class="label">#<%= "#{@enquiry.uid}" %></span></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <a href="#" class="btn btn-green submit-btn">Update Enquiry</a>
+
+        <%= link_to '<i class="icon-search"></i>'.html_safe, @enquiry, {:title => 'View', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+
+        <%= link_to '<i class="icon-list-alt"></i>'.html_safe, enquiries_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <% if @enquiry.manager.blank? %>
+          <div class="alert alert-warning" style="margin-top:20px">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <i class="icon icon-warning-sign"></i> A manager must be assigned to this enquiry. 
+          </div>
+        <% end %>  
+        <% if @enquiry.invoice_company.blank? %>
+          <div class="alert alert-warning" style="margin-top:20px">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <i class="icon icon-warning-sign"></i> An Internal Company must be assigned to this enquiry. 
+          </div>
+        <% end %>  
+        <div class="box box-condensed box-color box-bordered">
+          <%= render 'form' %>
+          <div class="actions">
+            <a href="#" class="btn btn-green submit-btn">Update Enquiry</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<div class="box-title">
+  <h3><span class="step">2</span> Download and review the attached contract</h3>
+</div>
+<div class="box-content nopadding">
+  <div class="original-contract-download">
+    <%= link_to '<i class="icon-download-alt"></i> Download Contract in PDF format'.html_safe, vehicle_contract_path(@vehicle_contract, :user_email => @vehicle_contract.customer.email, :user_token => @vehicle_contract.customer.authentication_token, format: "pdf"), {:title => 'Download Contract', :class => 'btn btn-satblue', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+    <%= link_to '<i class="icon-download-alt"></i> Download Terms and Conditions in PDF format'.html_safe, download_terms_conditions_path(@vehicle_contract, :user_email => @vehicle_contract.customer.email, :user_token => @vehicle_contract.customer.authentication_token, format: "pdf"), {:title => 'Download Terms and Conditions', :class => 'btn btn-satblue', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+  </div>
+</div>

@@ -1,0 +1,288 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Vehicle Contract <span class="label"><%= "#{@vehicle_contract.uid}" %></span></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if (can? :send_contract, VehicleContract) && VehicleContractStatusManager.action_permitted?(:send_contract, { current_status: @vehicle_contract.current_status }) %>
+          <a href="#send-vehicle-contract-model" role="button" class="btn btn-satblue" data-toggle="modal"><i class="icon-envelope"></i>
+            Send
+          </a>
+          <%= render 'send_form' %>
+        <% end %>
+
+        <%= link_to '<i class="icon-legal"></i>'.html_safe, view_customer_contract_path(@vehicle_contract), {id: 'customer-contract-link', title: 'Customer Contract', class: 'btn', rel: 'tooltip', "data-placement" => "bottom"} %>
+
+        <% if (can? :review, VehicleContract) && VehicleContractStatusManager.action_permitted?(:review, { current_status: @vehicle_contract.current_status } ) %>
+          <%= link_to content_tag(:i, nil, class: 'icon-comments-alt'), {controller: "vehicle_contracts", action: "review", id: @vehicle_contract.uid}, {:title => 'Review Contract', :class => 'btn action-link'} %>
+        <% end %>  
+        <%= link_to '<i class="icon-list-alt"></i>'.html_safe, vehicle_contracts_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+        <%= link_to '<i class="icon-download"></i>'.html_safe, vehicle_contract_path(@vehicle_contract, format: "pdf"), {:title => 'Download Contract', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <% if can? :update, VehicleContract && VehicleContractStatusManager.action_permitted?(:update, {current_status: @vehicle_contract.current_status}) %>
+          <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_vehicle_contract_path(@vehicle_contract), {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    
+    <div class="row-fluid">
+      <div id="vehicle-contract-details" class="span12">
+        <% if @vehicle_contract.current_status == "verified" && @vehicle_contract.vehicle_id.blank? && current_user.admin? %>
+          <div class="alert alert-warning" style="margin-top:20px">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <i class="icon icon-warning-sign"></i> Before sending this contract to the customer, the manager must select a  vehicle. 
+          </div>
+        <% end %>
+        <% if @vehicle_contract.current_status == "draft" && current_user.admin? %>
+          <div class="alert alert-warning" style="margin-top:20px">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <i class="icon icon-warning-sign"></i> Before verifying this contract, the manager must ensure that the customer details are complete and correct. 
+          </div>
+          <% unless @vehicle_contract.vehicle.present? %>
+            <div class="alert alert-warning" style="margin-top:20px">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <i class="icon icon-warning-sign"></i> Before verifying this contract, a vehicle must be selected by editing the contract. 
+            </div>
+          <% end %>
+        <% end %> 
+        <% if @vehicle_contract.current_status == "verified" && current_user.admin? %>
+          <div class="alert alert-warning" style="margin-top:20px">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <i class="icon icon-warning-sign"></i> Before sending this contract to the customer, the manager must ensure that all contract details are complete and accurate. 
+          </div>
+        <% end %> 
+        <% if @vehicle_contract.current_status == "presented_to_customer" && current_user.admin? %>
+          <div class="alert alert-info" style="margin-top:20px">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <i class="icon icon-warning-sign"></i> This contract has been emailed to the customer and may be emailed again, if necessary.
+          </div>
+        <% end %> 
+        <% if @vehicle_contract.current_status == "presented_to_customer" && current_user == @vehicle_contract.customer %>
+          <div class="alert alert-warning" style="margin-top:20px">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <i class="icon icon-warning-sign"></i> This contract is presented to you and a decision is required. You may download the contract, sign it and send the scanned contract to the dealer via post or email. Alternatively, you may accept the contract by clicking on the Accept button.
+          </div>
+        <% end %> 
+
+        <% if VehicleContractStatusManager.action_permitted?(:verify_customer_info, {current_status: @vehicle_contract.current_status}) and current_user.admin? %>
+          <%= render(partial: 'verification_form') %>
+        <% end %>  
+
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="icon-cogs"></i>Administration</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-bordered administration" style="clear: both;">
+              <tbody>
+                <tr>
+                  <td width="50%">Assigned to: <%= @view_contract.manager_name %></td>
+                  <td>Status: <%= vehicle_contract_status_label(@vehicle_contract.current_status) %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box-title">
+            <h3><i class="icon-user"></i>Customer</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-bordered customer" style="clear: both;">
+              <tbody>
+                <tr>
+                  <td>Customer name</td>
+                  <td><%= @view_contract.customer_name %></td>
+                  <td>Email</td>
+                  <td><%= @view_contract.customer.email %></td>
+                </tr>
+                <tr>  
+                  <td>Company</td>
+                  <td><%= @view_contract.customer_company_name %></td>
+                  <td>Phone</td>
+                  <td><%= @view_contract.customer.phone %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <% options = {current_status: @vehicle_contract.current_status, current_user: current_user, signed_contract_exists: @vehicle_contract.signed_contract.present?} %>
+          <% if VehicleContractStatusManager.action_permitted?(:upload_contract, options ) %>
+            <div class="box-title">
+              <h3><i class="glyphicon-paperclip"></i>Signed Contract</h3>
+            </div>
+            <div class="box-content nopadding">
+              <% if @vehicle_contract.signed_contract.present? && @vehicle_contract.signed_contract.persisted? %>
+                <table class="table table-bordered signed-contract" style="clear: both;">
+                  <tbody>
+                    <tr>
+                      <td>Contract uploaded by</td>
+                      <td><%= @vehicle_contract.signed_contract.uploaded_by.name %></td>
+                      <td>Uploaded time</td>
+                      <td><%= @vehicle_contract.signed_contract.original_upload_time_display %></td>
+                    </tr>
+                    <tr>
+                      <td>Upload from IP address</td>
+                      <td><%= @vehicle_contract.signed_contract.uploaded_location_ip %></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>Uploaded file name</td>
+                      <td><%= @vehicle_contract.signed_contract.upload_file_name %></td>
+                      <td>Uploaded file size</td>
+                      <td><%= number_to_human_size(@vehicle_contract.signed_contract.upload_file_size) %></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <table class="contract-download">
+                  <% file = @vehicle_contract.signed_contract %>
+                  <tr>
+                    <td><a href="<%= file.upload.url(:original) %>"><%= image_tag file.upload.url(:large) %></a></td>
+                    <td>
+                      <a class="btn" href="<%= file.upload.url(:original) %>" download="Contract <%= @vehicle_contract.uid %>"><i class="icon-download-alt"></i> Download attached contract</a>
+                      <br>
+                      <br>
+                      <%= link_to '<i class="icon-legal"></i> Download Terms and Conditions'.html_safe, download_terms_conditions_url(@vehicle_contract), {class: 'btn', rel: 'tooltip', "data-placement" => "bottom"} %>
+
+                    </td>
+                  </tr>
+                </table>
+              <% end %>  
+              <div style="margin:5px; min-height: 200px; float:left">
+                <%= form_for(@vehicle_contract, html: {class: "form-horizontal"}, url: {controller: "vehicle_contracts", action: "upload_contract"}) do |f| %>
+                  <%= f.fields_for :signed_contract do |builder| %>
+                    <div class="control-group">
+                      <div style="margin-top:20px">
+                        <div class="control-group">
+                          <%= builder.label :upload, "Scanned contract", :class => "control-label" %>
+                          <%= builder.file_field :upload %>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+
+                  <div class="actions">
+                    <%= f.submit "Upload Contract", :class => "btn btn-grey" %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+
+          <div class="box-title">
+            <h3><i class="glyphicon-notes"></i>Quote</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-bordered quote" style="clear: both;">
+              <tbody>
+                <tr>
+                  <td>Quote Number</td>
+                  <td><%= @view_contract.quote_number %></td>
+                  <td>Quote Date</td>
+                  <td><%= @view_contract.quote_date %></td>
+                </tr>
+                <tr>
+                  <td>Quote total</td>
+                  <td><%= number_to_currency(@view_contract.quote.grand_total) %></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box-title">
+            <h3><i class="glyphicon-car"></i>Vehicle</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-bordered vehicle" style="clear: both;">
+              <tbody>
+                <% if @view_contract.vehicle.present? %>
+                  <tr>
+                    <td>Year, Make & Model</td>
+                    <td><%= @view_contract.vehicle_name %></td>
+                    <td>Transmission</td>
+                    <td><%= @view_contract.vehicle.transmission %></td>
+                  </tr>
+                  <tr>
+                    <td>Vehicle Number</td>
+                    <td><%= @view_contract.vehicle.vehicle_number %></td>
+                    <td>Seating Capacity</td>
+                    <td><%= @view_contract.vehicle.seating_capacity %></td>
+                  </tr>
+                  <tr>
+                    <td>VIN Number</td>
+                    <td><%= @view_contract.vehicle.vin_number %></td>
+                    <td>Rego Number</td>
+                    <td><%= @view_contract.vehicle.rego_number %></td>
+                  </tr>
+                <% else %>  
+                  <tr>
+                    <td>Vehicle details not yet available.</td>
+                  </tr>
+                <% end %>  
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="icon-legal"></i>Vehicle Contract Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-bordered table-force-topborder contract-details" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Deposit received</td>
+                  <td><%= @view_contract.deposit_received %></td>
+                </tr>
+                <tr>
+                  <td>Deposit received on</td>
+                  <td><%= @view_contract.deposit_received_date %></td>
+                </tr>
+                <tr>
+                  <td>Special Conditions</td>
+                  <td><%= @view_contract.special_conditions %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <% if current_user.admin? %>
+      <div id="vehicle-contract-activity">
+        <h3>
+          <i class="icon-rss"></i> Vehicle Contract History
+          <span class="pull-right">
+            <i class="icon-eye-close info-icon" title="Only viewable by admin" rel="tooltip" data-placement="left"></i>
+          </span>
+        </h3>
+        <div class="activities">
+          <% @activities.each do |activity| %>
+            <div class="activity">
+              <div class="details">
+                <%= render_activity activity, locals: {display: "simple"} %>
+                <span class="time"><%= time_ago_in_words(activity.created_at) + " ago" %></span>
+              </div>
+              <div class="date">
+                <%= activity.created_at.strftime("%e %b %Y, %l:%M %p") %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

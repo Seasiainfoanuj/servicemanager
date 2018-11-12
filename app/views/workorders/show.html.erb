@@ -1,0 +1,433 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1><%= @workorder.type.name if @workorder.type %> <span class="label"><%= "REF# #{@workorder.uid}" %></span><% if @workorder.vehicle %> <%= link_to @workorder.vehicle.name, @workorder.vehicle, class: "label label-green" %><% end %></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if @workorder.status == 'complete' && @workorder.sp_invoice.blank? %>
+          <%= link_to 'Submit Invoice'.html_safe, workorder_submit_invoice_path(@workorder), :class => 'btn btn-green' %>
+        <% end %>
+
+        <% if @workorder.vehicle_log && can?(:read, @workorder.vehicle_log) %>
+          <%= link_to 'View Logbook Entry'.html_safe, @workorder.vehicle_log, :class => 'btn btn-satgreen' %>
+        <% end %>
+
+        <% if (can? :send_notifications, Workorder) && @workorder.status != 'cancelled'  %>
+          <a href="#send-workorder-model" role="button" class="btn btn-satblue" data-toggle="modal"><i class="icon-envelope"></i> Send Workorder</a>
+          <%= render 'send_form' %>
+        <% end %>
+
+        <% if @workorder.status == "confirmed" %>
+          <% if can? :complete, Workorder %>
+
+            <a href="#complete-model-<%= @workorder.id %>" role="button" class="btn btn-satgreen" data-toggle="modal"><i class="icon-ok-sign"></i> Complete</a>
+
+            <div id="complete-model-<%= @workorder.id %>" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Complete Workorder</h3>
+              </div>
+              <div class="modal-body">
+                <p>You are about to complete this workorder and start a logbook entry for: <br>
+                  <table class="table table-bordered" style="border:none">
+                    <tbody>
+                      <tr>
+                        <td style="border-left:none"><span class="label label-satblue"><%= @workorder.vehicle.number %></span> <span class="label label-green"><%= @workorder.vehicle.call_sign %></span></td>
+                        <td><%= @workorder.vehicle.name %></td>
+                        <td>VIN <%= @workorder.vehicle.vin_number %></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                <% if @workorder.is_recurring == true %>
+                <div class="alert alert-success">
+                  <h5>This is a <%= @workorder.recurring_period %> day recurring workorder</h5>
+                  <% next_workorder_date = @workorder.next_workorder_date %>
+                  <p>The next workorder will be created for <span style="font-size:1.1em;font-weight:bold"><%= next_workorder_date.strftime('%d/%m/%Y %l:%M %p') %></b></p>
+                </div>
+                <% end %>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-grey" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                <% if @workorder.is_recurring == true %>
+                  <%= link_to '<i class="icon-ok-sign"></i> Proceed'.html_safe, {:action => 'complete_step1', :workorder_id => @workorder.id, :create_recurring_workorder => true}, {:class => 'btn btn-satgreen'} %>
+                <% else %>
+                  <%= link_to '<i class="icon-ok-sign"></i> Proceed'.html_safe, {:action => 'complete_step1', :workorder_id => @workorder.id}, {:class => 'btn btn-satgreen'} %>
+                <% end %>
+              </div>
+            </div>
+
+          <% end %>
+        <% end %>
+
+        <% if @vehicle %>
+          <% if can? :create, Workorder %>
+            <%= link_to '<i class="icon-edit"></i>'.html_safe, {:action => 'edit', :id => @workorder.id, :vehicle_id => @workorder.vehicle.id}, {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+            <%= link_to '<i class="icon-list-alt"></i>'.html_safe, {:action => 'index', :vehicle_id => @workorder.vehicle.id}, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+          <% end %>
+        <% else %>
+          <% if can? :create, Workorder %>
+            <%= link_to '<i class="icon-edit"></i>'.html_safe, {:action => 'edit', :id => @workorder.id}, {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+          <% end %>
+          <%= link_to '<i class="icon-list-alt"></i>'.html_safe, workorders_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+
+          <div class="row-fluid">
+            <div class="span6">
+              <div class="box-title">
+                <h3><i class="glyphicon-notes"></i>Workorder Details</h3>
+              </div>
+              <div class="box-content nopadding">
+                <table class="table table-bordered table-force-topborder" style="clear: both">
+                  <tbody>
+                    <tr>
+                      <td>Type</td>
+                      <td width="75%"><span class="label" style="background-color: <%= @workorder.type.label_color if @workorder.type %>"><%= @workorder.type.name if @workorder.type %></span></td>
+                    </tr>
+                    <tr>
+                      <td>Status</td>
+                      <td width="75%"><%= workorder_status_label(@workorder.status) %></td>
+                    </tr>
+                    <tr>
+                      <td>Recurring</td>
+                      <td width="75%"><%= @workorder.recurring? %></td>
+                    </tr>
+                    <% if @workorder.is_recurring == true %>
+                      <tr>
+                        <td>Recurring Period</td>
+                        <td width="75%"><%= "#{@workorder.recurring_period_humanize}" %></td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="span6">
+              <div class="box-title">
+                <h3><i class="icon-calendar"></i>Workorder Schedule</h3>
+              </div>
+              <div class="box-content nopadding">
+                <table class="table table-bordered table-force-topborder" style="clear: both">
+                  <tbody>
+                    <tr>
+                      <td>Scheduled Time</td>
+                      <td width="75%"><%= @workorder.sched_date_field %> - <b><%= @workorder.sched_time_field %></b></td>
+                    </tr>
+                    <tr>
+                      <td>ETC Time</td>
+                      <td width="75%"><%= @workorder.etc_date_field %> - <b><%= @workorder.etc_time_field %></b></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="box-title">
+            <h3><i class="glyphicon-group" style="position:relative; top:-3px;"></i>Contact Information</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Service Provider</td>
+                  <td width="80%">
+                    <% if @workorder.service_provider %>
+                      <%= render 'shared/contact_info_model', user: @workorder.service_provider, model_name: 'service-provider' %>
+                      <a href="#modal-service-provider" class="btn btn-mini" data-toggle="modal" style="margin-right:5px"><i class="icon-search"></i></a> <%= @workorder.service_provider.company_name %>
+                    <% end %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Customer</td>
+                  <td width="80%">
+                    <% if @workorder.customer %>
+                      <%= render 'shared/contact_info_model', user: @workorder.customer, model_name: 'customer' %>
+                      <a href="#modal-customer" class="btn btn-mini" data-toggle="modal" style="margin-right:5px"><i class="icon-search"></i></a> <%= @workorder.customer.company_name %>
+                    <% end %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Assigned to</td>
+                  <td width="80%">
+                    <% if @workorder.manager %>
+                      <%= render 'shared/contact_info_model', user: @workorder.manager, model_name: 'manager' %>
+                      <a href="#modal-manager" class="btn btn-mini" data-toggle="modal" style="margin-right:5px"><i class="icon-search"></i></a> <%= @workorder.manager.company_name %>
+                    <% end %>
+                  </td>
+                </tr>
+                <% @workorder.subscribers.each do |subscriber| %>
+                  <tr>
+                    <td>Subscriber</td>
+                    <td width="80%">
+                      <%= subscriber.company_name %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+
+          <% if @workorder.invoice_company && current_user.has_role?(:admin) || @workorder.invoice_company && current_user.has_role?(:service_provider) %>
+            <div class="box-title">
+              <h3><i class="glyphicon-notes_2" style="position:relative; top:-3px;"></i>Invoice To</h3>
+            </div>
+            <div class="box-content nopadding">
+              <table id="invoice-to" class="table table-bordered table-force-topborder" style="clear: both">
+                <tbody>
+                  <tr>
+                    <td>Company</td>
+                    <td width="80%"><%= @workorder.invoice_company.name %></td>
+                  </tr>
+                  <% if @workorder.invoice_company.abn.present? %>
+                    <tr>
+                      <td>ABN</td>
+                      <td width="80%"><%= @workorder.invoice_company.abn %></td>
+                    </tr>
+                  <% end %>
+                  <% if @workorder.invoice_company.acn.present? %>
+                    <tr>
+                      <td>ACN</td>
+                      <td width="80%"><%= @workorder.invoice_company.acn %></td>
+                    </tr>
+                  <% end %>
+                  <% if @workorder.invoice_company.phone.present? %>
+                    <tr>
+                      <td>Phone</td>
+                      <td width="80%"><%= @workorder.invoice_company.phone %></td>
+                    </tr>
+                  <% end %>
+                  <% if @workorder.invoice_company.fax.present? %>
+                    <tr>
+                      <td>Fax</td>
+                      <td width="80%"><%= @workorder.invoice_company.fax %></td>
+                    </tr>
+                  <% end %>
+                  <% if @workorder.invoice_company.address_line_1.present? || @workorder.invoice_company.address_line_2.present? || @workorder.invoice_company.suburb.present? || @workorder.invoice_company.state.present? || @workorder.invoice_company.postcode.present? || @workorder.invoice_company.country.present? %>
+                    <tr>
+                      <td>Address</td>
+                      <td width="80%">
+                        <%= "#{@workorder.invoice_company.address_line_1}<br>".html_safe if @workorder.invoice_company.address_line_1.present? %>
+                        <%= "#{@workorder.invoice_company.address_line_2}<br>".html_safe if @workorder.invoice_company.address_line_2.present? %>
+                        <%= "#{@workorder.invoice_company.suburb}, ".html_safe if @workorder.invoice_company.suburb.present? %>
+                        <%= "#{@workorder.invoice_company.state} ".html_safe if @workorder.invoice_company.state.present? %>
+                        <%= "#{@workorder.invoice_company.postcode} ".html_safe if @workorder.invoice_company.postcode.present? %>
+                        <%= "<br>#{@workorder.invoice_company.country}".html_safe if @workorder.invoice_company.country.present? %>
+                      </td>
+                    </tr>
+                  <% end %>
+                  <% if @workorder.invoice_company.accounts_admin %>
+                    <tr>
+                      <td>Accounts Person</td>
+                      <td width="80%">
+                        <%= @workorder.invoice_company.accounts_admin.ref_name %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+
+          <% if @workorder.sp_invoice && current_user.has_role?(:admin) %>
+            <div class="box-title">
+              <h3><i class="glyphicon-notes"></i>Service Provider Invoice</h3>
+            </div>
+            <div class="box-content nopadding">
+              <table id="sp-invoice" class="table table-bordered table-force-topborder" style="clear: both">
+                <tbody>
+                  <tr>
+                    <td>Invoice Number</td>
+                    <td width="80%">
+                      <%= link_to(@workorder.sp_invoice.invoice_number, @workorder.sp_invoice) %>
+                      <%= link_to '<i class="icon-search"></i>'.html_safe, @workorder.sp_invoice, :class => 'btn btn-mini' %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Status</td>
+                    <td width="80%"><%= sp_invoice_status_label(@workorder.sp_invoice.status) %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+
+          <div class="box-title">
+            <h3><i class="glyphicon-car"></i>Vehicle Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="vehicle" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Year, Make &amp; Model</td>
+                  <td width="80%"><%= @workorder.vehicle.name %><% if @workorder.vehicle %> <%= link_to '<i class="icon-search"></i>'.html_safe, @workorder.vehicle, {:title => 'View', :class => 'btn btn-mini', 'rel' => 'tooltip'} %><% end %></td>
+                </tr>
+                <% if @workorder.vehicle.number.present? %>
+                  <tr>
+                    <td>Vehicle Number</td>
+                    <td width="80%"><%= @workorder.vehicle.number %></td>
+                  </tr>
+                <% end %>
+                <% if @workorder.vehicle.vin_number.present? %>
+                  <tr>
+                    <td>VIN Number</td>
+                    <td width="80%"><%= @workorder.vehicle.vin_number %></td>
+                  </tr>
+                <% end %>
+                <% if @workorder.vehicle.engine_number.present? %>
+                  <tr>
+                    <td>Engine Number</td>
+                    <td width="80%"><%= @workorder.vehicle.engine_number %></td>
+                  </tr>
+                <% end %>
+                <% if @workorder.vehicle.transmission.present? %>
+                  <tr>
+                    <td>Transmission</td>
+                    <td width="80%"><%= @workorder.vehicle.transmission %></td>
+                  </tr>
+                <% end %>
+                <% if @workorder.vehicle.odometer_reading.present? %>
+                  <tr>
+                    <td>Odometer Reading</td>
+                    <td width="80%"><%= @workorder.vehicle.odometer_reading %></td>
+                  </tr>
+                <% end %>
+                <% if @workorder.vehicle.rego_number.present? %>
+                  <tr>
+                    <td>Rego Number</td>
+                    <td width="80%"><%= @workorder.vehicle.rego_number %></td>
+                  </tr>
+                <% end %>
+                <% if @workorder.vehicle.seating_capacity.present? %>
+                  <tr>
+                    <td>Seating Capacity</td>
+                    <td width="80%"><%= @workorder.vehicle.seating_capacity %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+
+          <% if @workorder.vehicle_log %>
+            <div class="box-title">
+              <h3><i class="glyphicon-notes"></i>Completed Logbook Entry</h3>
+            </div>
+            <div class="box-content nopadding">
+              <table class="table table-bordered table-force-topborder" style="clear: both">
+                  <tbody>
+                    <tr>
+                      <td>REF</td>
+                      <td width="80%">
+                        <span class="label label-grey"><%= @workorder.vehicle_log.uid %></span>
+                        <%= link_to '<i class="icon-search"></i>'.html_safe, {:controller => 'vehicle_logs', :action => 'show', :id => @workorder.vehicle_log.id, :vehicle_id => @workorder.vehicle.id}, {:title => 'View', :class => 'btn btn-mini', 'rel' => 'tooltip'} %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Odometer Reading</td>
+                      <td width="80%"><%= @workorder.vehicle_log.odometer_reading %></td>
+                    </tr>
+                    <tr>
+                      <td>Notes</td>
+                      <td width="80%"><%= @workorder.vehicle_log.details.html_safe if @workorder.vehicle_log.details %></td>
+                    </tr>
+                    <% unless @workorder.vehicle_log.log_uploads.empty? %>
+                      <tr>
+                        <td>Attachments</td>
+                        <td width="80%">
+                          <% @workorder.vehicle_log.log_uploads.each do |file| %>
+                            <div style="margin:5px; min-height: 200px; float:left">
+                              <div class="thumbnail" style="float: left; margin-right: 5px; text-align:center;">
+                                <a href="<%= file.upload.url(:original) %>"><%= image_tag file.upload.url(:medium) %></a>
+                                <center><a href="<%= file.upload.url(:original) %>" style="font-size:0.8em;padding:5px;"><%= file.upload_file_name %></a></center>
+                              </div>
+                            </div>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+            </div>
+          <% end %>
+
+          <% unless @workorder.details.blank? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-notes"></i>Workorder Notes</h3>
+            </div>
+            <div class="box-content">
+              <%= @workorder.details.html_safe %>
+            </div>
+          <% end %>
+
+          <%= render 'shared/notes/list', resource: @workorder %>
+
+          <% unless @workorder.type.workorder_type_uploads.empty? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-paperclip"></i><%= @workorder.type.name %> Workorder Attachments</h3>
+            </div>
+            <div class="box-content" style="padding: 20px 20px 50px;">
+              <% @workorder.type.workorder_type_uploads.each do |file| %>
+              <div style="margin:5px; height: 200px; float:left">
+                <div class="thumbnail" style="float: left; margin-right: 5px; text-align:center;">
+                  <a href="<%= file.upload.url(:original) %>"><%= image_tag file.upload.url(:medium) %></a><br>
+                  <a href="<%= file.upload.url(:original) %>" style="font-size:0.8em;padding:5px;"><%= file.upload_file_name %></a>
+                </div>
+              </div>
+              <% end %>
+            </div>
+          <% end %>
+
+          <% unless @workorder.workorder_uploads.empty? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-paperclip"></i>Attachments</h3>
+            </div>
+            <div class="box-content" style="padding: 20px 20px 50px;">
+              <% @workorder.workorder_uploads.each do |file| %>
+              <div style="margin:5px; height: 200px; float:left">
+                <div class="thumbnail" style="float: left; margin-right: 5px; text-align:center;">
+                  <a href="<%= file.upload.url(:original) %>"><%= image_tag file.upload.url(:medium) %></a><br>
+                  <a href="<%= file.upload.url(:original) %>" style="font-size:0.8em;padding:5px;"><%= file.upload_file_name %></a>
+                </div>
+              </div>
+              <% end %>
+            </div>
+          <% end %>
+
+          <% if current_user.has_role? :admin %>
+            <div class="box-title">
+              <h3><i class="icon-bullhorn"></i>Workorder Activity</h3>
+            </div>
+            <div id="activity-feed" class="box-content scrollable" data-height="300" data-visible="true">
+              <% @activities.each do |activity| %>
+                <div class="activity">
+                  <div class="details">
+                    <%= render_activity activity, locals: {display: "simple"} %>
+                    <span class="time"><%= time_ago_in_words(activity.created_at) + " ago" %></span>
+                  </div>
+                  <div class="date">
+                    <%= activity.created_at.strftime("%e %b %Y, %l:%M %p") %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

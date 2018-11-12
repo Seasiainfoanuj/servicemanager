@@ -1,0 +1,4 @@
+== Service Manager 8.5.0
+
+* Ruby 2.0.0p247
+* Rails 4.0.0

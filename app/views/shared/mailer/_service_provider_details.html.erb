@@ -1,0 +1,43 @@
+<tr>
+  <td colspan="2"><h3>Service Provider:</h3></td>
+</tr>
+
+<% unless object.service_provider.name == object.service_provider.email %>
+  <tr>
+    <td>Name:</td>
+    <td><%= object.service_provider.name %></td>
+  </tr>
+<% end %>
+
+<% if object.service_provider.company.present? %>
+  <tr>
+    <td>Company:</td>
+    <td><%= object.service_provider.company %></td>
+  </tr>
+<% end %>
+
+<tr>
+  <td>Email:</td>
+  <td><%= mail_to object.service_provider.email %></td>
+</tr>
+
+<% if object.service_provider.phone.present? %>
+  <tr>
+    <td>Phone:</td>
+    <td><%= object.service_provider.phone %></td>
+  </tr>
+<% end %>
+
+<% if object.service_provider.mobile.present? %>
+  <tr>
+    <td>Mobile:</td>
+    <td><%= object.service_provider.mobile %></td>
+  </tr>
+<% end %>
+
+<% if object.service_provider.website.present? %>
+  <tr>
+    <td>Website:</td>
+    <td><%= object.service_provider.website %></td>
+  </tr>
+<% end %>

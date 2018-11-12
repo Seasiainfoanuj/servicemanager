@@ -1,0 +1,130 @@
+<%= form_for(@company, :html => {:class => "form-horizontal form-validate"}) do |f| %>
+  <% if @company.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@company.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @company.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="box-title">
+    <h3><i class="icon-building"></i> Company Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="span12">
+      <div class="control-group">
+        <%= f.label :name, "Company Name", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :name, {:class => "input-large", 'data-rule-required' => true} %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :logo, "Logo", :class => "control-label" %>
+        <div class="controls">
+          <% if @company.logo.present? %>
+            <%= image_tag @company.logo.url(:large) %>
+            <br>
+            Replace <%= f.file_field :logo %>
+          <% else %>
+            <%= f.file_field :logo, 'data-rule-required' => true %>
+          <% end %>
+        </div>
+      </div>
+      
+      <div class="control-group">
+        <%= f.label :slug, "Slug", :class => "control-label" %>
+        <div class="controls">
+          <% if params[:action] == "new" %>
+            <%= f.text_field :slug, {:class => "input-large"} %>
+          <% else %>
+            <%= f.text_field :slug, {class: "input-large", readonly: true} %>
+          <% end %>  
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :abn, "ABN", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :abn, {:class => "input-large"} %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :acn, "ACN", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :acn, {:class => "input-large"} %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :phone, "Phone", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :phone, {:class => "input-large"} %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :fax, "Fax", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :fax, {:class => "input-large"} %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :website, "Website", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :website, {:class => "input-large"} %>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="control-group">
+        <%= f.label :address_line_1, "Address", :class => "control-label" %>
+        <div class="controls" style="display:block;">
+          <%= f.text_field :address_line_1, :class => "input-large" %>
+        </div>
+        <div class="controls" style="display:block; margin-top:10px;">
+          <%= f.text_field :address_line_2, :class => "input-large" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :suburb, "Suburb", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :suburb, :class => "input-large" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :state, "State", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :state, :class => "input-large" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :postcode, "Postcode", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :postcode, :class => "input-small" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :country, "Country", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :country, :class => "input-large" %>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="control-group">
+        <%= f.label :accounts_admin_id, "Accounts Admin", :class => "control-label" %>
+        <div class="controls">
+          <%= f.collection_select :accounts_admin_id, User.filter_by_admin, :id, :ref_name, {prompt: true}, {:id => 'admin_select', :class=>'select2-me span6'} %>
+          <div style="clear:both"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br><br>
+  <div class="actions">
+    <%= f.submit :class => "btn btn-grey" %>
+  </div>
+<% end %>

@@ -1,0 +1,102 @@
+<% present(@vehicle_model) do |vehicle_model| %>
+
+  <%= render(:partial => 'layouts/left') %>
+  <div id="main">
+    <div class="container-fluid">
+      <%= render(:partial => 'layouts/notice') %>
+      <div class="page-header">
+
+        <div class="pull-left">
+          <h1><%= "Vehicle Model: #{vehicle_model.full_name}" %></h1>
+        </div>
+        <div class="pull-right">
+          <br>
+          <%= link_to '<i class="icon-list-alt"></i>'.html_safe, vehicle_models_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+          <% if current_user.has_role? :superadmin, :masteradmin %>    
+           <%= link_to '<i class="icon-edit"></i>'.html_safe, {:action => 'edit', :id => vehicle_model.id}, {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+          <% end %>
+        </div>
+      </div>
+      <div class="breadcrumbs">
+        <%= render_crumbs %>
+        <div class="close-bread">
+          <a href="#"><i class="icon-remove"></i></a>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="box box-condensed box-color box-bordered">
+            <div class="box-title">
+              <h3><i class="glyphicon-car" style="position:relative; top: -2px;"></i>Vehicle Model Details</h3>
+                  <%= manual_link('vehicle_models') %>
+            </div>
+            <div class="box-content nopadding">
+              <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+                <tbody>
+                  <tr>
+                    <td width="25%">Vehicle Make</td>
+                    <td width="70%"><%= vehicle_model.make.name %></td>
+                  </tr>
+                  <tr>
+                    <td width="25%">Vehicle Model</td>
+                    <td width="70%"><%= vehicle_model.name %></td>
+                  </tr>
+                  <tr>
+                    <td width="25%">Number of Seats</td>
+                    <td width="70%"><%= vehicle_model.number_of_seats %></td>
+                  </tr>
+                  <tr>
+                    <td width="25%">Hire Product Types</td>
+                    <td width="70%"><%= hire_product_type_list(vehicle_model) %></td>
+                  </tr>
+                  <tr>
+                    <td width="25%">Hire Addons</td>
+                    <td width="70%"><%= hire_addon_list(vehicle_model) %></td>
+                  </tr>
+                  <tr>
+                    <td width="25%">Default License Type</td>
+                    <td width="70%"><%= vehicle_model.license_type %></td>
+                  </tr>
+                  <tr>
+                    <td width="25%">Tags</td>
+                    <td width="70%"><%= vehicle_model.display_tags %></td>
+                  </tr>
+                  <tr>
+                    <td width="25%">Daily Hire Rate</td>
+                    <td width="70%"><%= vehicle_model.daily_rate_display %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <%= render 'shared/fees_list', chargeable: vehicle_model %>
+
+            <%= render 'images_list' %>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row-fluid">
+        <div class="span6">
+          <%= render 'addons_list' %>
+        </div>  
+
+        <div class="span6">
+          <%= render 'product_types_list' %>
+        </div>  
+      </div>
+
+      <div class="alert alert-info" style="margin-top:20px">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="icon icon-info-sign"></i> Are you missing a Hire Add-on from the list above? New Hire Addons can be managed on the /hire_addons page. Choose Hire Addons from the Hire menu option.
+      </div>
+
+      <div class="alert alert-info" style="margin-top:20px">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="icon icon-info-sign"></i> Do you wish to add a new Hire Product Type? Navigate to Hire / More / Hire Product Types.
+      </div>
+
+    </div>
+  </div>
+<% end %>

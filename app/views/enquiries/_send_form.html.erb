@@ -1,0 +1,108 @@
+
+  <div id="send-workorder-model" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel">Send Email</h3>
+    </div>
+    <div class="modal-body">
+      <div class="row-fluid">
+        <div style="padding: 20px; background: #fbfbfb; border: 1px dashed #DDDDDD">
+          <div class="control-group">
+            <label for="textfield" id="send_to_label" class="control-label send_to_label"><b>Send to</b></label>
+            <div class="controls">
+              <div class="recipients-col" style="margin: 10px 20px;">
+                <% if @enquiry.user %>
+                  <div class="check-line">
+                    <input type="checkbox" id="c_service_provider" class='icheck-me' data-skin="square" data-color="blue" data-customer_id="<%= @enquiry.user.id %>"> <label class='inline' for="c_service_provider">Customer - <%= @enquiry.user.company_name_short unless @enquiry.user.company_name_short == "[#{@enquiry.user.email}]" %> (<%= @enquiry.user.email %>)</label>
+                  </div>
+                <% end %>
+                <% if @enquiry.manager %>
+                  <div class="check-line">
+                    <input type="checkbox" id="c_manager" class='icheck-me' data-skin="square" data-color="blue" data-admin_id="<%= @enquiry.manager.id %>"> <label class='inline' for="c_manager">Manager - <%= @enquiry.manager.company_name_short unless @enquiry.manager.company_name_short == "[#{@enquiry.manager.email}]" %> (<%= @enquiry.manager.email %>)</label>
+                  </div>
+                <% end %>
+              <div class="check-line">
+                  <div style="float: left; margin-right: 15px;">
+                    <input type="checkbox" id="c_others" class='icheck-me' data-skin="square" data-color="blue" />
+                  </div>
+                  <input id="other_recipients" class="input-xlarge" type="text" style="float: left;" placeholder="Other recipient(s) separated by comma" title="Separate multiple emails with a comma" />
+                  <br>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="control-group">
+            <% @logged_user = User.where( :id => current_user.id).first %>
+            <label for="email_message" id="message_label" class="control-label message_label"><b>Message</b></label>
+            <div class="controls">
+              <% default_text = "Hi #{@enquiry.user.name},
+
+
+
+
+
+Best Regards,
+#{current_user.name if current_user} \n" %>
+<% if  @logged_user.job_title.present? && @logged_user.company.present? %>
+<% default_text << "#{@logged_user.job_title}"  %>
+<% default_text << " | #{@logged_user.company} \n" %>
+<% elsif @logged_user.job_title.present? %>
+<% default_text << "#{@logged_user.job_title}\n" %>
+<% else %>
+<% default_text << "#{@logged_user.company}\n"  if @logged_user.company.present? %>
+<% end %>
+<% if @logged_user.postal_address.present? && @logged_user.postal_address.line_1.present? && @logged_user.postal_address.line_2.present? %>
+<% default_text << "#{@logged_user.postal_address.line_1}" %>
+<% default_text << " | #{@logged_user.postal_address.line_2} \n " %>
+<% else %>
+<% default_text << "#{@logged_user.postal_address.line_1}\n" if @logged_user.postal_address && @logged_user.postal_address.line_1  %>
+<% end %>
+<% if @logged_user.postal_address.present? && @logged_user.postal_address.suburb.present? && @logged_user.postal_address.state.present? && @logged_user.postal_address.postcode.present? %>
+<% default_text << "#{@logged_user.postal_address.suburb}" %>
+<% default_text << " #{@logged_user.postal_address.state}" %>
+<% default_text << " #{@logged_user.postal_address.postcode} \n" %>
+<% elsif @logged_user.postal_address.present? && @logged_user.postal_address.suburb.present? && @logged_user.postal_address.state.present? %>
+<% default_text << "#{@logged_user.postal_address.suburb}" %>
+<% default_text << " #{@logged_user.postal_address.state}\n" %>
+<% elsif @logged_user.postal_address.present? && @logged_user.postal_address.suburb.present? && @logged_user.postal_address.postcode.present? %>
+<% default_text << "#{@logged_user.postal_address.suburb}" %>
+<% default_text << " #{@logged_user.postal_address.postcode}\n" %>
+<% elsif @logged_user.postal_address.present? && @logged_user.postal_address.state.present? && @logged_user.postal_address.postcode.present?%>
+<% default_text << "#{@logged_user.postal_address.state}"%>
+<% default_text << " #{@logged_user.postal_address.postcode}\n" %>
+<% elsif @logged_user.postal_address.present? && @logged_user.postal_address.suburb.present? %>
+<% default_text << "#{@logged_user.postal_address.suburb}\n"%>
+<% elsif @logged_user.postal_address.present? && @logged_user.postal_address.state.present? %>
+<% default_text << "#{@logged_user.postal_address.state}\n"%>
+<% else  %>
+<% default_text << "#{@logged_user.postal_address.postcode}\n" if @logged_user.postal_address.present? && @logged_user.postal_address.postcode.present?%>
+<% end %>
+<% if @logged_user.phone.present? && @logged_user.mobile.present? %>
+<% default_text << "P: #{@logged_user.phone}" %>
+<% default_text << " | M: #{@logged_user.mobile} \n"%>
+<% elsif @logged_user.phone.present? %>
+<% default_text << "P: #{@logged_user.phone}\n" %>
+<% else %>
+<% default_text << "M: #{@logged_user.mobile}\n" if @logged_user.mobile.present?%>
+<% end %>
+<% default_text << "E: #{@logged_user.email} \n" if @logged_user.email.present? %>
+<% default_text << "W: #{@logged_user.website} " if @logged_user.website.present? %>
+              <textarea name="email_message" id="email_message" class="span12" rows="8" required ><%= default_text  -%></textarea>
+            </div>
+          </div>
+          <%= render "enquiry_email_attachment" %>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" style="margin-top: 35px;">
+        
+      <div class="pull-right">
+          <button class="btn btn-grey" data-dismiss="modal" aria-hidden="true">Cancel</button>
+          <%= link_to "Send",  enquiry_send_enquiry_mail_path(:enquiry_id => @enquiry.id), 
+          {:class => 'btn btn-satblue', :id => 'enquiry_email_send_button'} %>
+      </div>
+    
+    </div>
+  </div>
+

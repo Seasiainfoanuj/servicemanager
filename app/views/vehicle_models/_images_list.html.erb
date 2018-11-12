@@ -1,0 +1,33 @@
+<% present(@vehicle_model) do |vehicle_model| %>
+  <div class="row-fluid">
+    <% if vehicle_model.images.any? %>
+      <div class="box-title">
+        <h3><i class="glyphicon-paperclip"></i>Documents and images</h3>
+      </div>
+      <div class="box-content nopadding">
+        <table id="vehicle-model-image-details" class="table table-bordered">
+          <thead>
+            <tr>
+              <td>File name</td>
+              <td>Type</td>
+              <td>Classification</td>
+              <td>Image name</td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            <% vehicle_model.images.each do |file| %>
+              <tr>
+                <td><a href="<%= file.image.url(:original) %>"><%= file.image_file_name %></a></td>
+                <td><%= file.image_type_name.titleize %></td>
+                <td><%= file.image_type == 0 ? file.document_type.name : file.photo_category.name %></td>
+                <td><%= file.name %></td>
+                <td><a href="<%= file.image.url(:original) %>"><%= image_tag file.image.url(:medium) %></a></td>
+              </tr>
+            <% end %>  
+          </tbody>  
+        </table>
+      </div>
+    <% end %>
+  </div>
+<% end %>

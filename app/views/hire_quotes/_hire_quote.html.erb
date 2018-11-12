@@ -1,0 +1,29 @@
+<tr>
+  <td><%= hire_quote.reference %></td>
+  <% if hire_quote.client_type == "person" %>
+    <td>
+      <% if current_user.admin? %>
+        <%= link_to("#{hire_quote.customer_first_name} #{hire_quote.customer_last_name}", user_path(hire_quote.user_id)) %>
+      <% else %>
+        <%= "#{hire_quote.customer_first_name} #{hire_quote.customer_last_name}" %>
+      <% end %>
+      <%= " (#{hire_quote.customer_email})" %>
+    </td>
+  <% else %>
+    <td>
+      <%= link_to(hire_quote.company_name, company_path(hire_quote.company_id)) %>
+    </td>
+  <% end %>
+  <td><%= "#{hire_quote.manager_first_name} #{hire_quote.manager_last_name}" %></td>
+  <td><%= hire_quote_status_label(hire_quote.status) %></td>
+  <td><%= hire_quote.status_date.strftime("%Y-%m-%d") %></td>
+  <td><%= hire_quote.tags %></td>
+  <td>
+    <% if current_user.admin? %>
+      <%= link_to content_tag(:i, nil, class: 'icon-search'), hire_quote_path(hire_quote.reference), {:title => 'View', :class => 'btn action-link'} %>
+      <%= link_to content_tag(:i, nil, class: 'icon-edit'), edit_hire_quote_path(hire_quote.reference), {:title => 'Edit', :class => 'btn action-link'} %>
+    <% else %>
+      <%= link_to content_tag(:i, nil, class: 'icon-search'), view_customer_quote_hire_quote_path(hire_quote.reference), {:title => 'View', :class => 'btn action-link'} %>
+      <% end %>
+  </td>
+</tr>
