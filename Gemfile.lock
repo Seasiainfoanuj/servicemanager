@@ -234,6 +234,7 @@ GEM
       railties (>= 3.2.16)
     jquery-validation-rails (1.16.0)
     json (1.8.6)
+    kgio (2.11.2)
     less (2.6.0)
       commonjs (~> 0.2.7)
     less-rails (2.8.0)
@@ -344,6 +345,7 @@ GEM
       activesupport (= 4.2.7.1)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
+    raindrops (0.19.0)
     rake (12.0.0)
     rb-fsevent (0.9.8)
     rb-inotify (0.9.8)
@@ -435,6 +437,9 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.5)
+    unicorn (5.4.1)
+      kgio (~> 2.6)
+      raindrops (~> 0.7)
     warden (1.2.7)
       rack (>= 1.0)
     websocket-driver (0.6.5)
@@ -525,6 +530,7 @@ DEPENDENCIES
   turbolinks (~> 5.0.0)
   twitter-bootstrap-rails
   uglifier
+  unicorn
   whenever
   wicked_pdf
   will_paginate

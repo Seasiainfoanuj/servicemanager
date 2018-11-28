@@ -62,6 +62,10 @@ gem 'net-ssh'
 gem 'asset_sync'
 gem 'fog-aws'
 
+group :production do
+  gem "unicorn"
+end
+
 group :development do
   gem 'guard-rspec'
   gem 'guard-livereload'
