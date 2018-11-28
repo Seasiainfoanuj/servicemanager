@@ -62,6 +62,7 @@ gem 'net-ssh'
 gem 'asset_sync'
 gem 'fog-aws'
 gem "ops_care", git: "git@github.com:reinteractive/OpsCare.git", branch: "master"
+gem "yaml_db"
 
 group :production do
   gem "unicorn"
