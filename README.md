@@ -15,7 +15,7 @@
 * clone repository
 
 ```
-git clone git@github.com:themi/bus4x4.git bus4x4-sm
+git clone git@github.com:reinteractive/bus4x4.git bus4x4-sm
 cd bus4x4-sm
 ```
 

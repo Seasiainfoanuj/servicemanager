@@ -58,6 +58,10 @@ gem 'acts-as-taggable-on'
 gem 'mailgun'
 gem 'net-ssh'
 
+# OpsCare added Gems
+gem 'asset_sync'
+gem 'fog-aws'
+
 group :development do
   gem 'guard-rspec'
   gem 'guard-livereload'
@@ -80,6 +84,7 @@ group :development, :test do
   gem 'timecop'
   gem 'parallel_tests'
   gem 'byebug'
+  gem 'dotenv-rails'
 end
 
 group :test, :darwin do

@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-ServiceManager::Application.config.secret_key_base = '205e59660b1772c22d2ec24963da820edef05077220933ad7f8e11c476c42729922d5ca61c29c1d30ea1602a4e91ef21ed1836cc0ec9c6fb5bc9f125e9480faf'
+ServiceManager::Application.config.secret_key_base = ENV["RAILS_SECRET_KEY_BASE"]
