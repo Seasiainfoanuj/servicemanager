@@ -49,7 +49,7 @@ gem 'combine_pdf'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'public_activity'
-gem 'newrelic_rpm'
+# gem 'newrelic_rpm'
 gem 'touchpunch-rails'
 gem 'will_paginate'
 
@@ -61,6 +61,7 @@ gem 'net-ssh'
 # OpsCare added Gems
 gem 'asset_sync'
 gem 'fog-aws'
+gem "ops_care", git: "git@github.com:reinteractive/OpsCare.git", branch: "master"
 
 group :production do
   gem "unicorn"
