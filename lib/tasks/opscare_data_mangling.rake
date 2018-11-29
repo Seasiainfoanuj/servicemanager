@@ -31,7 +31,7 @@ namespace :opscare do
 
       # puts "Mangling emails addresses by appending '.local'"
       %w( users ).each do |table|
-        %x[ mysql -h #{db['host']} -u #{db['username']} -p #{db['password']} #{db['database']} -e "UPDATE users SET email= CONCAT(email, '.local') WHERE NOT (email LIKE '%.local' OR email LIKE '%@reinteractive.net' OR email LIKE '%@bus4x4.com.au');" ]
+        %x[ mysql -h #{db['host']} -u #{db['username']} -p#{db['password']} #{db['database']} -e "UPDATE users SET email= CONCAT(email, '.local') WHERE NOT (email LIKE '%.local' OR email LIKE '%@reinteractive.net' OR email LIKE '%@bus4x4.com.au');" ]
       end
     end # task :mangle
   end # namespace :data
