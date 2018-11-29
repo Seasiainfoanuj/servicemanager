@@ -24,7 +24,7 @@ namespace :opscare do
       end
 
       # Get the DB config if you're calling it directly
-      # db = get_db_config(ENV["RAILS_ENV"])
+      db = get_db_config(ENV["RAILS_ENV"])
 
       # Example action: adding ".local" at the end of the user.email field
       # (beware it will also edit your admin user account):
