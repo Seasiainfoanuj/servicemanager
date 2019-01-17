@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
   s.authors = ["William Yeung".freeze]
-  s.date = "2018-11-28"
+  s.date = "2019-01-17"
   s.description = "Helper for triggering select for select2 javascript library".freeze
   s.email = ["william@tofugear.com".freeze]
   s.files = ["Gemfile".freeze, "Rakefile".freeze, "capybara-select2.gemspec".freeze, "lib/capybara-select2.rb".freeze, "lib/capybara-select2/version.rb".freeze, "lib/capybara/select2.rb".freeze, "lib/capybara/selectors/tag_selector.rb".freeze]

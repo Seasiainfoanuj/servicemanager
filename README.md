@@ -2,7 +2,7 @@
 
 ## repository
 
-* [git@github.com:reinteractive/bus4x4.git](https://github.com/reinteractive/bus4x4.git)
+* [git@github.com:reinteractive/bus4x4-service-manager.git](https://github.com/reinteractive/bus4x4-service-manager.git)
 
 ## Dependencies
 
@@ -15,7 +15,7 @@
 * clone repository
 
 ```
-git clone git@github.com:reinteractive/bus4x4.git bus4x4-sm
+git clone git@github.com:reinteractive/bus4x4-service-manager.git bus4x4-sm
 cd bus4x4-sm
 ```
 
