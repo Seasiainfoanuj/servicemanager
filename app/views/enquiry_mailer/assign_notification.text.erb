@@ -1,0 +1,20 @@
+You have been assigned to the following enquiry:
+
+Enquiry Details
+-----------------------------------------
+<%= "REF#: #{@enquiry.uid}" %>
+<%= "Type: #{@enquiry.enquiry_type.name}" if @enquiry.enquiry_type %>
+
+Message:
+----------------------
+<%= "#{@enquiry.details}" %>
+
+Enquirer:
+----------------------
+<%= "Name: #{@enquiry.first_name} #{@enquiry.last_name}" if @enquiry.first_name.present? || @enquiry.last_name.present? %>
+<%= "Email: #{@enquiry.email}" if @enquiry.email.present? %>
+<%= "Phone: #{@enquiry.phone}" if @enquiry.phone.present? %>
+<%= "Company: #{@enquiry.company}" if @enquiry.company.present? %>
+<%= "Job Title: #{@enquiry.job_title}" if @enquiry.job_title.present? %>
+
+Link: <%= enquiry_url(@enquiry) %>

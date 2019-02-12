@@ -1,0 +1,182 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Edit Master Quote International: <%= @master_quote.name %></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if can? :create, MasterQuoteTitlePage %>
+          <div class="btn-group">
+            <% unless @master_quote.title_page %>
+              <%= link_to "<i class='icon-plus-sign'></i> Add Title Page".html_safe, {:controller => 'master_quote_title_pages', :action => 'new', :master_quote_id => @master_quote.id}, :class => 'btn btn-satgreen' %>
+            <% else %>
+              <a id="title-page-links" href="#" data-toggle="dropdown" class="btn btn-inverse dropdown-toggle">Title Page <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li>
+                  <%= link_to "<i class='icon-edit'></i> Edit Title Page".html_safe, {:controller => 'master_quote_title_pages', :action => 'edit', :id => @master_quote.title_page.id, :master_quote_id => @master_quote.id} %>
+                </li>
+                <li>
+                  <% if can? :destroy, MasterQuoteTitlePage %>
+                    <%= link_to "<i class='icon-remove'></i> Delete".html_safe, @master_quote.title_page, method: :delete, data: {confirm: "You are about to delete the title page for this master quote. Are you sure you want to do this?"} %>
+                  <% end %>
+                </li>
+              </ul>
+            <% end %>
+          </div>
+        <% end %>
+
+        <% if can? :create, MasterQuoteSummaryPage %>
+          <div class="btn-group">
+            <% unless @master_quote.summary_page %>
+              <%= link_to "<i class='icon-plus-sign'></i> Add Summary Page".html_safe, {:controller => 'master_quote_summary_pages', :action => 'new', :master_quote_id => @master_quote.id}, :class => 'btn btn-satgreen' %>
+            <% else %>
+              <a id="summary-page-links" href="#" data-toggle="dropdown" class="btn btn-inverse dropdown-toggle">Summary Page <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li>
+                  <%= link_to "<i class='icon-edit'></i> Edit Summary Page".html_safe, {:controller => 'master_quote_summary_pages', :action => 'edit', :id => @master_quote.summary_page.id, :master_quote_id => @master_quote.id} %>
+                </li>
+                <li>
+                  <% if can? :destroy, MasterQuoteSummaryPage %>
+                    <%= link_to "<i class='icon-remove'></i> Delete".html_safe, @master_quote.summary_page, method: :delete, data: {confirm: "You are about to delete the summary page for this master quote. Are you sure you want to do this?"} %>
+                  <% end %>
+                </li>
+              </ul>
+            <% end %>
+          </div>
+        <% end %>
+
+        <%= link_to '<i class="icon-search"></i>'.html_safe, {controller: "master_quotes_internationals", action: "show", id: @master_quote.id}, {:title => 'View', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <%= link_to '<i class="icon-list-alt"></i>'.html_safe, master_quotes_internationals_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <br>
+    <div class="row-fluid">
+      <div class="span12">
+        <%= render 'pro_tip' %>
+
+        <div class="box" style="border: 2px solid #ddd;">
+          <div class="box-content">
+            <div class="invoice-info">
+              <%= render 'edit_form' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-paperclip"></i>Specification Sheet</h3>
+          </div>
+          <div class="box-content" style="padding: 30px 50px;">
+            <div id="specification-sheet-upload-container">
+              <%= form_for [@master_quote, MasterQuoteSpecificationSheet.new],
+                   :url => master_quote_specification_sheets_path(@master_quote, MasterQuoteSpecificationSheet.new),
+                  :html => { :multipart => true , :id => "master-quote-specification-sheet", "data-master-quote-id" => @master_quote.id  } do |f| %>
+                <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                <div class="row fileupload-buttonbar">
+                  <div class="span7">
+                    <!-- The fileinput-button span is used to style the file input field as button -->
+                    <span class="btn btn-success fileinput-button">
+                      <i class="icon-plus icon-white"></i>
+                      <span>Add file...</span>
+                      <%= f.file_field :upload %>
+                      <%= f.hidden_field :master_quote_id, :value => @master_quote.id, :id => "master_quote_id" %>
+                    </span>
+                    <button type="submit" class="btn btn-primary start">
+                      <i class="icon-upload icon-white"></i>
+                      <span>Start upload</span>
+                    </button>
+                    <button type="reset" class="btn btn-orange cancel">
+                      <i class="icon-ban-circle icon-white"></i>
+                      <span>Cancel upload</span>
+                    </button>
+                  </div>
+                  <div class="span5">
+                    <!-- The global progress bar -->
+                    <div class="progress progress-success progress-striped active fade">
+                      <div class="bar" style="width:0%;"></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- The loading indicator is shown during image processing -->
+                <div class="fileupload-loading"></div>
+                <br>
+                <!-- The table listing the files available for upload/download -->
+                <table class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+                </table>
+              <% end %>
+
+              <%= render 'shared/form_upload' %>
+              <%= render 'shared/form_download' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-paperclip"></i>Attachments</h3>
+          </div>
+          <div class="box-content" style="padding: 30px 50px;">
+            <div id="file-uploads-container">
+              <%= form_for MasterQuoteUpload.new, :html => { :multipart => true, :id => "master-quote-upload", "data-master-quote-id" => @master_quote.id  } do |f| %>
+                <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                <div class="row fileupload-buttonbar">
+                  <div class="span7">
+                    <!-- The fileinput-button span is used to style the file input field as button -->
+                    <span class="btn btn-success fileinput-button">
+                      <i class="icon-plus icon-white"></i>
+                      <span>Add files...</span>
+                      <%= f.file_field :upload %>
+                      <%= f.hidden_field :master_quote_id, :value => @master_quote.id, :id => "master_quote_id" %>
+                    </span>
+                    <button type="submit" class="btn btn-primary start">
+                      <i class="icon-upload icon-white"></i>
+                      <span>Start upload</span>
+                    </button>
+                    <button type="reset" class="btn btn-orange cancel">
+                      <i class="icon-ban-circle icon-white"></i>
+                      <span>Cancel upload</span>
+                    </button>
+                  </div>
+                  <div class="span5">
+                    <!-- The global progress bar -->
+                    <div class="progress progress-success progress-striped active fade">
+                      <div class="bar" style="width:0%;"></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- The loading indicator is shown during image processing -->
+                <div class="fileupload-loading"></div>
+                <br>
+                <!-- The table listing the files available for upload/download -->
+                <table class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+                </table>
+              <% end %>
+
+              <%= render 'shared/form_upload' %>
+              <%= render 'shared/form_download' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

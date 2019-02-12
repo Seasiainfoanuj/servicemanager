@@ -1,0 +1,92 @@
+table#hire-quote-vehicle-details tr {
+  td:nth-of-type(1) { 
+    background: #E9E9E9;
+    width: 20%; 
+  }
+  td:nth-of-type(2) { width: 30%; }
+  td:nth-of-type(3) { 
+    background: #E9E9E9;
+    width: 20%; 
+    border-left: 2px solid #333;
+  }
+  td:nth-of-type(4) { width: 30%; }
+}
+
+#hire-quote-addons, #addons-for-hire-product {
+  table thead {
+    tr:first-of-type {
+      background: #E9E9E9;
+      td {
+        border-bottom: 1px solid #A5A5A5;
+      }
+    }
+  }
+}
+
+form#hire-quote-vehicle-form {
+  table.vehicle-addons tbody tr, table.vehicle-fees tbody tr {
+    width: 100%;
+    td:last-of-type {
+      input {
+        text-align: right;
+        width: 100px;
+        background: lightblue;
+      }      
+    }
+  }
+  select#hire_quote_vehicle_model_id {
+    background: lightblue;
+  }
+  input#hire_quote_vehicle_start_date_field {
+    background: lightblue;
+  }
+  input#hire_quote_vehicle_end_date_field {
+    background: lightblue;
+  }
+  input#hire_quote_vehicle_daily_rate {
+    background: lightblue;
+    text-align: right;
+  }
+
+  .fees-subform input.fee {
+    background: lightblue;
+  }
+}
+#hire-quote-vehicle-images {
+  margin: 10px auto;
+  img {
+    width: 440px;
+    margin-left: 10px;
+  }
+}
+table#hire-quote-vehicle-enquiry-details tr {
+  td:first-of-type {
+    width: 20%;
+  }
+}
+
+table#hire-quote-vehicle-quote-details tr {
+  td:first-of-type {
+    width: 20%;
+  }
+}
+table#hire-addons-form-table {
+  /*display: block;*/
+  thead {
+    /*display: block;*/
+    tr {
+      td { width: 25%; }
+      td.addon-hire-price input {
+        background: lightblue;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+table#hire-fee-form-table {
+  thead {
+    tr {
+      td { width: 33.3333%; }
+    }
+  }
+}

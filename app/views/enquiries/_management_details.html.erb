@@ -1,0 +1,99 @@
+<% present(@enquiry) do |enquiry| %>
+  <div class="box-title">
+    <h3><i class="glyphicon-notes"></i>Enquiry Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :enquiry_type_id, "Enquiry Type", :class => "control-label" %>
+        <div class="controls">
+          <% readonly = enquiry.hire_enquiry? %>
+            <%= f.select :enquiry_type_id, options_for_select(enquiry.options_for_enquiry_types, enquiry.enquiry_type.id), {include_blank: false}, {class: "select2-me span4", disabled: readonly} %>
+        </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :invoice_company, "Internal Company", :class => "control-label" %>
+        <div class="controls">
+          <%= collection_select(:enquiry, :invoice_company_id, InvoiceCompany.all, :id, :name, {prompt: true}, {:class=>'select2-me span6', :style => "margin-left:0"}) %>
+        </div>
+    </div>
+     
+    <div class="control-group">
+      <%= f.label :manager_id, "Assign to", :class => "control-label" %>
+        <% if current_user.has_role? :employee  %>
+          <div class="controls">
+            <% if  enquiry.manager_id.present? %>
+              <%= f.select :manager_id, options_for_select(options_for_enquiriers(enquiry.manager_id), enquiry.manager_id), {include_blank: 'Assign to a manager'}, {class: "select2-me span6", :style => "margin-left:0", 'data-rule-required' => true} %>
+            <% else %>  
+              <%= f.select :manager_id, options_for_select(option_for_dealer, current_user.id), {include_blank: 'Assign to a manager'}, {class: "select2-me span6", :style => "margin-left:0", 'data-rule-required' => true} %>
+            <% end %> 
+          <div style="clear:both"></div>
+          </div>
+      <% end %> 
+      <% if !@enquiry.manager.nil?  %>
+        <% manager_name = @enquiry.manager.id %>
+      <% else %>
+        <% manager_name = "" %> 
+      <% end %> 
+        <% user_name = enquiry.user.id if enquiry.user.present? %>
+      <% if current_user.has_role? :masteradmin , :superadmin %>
+        <div class="controls">
+          <%= f.select :manager_id, options_for_select(admin_managers, enquiry.manager_id), {include_blank: 'Assign to a manager'}, {class: "select2-me span6", :style => "margin-left:0", 'data-rule-required' => true} %>
+          <div style="clear:both"></div>
+        </div>
+          
+      <% elsif (current_user.has_role? :admin) && ( !current_user.has_role? :employee, :masteradmin, :superadmin, :dealer) && ((current_user.id == user_name) || (current_user.id == manager_name))%>
+        <div class="controls">
+          <%= f.select :manager_id, options_for_select(admin_managers, enquiry.manager_id), {include_blank: 'Assign to a manager'}, {class: "select2-me span6", :style => "margin-left:0", 'data-rule-required' => true} %>
+          <div style="clear:both"></div>
+        </div>
+      
+      <% elsif (current_user.has_role? :dealer) %>
+        <div class="controls">
+          <% if  enquiry.manager_id.present? %>
+            <%= f.select :manager_id, options_for_select(options_for_enquiriers(enquiry.manager_id), enquiry.manager_id), {include_blank: 'Assign to a manager'}, {class: "select2-me span6", :style => "margin-left:0", 'data-rule-required' => true} %>
+          <% else %>  
+            <%= f.select :manager_id, options_for_select(option_for_dealer,  current_user.id), {include_blank: 'Assign to a manager'}, {class: "select2-me span6", :style => "margin-left:0", 'data-rule-required' => true} %>
+          <% end %>   
+          <div style="clear:both"></div>
+        </div>    
+      <% end %>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :status, "Status", :class => "control-label" %>
+        <div class="controls">
+          <%= f.select :status, options_for_select(enquiry.options_for_statuses, enquiry.status), {include_blank: false}, class: "select2-me span4" %>
+        </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :score, "Score", :class => "control-label" %>
+        <div class="controls">
+          <%= f.select :score, options_for_select([["Cold", "cold"], ["Warm", "warm"], ["Hot", "hot"]], enquiry.score), {include_blank: 'Add Score'}, class: "select2-me span4" %>
+        </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :find_us, "How did you find us? *", :class => "control-label right" %>
+      <div class="controls">
+        <%= f.select :find_us, options_for_select(['Social media','Bus 4x4 websites','Referrals','Magazine ads','Online ads','Others']), {include_blank: 'Select Options'}, class: "select2-me span4" %>
+      </div>
+    </div>
+    <div class="control-group" style="margin-bottom: 0;">
+      <div class="controls">
+        <div style="float: left; width: 100px;">
+          <div class="check-line" style="float: left;">
+            <%= f.check_box :flagged, {:class => "icheck-me", "data-skin" => "square", "data-color" => "orange"} %>
+              <%= f.label :flagged, "Flag", :class => "inline" %>
+          </div>
+        </div>
+
+        <div style="float: left; width: 150px;">
+          <div class="check-line">
+            <%= f.check_box :seen, {:class => "icheck-me", "data-skin" => "square", "data-color" => "red", checked: true} %>
+              <%= f.label :seen, "Mark as Read", :class => "inline" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>

@@ -1,0 +1,272 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1><%= @off_hire_job.name %> <span class="label"><%= "REF# #{@off_hire_job.uid}" %></span></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if @off_hire_job.status == 'complete' && @off_hire_job.sp_invoice.blank? %>
+          <%= link_to 'Submit Invoice'.html_safe, off_hire_job_submit_invoice_path(@off_hire_job), :class => 'btn btn-green' %>
+        <% end %>
+
+        <% if can? :send_notifications, OffHireJob %>
+          <a href="#send-off-hire-job-model" role="button" class="btn btn-satblue" data-toggle="modal"><i class="icon-envelope"></i> Send by Email</a>
+          <%= render 'send_form' %>
+        <% end %>
+
+        <% if current_user.has_role? :admin %>
+          <% if can? :update, OffHireJob %>
+            <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_off_hire_job_path, {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+          <% end %>
+        <% end %>
+
+        <% if can? :read, HireAgreement %>
+          <%= link_to '<i class="icon-list-alt"></i>'.html_safe, hire_agreement_path(@off_hire_job.off_hire_report.hire_agreement), {:title => "Hire Agreement", :class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+        <% else %>
+          <%= link_to '<i class="icon-list-alt"></i>'.html_safe, off_hire_jobs_path, {:title => "List All", :class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+        <% end %>
+
+        <% if can? :complete, OffHireJob %>
+          <% if @off_hire_job.status == 'confirmed' %>
+            <%= link_to '<i class="icon-ok-sign"></i> Complete'.html_safe, {:action => 'complete_step1', :off_hire_job_id => @off_hire_job.id}, {:class => 'btn btn-satgreen'} %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+
+          <div class="row-fluid">
+            <div class="span6">
+              <div class="box-title">
+                <h3><i class="glyphicon-notes"></i>Job Details</h3>
+              </div>
+              <div class="box-content nopadding">
+                <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+                  <tbody>
+                    <tr>
+                      <td>REF</td>
+                      <td width="75%"><span class="label label-grey"><%= @off_hire_job.uid %></span></td>
+                    </tr>
+                    <tr>
+                      <td>Status</td>
+                      <td width="75%"><%= off_hire_job_status_label(@off_hire_job.status) %></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="span6">
+              <div class="box-title">
+                <h3><i class="icon-calendar"></i>Schedule</h3>
+              </div>
+              <div class="box-content nopadding">
+                <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+                  <tbody>
+                    <tr>
+                      <td>Scheduled Time</td>
+                      <td width="75%"><%= @off_hire_job.sched_date_field %> - <b><%= @off_hire_job.sched_time_field %></b></td>
+                    </tr>
+                    <tr>
+                      <td>ETC Time</td>
+                      <td width="75%"><%= @off_hire_job.etc_date_field %> - <b><%= @off_hire_job.etc_time_field %></b></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="box-title">
+            <h3><i class="glyphicon-group" style="position:relative; top:-3px;"></i>Contact Information</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Service Provider</td>
+                  <td width="80%">
+                    <% if @off_hire_job.service_provider %>
+                      <%= render 'shared/contact_info_model', user: @off_hire_job.service_provider, model_name: 'service-provider' %>
+                      <a href="#modal-service-provider" class="btn btn-mini" data-toggle="modal" style="margin-right:5px"><i class="icon-search"></i></a> <%= @off_hire_job.service_provider.company_name %>
+                    <% end %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Assigned to</td>
+                  <td width="80%">
+                    <% if @off_hire_job.manager %>
+                      <%= render 'shared/contact_info_model', user: @off_hire_job.manager, model_name: 'manager' %>
+                      <a href="#modal-manager" class="btn btn-mini" data-toggle="modal" style="margin-right:5px"><i class="icon-search"></i></a> <%= @off_hire_job.manager.company_name %>
+                    <% end %>
+                  </td>
+                </tr>
+                <% @off_hire_job.subscribers.each do |subscriber| %>
+                  <tr>
+                    <td>Subscriber</td>
+                    <td width="80%">
+                      <%= subscriber.company_name %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+
+          <% if @off_hire_job.invoice_company %>
+            <div class="box-title">
+              <h3><i class="glyphicon-notes_2" style="position:relative; top:-3px;"></i>Invoice To</h3>
+            </div>
+            <div class="box-content nopadding">
+              <table id="invoice-to" class="table table-bordered table-force-topborder" style="clear: both">
+                <tbody>
+                  <tr>
+                    <td>Company</td>
+                    <td width="80%"><%= @off_hire_job.invoice_company.name %></td>
+                  </tr>
+                  <% if @off_hire_job.invoice_company.abn.present? %>
+                    <tr>
+                      <td>ABN</td>
+                      <td width="80%"><%= @off_hire_job.invoice_company.abn %></td>
+                    </tr>
+                  <% end %>
+                  <% if @off_hire_job.invoice_company.acn.present? %>
+                    <tr>
+                      <td>ACN</td>
+                      <td width="80%"><%= @off_hire_job.invoice_company.acn %></td>
+                    </tr>
+                  <% end %>
+                  <% if @off_hire_job.invoice_company.phone.present? %>
+                    <tr>
+                      <td>Phone</td>
+                      <td width="80%"><%= @off_hire_job.invoice_company.phone %></td>
+                    </tr>
+                  <% end %>
+                  <% if @off_hire_job.invoice_company.fax.present? %>
+                    <tr>
+                      <td>Fax</td>
+                      <td width="80%"><%= @off_hire_job.invoice_company.fax %></td>
+                    </tr>
+                  <% end %>
+                  <% if @off_hire_job.invoice_company.address_line_1.present? || @off_hire_job.invoice_company.address_line_2.present? || @off_hire_job.invoice_company.suburb.present? || @off_hire_job.invoice_company.state.present? || @off_hire_job.invoice_company.postcode.present? || @off_hire_job.invoice_company.country.present? %>
+                    <tr>
+                      <td>Address</td>
+                      <td width="80%">
+                        <%= "#{@off_hire_job.invoice_company.address_line_1}<br>".html_safe if @off_hire_job.invoice_company.address_line_1.present? %>
+                        <%= "#{@off_hire_job.invoice_company.address_line_2}<br>".html_safe if @off_hire_job.invoice_company.address_line_2.present? %>
+                        <%= "#{@off_hire_job.invoice_company.suburb}, ".html_safe if @off_hire_job.invoice_company.suburb.present? %>
+                        <%= "#{@off_hire_job.invoice_company.state} ".html_safe if @off_hire_job.invoice_company.state.present? %>
+                        <%= "#{@off_hire_job.invoice_company.postcode} ".html_safe if @off_hire_job.invoice_company.postcode.present? %>
+                        <%= "<br>#{@off_hire_job.invoice_company.country}".html_safe if @off_hire_job.invoice_company.country.present? %>
+                      </td>
+                    </tr>
+                  <% end %>
+                  <% if @off_hire_job.invoice_company.accounts_admin %>
+                    <tr>
+                      <td>Accounts Person</td>
+                      <td width="80%">
+                        <%= @off_hire_job.invoice_company.accounts_admin.ref_name %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+
+          <% if @off_hire_job.sp_invoice && current_user.has_role?(:admin) %>
+            <div class="box-title">
+              <h3><i class="glyphicon-notes"></i>Service Provider Invoice</h3>
+            </div>
+            <div class="box-content nopadding">
+              <table id="sp-invoice" class="table table-bordered table-force-topborder" style="clear: both">
+                <tbody>
+                  <tr>
+                    <td>Invoice Number</td>
+                    <td width="80%">
+                      <%= link_to(@off_hire_job.sp_invoice.invoice_number, @off_hire_job.sp_invoice) %>
+                      <%= link_to '<i class="icon-search"></i>'.html_safe, @off_hire_job.sp_invoice, :class => 'btn btn-mini' %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Status</td>
+                    <td width="80%"><%= sp_invoice_status_label(@off_hire_job.sp_invoice.status) %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+
+          <div class="box-title">
+            <h3><i class="glyphicon-car"></i>Vehicle Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="vehicle" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Year, Make &amp; Model</td>
+                  <td width="80%"><%= @off_hire_job.off_hire_report.hire_agreement.vehicle.name %></td>
+                </tr>
+                <tr>
+                  <td>Vehicle Number</td>
+                  <td width="80%"><%= @off_hire_job.off_hire_report.hire_agreement.vehicle.number %> <%= @off_hire_job.off_hire_report.hire_agreement.vehicle.call_sign %></td>
+                </tr>
+                <tr>
+                  <td>VIN Number</td>
+                  <td width="80%"><%= @off_hire_job.off_hire_report.hire_agreement.vehicle.vin_number %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <% unless @off_hire_job.details.blank? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-notes"></i>Job Details</h3>
+            </div>
+            <div class="box-content">
+              <%= @off_hire_job.details.html_safe %>
+            </div>
+          <% end %>
+
+          <% unless @off_hire_job.service_provider_notes.blank? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-notes"></i>Notes On Completion</h3>
+            </div>
+            <div class="box-content">
+              <%= @off_hire_job.service_provider_notes.html_safe %>
+            </div>
+          <% end %>
+
+          <%= render 'shared/notes/list', resource: @off_hire_job %>
+
+          <% unless @off_hire_job.uploads.empty? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-paperclip"></i>Attachments</h3>
+            </div>
+            <div class="box-content" style="padding: 20px 20px 50px;">
+              <% @off_hire_job.uploads.each do |file| %>
+              <div style="margin:5px; height: 200px; float:left">
+                <div class="thumbnail" style="float: left; margin-right: 5px; text-align:center;">
+                  <a href="<%= file.upload.url(:original) %>"><%= image_tag file.upload.url(:medium) %></a><br>
+                  <a href="<%= file.upload.url(:original) %>" style="font-size:0.8em;padding:5px;"><%= file.upload_file_name %></a>
+                </div>
+              </div>
+              <% end %>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

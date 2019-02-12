@@ -1,0 +1,88 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <h1>Schedule Search</h1>
+    </div>
+
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">    
+        <div class="box box-condensed box-color box-bordered">
+
+          <div class="box-title">
+            <h3><i class="glyphicon-cars"></i>Schedule Search</h3>
+          </div>
+          <div class="box-content">
+            <div id='search-form'>
+              <%= form_for(@search, :url => {:action => :submit, :controller => :schedule_views }, :method => :post, :html => {:id => 'search-form', :class => "form-horizontal"}) do |f| %>
+
+                <div class="control-group">
+                  <%= f.label :view_type, "Select Schedule view:", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= f.select :view_type, options_for_select(ScheduleView.all.collect { |sv| [sv.name, sv.id] }, selected: '1'), class: "input-xlarge selected-users", size: 4, id: 'schedule-views' %>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <%= f.label :rego, "Vehicle registration number", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= f.text_field :rego, :class => "input-large" %>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <%= f.label :vin, "VIN number", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= f.text_field :vin, :class => "input-large" %>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <%= f.label :bus_num, "Bus number", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= f.text_field :bus_num, :class => "input-large" %>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <%= f.label :call_sign, "Call sign", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= f.text_field :call_sign, :class => "input-large" %>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <%= f.label :date_from, "Date from", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= f.text_field :date_from, {:class => "input-small datepick mask_date", :value => display_date(DEFAULT_QUERY_START_DATE)} %>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <%= f.label :date_until, "Date until", :class => "control-label right" %>
+                  <div class="controls">
+                    <%= f.text_field :date_until, {:class => "input-small datepick mask_date", :value => display_date(DEFAULT_QUERY_END_DATE)} %>
+                  </div>
+                </div>
+
+                <div class="actions">
+                  <%= f.submit "Search", :class => "btn btn-green note-submit", id: 'schedule-submit' %>
+                </div>
+
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

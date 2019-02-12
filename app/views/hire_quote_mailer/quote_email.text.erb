@@ -1,0 +1,17 @@
+Hi <%= @customer.first_name %>,
+
+<% unless @message.nil? || @message.blank? %>
+  <%= @message %>
+<% end %>
+To access your quote from <%= BUS4X4_HIRE_COMPANY_NAME %>, go to:
+
+<%= view_customer_quote_hire_quote_url(@quote, :user_email => @customer.email, :user_token => @customer.authentication_token) %>
+
+Best Regards,
+<%= @manager.name %>
+<%= BUS4X4_HIRE_COMPANY_NAME %>
+<%= "Phone: #{@manager.phone}" if @manager.phone.present? %>
+<%= "Mobile: #{@manager.mobile}" if @manager.mobile.present? %>
+<%= "Email: #{@manager.email}" if @manager.email.present? %>
+<%= "Fax: #{@manager.fax}" if @manager.fax.present? %>
+<%= "Website: #{@manager.website}" if @manager.website.present? %>

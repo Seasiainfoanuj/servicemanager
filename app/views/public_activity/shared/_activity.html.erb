@@ -1,0 +1,15 @@
+<% activity.owner ? owner = link_to(activity.owner.name, activity.owner) : owner = "a deleted user" %>
+
+<% if activity.trackable && activity.trackable_type == 'BuildSpecification' %>
+  <% build = activity.trackable.build %>
+  <% trackable = link_to("#{activity.trackable_type.titleize} #{uid}", build_build_specification_path(build), class: 'btn btn-mini') %>
+<% else %>  
+  <% activity.trackable ? trackable = link_to("#{activity.trackable_type.titleize} #{uid}", activity.trackable, class: 'btn btn-mini') : trackable = "#{activity.trackable_type.titleize} #{uid}" %>
+<% end %>
+
+<% if display == "simple" %>
+  <%= "#{action.capitalize} by #{owner}".html_safe %>
+<% else %>
+  <%= "#{trackable} #{action.capitalize} by #{owner}".html_safe %>
+<% end %>
+

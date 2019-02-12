@@ -1,0 +1,84 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Enquiries</h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if can? :create, Enquiry %>
+          <%= link_to '<i class="icon-plus-sign"></i> Create Enquiry'.html_safe, new_enquiry_path, {:class => 'btn btn-lightgrey'} %>
+        <% end %>
+      </div>
+     
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <% if current_user.admin? %>
+          <div class="alert alert-info" style="margin-top:20px">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <i class="icon icon-info-sign"></i> To see Hire Enquiries only, select 'Hire / Lease' from Enquiry Type and click the Search button.
+          </div>
+        <% end %>
+
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-group" style="position:relative; top: -3px;"></i>Enquiries</h3><%= manual_link('enquiries') if current_user.admin? %>
+          </div>
+          <div class="box-content nopadding enquiries">
+
+            <%= render('search_form') if current_user.admin? %>
+
+            <table id="enquiries-table" class="table">
+              <thead>
+                <tr>
+                  <% if current_user.admin? %>
+                    <th></th>
+                    <th><i class="glyphicon-flag"></i></th>
+                  <% end %>
+                  <th>REF</th>
+                  <% if current_user.has_role? :admin %>
+                    <th>Status</th>
+                  <% end %>
+                  <th>Type</th>
+                  <th>Enquirer/Company</th>
+                  <th>Assigned to</th>
+                  <th>Score</th>
+                  <th>Enquiry Date</th>
+                  <th data-orderable="false">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if @enquiries.total_entries > 0 %>
+                  <%= render @enquiries %>
+                <% else %>
+                  <tr><td colspan="10" style="text-align: center;">No records matched your search criteria.</td></tr>
+                <% end %>
+              </tbody>
+            </table>
+
+            <% if @enquiries.total_entries > 0 %>
+              <table id="enquiries-table-footer">
+                <thead>
+                  <tr>
+                    <th><%= query_totals(@enquiries.total_entries, params[:page].to_i, @search.per_page.to_i) %></th>
+                  </tr>
+                </thead>
+              </table>  
+            <% end %>  
+           
+            <%= will_paginate @enquiries unless @enquiries.none? %>            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

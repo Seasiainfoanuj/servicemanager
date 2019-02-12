@@ -1,0 +1,57 @@
+<%= form_for(@search, html: {id: "enquiries-search"}, method: :post, url: {controller: "enquiries", action: "search"}) do |f| %>
+
+  <section class="field-filters">
+    <div class="control-group">
+      <%= f.label :uid, "REF" %><br>
+      <%= f.text_field :uid, class: 'search-field', placeholder: 'full number' %>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :enquirer_name, "Enquirer name" %><br>
+      <%= f.text_field :enquirer_name, class: 'search-field', placeholder: 'partial name or email', class: 'enquirer' %>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :manager_name, "Manager name" %><br>
+      <%= f.text_field :manager_name, class: 'search-field', placeholder: 'partial name', class: 'enquirer' %>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :company_name, "Company name" %><br>
+      <%= f.text_field :company_name, class: 'search-field', placeholder: 'partial name' %>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :enquiry_type, "Enquiry Type" %><br>
+      <%= f.select :enquiry_type, options_for_select(EnquiryType.all.collect { |etype| [etype.name, etype.id] }, @search.enquiry_type), {include_blank: ''} %>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :enquiry_status, "Status", class: "select" %><br>
+      <%= f.select :enquiry_status, options_for_select(Enquiry::STATUSES.map(&:titleize), @search.enquiry_status), {include_blank: ''} %>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :show_all, "Show all", class: "check" %><br>
+      <%= f.check_box :show_all, class: "check" %>
+    </div> 
+
+    <div class="control-group">
+      <%= f.label :sort_field, "Sort by", class: "select" %><br>
+      <%= f.select :sort_field, options_for_select(['Enquiry Ref', 'Enquirer first name', 'Enquirer last name', 'Enquirer email', 'Company name', 'Enquiry status', 'Enquiry type', 'Enquiry date'], @search.sort_field) %>
+      <%= f.select :direction, options_for_select(['Ascending', 'Descending'], @search.direction) %>
+    </div>
+
+    <div class="control-group per-page">
+      <%= f.label :per_page, "Rows per page" %><br>
+      <%= f.select :per_page, options_for_select(['10', '20', '30'], @search.per_page) %>
+    </div>  
+  </section>
+
+  <section class="buttons">
+    <div class="control-group">
+      <%= submit_tag "Search", class: "btn btn-blue" %> 
+      <%= button_tag "Clear", class: "btn btn-blue", id: "clear-all-search-fields" %> 
+    </div>
+  </section>
+<% end %>  

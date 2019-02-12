@@ -1,0 +1,45 @@
+<div id="send-build-order-model" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Send Build Order</h3>
+  </div>
+  <div class="modal-body">
+    <div class="row-fluid">
+      <div style="padding: 20px; background: #fbfbfb; border: 1px dashed #DDDDDD">
+        <div class="control-group">
+          <label for="textfield" id="send_to_label" class="control-label"><b>Send to</b></label>
+          <div class="controls">
+            <div class="recipients-col" style="margin: 10px 20px;">
+              <% if @build_order.service_provider %>
+                <div class="check-line">
+                  <input type="checkbox" id="c_service_provider" class='icheck-me' data-skin="square" data-color="blue" data-service_provider_id="<%= @build_order.service_provider.id %>"> <label class='inline' for="c_service_provider">Service Provider - <%= @build_order.service_provider.company_name_short unless @build_order.service_provider.company_name_short == "[#{@build_order.service_provider.email}]" %> (<%= @build_order.service_provider.email %>)</label>
+                </div>
+              <% end %>
+              <% if @build_order.manager %>
+                <div class="check-line">
+                  <input type="checkbox" id="c_manager" class='icheck-me' data-skin="square" data-color="blue" data-admin_id="<%= @build_order.manager.id %>"> <label class='inline' for="c_manager">Manager - <%= @build_order.manager.company_name_short unless @build_order.manager.company_name_short == "[#{@build_order.manager.email}]" %> (<%= @build_order.manager.email %>)</label>
+                </div>
+              <% end %>
+              <% @build_order.subscribers.each do |subscriber| %>
+                <div class="check-line">
+                  <input type="checkbox" id="c_subscriber_<%= subscriber.id %>" class='icheck-me subscriber' data-skin="square" data-color="blue" data-subscriber_id="<%= subscriber.id %>"> <label class='inline' for="c_subscriber_<%= subscriber.id %>">Subscriber - <%= subscriber.company_name_short unless subscriber.company_name_short == "[#{subscriber.email}]" %> (<%= subscriber.email %>)</label>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="control-group">
+          <label for="email_message" id="message_label" class="control-label"><b>Message</b></label>
+          <div class="controls">
+            <textarea name="email_message" id="email_message" class="span12" rows="5">Please review the following build order.</textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-grey" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <%= link_to "Send", {:action => 'send_notifications', :build_order_id => @build_order.id}, {:class => 'btn btn-satblue', :id => 'email_send_button'} %>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<h2>Secure Login</h2>
+
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "form-validate"}) do |f| %>
+
+  <%= render(:partial => 'layouts/notice') %>
+  
+  <div class="control-group">
+    <div class="email controls">
+       <%= f.email_field :email, {:autofocus => true, :placeholder => 'Email address', :class => 'input-block-level', 'data-rule-required' => true, 'data-rule-email' => true} %>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="pw controls">
+      <%= f.password_field :password, {:placeholder => 'Password', :class => 'input-block-level', 'data-rule-required' => true } %>
+    </div>
+  </div>
+  <div class="submit">
+    <% if devise_mapping.rememberable? -%>
+      <div class="remember">
+        <%= f.check_box :remember_me, {:id => 'remember', :class => 'icheck-me', 'data-skin' => 'square', 'data-color' => 'blue'} %>
+        <%= f.label :remember_me %>
+      </div>
+    <% end -%>
+    <%= f.submit "Login", :class => 'btn btn-grey' %>
+  </div>
+<% end %>
+
+<div class="forget">
+  <%= render "devise/shared/links" %>
+</div>

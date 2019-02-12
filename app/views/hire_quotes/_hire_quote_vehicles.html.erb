@@ -1,0 +1,40 @@
+<div class="box box-condensed box-color box-bordered">
+  <div class="box-title">
+    <h3><i class="icon-truck", aria-hidden="true" style="position:relative; top:-3px;"></i>Hire Quote Vehicles</h3>
+    <%= manual_link('hire_quote_vehicles') if current_user.admin? %>
+  </div>
+  <div class="box-content nopadding">
+    <table id="hire-quote-vehicle-list" class="table table-bordered table-force-topborder" style="clear: both">
+      <thead>
+        <tr>
+          <th>Make</th>
+          <th>Model</th>
+          <th>From</th>
+          <th>Until</th>
+          <th>Ongoing?</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% quote.vehicles.each do |vehicle| %>
+          <tr>
+            <td><%= vehicle.vehicle_model.make.name %></td>
+            <td><%= link_to(vehicle.vehicle_model.name, vehicle.vehicle_model) %></td>
+            <td><%= display_date(vehicle.start_date, {format: :short}) %></td>
+            <td><%= display_date(vehicle.end_date, {format: :short}) %></td>
+            <td><%= vehicle.ongoing_contract ? "Yes" : "No" %></td>
+            <td>
+              <%= link_to content_tag(:i, nil, class: 'icon-search'), hire_quote_hire_quote_vehicle_path(quote.reference, vehicle.id), {:title => 'View', :class => 'btn action-link'} %>
+              <% if quote.admin_may_perform_action?(:update_quote_vehicle) %>
+                <%= link_to content_tag(:i, nil, class: 'icon-edit'), edit_hire_quote_hire_quote_vehicle_path(quote.reference, vehicle.id), {:title => 'Edit', :class => 'btn action-link'} %>
+              <% end %>
+              <% if quote.admin_may_perform_action?(:delete_quote_vehicle) %>
+                <%= link_to '<i class="icon-ban-circle"></i>'.html_safe, hire_quote_hire_quote_vehicle_path(quote.reference, vehicle.id), :class => 'btn action-link', method: :delete, :title => 'Destroy', 'rel' => 'tooltip', data: {confirm: "You are about to permanently remove this vehicle from the quote. You cannot reverse this action. Are you sure you want to proceed?"} %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>  
+      </tbody>
+    </table>
+  </div>
+</div>

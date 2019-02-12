@@ -1,0 +1,28 @@
+<div class="box-title">
+  <h3><span class="step">1</span> Please check if personal details are correct</h3>
+</div>
+
+<div class="box-content nopadding">
+  <table class="table table-bordered vehicle" style="clear: both;">
+    <tbody>
+      <tr>
+        <td>First name</td>
+        <td><%= @view_contract.customer.first_name %></td>
+        <td>Last name</td>
+        <td><%= @view_contract.customer.last_name %></td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td><%= @view_contract.customer.email %></td>
+        <td>Phone</td>
+        <td><%= @view_contract.customer.phone %></td>
+      </tr>
+      <tr>
+        <td>Company</td>
+        <td><%= @view_contract.customer_company_name %></td>
+        <td>Job title</td>
+        <td><%= @view_contract.customer.job_title %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,17 @@
+<% if @hire_agreement.manager && @hire_agreement.manager.first_name %>
+Hi <%= @hire_agreement.manager.first_name %>,
+
+<% end %>
+<%= @hire_agreement.customer.name %> has accepted hire agreement #<%= @hire_agreement.uid %>.
+
+Contact Details:
+-----------------------------------------
+<% if @hire_agreement.customer.first_name && @hire_agreement.customer.last_name %>
+Name: <%= @hire_agreement.customer.name %>
+<% end %>
+<% if @hire_agreement.customer.email && @hire_agreement.customer.email %>
+Email: <%= @hire_agreement.customer.email %>
+<% end %>
+<% if @hire_agreement.customer.mobile %>
+Phone: <%= @hire_agreement.customer.mobile %>
+<% end %>

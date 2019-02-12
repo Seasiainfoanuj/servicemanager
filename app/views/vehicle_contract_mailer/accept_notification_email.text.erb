@@ -1,0 +1,17 @@
+<% if @vehicle_contract.manager && @vehicle_contract.manager.first_name %>
+Hi <%= @vehicle_contract.manager.first_name %>,
+
+<% end %>
+<%= @vehicle_contract.customer.name %> has accepted vehicle contract #<%= @vehicle_contract.uid %>.
+
+Customer Contact Details:
+-----------------------------------------
+<% if @vehicle_contract.customer.first_name && @vehicle_contract.customer.last_name %>
+Name: <%= @vehicle_contract.customer.name %>
+<% end %>
+<% if @vehicle_contract.customer.email && @vehicle_contract.customer.email %>
+Email: <%= @vehicle_contract.customer.email %>
+<% end %>
+<% if @vehicle_contract.customer.mobile %>
+Phone: <%= @vehicle_contract.customer.mobile %>
+<% end %>

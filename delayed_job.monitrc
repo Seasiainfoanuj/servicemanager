@@ -1,0 +1,6 @@
+check process delayed_job
+  with pidfile /var/www/vhosts/secure.bus4x4.com.au/shared/pids/delayed_job.pid
+  start program = "/bin/bash -c 'cd /var/www/vhosts/secure.bus4x4.com.au/current && PATH=/home/deployer/.rbenv/bin:/home/deployer/.rbenv/shims:$PATH RAILS_ENV=production bin/delayed_job start'"
+    as uid deployer and gid deployer
+  stop program = "/bin/bash -c 'cd /var/www/vhosts/secure.bus4x4.com.au/current && PATH=/home/deployer/.rbenv/bin:/home/deployer/.rbenv/shims:$PATH RAILS_ENV=production bin/delayed_job stop'"
+    as uid deployer and gid deployer

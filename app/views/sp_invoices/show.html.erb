@@ -1,0 +1,122 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1><%= @sp_invoice.invoice_number %></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <%= link_to "<i class='icon-ok-sign'></i> Process".html_safe, sp_invoice_process_sp_invoice_path(@sp_invoice), :class => 'btn btn-green', data: {confirm: "Are you sure you want to mark invoice #{@sp_invoice.invoice_number} as processed?"} unless @sp_invoice.status == 'processed' %>
+
+        <%= link_to '<i class="icon-list-alt"></i>'.html_safe, sp_invoices_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+
+        <% if can? :update, @sp_invoice %>
+          <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_sp_invoice_path(@sp_invoice), {:title => 'Edit', :class => 'btn', "data-placement" => "bottom", 'rel' => 'tooltip'} %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-user" style="position:relative; top:-3px;"></i>Job Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Job Type</td>
+                  <td width="80%">
+                    <% if @sp_invoice.job_type == 'Workorder' %>
+                      <%= content_tag(:span, @sp_invoice.workorder.type.name, class: 'label', style: "background-color: #{@sp_invoice.workorder.type.label_color}") %>
+                    <% else %>
+                      <%= content_tag(:span, @sp_invoice.job_type.titleize, class: 'label label-grey') %>
+                    <% end %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Job Ref</td>
+                  <td width="80%">
+                    <%= link_to '<i class="icon-search"></i>'.html_safe, @sp_invoice.job, :class => 'btn btn-mini' %>
+                    <%= link_to(content_tag(:span, @sp_invoice.job.uid, class: 'label label-grey'), @sp_invoice.job) %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Service Provider</td>
+                  <td width="80%">
+                    <% if @sp_invoice.job.service_provider %>
+                      <%= render 'shared/contact_info_model', user: @sp_invoice.job.service_provider, model_name: 'service-provider' %>
+                      <a href="#modal-service-provider" class="btn btn-mini" data-toggle="modal" style="margin-right:5px"><i class="icon-search"></i></a> <%= @sp_invoice.job.service_provider.company_name %>
+                    <% end %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Vehicle</td>
+                  <td width="80%"><%= link_to '<i class="icon-search"></i>'.html_safe, @vehicle, :class => 'btn btn-mini' %> <%= @vehicle.ref_name %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box-title">
+            <h3><i class="glyphicon-notes"></i>Invoice Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="sp-invoice-details" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Invoice Number</td>
+                  <td width="80%"><%= @sp_invoice.invoice_number %></td>
+                </tr>
+                <tr>
+                  <td>Status</td>
+                  <td width="80%"><%= sp_invoice_status_label(@sp_invoice.status) %></td>
+                </tr>
+                <tr>
+                  <td>Attachment</td>
+                  <td width="80%">
+                    <% if @sp_invoice.upload_file_name.present? %>
+                      <%= link_to '<i class="icon-search"></i>'.html_safe, @sp_invoice.upload.url(:original), :class => 'btn btn-mini' %>
+                      <%= link_to @sp_invoice.upload_file_name, @sp_invoice.upload.url(:original) %>
+                    <% else %>
+                      No attachment found.
+                    <% end %>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <%= render 'shared/notes/list', resource: @sp_invoice %>
+
+          <% if current_user.has_role? :admin %>
+            <div class="box-title">
+              <h3><i class="icon-bullhorn"></i>Activity</h3>
+            </div>
+            <div id="activity-feed" class="box-content scrollable" data-height="300" data-visible="true">
+              <% @activities.each do |activity| %>
+                <div class="activity">
+                  <div class="details">
+                    <%= render_activity activity, locals: {display: "simple"} %>
+                    <span class="time"><%= time_ago_in_words(activity.created_at) + " ago" %></span>
+                  </div>
+                  <div class="date">
+                    <%= activity.created_at.strftime("%e %b %Y, %l:%M %p") %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

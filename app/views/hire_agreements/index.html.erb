@@ -1,0 +1,75 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Hire Agreements</h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if can? :create, HireAgreement %>
+
+          <a href="#create_customer_model" role="button" class="btn btn-lightgrey" data-toggle="modal"><i class="icon-plus-sign"></i> New Hire Agreement</a>
+
+          <div id="create_customer_model" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">New Customer?</h3>
+            </div>
+            <div class="modal-body">
+              <p>To create a hire agreement you must select a pre existing customer. Do you need to create a new customer record first?</p>
+            </div>
+            <div class="modal-footer">
+              <% if @vehicle %>
+              <%= link_to 'Existing Customer', {:action => 'new', :vehicle_id => @vehicle.id}, {:class => 'btn btn-orange'} %>
+              <% else %>
+                <%= link_to '<i class="glyphicon-user" style="position:relative; top: -2px;"></i> Existing Customer'.html_safe, {:action => 'new'}, {:class => 'btn btn-orange'} %>
+              <% end %>
+              <%= link_to '<i class="icon-plus-sign"></i> New Customer'.html_safe, {:controller => 'users', :action => 'customer'}, {:class => 'btn btn-satgreen'} %>
+            </div>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-notes"></i>Hire Agreements</h3>
+
+            <div class="show-all-check">
+              <input type="checkbox" id="show-all" class="icheck-me" data-skin="square" data-color="red" value="false">
+              <label for="show-all"><i class="icon-question-sign" title="Returned and Cancelled Hire Agreements filtered by default" rel="tooltip" data-placement="top"></i> Show All</label>
+            </div>
+          </div>
+
+          <div class="box-content nopadding">
+            <table class="table table-hover table-nomargin dataTable dataTable-ajax dataTable-tools dataTable-colvis dataTable-scroll-x table-bordered dataTable-showAllCheckbox" data-source="<%= hire_agreements_url(format: "json", vehicle_id: params[:vehicle_id], filtered_user: params[:filtered_user_id]) %>" data-default-sort-column="4" data-default-sort-direction="asc">
+              <thead>
+                <tr>
+                  <th>REF</th>
+                  <th>Vehicle</th>
+                  <th>Status</th>
+                  <th>Customer</th>
+                  <th>Pickup Date</th>
+                  <th>Return Date</th>
+                  <th data-orderable="false">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

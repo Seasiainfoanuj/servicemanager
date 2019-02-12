@@ -1,0 +1,31 @@
+<% if notifications.any? %>
+  <table class="table table-hover table-nomargin notification-list">
+    <thead>
+      <tr>
+        <th>Event name</th>
+        <th>Due date</th>
+        <th>Completed date</th>
+        <th>Recipients</th>
+        <th>Actions</th>
+      </tr>
+    <tbody>
+      <% notifications.each do |notification| %>
+        <tr>
+          <td><%= notification_type_label(notification.notification_type) %></td>
+          <td><%= notification.due_date_field %></td>
+          <td><%= notification.completed_date_field %></td>
+          <td><%= notification.recipients_list %></td>
+          <td><%= link_to content_tag(:i, nil, class: 'icon-search'), notification, {title: 'View', class: 'btn action-link', rel: 'tooltip'}  %>
+              <%= link_to content_tag(:i, nil, class: 'icon-edit'), {controller: "notifications", action: "edit", id: notification.id}, {:title => 'Edit', :class => 'btn action-link'} %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="alert alert-warning" style="margin-top:20px">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <i class="icon icon-warning-sign"></i> No notifications have been defined for this vehicle.
+  </div>
+<% end %>
+

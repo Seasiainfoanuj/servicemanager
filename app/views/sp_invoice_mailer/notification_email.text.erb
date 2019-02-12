@@ -1,0 +1,7 @@
+<% if @user && @user.first_name %>
+Hi <%= @user.first_name %>,
+
+<% end %>
+An invoice has been submitted for <%= @invoice.job_type.titleize %> #<%= @invoice.job.uid %>
+
+Link: <%= sp_invoice_url(@invoice) %>

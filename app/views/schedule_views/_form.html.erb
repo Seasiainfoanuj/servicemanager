@@ -1,0 +1,51 @@
+<%= form_for(@schedule_view, :html => {:id => "schedule-view-form", :class => "form-horizontal"}) do |f| %>
+  <% if @schedule_view.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@schedule_view.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @schedule_view.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="box-title">
+    <h3><i class="glyphicon-calendar"></i>Schedule View Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :name, "Name", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name, :class => "input-xlarge" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-title">
+    <h3><i class="glyphicon-cars"></i>Vehicles</h3>
+  </div>
+  <div class="box-content nopadding">
+    <table id="vehicles-table" class="table">
+      <tbody>
+        <%= f.fields_for :vehicle_schedule_views do |builder| %>
+          <%= render 'vehicle_schedule_view_fields', f: builder %>
+        <% end %>
+
+        <tr id="bottom_anchor"></tr>
+        <tr>
+          <td colspan="2">
+            <select id="vehicle-select" class="select2-me span8" style="margin-right: 20px;">
+              <%= options_from_collection_for_select(Vehicle.all, :id, :ref_name) %>
+            </select>
+
+            <%= link_to_add_fields '<i class="icon-plus-sign"></i> Add Vehicle', f, :vehicle_schedule_views %>
+            <a href="#" id="add_all_vehicles" class="btn pull-right"><i class="icon-plus-sign"></i> Add All Vehicles</a>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+<% end %>

@@ -1,0 +1,80 @@
+.all-roles {
+  label, input { float: left; }
+  label { 
+    padding-left: 5px;
+    padding-right: 15px; 
+  }
+  .controls {
+    padding-top: 5px;
+  }
+}
+.company a.btn {
+  margin-left: 10px;
+}
+#add-company, 
+.show-address-button,
+.hide-address-button {
+  margin-left: 160px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.show-address-button {
+  margin-left: 20px;
+}
+#new-company-details,
+#postal-address-details,
+#physical-address-details,
+#billing-address-details,
+#delivery-address-details {
+  display: block;
+}
+.display-address {
+  margin-left: 160px;
+  margin-bottom: 5px;
+}
+#user-form {
+  h4 {
+    margin-left: 160px;
+  }
+  .person-address {
+    .control-group {
+      display: inline-block;
+    }
+  }
+  .control-group.all-roles .controls {
+    margin-left: 0;
+  }
+}
+#contact-company-profile-form {
+  .form-actions {
+    padding-left: 160px;
+  }
+}
+
+#contact-company-profile-page {
+  .new-role {
+    margin-top: 20px;
+    margin-left: 10px;
+    background: #e9e9e9;
+    padding: 20px;
+    label { 
+      display: inline-block; 
+      vertical-align: top;
+    }
+    .controls { 
+      margin-left: 100px;
+      display: inline-block; 
+    }
+  }
+  .user-contact-roles {
+    margin-left: 0;
+  }
+  #s2id_contact_role_type_id { 
+    width: 220px; 
+  }
+
+  
+}

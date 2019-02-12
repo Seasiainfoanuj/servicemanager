@@ -1,0 +1,107 @@
+<%= form_for(@build, :html => {:id => "build-form", :class => "form-horizontal form-validate"}) do |f| %>
+  <% if @build.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@build.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @build.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="box-title">
+    <h3><i class="glyphicon-car"></i>Build Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :number, "Number", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :number, {:class => "input-large", 'data-rule-required' => true} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :vehicle_id, "Vehicle", :class => "control-label" %>
+      <div class="controls">
+        <% if params[:action] == "new" %>
+          <%= f.collection_select :vehicle_id, Vehicle.includes(:build).where(:builds => {:id => nil}), :id, :ref_name, {prompt: 'Select a vehicle'}, {:class=>'select2-me span8', 'data-rule-required' => true} %>
+        <% else %>
+          <%= f.collection_select :vehicle_id, Vehicle.all, :id, :ref_name, {prompt: 'Select a vehicle'}, {:class=>'select2-me span8', 'data-rule-required' => true} %>
+        <% end %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :quote_id, "Quote", :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select :quote_id, Quote.where(:status => 'accepted'), :id, :ref_name, {prompt: 'Select accepted quote'}, :class=>'select2-me span6' %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :invoice_company_id, "Company", :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select :invoice_company_id, InvoiceCompany.all, :id, :name, {prompt: true}, {:class=>'select2-me span6', 'data-rule-required' => true} %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :manager_id, "Build Manager", :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select :manager_id, User.filter_by_admin, :id, :name, {prompt: 'Assign to'}, {:id => 'admin_select', :class=>'select2-me span6'} %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="box-title">
+  <h3><i class="glyphicon-paperclip"></i>Attachments</h3>
+</div>
+<% if @build.id %>
+  <div class="box-content" style="padding: 30px 50px;">
+    <div id="file-uploads-container">
+      <%= form_for BuildUpload.new, :html => { :multipart => true, :id => "buildupload", :class => "form-validate", "data-build-id" => @build.id  } do |f| %>
+        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+        <div class="row fileupload-buttonbar">
+          <div class="span7">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+            <span class="btn btn-success fileinput-button">
+              <i class="icon-plus icon-white"></i>
+              <span>Add files...</span>
+              <%= f.file_field :upload %>
+              <%= f.hidden_field :build_id, :value => @build.id, :id => "build_id" %>
+            </span>
+            <button type="submit" class="btn btn-primary start">
+              <i class="icon-upload icon-white"></i>
+              <span>Start upload</span>
+            </button>
+            <button type="reset" class="btn btn-orange cancel">
+              <i class="icon-ban-circle icon-white"></i>
+              <span>Cancel upload</span>
+            </button>
+          </div>
+          <div class="span5">
+            <!-- The global progress bar -->
+            <div class="progress progress-success progress-striped active fade">
+              <div class="bar" style="width:0%;"></div>
+            </div>
+          </div>
+        </div>
+        <!-- The loading indicator is shown during image processing -->
+        <div class="fileupload-loading"></div>
+        <br>
+        <!-- The table listing the files available for upload/download -->
+        <table class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+        </table>
+      <% end %>
+
+      <%= render 'shared/form_upload' %>
+      <%= render 'shared/form_download' %>
+    </div>
+  </div>
+<% else %>
+  <div class="box-content">
+    <span class="alert alert-warning"><i class="icon-warning-sign" style="margin-right:3px"></i> Create build to enable file attachments. </span>
+  </div>
+<% end %>

@@ -1,0 +1,34 @@
+<%= form_for(@enquiry_type, :html => {:id => "enquiry-type-form", :class => "form-horizontal"}) do |f| %>
+  <% if @enquiry_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@enquiry_type.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @enquiry_type.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="box-title">
+    <h3><i class="glyphicon-notes"></i>Enquiry Type Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :slug, "Slug", :class => "control-label" %>
+      <div class="controls">
+        <% if params[:action] == "new" %>
+          <%= f.text_field :slug, {:class => "input-large"} %>
+        <% else %>
+          <%= f.text_field :slug, {class: "input-large", readonly: true} %>
+        <% end %>  
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :name, "Name", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name, :class => "input-xlarge" %>
+      </div>
+    </div>
+  </div>
+<% end %>

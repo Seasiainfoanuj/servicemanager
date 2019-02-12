@@ -1,0 +1,175 @@
+<table border="0" cellpadding="3" cellspacing="0" class="email_build_order_details">
+  <tr>
+    <td colspan="2"><h3>Build Order:</h3></td>
+  </tr>
+  <tr>
+    <td>Ref Name:</td>
+    <td><%= @build_order.name %></td>
+  </tr>
+  <tr>
+    <td>Status:</td>
+  <td><%= @build_order.status.capitalize %></td>
+  </tr>
+
+  <tr>
+    <td>Scheduled:</td>
+  <td><%= @build_order.sched_date_field %> - <%= @build_order.sched_time_field %></td>
+  </tr>
+  <tr>
+    <td>Est Complete:</td>
+    <td><%= @build_order.etc_date_field %> - <%= @build_order.etc_time_field %></td>
+  </tr>
+
+  <% if @build_order.invoice_company %>
+    <tr>
+      <td colspan="2"><h3>Invoice To:</h3></td>
+    </tr>
+    <tr>
+      <td>Company:</td>
+      <td><%= @build_order.invoice_company.name %></td>
+    </tr>
+    <% if @build_order.invoice_company.abn.present? %>
+      <tr>
+        <td>ABN:</td>
+        <td><%= @build_order.invoice_company.abn %></td>
+      </tr>
+    <% end %>
+    <% if @build_order.invoice_company.acn.present? %>
+      <tr>
+        <td>ACN:</td>
+        <td><%= @build_order.invoice_company.acn %></td>
+      </tr>
+    <% end %>
+    <% if @build_order.invoice_company.phone.present? %>
+      <tr>
+        <td>Phone:</td>
+        <td><%= @build_order.invoice_company.phone %></td>
+      </tr>
+    <% end %>
+    <% if @build_order.invoice_company.fax.present? %>
+      <tr>
+        <td>Fax:</td>
+        <td><%= @build_order.invoice_company.fax %></td>
+      </tr>
+    <% end %>
+    <% if @build_order.invoice_company.address_line_1.present? || @build_order.invoice_company.address_line_2.present? || @build_order.invoice_company.suburb.present? || @build_order.invoice_company.state.present? || @build_order.invoice_company.postcode.present? || @build_order.invoice_company.country.present? %>
+      <tr>
+        <td>Address:</td>
+        <td>
+          <%= "#{@build_order.invoice_company.address_line_1}<br>".html_safe if @build_order.invoice_company.address_line_1.present? %>
+          <%= "#{@build_order.invoice_company.address_line_2}<br>".html_safe if @build_order.invoice_company.address_line_2.present? %>
+          <%= "#{@build_order.invoice_company.suburb}, ".html_safe if @build_order.invoice_company.suburb.present? %>
+          <%= "#{@build_order.invoice_company.state} ".html_safe if @build_order.invoice_company.state.present? %>
+          <%= "#{@build_order.invoice_company.postcode} ".html_safe if @build_order.invoice_company.postcode.present? %>
+          <%= "<br>#{@build_order.invoice_company.country}".html_safe if @build_order.invoice_company.country.present? %>
+        </td>
+      </tr>
+    <% end %>
+    <% if @build_order.invoice_company.accounts_admin %>
+      <tr>
+        <td>Accounts Person:</td>
+        <td>
+          <%= @build_order.invoice_company.accounts_admin.ref_name %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+
+  <tr>
+    <td colspan="2"><h3>Vehicle Details:</h3></td>
+  </tr>
+
+  <tr>
+    <td>Name:</td>
+    <td><%= @build.vehicle.name %> <%= "##{@build.vehicle.number}" if @build.vehicle.number %></td>
+  </tr>
+  <tr>
+    <td>Vin:</td>
+    <td><%= @build.vehicle.vin_number unless @build.vehicle.vin_number.blank? %></td>
+  </tr>
+  <tr>
+    <td>Rego No:</td>
+    <td><%= @build.vehicle.rego_number unless @build.vehicle.rego_number.blank? %></td>
+  </tr>
+
+  <% unless @user == @build_order.service_provider %>
+    <tr>
+      <td colspan="2"><h3>Service Provider:</h3></td>
+    </tr>
+
+    <% unless @build_order.service_provider.name == @build_order.service_provider.email %>
+      <tr>
+        <td>Name:</td>
+        <td><%= @build_order.service_provider.name %></td>
+      </tr>
+    <% end %>
+
+    <% if @build_order.service_provider.company.present? %>
+      <tr>
+        <td>Company:</td>
+        <td><%= @build_order.service_provider.company %></td>
+      </tr>
+    <% end %>
+
+    <tr>
+      <td>Email:</td>
+      <td><%= mail_to @build_order.service_provider.email %></td>
+    </tr>
+
+    <% if @build_order.service_provider.phone.present? %>
+      <tr>
+        <td>Phone:</td>
+        <td><%= @build_order.service_provider.phone %></td>
+      </tr>
+    <% end %>
+
+    <% if @build_order.service_provider.mobile.present? %>
+      <tr>
+        <td>Mobile:</td>
+        <td><%= @build_order.service_provider.mobile %></td>
+      </tr>
+    <% end %>
+  <% end %>
+
+  <% if @build_order.manager.present? %>
+    <tr>
+      <td colspan="2"><h3>Manager:</h3></td>
+    </tr>
+    <% unless @build_order.manager.name == @build_order.manager.email %>
+      <tr>
+        <td>Name:</td>
+        <td><%= @build_order.manager.name %></td>
+      </tr>
+    <% end %>
+
+    <tr>
+      <td>Email:</td>
+      <td><%= mail_to @build_order.manager.email %></td>
+    </tr>
+
+    <% if @build_order.manager.phone.present? %>
+      <tr>
+        <td>Phone:</td>
+        <td><%= @build_order.manager.phone %></td>
+      </tr>
+    <% end %>
+
+    <% if @build_order.manager.mobile.present? %>
+      <tr>
+        <td>Mobile:</td>
+        <td><%= @build_order.manager.mobile %></td>
+      </tr>
+    <% end %>
+  <% end %>
+
+</table>
+
+<br />
+
+Link: <%= build_order_url(@build_order) %><br />
+
+<% unless @build_order.build_order_uploads.empty? %>
+  This build order has file attachments. <br />
+<% end %>
+
+<br />

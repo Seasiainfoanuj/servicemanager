@@ -1,0 +1,29 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Edit System Error #<%= @system_error.id %></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <%= link_to '<i class="icon-search"></i>'.html_safe, system_error_path(@system_error), {:title => 'View', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <%= link_to '<i class="icon-list-alt"></i>'.html_safe, system_errors_log_path, {:title => "Cancel",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div id="system-error-details" class="box box-condensed box-color box-bordered">
+          <%= render 'form' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

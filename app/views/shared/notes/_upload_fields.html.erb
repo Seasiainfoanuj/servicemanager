@@ -1,0 +1,9 @@
+<div class="control-group">
+  <% if f.object.upload? %>
+    <%= f.object.upload_file_name %>
+    <%= f.hidden_field :_destroy %>
+    <%= link_to '<i class="icon-remove"></i>'.html_safe, '#', class: "remove_fields" %>
+  <% else %>
+    <%= f.file_field :upload %>
+  <% end %>
+</div>

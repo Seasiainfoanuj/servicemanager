@@ -1,0 +1,64 @@
+<%= form_for(@address, :html => {:class => "form-horizontal form-validate"}) do |f| %>
+  <% if @address.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@address.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @address.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="box-title">
+    <h3><i class="icon-group"></i> Address Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :address_type, "Address type", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :address_type, {:class => "input-large wide", 'data-rule-required' => true} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :line_1, "Line 1", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :line_1, {:class => "input-large wide"} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :line_2, "Line 2", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :line_2, {:class => "input-large wide"} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :suburb, "Suburb", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :suburb, {:class => "input-large"} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :state, "State", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :state, {:class => "input-large"} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :postcode, "Postal code", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :postcode, {:class => "input-large"} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :country, "Country", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :country, {:class => "input-large"} %>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit :class => "btn btn-grey" %>
+  </div>
+<% end %>

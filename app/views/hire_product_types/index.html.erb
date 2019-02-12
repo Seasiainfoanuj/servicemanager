@@ -1,0 +1,63 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Hire Product Types</h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if current_user.has_role? :superadmin, :masteradmin %>
+        <% if can? :view, HireProductType %>
+          <%= link_to '<i class="icon-plus-sign"></i> Add New Hire Product Type'.html_safe, new_hire_product_type_path, {:class => 'btn btn-grey'} %>
+        <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-user"></i>Hire Product Types</h3> %>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-hover table-nomargin dataTable dataTable-tools dataTable-colvis dataTable-scroll-x table-bordered">
+              <thead>
+                <tr>
+                  <th>Hire Product Name</th>
+                  <% if current_user.has_role? :superadmin, :masteradmin %>
+                  <th width="100">Actions</th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% @hire_product_types.each do |hire_product_type| %>
+                  <tr>
+                    <td><%= hire_product_type.name %></td>
+                    <% if current_user.has_role? :superadmin, :masteradmin %>
+                    <td>
+                      <% if can? :update, HireProductType %>
+                        <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_hire_product_type_path(hire_product_type), {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip'} %>
+                      <% end %>
+                      <% if can? :destroy, HireProductType %>
+                        <%= link_to '<i class="icon-ban-circle"></i>'.html_safe, hire_product_type, method: :delete, :class => 'btn hidden', :title => 'Destroy', 'rel' => 'tooltip', data: {confirm: "You are about to permanently delete #{hire_product_type.name}. You cannot reverse this action. Are you sure you want to proceed?"} %>
+                      <% end %>
+                    </td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

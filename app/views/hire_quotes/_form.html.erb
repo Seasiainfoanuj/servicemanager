@@ -1,0 +1,95 @@
+<% present(@hire_quote) do |quote| %>
+
+  <%= form_for(@hire_quote, :html => {:id => "hire-quote-form", :class => "form-horizontal form-validate"}) do |f| %>
+
+    <% if quote.errors.any? %>
+      <div id="error_explanation">
+        <h2>The quote could not be saved. Please check for missing items.</h2>
+        <% if @hire_quote.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@hire_quote.errors.count, "error") %> prohibited this page from being saved:</h2>
+            <ul>
+              <% @hire_quote.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+      <br>
+    <% end %>
+
+    <div class="box-title">
+      <h3><i class="glyphicon-car"></i>Hire Quote Details</h3>
+    </div>
+    <div class="box-content">
+      <div class="span6">
+        <div class="control-group">
+          <%= f.label :customer_id, "Customer", :class => "control-label" %>
+          <%= f.select :customer_id, options_for_select(quote.options_for_customers, quote.selected_customer), {include_blank: 'Choose customer'}, {class: "select2-me span11", 'data-rule-required' => true, :style => "margin-left:0"} %>
+          <div style="clear:both"></div>
+          <%= content_tag(:span, "Hint: To see companies only, enter COMPANY:", class: 'label label-blue') %>
+        </div>
+      </div>
+
+      <div class="span6">
+        <div class="control-group">
+          <%= f.label :manager_id, "Manager", :class => "control-label" %>
+          <% if params[:action] == "new" %>
+            <%= f.select :manager_id, options_for_select(quote.options_for_managers, current_user.client.id), {include_blank: 'Assign to a manager'}, {class: "select2-me span11", :style => "margin-left:0"} %>
+          <% else %>
+            <%= f.select :manager_id, options_for_select(quote.options_for_managers, quote.selected_manager), {include_blank: 'Assign to a manager'}, {class: "select2-me span11", :style => "margin-left:0"} %>
+          <% end %>
+          <div style="clear:both"></div>
+        </div>
+      </div>
+
+      <% if @hire_quote.persisted? and @hire_quote.customer.company? %>
+        <div class="new-row">
+          <div class="span6">
+            <div class="control-group">
+              <%= f.label :authorised_contact_id, "Authorised contact (only if customer is a company)", :class => "control-label authorised-contact" %>
+              <%= f.select :authorised_contact_id, options_for_select(quote.options_for_company_contacts, quote.selected_authorised_contact), {include_blank: 'Choose authorised contact'}, {class: "select2-me span11", 'data-rule-required' => true, :style => "margin-left:0"} %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="new-row">
+        <div class="control-group hire-quote-tags">
+          <%= f.label :tags, "Tags", :class => "control-label" %>
+          <%= f.text_field :tags, :class => "input-xlarge" %>
+          <%= select_tag :all_tags, options_for_select(SearchTag.hire_quote.map { |tag| tag.name.titleize }), prompt: 'Append Tag' %>
+          <%= button_tag "+", id: 'add-tag', class: "btn" %>
+        </div>
+      </div>
+
+      <div class="new-row">
+        <div class="control-group">
+          <%= label_tag nil, "Quoted Vehicles", class: "control-label" %>
+          <div class="controls">
+            <%= text_field_tag :quoted_vehicles, nil, class: "input-xlarge", value: quote.quoted_vehicle_names, readonly: true %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box-title">
+      <h3><i class="icon-envelope"></i>Hire Quote Cover Letter</h3>
+    </div>
+    <div class="box-content">
+      <%= f.fields_for :cover_letter do |cover_letter| %>
+        <%= render 'cover_letter_form', cover_letter: cover_letter %>
+      <% end %>
+    </div>
+
+    <div class="actions">
+      <% if quote.persisted? %>
+        <%= f.submit 'Update Hire Quote', class: "btn btn-green" %>
+      <% else %>
+        <%= f.submit 'Create Hire Quote', class: "btn btn-green" %>
+      <% end %>  
+    </div>  
+
+  <% end %>  
+<% end %>

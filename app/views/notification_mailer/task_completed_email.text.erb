@@ -1,0 +1,17 @@
+<% if @recipient.first_name %>
+  Hi <%= @recipient.first_name %>,
+<% end %>
+
+<% unless @message.nil? || @message.blank? %>
+  <%= @message %>
+<% end %>
+
+Just to let you know, I have completed this task. To access the notification, go to:
+<%= notification_url(@notification) %>
+
+Best Regards,
+<%= @sent_by.name %>
+<%= @notification.invoice_company.name %>
+<%= "Phone: #{@sent_by.phone}" if @sent_by.phone.present? %>
+<%= "Mobile: #{@sent_by.mobile}" if @sent_by.mobile.present? %>
+<%= "Email: #{@sent_by.email}" if @sent_by.email.present? %>

@@ -1,0 +1,2 @@
+module MasterQuoteItemsHelper
+end

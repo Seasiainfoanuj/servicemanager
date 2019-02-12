@@ -1,0 +1,45 @@
+<section class="vehicle-description">
+  <h1>B - DESCRIPTION OF THE MOTOR VEHICLE</h1>
+  <div class="row-fluid">
+    <div class="span12">
+      <table>
+        <tbody>
+          <% if @view_contract.vehicle_details_available? %>
+          <tr>
+            <td>Make & Model</td>
+            <td><%= @view_contract.vehicle_model %></td>
+            <td>VIN number</td>
+            <td><%= @view_contract.vehicle_vin_number %></td>
+          </tr>
+          <tr>
+            <td>Body Type</td>
+            <td><%= @view_contract.vehicle.body_type if @view_contract.vehicle %></td>
+            <td>Engine number</td>
+            <td><%= @view_contract.vehicle_engine_number %></td>
+          </tr>
+          <tr>
+            <td>Colour</td>
+            <td><%= @view_contract.vehicle_colour %></td>
+            <td>Rego number</td>
+            <td><%= @view_contract.rego_number if @view_contract.vehicle %></td>
+          </tr>
+          <tr>
+            <td>Transmission type</td>
+            <td><%= @view_contract.vehicle_transmission %></td>
+            <td>Build date</td>
+            <td><%= @view_contract.vehicle_build_date %></td>
+          </tr>
+          <tr>
+            <td>Engine type</td>
+            <td><%= @view_contract.engine_type if @view_contract.vehicle %></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <% else %>
+          <tr><td>VEHICLE DETAILS UNAVAILABLE</td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

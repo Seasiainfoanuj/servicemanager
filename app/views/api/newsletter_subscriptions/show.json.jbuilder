@@ -1,0 +1,1 @@
+json.extract! @subscription, :id, :first_name, :last_name, :email

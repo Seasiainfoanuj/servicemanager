@@ -1,0 +1,63 @@
+table#vehicle-model-image-details {
+  thead {
+    tr {
+      background: #e5e5e5;
+      font-weight: bold;
+    }
+  }
+}
+#vehicle-model-form {
+  .fees-subform {
+    input.fee {
+      margin-left: 10px;
+      text-align: right;
+    }
+  }
+  .vehicle-model-tags {
+    select {
+      margin-left: 10px;
+    }
+  }
+  .fee {
+    display: inline;
+  }
+  .controls.fee {
+    margin-left: 20px;
+  }
+}
+#vehicle-model-images {
+  padding: 20px;
+  display: block;
+
+  .image-properties {
+    display: inline-block;
+
+    .control-group {
+      display: block;
+      margin-bottom: 10px;
+
+      .controls {
+        display: inline-block;
+        margin-left: 50px;
+      }
+      .form-label {
+        display: inline-block;
+      }
+      select {
+        display: inline-block; 
+      }
+      input {
+        display: inline-block;
+      }
+    }
+  }
+
+  .image-item {
+    margin-bottom: 20px;
+    margin-left: 20px;
+    img {
+      float: right;
+      margin-right: 50px;
+    }
+  }
+}

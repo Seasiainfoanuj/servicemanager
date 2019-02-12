@@ -1,0 +1,60 @@
+<% present(@enquiry) do |enquiry| %>
+
+  <div class="box-title">
+    <h3><i class="glyphicon-user"></i>Enquirer Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :user_id, "Linked User", :class => "control-label" %>
+      <div class="controls">
+        <%= f.select :user_id, options_for_select(options_for_customers, enquiry.selected_customer), {include_blank: 'Choose customer'}, {class: "select2-me span6", :style => "margin-left:0"} %>
+
+        <div style="clear:both"></div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <%= f.label :first_name, "First Name", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :first_name, :class => "input-medium" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :last_name, "Last Name", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :last_name, :class => "input-medium" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :email, "Email", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :email, :class => "input-xlarge" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :phone, "Phone", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :phone, :class => "input-medium" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :company, "Company", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :company, :class => "input-xlarge" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :job_title, "Job Title", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :job_title, :class => "input-medium" %>
+      </div>
+    </div>
+  </div>
+<% end %>

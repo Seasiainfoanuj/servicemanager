@@ -1,0 +1,70 @@
+<% present(@quote) do |quote| %>
+  <div id="title-page" class="a4-page">
+    <div class="title-page-left">
+      <div class="title-page-logo">
+        <%= image_tag quote.dealer_logo(:large) %>
+      </div>
+
+      <div class="title-page-image-top">
+        <%= image_tag quote.title_page.image_1.url(:title_page) %>
+      </div>
+
+      <div class="title-page-image-bottom">
+        <%= image_tag quote.title_page.image_2.url(:title_page) %>
+      </div>
+
+      <h1 class="title-page-title">
+        <%= quote.title_page.title %>
+      </h1>
+
+      <div class="title-page-recipient">
+        <%= quote.customer_name %><br>
+        <%= "<strong>#{quote.customer_company_name}</strong><br>".html_safe %>
+        <% if quote.customer_postal_address.present? %>
+          <address>
+            <%= quote.customer_postal_address_line_1 %>
+            <%= quote.customer_postal_address_line_2 %>
+            <%= quote.customer_postal_address_suburb %>
+            <%= quote.customer_postal_address_state %>
+            <%= quote.customer_postal_address_postcode %>
+            <%= quote.customer_postal_address_country %>
+          </address>
+        <% end %>
+        <%= "<b>Email:</b> #{quote.customer_email}".html_safe if quote.customer_name != "[#{quote.customer_email}]" %> <br>
+        <%= "<b>Phone:</b> #{quote.customer_phone}".html_safe if quote.customer_phone.present? %> <br>
+        <%= "<b>Mobile:</b> #{quote.customer_mobile}".html_safe if quote.customer_mobile.present? %><br>
+        <%= "<b>Website:</b> #{quote.customer_website}".html_safe if quote.customer_website.present? %>
+      </div>
+    </div>
+
+    <div class="title-page-right">
+      <span class="title-page-right-title-large">BUS 4x4 Group of Companies</span>
+      <hr>
+      <span class="title-page-right-title">Bus 4x4 Australia</span>
+      <hr>
+      <span class="title-page-right-title">Bus 4x4 Japan</span>
+      <hr>
+      <span class="title-page-right-title">4x4 Tour Bus Australia</span>
+      <hr>
+      <span class="title-page-right-title">4x4 Motorhomes Australia</span>
+      <hr>
+
+      <div class="title-page-right-address">
+        <address>
+          <%= quote.dealer_address_line_1 %><br>
+          <%= "#{quote.dealer_address_line_2} <br>".html_safe unless quote.dealer_address_line_2.blank? %>
+          <%= quote.dealer_suburb %>, <%= quote.dealer_state %> <%= quote.dealer_postcode %> <br>
+          <%= quote.dealer_country %>
+        </address>
+
+        <br>
+        <p><%= quote.invoice_company.website %></p>
+        <br>
+
+        <%= quote.date.strftime("%-d %B %Y") %>
+      </div>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+<% end %>

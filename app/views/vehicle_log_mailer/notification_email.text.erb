@@ -1,0 +1,10 @@
+<% unless @user.first_name.nil? || @user.first_name.blank? %>
+<%= "Hi #{@user.first_name}," %>
+
+<% end %>
+Logbook entry [REF #<%= @vehicle_log.uid %>] has been flagged and requires your attention. You can login and view this entry here: <%= vehicle_log_url(@vehicle_log) %>
+
+<% if @vehicle_log.follow_up_message.present? %>
+Follow up message: <%= @vehicle_log.follow_up_message %>
+<% end %>
+

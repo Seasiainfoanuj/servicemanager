@@ -1,0 +1,20 @@
+<% if @quote.manager && @quote.manager.first_name %>
+Hi <%= @quote.manager.first_name %>,
+
+<% end %>
+<%= @quote.customer.name %> requested that changes be made to quote <%= @quote.number %>.
+
+<% unless @message.nil? || @message.blank? %>
+Requested Changes:
+-----------------------------------------
+<%= @message %>
+
+<% end %>
+Contact Details:
+-----------------------------------------
+<% if @quote.customer.first_name && @quote.customer.last_name %>
+Name: <%= @quote.customer.name %>
+<% end %>
+Email: <%= @quote.customer.email %>
+Phone: <%= @quote.customer.mobile %>
+<%= "Website: #{@quote.customer.website}" if @quote.customer.website.present? %>

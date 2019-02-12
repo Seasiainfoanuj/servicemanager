@@ -1,0 +1,9 @@
+<div class="control-group">
+  <%= f.label :user_id, "Subscriber", :class => "control-label" %>
+  <div class="controls">
+    <%= f.collection_select :user_id, User.with_roles(:admin, :customer), :id, :company_name, {prompt: true}, {:class=>'select2-me span6'} %>
+
+    <%= f.hidden_field :_destroy %>
+    <%= link_to '<i class="icon-remove"></i>'.html_safe, '#', class: "remove_field" %>
+  </div>
+</div>

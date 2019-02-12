@@ -1,0 +1,51 @@
+<div id="main" class="page-container vehicle-contract">
+  <%= render(:partial => 'layouts/notice') %>
+
+  <div id="vehicle-contract-form" class="a4-page">
+    <div class="contract-heading">
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <h1>CONTRACT OF SALE</h1>
+              <h2>for New Motor Vehicle</h2>
+              <h3><%= "Contract reference: #{@view_contract.vehicle_contract.uid}" %></h3>
+            </th>
+            <th>
+              <div class="status-box">
+                <%= vehicle_contract_status_label(@view_contract.vehicle_contract.current_status) %>
+              </div>
+            </th>
+            <th>
+              <div class="invoice-logo">
+                <%= image_tag @view_contract.dealer_logo(:large) %>
+              </div>
+            </th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+
+    <%= render 'signed_contract' %>
+
+    <%= render 'party_details' %>
+
+    <%= render 'vehicle_details' %>
+
+    <%= render 'options_and_accessories' %>
+
+    <%= render 'special_conditions' %>
+      
+    <%= render 'price_details' %>
+
+    <%= render 'terms_and_conditions' %>
+
+    <% if @vehicle_contract.current_status == 'signed' %>
+      <%= render 'signature_confirmation' %>
+    <% else %>
+      <%= render 'unsigned_contract_end' %>
+    <% end %>  
+
+    <p class="the-end">- - - - - - END OF CONTRACT - - - - - -</p>
+  </div>
+</div>

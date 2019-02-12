@@ -1,0 +1,15 @@
+<% present(@quote) do |quote| %>
+
+  <div class="invoice-from">
+    <span>From</span><br>
+    <strong><%= quote.dealer_name %></strong>
+    <address>
+      <%= quote.dealer_address_line_1 %><br>
+      <%= quote.dealer_address_line_2 %>
+      <%= quote.dealer_address_remainder %> <br>
+      <%= quote.dealer_phone %>
+      <%= quote.dealer_fax %>
+    </address>
+  </div>
+
+<% end %>

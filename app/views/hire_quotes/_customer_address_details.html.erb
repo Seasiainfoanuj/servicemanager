@@ -1,0 +1,10 @@
+<% present(@hire_quote) do |quote| %>
+  <div class="invoice-from">
+    <span>To:</span><br>
+    <strong><%= quote.authorised_contact.name %></strong>&nbsp;(<%= quote.authorised_contact.email %>)
+    <address>
+      <%= quote.hire_quote_cover_letter_address %>
+      <%= quote.customer_contact_details( {phone: true, mobile: true}) %>
+    </address>
+  </div>
+<% end %>

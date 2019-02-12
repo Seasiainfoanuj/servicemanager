@@ -1,0 +1,17 @@
+<div class="subnav">
+  <div class="subnav-title">
+    <a href="#" class='toggle-subnav'><i class="icon-angle-down"></i><span>Related Links</span></a>
+  </div>
+  <ul class="subnav-menu">
+  <li class="<%= 'active' if params[:controller] == 'users' && params[:action] == 'show' || params[:controller] == 'users' && params[:action] == 'edit' %>">
+    <%= link_to 'User Details', user_path(@filtered_user) %>
+  </li>
+    <% @associations.each do |association| model_name = association.singularize.camelize.constantize %>
+      <% if (@ability.can? :create, model_name) || (@ability.can? :read, model_name) %>
+        <li class="<%= 'active' if params[:controller] == association %>">
+          <%= link_to (@replace[association] || association).titleize, "/users/#{@filtered_user.id}/#{association}" %>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>

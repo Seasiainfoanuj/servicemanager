@@ -1,0 +1,171 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1><%= @build.number %></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if @build.sales_order %>
+          <%= link_to 'View Linked Order', @build.sales_order, class: "btn btn-grey" %>
+        <% end %>
+
+        <% if can? :update, Build %>
+          <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_build_path(@build), {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <% end %>
+        <%= link_to '<i class="icon-list-alt"></i>'.html_safe, builds_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+        <% if @build.specification %>
+          <%= link_to '<i class="icon-book"></i>'.html_safe, build_build_specification_path(@build), {:title => "View Specification",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+        <% else %>
+          <%= link_to '<i class="icon-book"></i>'.html_safe, new_build_build_specification_path(@build), {id: "build-specification-link", title: "Create Specification", class: 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+          <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title nopadding">
+            <table class="table table-nomargin table-build-details">
+              <tr>
+                <td>
+                  <%= @build.vehicle.number %>
+                  <%= @build.vehicle.call_sign %>
+                  <%= " - " if @build.vehicle.number.present? || @build.vehicle.call_sign.present? %>
+                  <%= @build.vehicle.name %>
+                  <%= link_to '<i class="icon-search"></i>'.html_safe, @build.vehicle, {:title => 'View', :class => 'btn btn-mini', 'rel' => 'tooltip'} %>
+                </td>
+                <% if @build.quote %>
+                  <td>Quote No: <%= @build.quote.number %></td>
+                <% end %>
+              </tr>
+              <tr>
+                <% if @build.manager %>
+                  <td>
+                    Assigned to: <%= @build.manager.name %>,
+                    <%= @build.invoice_company.name if @build.invoice_company %>
+                  </td>
+                <% else %>
+                  <td></td>
+                <% end %>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="box box-condensed box-color box-bordered" style="overflow:hidden">
+          <div class="box-title">
+            <h3><i class="icon-time"></i>Schedule Overview</h3>
+          </div>
+          <div class="box-content nopadding" style="height: 300px;">
+            <%= render 'schedule', build: @build %>
+          </div>
+
+          <% unless @build_orders.empty? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-notes"></i>Build Orders</h3>
+            </div>
+            <div class="box-content nopadding">
+
+              <table class="progress-table clean">
+                <tbody>
+                  <tr>
+                    <% @build.build_orders.where.not(:status => 'cancelled').sort { |a,b| a.sched_time <=> b.sched_time }.each do |build_order| %>
+                    <td width="<%= number_to_percentage(100/@build.build_orders.length) %>">
+                      <%= link_to "", build_order, {:class => "btn #{build_order_progress_class(build_order.status)} progress-link", 'rel' => 'popover', 'data-trigger' => 'hover', 'data-placement' => 'bottom', 'data-original-title' => "#{build_order.name} ##{build_order.uid}", 'data-content' => "Scheduled Start  #{build_order.sched_time_field} - #{build_order.service_provider.name} - Estimated to be complete at #{build_order.etc_time_field} #{build_order.etc_date_field}"} %>
+                    </td>
+                    <% end %>
+                  </tr>
+                </tbody>
+              </table>
+
+              <table class="table table-hover table-nomargin table-bordered">
+                <thead>
+                  <tr>
+                    <th>REF</th>
+                    <th>Name</th>
+                    <th>Service Provider</th>
+                    <th>Scheduled</th>
+                    <th>ETC</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @build_orders.each do |build_order| %>
+                    <tr>
+                      <td><span class="label label-grey"><%= build_order.uid %></span></td>
+                      <td><%= build_order.name %></td>
+                      <td><%= build_order.service_provider.company_name_short %></td>
+                      <td><%= build_order.sched_date_field %> - <b><%= build_order.sched_time_field %></b></td>
+                      <td><%= build_order.etc_date_field %> - <b><%= build_order.etc_time_field %></b></td>
+                      <td><%= build_order_status_label(build_order.status) %></td>
+                      <td>
+                        <%= link_to '<i class="icon-search"></i>'.html_safe, build_order, {:title => 'View', :class => 'btn', 'rel' => 'tooltip'} %>
+                        <% if can? :update, Build %>
+                          <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_build_order_path(build_order), {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip'} %>
+                        <% end %>
+                        <% if can? :destroy, Build %>
+                          <%= link_to '<i class="icon-ban-circle"></i>'.html_safe, build_order, method: :delete, :class => 'btn', :title => 'Destroy', 'rel' => 'tooltip', data: {confirm: "You are about to permanently delete build order ##{build_order.uid}. You cannot reverse this action. Are you sure you want to proceed?"} %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+
+          <% unless @build.uploads.empty? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-paperclip"></i>Attachments</h3>
+            </div>
+            <div class="box-content" style="padding: 20px 20px 50px;">
+              <% @build.uploads.each do |file| %>
+              <div style="margin:5px; height: 200px; float:left">
+                <div class="thumbnail" style="float: left; margin-right: 5px; text-align:center;">
+                  <a href="<%= file.upload.url(:original) %>"><%= image_tag file.upload.url(:medium) %></a><br>
+                  <a href="<%= file.upload.url(:original) %>" style="font-size:0.8em;padding:5px;"><%= file.upload_file_name %></a>
+                </div>
+              </div>
+              <% end %>
+            </div>
+          <% end %>
+
+          <div style="padding: 20px 0">
+            <%= link_to '<i class="icon-plus-sign"></i> Add Build Order'.html_safe, new_build_order_path(:build_id => @build.id), {:class => 'btn btn-green'} %>
+          </div>
+
+          <%= render 'shared/notes/list', resource: @build %>
+
+          <% if current_user.has_role? :admin %>
+            <div class="box-title">
+              <h3><i class="icon-bullhorn"></i>Activity</h3>
+            </div>
+            <div id="activity-feed" class="box-content scrollable" data-height="300" data-visible="true">
+              <% @activities.each do |activity| %>
+                <div class="activity">
+                  <div class="details">
+                    <%= render_activity activity, locals: {display: "simple"} %>
+                    <span class="time"><%= time_ago_in_words(activity.created_at) + " ago" %></span>
+                  </div>
+                  <div class="date">
+                    <%= activity.created_at.strftime("%e %b %Y, %l:%M %p") %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

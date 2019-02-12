@@ -1,0 +1,24 @@
+<%= form_for(@master_quote_type, :html => {:id => "master-quote-type-form", :class => "form-horizontal"}) do |f| %>
+  <% if @master_quote_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@master_quote_type.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @master_quote_type.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="box-title">
+    <h3><i class="glyphicon-notes"></i>Master Quote Type Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :name, "Name", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name, :class => "input-xlarge" %>
+      </div>
+    </div>
+  </div>
+<% end %>

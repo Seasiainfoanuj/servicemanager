@@ -1,0 +1,180 @@
+<%= hidden_field_tag 'is_hire', params['enquiry']['hire_enquiry_attributes'].present? if params['enquiry'].present? %>
+
+<% present(@enquiry) do |enquiry| %>
+
+  <div class="page-header">
+    <h1>Enquiry Form</h1>
+  </div>
+
+  <%= form_for(@enquiry, :html => {:class => "form-horizontal form-validate", :id => "enquire-form"}) do |f| %>
+    <% if @enquiry.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@enquiry.errors.count, "error") %> prohibited this enquiry from being saved:</h2>
+
+        <ul>
+        <% @enquiry.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+      <br><br>
+    <% end %>
+
+    <div class="control-group">
+      <div class="controls check-line">
+        <input type="checkbox" id="hire_enquiry_check" name="hire_enquiry_check" class='icheck-me' data-skin="square" data-color="grey"> <label class='inline' for="hire_enquiry_check">Do you want to hire a vehicle?</label>
+      </div>
+      <div class="controls check-line">
+        <input type="checkbox" id="corporate_enquiry_check" name="corporate_enquiry_check" class='icheck-me' data-skin="square" data-color="grey"> <label class='inline' for="corporate_enquiry_check">Is this enquiry for a company?</label>
+      </div>
+    </div>
+
+    <h3>How can we contact you?</h3>
+
+    <div class="control-group">
+      <%= f.label :first_name, "First Name*", :class => "control-label right" %>
+      <div class="controls">
+        <%= f.text_field :first_name, :class => "input-xlarge", 'data-rule-required' => true %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :last_name, "Last Name*", :class => "control-label right" %>
+      <div class="controls">
+        <%= f.text_field :last_name, :class => "input-xlarge", 'data-rule-required' => true %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :email, "Email*", :class => "control-label right" %>
+      <div class="controls">
+        <%= f.text_field :email, :class => "input-xlarge", 'data-rule-required' => true %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :phone, "Phone", :class => "control-label right" %>
+      <div class="controls">
+        <%= f.text_field :phone, :class => "input-xlarge" %>
+      </div>
+    </div>
+
+      <div class="control-group">
+      <%= f.label :score, "Score", :class => "control-label right" %>
+      <div class="controls">
+        <%= f.select :score, options_for_select([["Cold", "cold"], ["Warm", "warm"], ["Hot", "hot"]]), {include_blank: 'Select Score'}, class: "select2-me span4" %>
+      </div>
+    </div>
+   
+   <% if current_user.has_role? :admin  %>
+    <div class="control-group">  
+      <%= f.label :manager_id, "Assign to", :class => "control-label right" %>
+       <div class="controls">
+         <% unless current_user.has_role? :dealer %>
+          <%= f.select :manager_id, options_for_select(admin_managers, current_user.id), {include_blank: 'Assign to a manager'}, {class: "select2-me span8", :style => "margin-left:0", 'data-rule-required' => true} %>
+         <% else %>
+          <%= f.select :manager_id, options_for_select(option_for_dealer, current_user.id), {include_blank: 'Assign to a manager'}, {class: "select2-me span8", :style => "margin-left:0", 'data-rule-required' => true} %>
+         <% end %>
+         <div style="clear:both"></div>
+      </div>
+     <% end %>
+  <br> 
+    <div id="company-details">
+      <h3>If this enquiry is for your company, please give us some more details.</h3>
+      <div class="control-group">
+        <%= f.label :company, "Company*", :class => "control-label right" %>
+        <div class="controls">
+          <%= f.text_field :company, :class => "input-xlarge", 'data-rule-company-required' => true %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :job_title, "Job Title", :class => "control-label right" %>
+        <div class="controls">
+          <%= f.text_field :job_title, :class => "input-xlarge" %>
+        </div>
+      </div>
+
+
+      <br>
+
+      <%= f.fields_for :address do |builder| %>
+        <div class="control-group">
+          <%= builder.label :line_1, "Address*", :class => "control-label right" %>
+          <div class="controls" style="display:block;">
+            <%= builder.text_field :line_1, :class => "input-large", 'data-rule-company-required' => true %>
+          </div>
+          <div class="controls" style="display:block; margin-top:10px;">
+            <%= builder.text_field :line_2, :class => "input-large" %>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= builder.label :suburb, "Suburb*", :class => "control-label right" %>
+          <div class="controls">
+            <%= builder.text_field :suburb, :class => "input-large", 'data-rule-company-required' => true %>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= builder.label :state, "State*", :class => "control-label right" %>
+          <div class="controls">
+            <%= builder.text_field :state, :class => "input-large", 'data-rule-company-required' => true %>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= builder.label :postcode, "Postcode*", :class => "control-label right" %>
+          <div class="controls">
+            <%= builder.text_field :postcode, :class => "input-small", 'data-rule-company-required' => true %>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= builder.label :country, "Country*", :class => "control-label right" %>
+          <div class="controls">
+            <%= builder.text_field :country, :class => "input-large", 'data-rule-company-required' => true %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+
+    <div id="hire-details">
+      <hr>    
+      <h3>Do you want to hire a vehicle? Fill in the details.</h3>
+      <%= render('hire_details', f: f ) %>
+    </div>
+
+    <hr>
+
+    <h3>Please tell us about anything that may be important to you.</h3>
+
+    <div class="control-group">
+      <%= f.label :enquiry_type_id, "Subject*", :class => "control-label right" %>
+      <div class="controls">
+        <%= f.select :enquiry_type_id, options_for_select(enquiry.options_for_enquiry_types, enquiry.enquiry_type), {include_blank: false}, class: "select2-me span4" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :details, "Enquiry", :class => "control-label right" %>
+      <div class="controls">
+        <%= f.text_area :details, {:id => 'enquiry_details', :class => "span12", 'rows' => 10} %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :find_us, "How did you find us? *", :class => "control-label right" %>
+      <div class="controls">
+        <%= f.select :find_us, options_for_select(['Social media','Bus 4x4 websites','Referrals','Magazine ads','Online ads','Others']), {include_blank: 'Select Options'}, class: "select2-me span4" %>
+      </div>
+    </div>
+
+    <div class="newsletter-subscription control-group">
+      <%= f.label :subscribe_to_newsletter, "Yes, please add me to the BUS 4x4 newsletter list." %>
+      <%= f.check_box :subscribe_to_newsletter, {:class => "icheck-me", "data-skin" => "square", "data-color" => "orange", checked: true} %>
+    </div>
+
+    <div class="actions">
+      <br>
+      <%= f.submit "Submit Enquiry", :class => 'btn btn-green submit-btn' %>
+    </div>
+  <% end %>
+<% end %>

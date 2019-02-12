@@ -1,0 +1,63 @@
+<%= form_for(@system_error, :html => {:class => "form-horizontal form-validate"}) do |f| %>
+  <% if @system_error.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@system_error.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @system_error.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="box-title">
+    <h3><i class="glyphicon-warning_sign"></i> System Error Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :resource_type, "Resource Type", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :resource_type, {:value => @system_error.resource_type_name, :readonly => true} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :error_status, "Error Status", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :error_status, {:value => @system_error.error_status_name, :readonly => true} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= label_tag "updated_at", "Status Date", :class => "control-label" %>
+      <div class="controls">
+        <%= text_field_tag "updated_at", nil, {:value => @system_error.updated_at.strftime("%d/%m/%Y"), :readonly => true} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= label_tag "description", "Description", :class => "control-label" %>
+      <div class="controls">
+        <%= text_area_tag "description", @system_error.description, :rows => "5", :readonly => true %>
+      </div>
+    </div>
+    <% if @system_error.error_status == SystemError::ACTION_REQUIRED %>
+      <div class="control-group">
+        <%= label_tag "action_taken", "Action taken", :class => "control-label" %>
+        <div class="controls">
+          <%= select_tag "action_taken", options_for_select(['No', 'Yes']) %>
+        </div>
+      </div>
+    <% elsif @system_error.error_status == SystemError::ACTIONED_BY_BUSINESS %>
+      <div class="control-group">
+        <%= label_tag "action_taken", "Solution implemented", :class => "control-label" %>
+        <div class="controls">
+          <%= select_tag "action_taken", options_for_select(['No', 'Yes']) %>
+        </div>
+      </div>
+    <% end %>      
+  </div>
+  <div class="actions">
+    <%= f.submit :class => "btn btn-grey" %>
+  </div>
+<% end %>
+
+
+

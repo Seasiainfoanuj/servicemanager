@@ -1,0 +1,2 @@
+module SavedQuoteItemsHelper
+end

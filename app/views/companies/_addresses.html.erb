@@ -1,0 +1,47 @@
+<%= f.fields_for :addresses do |addr| %>
+  <div class="<%= "#{Address.address_types[addr.object.address_type].downcase}-address" %>">
+    <div class="box-title">
+      <h3><i class="icon-group"></i><%= addr.object.address_type_display %></h3>
+    </div>
+    <div class="box-content">
+      <%= addr.hidden_field :address_type %>
+      <div class="control-group">
+        <%= addr.label :line_1, "", :class => "control-label" %>
+        <div class="controls">
+          <%= addr.text_field :line_1, {:class => "input-large wide"} %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= addr.label :line_2, "", :class => "control-label" %>
+        <div class="controls">
+          <%= addr.text_field :line_2, {:class => "input-large wide"} %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= addr.label :suburb, "", :class => "control-label" %>
+        <div class="controls">
+          <%= addr.text_field :suburb, {:class => "input-large"} %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= addr.label :state, "", :class => "control-label" %>
+        <div class="controls">
+          <%= addr.text_field :state, {:class => "input-large"} %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= addr.label :postcode, "", :class => "control-label" %>
+        <div class="controls">
+          <%= addr.text_field :postcode, {:class => "input-large"} %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= addr.label :country, "", :class => "control-label" %>
+        <div class="controls">
+          <%= addr.text_field :country, {:class => "input-large"} %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+

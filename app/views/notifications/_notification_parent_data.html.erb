@@ -1,0 +1,17 @@
+<div class="control-group">
+  <%= label_tag :event_type, "Event type", class: "control-label" %>
+  <div class="controls">
+    <%= text_field_tag :event_type, @notification.notification_type.event_full_name, {class: 'xxlarge', readonly: true} %>
+  </div>
+</div>
+
+<div class="control-group">
+  <%= label_tag :resource, "Notification for", class: "control-label" %>
+  <div class="controls">
+    <%= text_field_tag :resource, "Model: #{@notification.notifiable.name}, Rego: #{@notification.notifiable.rego_number}", {class: 'xxlarge', readonly: true} %>
+  </div>
+</div>
+
+<%= f.hidden_field :notifiable_id, value: @notification.notifiable_id %>
+<%= f.hidden_field :notifiable_type, value: @notification.notifiable_type %>
+<%= f.hidden_field :notification_type_id, value: @notification.notification_type_id %>

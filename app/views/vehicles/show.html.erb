@@ -1,0 +1,284 @@
+<div id="left">
+  <%= render 'layouts/left' %>
+</div>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1><%= "#{@vehicle.name}" %> <span class="label label-satblue"><%= @vehicle.vehicle_number %></span> <span class="label label-green"><%= @vehicle.call_sign %></span> <span class="label label-grey"><%= @vehicle.rego_number %></span> <span class="label"><%= "VIN# #{@vehicle.vin_number}" %></span></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <%= link_to '<i class="icon-list-alt"></i>'.html_safe, vehicles_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+
+        <% if can? :update, Vehicle %>
+          <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_vehicle_path, {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div id="vehicle-details-page" class="span12">
+        <% if @vehicle.exclude_from_schedule && current_user.has_role?(:admin) %>
+          <div class="alert alert-warning" style="margin-top:20px">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <i class="icon icon-warning-sign"></i> This vehicle is not displayed on schedule views.
+          </div>
+        <% end %>
+
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-car"></i>Vehicle Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="vehicle" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Model</td>
+                  <td width="80%"><%= "#{@vehicle.model.make.name} #{@vehicle.model.name}" %></td>
+                </tr>
+                <tr>
+                  <td>Year</td>
+                  <td width="80%"><%= @vehicle.model_year %></td>
+                </tr>
+                <tr>
+                  <td>Number of Seats</td>
+                  <td width="80%"></td>
+                </tr>
+                <tr>
+                  <td>License Type</td>
+                  <td width="80%"></td>
+                </tr>
+                <tr>
+                  <td>Class/Type</td>
+                  <td width="80%"><%= @vehicle.class_type %></td>
+                </tr>
+                <tr>
+                  <td>Vehicle Number</td>
+                  <td width="80%"><span class="label label-satblue"><%= @vehicle.vehicle_number %></span></td>
+                </tr>
+                <tr>
+                  <td>Call Sign</td>
+                  <td width="80%"><span class="label label-green"><%= @vehicle.call_sign %></span></td>
+                </tr>
+                <tr>
+                  <td>VIN Number</td>
+                  <td width="80%"><%= @vehicle.vin_number %></td>
+                </tr>
+                <tr>
+                  <td>Engine Number</td>
+                  <td width="80%"><%= @vehicle.engine_number %></td>
+                </tr>
+                <tr>
+                  <td>Transmission</td>
+                  <td width="80%"><%= @vehicle.transmission %></td>
+                </tr>
+                <tr>
+                  <td>Last Known Odometer Reading</td>
+                  <td width="80%"><%= @vehicle.odometer_reading %></td>
+                </tr>
+                <tr>
+                  <td>Rego Number</td>
+                  <td width="80%"><span class="label label-grey"><%= @vehicle.rego_number %></span></td>
+                </tr>
+                <tr>
+                  <td>Rego Due Date</td>
+                  <td width="80%"><%= @vehicle.rego_due_date_field %></td>
+                </tr>
+                <tr>
+                  <td>Seating Capacity</td>
+                  <td width="80%"><%= @vehicle.seating_capacity %></td>
+                </tr>
+                <tr>
+                  <td>License Required</td>
+                  <td width="80%">
+                    <% if @vehicle.license_required %>
+                      <% @license_types = @vehicle.license_required.split(',') %>
+                      <% @license_types.each do |type| %>
+                        <span class="label label-satblue"><%= type %> </span>
+                      <% end %>
+                    <% end %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Body type</td>
+                  <td width="80%"><%= @vehicle.body_type %></td>
+                </tr>
+                <tr>
+                  <td>Colour</td>
+                  <td width="80%"><%= @vehicle.colour %></td>
+                </tr>
+                <tr>
+                  <td>Engine type</td>
+                  <td width="80%"><%= @vehicle.engine_type %></td>
+                </tr>
+                <tr>
+                  <td>Build date</td>
+                  <td width="80%"><%= @vehicle.build_date_field %></td>
+                </tr>
+                <tr>
+                  <td>Availability Status</td>
+                  <td width="80%"><%= vehicle_status_label(@vehicle.status) %></td>
+                </tr>
+                <tr>
+                  <td>Tags</td>
+                  <td width="80%"><%= @vehicle.tags %></td>
+                </tr>
+                <% if @vehicle.status %>
+                <tr>
+                  <td>Status changed on</td>
+                  <td width="80%"><%= @vehicle.status_date.strftime("%d-%m-%Y") %></td>
+                </tr>
+                <% end %>
+
+              </tbody>
+            </table>
+          </div>
+          <% if @vehicle.hire_vehicle? %>
+          <div class="box-title">
+            <h3><i class="glyphicon-notes"></i>Hire Details</h3>
+          </div>
+          <div class="box-content nopadding">
+              <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Daily Hire Rate</td>
+                  <td width="80%">$<%= number_with_precision(@vehicle.hire_details.daily_rate, precision: 2) %></td>
+                </tr>
+                <tr>
+                  <td>Daily KM Allowance</td>
+                  <td width="80%"><%= @vehicle.hire_details.daily_km_allowance %> KM</td>
+                </tr>
+                 <tr>
+                  <td>Excess KM Rate</td>
+                  <td width="80%">$<%= number_with_precision(@vehicle.hire_details.excess_km_rate, precision: 2) %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <% end %>
+          <div class="box-title">
+            <h3><i class="glyphicon-group" style="position:relative; top:-3px;"></i>Supplier Information</h3>
+          </div>
+          <div class="box-content nopadding">
+              <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <% if current_user.has_role? :admin %>
+                  <tr>
+                    <td>Supplier</td>
+                    <td width="80%"><%= @vehicle.supplier.company_name if @vehicle.supplier %></td>
+                  </tr>
+                <% end %>
+                <tr>
+                  <td>Stock Number</td>
+                  <td width="80%"><%= @vehicle.stock_number %></td>
+                </tr>
+                <% if current_user.has_role? :admin %>
+                  <tr>
+                    <td>Build Number</td>
+                    <td width="80%"><%= @vehicle.build_number %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <% if current_user.has_role? :admin %>
+            <% unless @vehicle.kit_number.nil? || @vehicle.kit_number.blank? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-barcode"></i>KIT Details</h3>
+            </div>
+            <div class="box-content nopadding">
+                <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+                <tbody>
+                  <tr>
+                    <td>KIT ID</td>
+                    <td width="80%"><%= @vehicle.kit_number %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <% end %>
+          <% end %>
+          <div class="box-title">
+            <h3><i class="glyphicon-group" style="position:relative; top:-3px;"></i>Ownership Details</h3>
+          </div>
+          <div class="box-content nopadding">
+              <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Owner</td>
+                  <td width="80%"><%= @vehicle.owner.company_name if @vehicle.owner %></td>
+                </tr>
+                <% if current_user.has_role? :admin %>
+                  <tr>
+                    <td>Order Number</td>
+                    <td width="80%"><%= @vehicle.order_number %></td>
+                  </tr>
+                  <tr>
+                    <td>Invoice Number</td>
+                    <td width="80%"><%= @vehicle.invoice_number %></td>
+                  </tr>
+                <% end %>
+                <tr>
+                  <td>Delivery Date</td>
+                  <td width="80%"><%= @vehicle.delivery_date_field %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box-title">
+            <h3><i class="glyphicon glyphicon-flag"></i>Vehicle Notifications</h3>
+          </div>
+          <div class="box-content nopadding notifications">
+            <table class="notification-management">
+              <tr>
+                <td>Available Event type for Vehicles</td>
+                <td><%= notification_type_labels_for('vehicle') %></td>
+              </tr>
+              <tr>
+                <td>If required, add a new event type for Vehicles. Then return to this page and refresh.</td>
+                <td>
+                  <%= link_to 'Add New Vehicle Event Type', new_notification_type_path, {:class => 'btn btn-satgreen'} %>
+                </td>  
+              </tr>
+              <% if NotificationType.exists?(resource_name: 'Vehicle') %>
+                <% options = NotificationType.vehicle.collect { |type| type.event_name } %>
+                  <tr>
+                    <td><%= select_tag :event_types, options_for_select(options), class: "span8", id: "event-type-list", :prompt => 'Choose Event Type' %></td>
+                    <td><%= link_to 'Add New Vehicle Notification', {controller: "notifications", action: "new", vehicle_id: @vehicle.id}, {id: 'add-new-notification', class: 'btn btn-satgreen'} %></td>
+                  </tr>
+                <% end %>  
+            </table>
+          </div>
+
+          <% if current_user.has_role? :admin %>
+            <div class="box-title">
+              <h3><i class="icon-bullhorn"></i>Vehicle Activity</h3>
+            </div>
+            <div id="activity-feed" class="box-content scrollable" data-height="300" data-visible="true">
+              <% @activities.each do |activity| %>
+                <div class="activity">
+                  <div class="details">
+                    <%= render_activity activity, locals: {display: "simple"} %>
+                    <span class="time"><%= time_ago_in_words(activity.created_at) + " ago" %></span>
+                  </div>
+                  <div class="date">
+                    <%= activity.created_at.strftime("%e %b %Y, %l:%M %p") %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

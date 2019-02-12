@@ -1,0 +1,7 @@
+<% if @user.first_name.present? %>
+  Hi <%= @user.first_name %>,
+<% end %>
+
+<%= @message %>
+
+<%= render 'hire_agreement' %>

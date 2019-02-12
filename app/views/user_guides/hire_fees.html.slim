@@ -1,0 +1,36 @@
+#user-guide
+  .panel.panel-default
+    .panel-body
+      h1 Service Manager User Guide
+      h2
+        i.icon-tag
+        |  Hire Fees
+
+  section.definition
+    h3 Definition
+    p.main-definition Hire Fees are charges incurred when a vehicle is serviced or returned.
+
+    dl.dl-horizontal
+      dt Fee Type
+      dd The category for similar types of expenses
+      dt Fee
+      dd The amount payable
+      dt Charge Unit
+      dd The unit of payment (e.g. per service, per km, per liter, per item, etc.)
+
+  = link_to '<span class="label label-info">back to Index</span>'.html_safe, user_guides_path
+
+  section
+    h3 How Fees are determined
+    p 
+      | When a Fee Type is created, the manager will decide on a standard fee that would apply in most circumstances. 
+    p
+      | When a Hire Product is created, all the standard fees are associated with the new Hire Product. The manager may then change the fees for this Hire Product if special circumstances apply due to the type of vehicle.
+    p 
+      | When a Hire Product is selected for a Hire Quote, the Hire Product Fees will apply by default. However, these fees may be changed on the quote if exceptions need to be made for a particular customer. Such changes will not affect the standard fees for Hire Products.
+    p 
+      | When the quote is accepted and a contract is created, all the quoted fees will apply to the contract. However, before the contract is signed the manager may still make changes to the contract fees.
+
+  section.change-history
+    h4 Change History
+    p Created by Francois van der Hoven on 25 July 2016

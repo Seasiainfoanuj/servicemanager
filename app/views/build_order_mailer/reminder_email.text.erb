@@ -1,0 +1,5 @@
+Hi <%= @user.first_name %>,
+
+This is a reminder that the following build order is <%= @build_order.status %> and scheduled for <%= @build_order.sched_date_field %> - <%= @build_order.sched_time_field %>. You can login and view this build order here: <%= build_order_url(@build_order) %>
+
+<%= render 'build_order' %>

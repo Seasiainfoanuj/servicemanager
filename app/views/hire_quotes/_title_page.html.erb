@@ -1,0 +1,9 @@
+<% present(@hire_quote) do |quote| %>
+  <div id="cover-letter" class="a4-page">
+    <div class="title-page-left">
+      <div class="title-page-logo">
+        <%= image_tag quote.company_logo(:large) %>
+      </div>
+    </div>
+  </div>
+<% end %>

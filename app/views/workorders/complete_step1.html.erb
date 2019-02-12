@@ -1,0 +1,201 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1><%= "#{@vehicle_log.name}" %> Logbook Entry <span class="label"><%= "REF# #{@vehicle_log.uid}" %></span></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <a href="#" class="btn btn-green submit-btn">Next</a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="row-fluid">
+            <div class="span6">
+              <div class="box-title">
+                <h3><i class="glyphicon-notes"></i>Workorder Details</h3>
+              </div>
+              <div class="box-content nopadding">
+                <table id="vehicle" class="table table-bordered table-force-topborder" style="clear: both">
+                  <tbody>
+                    <tr>
+                      <td>Type</td>
+                      <td width="75%"><span style="font-weight:bold;font-size:1.2em"><%= @vehicle_log.name %></span></td>
+                    </tr>
+                    <tr>
+                      <td>Status</td>
+                      <td width="75%"><%= workorder_status_label(@workorder.status) %></td>
+                    </tr>
+                    <tr>
+                      <td>Service Provider</td>
+                      <td width="75%"><%= @workorder.service_provider.company_name if  @workorder.service_provider %> </td>
+                    </tr>
+                    <tr>
+                      <td>Customer</td>
+                      <td width="75%"><%= @workorder.customer.company_name if  @workorder.customer %></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="span6">
+              <div class="box-title">
+                <h3><i class="glyphicon-car"></i>Vehicle Details</h3>
+              </div>
+              <div class="box-content nopadding">
+                <table id="vehicle" class="table table-bordered table-force-topborder" style="clear: both">
+                  <tbody>
+                    <tr>
+                      <td>Vehicle</td>
+                      <td width="75%"><%= @workorder.vehicle.name %> </td>
+                    </tr>
+                    <tr>
+                      <td>Vehicle Number</td>
+                      <td width="75%"><span class="label label-satblue"><%= @workorder.vehicle.number %></span></td>
+                    </tr>
+                    <tr>
+                      <td>VIN Number</td>
+                      <td width="75%"><%= @workorder.vehicle.vin_number %></td>
+                    </tr>
+                    <tr>
+                      <td>Rego Number</td>
+                      <td width="75%"><span class="label"><%= @workorder.vehicle.rego_number %></span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <%= form_for(@vehicle_log, :url => complete_from_workorder_vehicle_log_path(@vehicle_log), :html => {:class => "form-horizontal form-validate", :id => "complete-form"}) do |f| %>
+            <% if @vehicle_log.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@vehicle_log.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+                <ul>
+                <% @vehicle_log.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+            <div class="box-title">
+              <h3><span class="step">1</span>Vehicle Odometer Reading</h3>
+            </div>
+            <div class="box-content">
+              <div class="control-group hidden">
+                <%= f.label :name, "Entry Type", :class => "control-label" %>
+                <div class="controls">
+                  <%= f.text_field :name, :class => "span4", :disabled => true %>
+                </div>
+              </div>
+              <div class="control-group hidden">
+                <%= f.label :vehicle_id, "Vehicle", :class => "control-label" %>
+                <div class="controls">
+                  <%= f.collection_select :vehicle_id, Vehicle.all, :id, :ref_name, {prompt: false}, {:class=>'select2-me span6', :disabled => true} %>
+                </div>
+              </div>
+              <div class="control-group hidden">
+                <%= f.label :service_provider_id, "Service Provider", :class => "control-label" %>
+                <div class="controls">
+                  <%= f.collection_select :service_provider_id, User.filter_by_service_provider, :id, :company_name, {prompt: true}, {:class=>'select2-me span5', :disabled => true} %>
+                </div>
+              </div>
+              <div class="control-group">
+                <%= f.label :odometer_reading, "Odometer Reading", :class => "control-label" %>
+                <div class="controls">
+                  <div class="input-append">
+                    <%= f.text_field :odometer_reading, :class => "input-small", :id => 'odometer_reading', 'data-rule-required' => true %>
+                    <span class="add-on">km</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="box-title">
+              <h3><span class="step">2</span>Log Entry Notes</h3>
+            </div>
+            <div class="box-content">
+              <%= f.text_area :details, {:class => "editor span12", 'rows' => 5} %>
+            </div>
+
+            <div class="box-title">
+              <h3><span class="step">3</span>Flag For Review / Follow Up Message</h3>
+            </div>
+            <div class="box-content">
+              <p>Flag for review if there is something that needs to be followed up or if there is anything out of the normal.</p>
+              <br>
+              <div class="control-group">
+                <div class="check-line">
+                  <%= f.check_box :flagged, {:id => "flagged_check", :class => "icheck-me", "data-skin" => "square", "data-color" => "red"} %>
+                  <%= f.label :flagged, "Flag For Review", :class => "inline" %>
+                </div>
+              </div>
+              <div id="follow_up_message">
+                <%= f.label :follow_up_message, "Follow Up Message:", :class => "inline" %>
+                <%= f.text_area :follow_up_message, {:class => "span12", 'rows' => 5} %>
+              </div>
+            </div>
+          <% end %>
+
+          <div class="box-title">
+            <h3><span class="step">4</span>Upload job sheets, photos or other files</h3>
+          </div>
+          <% if @vehicle_log.id %>
+            <div class="box-content" style="padding: 30px 50px;">
+              <div id="file-uploads-container">
+                <%= form_for LogUpload.new, :html => { :multipart => true, :id => "logupload", :class => "form-validate", "data-log-id" => @vehicle_log.id  } do |f| %>
+                  <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                  <div class="row fileupload-buttonbar">
+                    <div class="span7">
+                      <!-- The fileinput-button span is used to style the file input field as button -->
+                      <span class="btn btn-success fileinput-button">
+                        <i class="icon-plus icon-white"></i>
+                        <span>Add files...</span>
+                        <%= f.file_field :upload %>
+                        <%= f.hidden_field :vehicle_log_id, :value => @vehicle_log.id, :id => "vehicle_log_id" %>
+                      </span>
+                      <button type="submit" class="btn btn-primary start">
+                        <i class="icon-upload icon-white"></i>
+                        <span>Start upload</span>
+                      </button>
+                      <button type="reset" class="btn btn-orange cancel">
+                        <i class="icon-ban-circle icon-white"></i>
+                        <span>Cancel upload</span>
+                      </button>
+                    </div>
+                    <div class="span5">
+                      <!-- The global progress bar -->
+                      <div class="progress progress-success progress-striped active fade">
+                        <div class="bar" style="width:0%;"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- The loading indicator is shown during image processing -->
+                  <div class="fileupload-loading"></div>
+                  <br>
+                  <!-- The table listing the files available for upload/download -->
+                  <table class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+                  </table>
+                <% end %>
+                <%= render 'shared/form_upload' %>
+                <%= render 'shared/form_download' %>
+              </div>
+            </div>
+          <% else %>
+            <div class="box-content">
+              Create log entry to enable file attachments.
+            </div>
+          <% end %>
+          <div class="actions">
+            <a href="#" class="btn btn-green submit-btn">Next</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,113 @@
+.new-note {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+}
+.note-details {
+  display: inline;
+  table { 
+    width: 100%;
+    tr {
+      td:nth-child(1) {
+        width: 20%;
+        padding-top: 14px;
+      }
+      td:nth-child(2) {
+        width: 12%;
+      }
+      td:nth-child(3) {
+        width: 50%;
+      }
+      td:nth-child(4) {
+        width: 18%;
+      }
+    }
+    tr:nth-child(3) > td {
+      padding-top: 10px;
+    }
+  }
+}
+.selected-users {
+  width: 420px;
+}
+.new-note textarea {
+  background: #fff;
+}
+.note {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.1),0 1px 0 #fff inset;
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.1),0 1px 0 #fff inset;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1),0 1px 0 #fff inset;
+  color: #444;
+}
+.note .note-meta {}
+.note .note-meta:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.note .note-meta .date,
+.note .note-meta .author,
+.note .note-meta .reminder-status,
+.note .note-meta .reminder-date,
+.note .note-meta .scope {
+  float: left;
+  margin-right: 15px;
+  color: #777;
+}
+.note .note-meta .email-notification {
+  float: left;
+}
+
+.note .note-meta .edit {
+  float: right;
+  color: #777;
+}
+.note .note-meta .date a,
+.note .note-meta .author a,
+.note .note-meta .scope a,
+.note .note-meta .edit a {
+  color: #777;
+}
+.note .note-meta .edit a {
+  margin-left: 10px;
+  font-size: 14px;
+}
+.note .note-meta .edit a:hover {
+  text-decoration: none;
+  color: #333;
+}
+.note .note-meta .date i,
+.note .note-meta .author i,
+.note .note-meta .scope i,
+.note .note-meta .edit i {
+  margin-right: 3px;
+  display: inline-block;
+}
+.note .note-text {
+  margin-top: 15px;
+  color: #555;
+}
+.note .note-uploads {
+  margin-top: 15px;
+}
+.note .note-uploads ul {
+  margin: 0;
+  list-style: none;
+}
+.note .note-update-form {
+  margin-top: 15px;
+}
+.note .note-activity {
+  margin-top: 15px;
+}
+#notes .notification-text {
+  margin-top: 15px;
+  a:link, a:visited {
+    color: #368EE0;
+  }
+}

@@ -1,0 +1,8 @@
+<% unless @recipient.first_name.nil? || @recipient.first_name.blank? %>
+<%= "Hi #{@recipient.first_name}," %>
+
+<% end %>
+<% unless @message.nil? || @message.blank? %>
+<%= @message %>
+
+<% end %>

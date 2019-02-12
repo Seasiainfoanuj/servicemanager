@@ -1,0 +1,2 @@
+<% note = Note.find(activity.trackable_id) %>
+Sent by email to <%= note.recipients.collect { |nr| nr.user.email }.join(', ') %> by <%= link_to activity.owner.name, activity.owner if activity.owner %>

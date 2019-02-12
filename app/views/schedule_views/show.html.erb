@@ -1,0 +1,44 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main" class="schedule-view">
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed">
+          <div class="box-title">
+            <h3>
+              <i class="glyphicon-calendar"></i> <%= @schedule_view.name %>
+              <a href="#" class="vehicles-link">(<%= pluralize(@schedule_view.vehicles.count, 'vehicle') %>)</a>
+            </h3>
+            <% if can? :update, @schedule_view  %>
+              <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_schedule_view_path(@schedule_view), class: 'pull-right' %>
+            <% end %>
+          </div>
+          <div id="schedule-container" class="box-content nopadding">
+            <div id="schedule" class="dhx_cal_container" data-schedule-view-id="<%= @schedule_view.id %>">
+              <div class="dhx_cal_navline">
+                <div class="dhx_cal_prev_button">&nbsp;</div>
+                <div class="dhx_cal_next_button">&nbsp;</div>
+                <div class="dhx_cal_today_button"></div>
+                <div class="dhx_cal_date"></div>
+                <div class="dhx_cal_legend" style="right:205px;">
+                  <a class="btn" id="legend-btn">Show Legend</a>
+                </div>
+                <div class="dhx_minical_icon" id="dhx_minical_icon">&nbsp;</div>
+                <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+                <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+                <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+                <div class="dhx_cal_tab" name="timeline_tab" style="right:200px;"></div>
+              </div>
+              <div class="dhx_cal_header">
+              </div>
+              <div class="dhx_cal_data">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render "footer_legend" %>

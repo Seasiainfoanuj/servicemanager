@@ -1,0 +1,100 @@
+#user-guide
+  .panel.panel-default
+    .panel-body
+      h1 Service Manager User Guide
+      h2
+        i.glyphicon-notes
+        |  Quotes
+
+  section.definition
+    h3 Definition
+    p.main-definition 
+      | A quote is an offer to sell some listed items to a customer. The offer is made by a manager on behalf of an 
+      span.glossary internal company 
+      | of #{BUS4X4_COMPANY_NAME}. 
+
+    dl.dl-horizontal
+      dt Customer
+      dd The person or company to whom the offer is made.
+      dt Manager 
+      dd The authorised sales representative of #{BUS4X4_COMPANY_NAME}.
+      dt Number
+      dd A unique system-generated number for the quote.       
+      dt PO Number 
+      dd to be defined       
+      dt Quote date
+      dd  
+        span.table-name
+          | (date)
+        |  The date when the quote was created
+      dt Discount
+      dd to be defined   
+      dt Status
+      dd Valid Quote statuses are: #{QuoteStatus::DISPLAY_STATUSSES.join(", ")}
+      dt Terms
+      dd Conditions, specified by the manager, to be fulfilled for the offer to be valid.
+      dt Comments
+      dd Comments by the manager, for the attention of the customer.
+      dt Invoice Company
+      dd 
+        | The 
+        span.glossary internal company
+        |  that issued the quote.
+      dt PP upload
+      dd to be defined
+      dt Total cents
+      dd The gross total of the quote, including tax.
+      dt Amendment
+      dd Is this quote an amendment?          
+
+  = link_to '<span class="label label-info">back to Index</span>'.html_safe, user_guides_path
+
+  section
+    h3 Data resources associated with a quote.
+    p A Quote belongs to the Internal Company that ownes the quoted product. It is created by a manager of the Internal Company and is offered to a customer, who is a user in the database. It has a Title Page, a Cover Letter and includes one or many Quote Line Items.
+    p A Quote may have many messages, attachments or notes. Other associations: Build, Hire Agreement, Purchase Order Upload.
+    p An Accepted Quote may result in a Vehicle Purchase Contract.
+
+  section
+    h3 Significance of quote statuses.
+    p A Quote is created as a draft and may be updated before it is sent to the customer. The customer may request changes, which results in an updated quote that is re-sent to the customer. Changes may continue until the customer is satisfied and accepts the Quote.
+    p A quote is cancelled by ... when ...
+    p A quote may be deleted when ...
+
+  section
+    h3 Various ways to create a quote.
+    h4 1. Create a New Quote.
+    p The recommended way to create a Quote is by choosing to add a new Quote and then add line items by clicking on the Master Quote Items button. The properties of the Master Quote Item is then automatically copied to the new line item. New line items can be created from scratch by clicking on Add Line.
+    h4 2. Amend an existing Quote
+    p This is done when a change is requested after the quote was accepted.
+    h4 3. Duplicating an existing Quote
+    p This is done when a new customer needs a quote that is very similar to another existing quote.
+
+  section
+    h3 Emails are generated for these quote events. 
+    ul
+      li When the manager 'sends' the quote, an email is generated and sent to the customer.
+      li When the customer requests changes, an email is sent to the manager.
+      li When the customer accepts a quote, the manager is informed by email.
+
+  section
+    h3 Special points to remember:
+    ul
+      li Hide line items when the prices of these items should not be visible to the customer.
+      li Always select GST for a line item unless the item may not be taxed, like Vehicle Registration.
+      li Labour cost must be included in one or more hidden line items.
+      li The buy price is added when ...
+      li Always select the most appropriate Quote Item Type from the drop-down list on the line item. 
+      li The price of a line item may be zero. This will not result in a warning or error.
+
+  section
+    h3 Tips
+    ul
+      li We often search for quotes in the Quote List by entering a value to find the quote. Tags can help to make this easier. Tags may be entered in edit mode.
+      li If it is OK for the name and description of a line item to have the same value, only enter the name. It will automatically be copied to the description.
+      li If you do not pick a Quote Item Type from the dropdown list, the value of 'Other' will be assigned.
+      li The Quote List only show quotes that have not been cancelled and quotes updated less than 6 months ago. To see older quotes, check the 'Show All' box on the top right-hand of the list.
+
+  section.change-history
+    h4 Change History
+    p Created by Francois van der Hoven on 14 April 2016

@@ -1,0 +1,115 @@
+<%= form_for(@hire_agreement, :html => {:class => "form-horizontal form-validate", :id => "hire-agreement-form"}) do |f| %>
+  <% if @hire_agreement.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@hire_agreement.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @hire_agreement.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :status, value: "pending" %>
+
+  <div class="box-title">
+    <h3><i class="glyphicon-bookmark"></i>Hire Agreement Type</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :hire_agreement_type_id, "Select Type", :class => "control-label" %>
+      <div class="controls">
+        <%= collection_select(:hire_agreement, :hire_agreement_type_id, HireAgreementType.all, :id, :name, {prompt: true}, {:class=>'select2-me span4', 'data-rule-required' => true}) %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-title">
+    <h3><i class="icon-cogs"></i>Configure Hire Agreement</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :invoice_company_id, "Invoice Company", :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select :invoice_company_id, InvoiceCompany.all, :id, :name, {prompt: true}, {:class=>'select2-me span4', 'data-rule-required' => true} %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :manager_id, "Assign to", :class => "control-label" %>
+      <div class="controls">
+        <%= collection_select(:hire_agreement, :manager_id, User.filter_by_admin, :id, :name, {prompt: true}, {:class=>'select2-me span4'}) %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :quote_id, "Quote", :class => "control-label" %>
+      <div class="controls">
+        <%= collection_select(:hire_agreement, :quote_id, Quote.all, :id, :ref_name, {prompt: true}, {:class=>'select2-me span4'}) %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :customer_id, "Customer/Hirer", :class => "control-label" %>
+      <div class="controls">
+        <%= collection_select(:hire_agreement, :customer_id, User.with_roles(:customer, :service_provider), :id, :company_name, {prompt: true}, {:class=>'select2-me span4', 'data-rule-required' => true}) %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-title">
+    <h3><span style="display:block; float:left;"><i class="icon-time"></i> Schedule Overview</span><span style="display:block; float:left; margin: 2px 10px 0 20px;"><input type="checkbox" id="show_hire_schedule_check" class='icheck-me' data-skin="square" data-color="blue" checked> </span> Show/Hide</h3>
+  </div>
+  <div id="hire_agreement_schedule_container" class="box-content nopadding" style="height: 600px;">
+    <%= render 'schedule', hire_agreement: @hire_agreement %>
+  </div>
+
+  <div class="box-title">
+    <h3><i class="glyphicon-car"></i>Vehicle Details</h3>
+  </div>
+  <div id="advanced-vehicle-select" class="box-content">
+    <div class="control-group">
+      <%= f.label :seating_requirement, "Seating Requirement", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :seating_requirement, {:id => 'seating-requirement', :style => 'width:45px;', :placeholder => 'e.g. 12'} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <div style="margin-left:0" class="controls">
+        <%= collection_select(:hire_agreement, :vehicle_id,  Vehicle.joins(:hire_details).where('active'), :id, :ref_name, {prompt: true}, {:id => 'vehicle-select', :class=>'select2-me span5', 'data-rule-required' => true}) %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+    <div id="vehicle-details">
+    </div>
+    <div id="vehicle-notices" style="margin-top:20px">
+    </div>
+  </div>
+
+  <div class="box-title">
+    <h3><i class="icon-calendar"></i>Hire Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <div class="input-append span12">
+        <%= f.text_field :date_range, {:class => "span4 daterangepick", :placeholder => 'Select the hire period', 'data-rule-required' => true} %>
+        <span class='add-on'><i class='icon-calendar'></i></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :pickup_location, "Pickup Location", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :pickup_location, :class => "input-large" %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :return_location, "Return Location", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :return_location, :class => "input-large" %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,37 @@
+#user-guide
+  .panel.panel-default
+    .panel-body
+      h1 Service Manager User Guide
+      h2 
+        i.glyphicon-notes
+        | Hire Enquiries
+
+  section.definition
+    h3 Definition
+    p.main-definition 
+      | A Hire Enquiry is created when the customer wants to hire a vehicle for a specified period, or as an ongoing arrangement.
+    dl.dl-horizontal
+      dt Hire Start date
+      dd The date when the vehicle is handed to the customer.
+      dt Hire Period
+      dd This is the number of days, weeks, months or years the customer wants to use the vehicle.
+      dt Number of vehicles
+      dd The number of vehicles the customer wants to hire.
+      dt Delivery required
+      dd The customer may request that the rental vehicle be delivered at a convenient location.
+      dt Delivery location
+      dd The address where the vehicle is delivered to the customer.
+      dt Ongoing contract
+      dd This when the customer wants to hire a vehicle for a long period and they do not forsee the specific duration of the hire period.
+      dt Transmission preference
+      dd Options are: #{HireEnquiry::TRANSMISSION_PREFERENCES.join(', ')}.
+      dt Minimum seats
+      dd The minimum number of seats required by the customer.
+      dt Special requirements
+      dd The customer may also ask for specific assessories or modifications to the rental vehicle.
+
+  = link_to '<span class="label label-info">back to Index</span>'.html_safe, user_guides_path
+
+  section.change-history
+    h4 Change History
+    p Created by Francois van der Hoven on 2 June 2016

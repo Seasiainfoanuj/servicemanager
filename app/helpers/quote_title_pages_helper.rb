@@ -1,0 +1,2 @@
+module QuoteTitlePagesHelper
+end

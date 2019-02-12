@@ -1,0 +1,47 @@
+<div class="image-item">
+  <% if f.object.persisted? %>
+    <%= image_tag f.object.image.url(:medium) %>
+  <% end %>
+
+  <div class="image-properties">
+    <div class="control-group">
+      <%= f.label :name, "Name", :class => "control-label span2" %>
+      <div class="controls">
+        * &nbsp;<%= f.text_field :name %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :image_type, "Image Type", class: "control-label span2" %>
+      <div class="controls">
+        <%= f.select :image_type, options_for_select([['Document', 0],['Photo', 1]], f.object.image_type.to_s), {}, id: "image-type#{inxs}", class: "image-type" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :image, class: "control-label span2" %>
+      <div class="controls">
+        <%= f.file_field :image, style: "border:none" %>
+      </div>
+    </div>
+
+    <% doc_class = f.object.image_type == 0 ? 'control-group' : 'control-group hidden' %>
+    <div class="<%= doc_class %>" id="doc-type<%= inxs %>">
+      <%= f.label :document_type_id, "Document Type", class: "control-label span2" %>
+      <div class="controls">
+        <%= f.select :document_type_id, options_for_select(DocumentType.all.each.collect { |tpe| [tpe.name, tpe.id] }, f.object.document_type_id.to_s) %>
+      </div>
+    </div>
+
+    <% photo_class = f.object.image_type == 1 ? 'control-group' : 'control-group hidden' %>
+    <div class="<%= photo_class %>" id="photo-type<%= inxs %>">
+      <%= f.label :photo_category_id, "Photo Category", class: "control-label span2" %>
+      <div class="controls">
+        <%= f.select :photo_category_id, options_for_select(PhotoCategory.all.each.collect { |cat| [cat.name, cat.id] }, f.object.photo_category_id.to_s) %>
+      </div>
+    </div>
+  </div>  
+
+  <hr>
+</div>
+

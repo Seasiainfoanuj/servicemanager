@@ -1,0 +1,59 @@
+<% present(@quote) do |quote| %>
+  <div id="cover-letter" class="a4-page">
+    <div class="page-content">
+      <div class="cover-letter-logo pull-left">
+        <%= image_tag quote.dealer_logo(:large) %>
+      </div>
+
+      <div class="cover-letter-from-address pull-right">
+        <address>
+          <%= quote.dealer_address_line_1 %><br>
+          <%= "#{quote.dealer_address_line_2} <br>".html_safe if quote.dealer_address_line_2.present? %>
+          <%= quote.dealer_suburb %>, <%= quote.dealer_state %> <%= quote.dealer_postcode %> <br>
+          <%= quote.dealer_country %>
+          <br>
+          <%= "ACN: #{quote.dealer.acn}<br>".html_safe if quote.dealer.acn.present? %>
+          <%= "ABN: #{quote.dealer.abn}<br>".html_safe if quote.dealer.abn.present? %>
+          <br>
+          <%= " #{quote.dealer_phone} <br>".html_safe if quote.dealer_phone.present? %>
+          <%= "Fax: #{quote.dealer_fax}<br>".html_safe if quote.dealer_fax.present? %>
+        </address>
+      </div>
+
+      <div class="clear"></div>
+
+      <div class="cover-letter-date">
+        <%= quote.date.strftime("%-d %B %Y") %>
+      </div>
+
+      <div class="cover-letter-recipient">
+        <%= quote.customer_name %><br>
+        <%= "#{quote.customer_company_name}<br>".html_safe if quote.customer_company_name.present? %>
+
+        <% if quote.customer_postal_address %>
+          <address>
+            <%= quote.customer_postal_address_line_1 %>
+            <%= quote.customer_postal_address_line_2 %>
+            <%= quote.customer_postal_address_suburb %>
+            <%= quote.customer_postal_address_state %>
+            <%= quote.customer_postal_address.postcode %>
+            <%= quote.customer_postal_address.country %>
+          </address>
+        <% end %>
+
+        <%= "Email: #{quote.customer_email}" if quote.customer_name != "[#{quote.customer_email}]" %> <br>
+        <%= "Phone: #{quote.customer_phone}".html_safe if quote.customer_phone.present? %> <br>
+        <%= "Mobile: #{quote.customer_mobile}".html_safe if quote.customer_mobile.present? %><br>
+        <%= quote.customer_website %><br>
+      </div>
+
+      <div class="cover-letter-title">
+        <%= quote.cover_letter.title if quote.cover_letter.title.present? %>
+      </div>
+
+      <div class="cover-letter-text">
+        <%= simple_format quote.cover_letter.text if quote.cover_letter.text.present? %>
+      </div>
+    </div>
+  </div>
+<% end %>

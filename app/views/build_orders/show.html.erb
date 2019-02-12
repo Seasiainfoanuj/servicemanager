@@ -1,0 +1,291 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1><%= @build_order.name %> <span class="label"><%= "REF# #{@build_order.uid}" %></span></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if @build_order.status == 'complete' && @build_order.sp_invoice.blank? %>
+          <%= link_to 'Submit Invoice'.html_safe, build_order_submit_invoice_path(@build_order), :class => 'btn btn-green' %>
+        <% end %>
+
+        <% if can? :send_notifications, BuildOrder %>
+          <a href="#send-build-order-model" role="button" class="btn btn-satblue" data-toggle="modal"><i class="icon-envelope"></i> Send by Email</a>
+          <%= render 'send_form' %>
+        <% end %>
+
+        <% if current_user.has_role? :admin %>
+          <% if can? :update, BuildOrder %>
+            <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_build_order_path, {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+          <% end %>
+        <% end %>
+
+        <% if can? :read, Build %>
+          <%= link_to '<i class="icon-list-alt"></i>'.html_safe, build_path(@build_order.build), {:title => "Build", :class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+        <% else %>
+          <%= link_to '<i class="icon-list-alt"></i>'.html_safe, build_orders_path, {:title => "List All", :class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+        <% end %>
+
+        <% if can? :complete, BuildOrder %>
+          <% if @build_order.status == 'confirmed' %>
+            <%= link_to '<i class="icon-ok-sign"></i> Complete'.html_safe, {:action => 'complete_step1', :build_order_id => @build_order.id}, {:class => 'btn btn-satgreen'} %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+
+          <div class="row-fluid">
+            <div class="span6">
+              <div class="box-title">
+                <h3><i class="glyphicon-notes"></i>Build Order Details</h3>
+              </div>
+              <div class="box-content nopadding">
+                <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+                  <tbody>
+                    <tr>
+                      <td>REF</td>
+                      <td width="75%"><span class="label label-grey"><%= @build_order.uid %></span></td>
+                    </tr>
+                    <tr>
+                      <td>Status</td>
+                      <td width="75%"><%= build_order_status_label(@build_order.status) %></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="span6">
+              <div class="box-title">
+                <h3><i class="icon-calendar"></i>Schedule</h3>
+              </div>
+              <div class="box-content nopadding">
+                <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+                  <tbody>
+                    <tr>
+                      <td>Scheduled Time</td>
+                      <td width="75%"><%= @build_order.sched_date_field %> - <b><%= @build_order.sched_time_field %></b></td>
+                    </tr>
+                    <tr>
+                      <td>ETC Time</td>
+                      <td width="75%"><%= @build_order.etc_date_field %> - <b><%= @build_order.etc_time_field %></b></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="box-title">
+            <h3><i class="glyphicon-group" style="position:relative; top:-3px;"></i>Contact Information</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Service Provider</td>
+                  <td width="80%">
+                    <% if @build_order.service_provider %>
+                      <%= render 'shared/contact_info_model', user: @build_order.service_provider, model_name: 'service-provider' %>
+                      <a href="#modal-service-provider" class="btn btn-mini" data-toggle="modal" style="margin-right:5px"><i class="icon-search"></i></a> <%= @build_order.service_provider.company_name %>
+                    <% end %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Assigned to</td>
+                  <td width="80%">
+                    <% if @build_order.manager %>
+                      <%= render 'shared/contact_info_model', user: @build_order.manager, model_name: 'manager' %>
+                      <a href="#modal-manager" class="btn btn-mini" data-toggle="modal" style="margin-right:5px"><i class="icon-search"></i></a> <%= @build_order.manager.company_name %>
+                    <% end %>
+                  </td>
+                </tr>
+                <% @build_order.subscribers.each do |subscriber| %>
+                  <tr>
+                    <td>Subscriber</td>
+                    <td width="80%">
+                      <%= subscriber.company_name %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+
+          <% if @build_order.invoice_company %>
+            <div class="box-title">
+              <h3><i class="glyphicon-notes_2" style="position:relative; top:-3px;"></i>Invoice To</h3>
+            </div>
+            <div class="box-content nopadding">
+              <table id="invoice-to" class="table table-bordered table-force-topborder" style="clear: both">
+                <tbody>
+                  <tr>
+                    <td>Company</td>
+                    <td width="80%"><%= @build_order.invoice_company.name %></td>
+                  </tr>
+                  <% if @build_order.invoice_company.abn.present? %>
+                    <tr>
+                      <td>ABN</td>
+                      <td width="80%"><%= @build_order.invoice_company.abn %></td>
+                    </tr>
+                  <% end %>
+                  <% if @build_order.invoice_company.acn.present? %>
+                    <tr>
+                      <td>ACN</td>
+                      <td width="80%"><%= @build_order.invoice_company.acn %></td>
+                    </tr>
+                  <% end %>
+                  <% if @build_order.invoice_company.phone.present? %>
+                    <tr>
+                      <td>Phone</td>
+                      <td width="80%"><%= @build_order.invoice_company.phone %></td>
+                    </tr>
+                  <% end %>
+                  <% if @build_order.invoice_company.fax.present? %>
+                    <tr>
+                      <td>Fax</td>
+                      <td width="80%"><%= @build_order.invoice_company.fax %></td>
+                    </tr>
+                  <% end %>
+                  <% if @build_order.invoice_company.address_line_1.present? || @build_order.invoice_company.address_line_2.present? || @build_order.invoice_company.suburb.present? || @build_order.invoice_company.state.present? || @build_order.invoice_company.postcode.present? || @build_order.invoice_company.country.present? %>
+                    <tr>
+                      <td>Address</td>
+                      <td width="80%">
+                        <%= "#{@build_order.invoice_company.address_line_1}<br>".html_safe if @build_order.invoice_company.address_line_1.present? %>
+                        <%= "#{@build_order.invoice_company.address_line_2}<br>".html_safe if @build_order.invoice_company.address_line_2.present? %>
+                        <%= "#{@build_order.invoice_company.suburb}, ".html_safe if @build_order.invoice_company.suburb.present? %>
+                        <%= "#{@build_order.invoice_company.state} ".html_safe if @build_order.invoice_company.state.present? %>
+                        <%= "#{@build_order.invoice_company.postcode} ".html_safe if @build_order.invoice_company.postcode.present? %>
+                        <%= "<br>#{@build_order.invoice_company.country}".html_safe if @build_order.invoice_company.country.present? %>
+                      </td>
+                    </tr>
+                  <% end %>
+                  <% if @build_order.invoice_company.accounts_admin %>
+                    <tr>
+                      <td>Accounts Person</td>
+                      <td width="80%">
+                        <%= @build_order.invoice_company.accounts_admin.ref_name %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+
+          <% if @build_order.sp_invoice && current_user.has_role?(:admin) %>
+            <div class="box-title">
+              <h3><i class="glyphicon-notes"></i>Service Provider Invoice</h3>
+            </div>
+            <div class="box-content nopadding">
+              <table id="sp-invoice" class="table table-bordered table-force-topborder" style="clear: both">
+                <tbody>
+                  <tr>
+                    <td>Invoice Number</td>
+                    <td width="80%">
+                      <%= link_to(@build_order.sp_invoice.invoice_number, @build_order.sp_invoice) %>
+                      <%= link_to '<i class="icon-search"></i>'.html_safe, @build_order.sp_invoice, :class => 'btn btn-mini' %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Status</td>
+                    <td width="80%"><%= sp_invoice_status_label(@build_order.sp_invoice.status) %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+
+          <div class="box-title">
+            <h3><i class="glyphicon-car"></i>Vehicle Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="vehicle" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Year, Make &amp; Model</td>
+                  <td width="80%"><%= @build_order.build.vehicle.name %></td>
+                </tr>
+                <tr>
+                  <td>Vehicle Number</td>
+                  <td width="80%"><%= @build_order.build.vehicle.number %> <%= @build_order.build.vehicle.call_sign %></td>
+                </tr>
+                <tr>
+                  <td>VIN Number</td>
+                  <td width="80%"><%= @build_order.build.vehicle.vin_number %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <% unless @build_order.details.blank? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-notes"></i>Build Order Details</h3>
+            </div>
+            <div class="box-content">
+              <%= @build_order.details.html_safe %>
+            </div>
+          <% end %>
+
+          <% unless @build_order.service_provider_notes.blank? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-notes"></i>Notes</h3>
+            </div>
+            <div class="box-content">
+              <%= @build_order.service_provider_notes.html_safe %>
+            </div>
+          <% end %>
+
+          <%= render 'shared/notes/list', resource: @build_order %>
+
+          <% unless @build_order.build_order_uploads.empty? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-paperclip"></i>Attachments</h3>
+            </div>
+            <div class="box-content" style="padding: 20px 20px 50px;">
+              <% @build_order.build_order_uploads.each do |file| %>
+              <div style="margin:5px; height: 200px; float:left">
+                <div class="thumbnail" style="float: left; margin-right: 5px; text-align:center;">
+                  <a href="<%= file.upload.url(:original) %>"><%= image_tag file.upload.url(:medium) %></a><br>
+                  <a href="<%= file.upload.url(:original) %>" style="font-size:0.8em;padding:5px;"><%= file.upload_file_name %></a>
+                </div>
+              </div>
+              <% end %>
+            </div>
+          <% end %>
+
+          <% if current_user.has_role? :admin %>
+            <div class="box-title">
+              <h3><i class="icon-bullhorn"></i>Build Order Activity</h3>
+            </div>
+            <div id="activity-feed" class="box-content scrollable" data-height="300" data-visible="true">
+              <% @activities.each do |activity| %>
+                <div class="activity">
+                  <div class="details">
+                    <%= render_activity activity, locals: {display: "simple"} %>
+                    <span class="time"><%= time_ago_in_words(activity.created_at) + " ago" %></span>
+                  </div>
+                  <div class="date">
+                    <%= activity.created_at.strftime("%e %b %Y, %l:%M %p") %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

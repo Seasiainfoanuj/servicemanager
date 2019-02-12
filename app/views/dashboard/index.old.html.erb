@@ -1,0 +1,79 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Hi<%= ", #{current_user.first_name}" %></h1>
+      </div>
+      <div class="pull-right">
+        <ul class="stats">
+          <li class='grey'>
+            <i class="icon-calendar"></i>
+            <div id="clock" class="details"></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+
+      <% if current_user.has_role? :admin %>
+
+      <div class="span6">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="icon-bullhorn"></i>Quote Activity</h3>
+          </div>
+          <div class="box-content nopadding scrollable" data-height="450" data-visible="true">
+            <table class="table table-nohead" id="randomFeed">
+              <tbody>
+                <% @quote_activities.each do |activity| %>
+                <tr>
+                  <td><%= render_activity activity %> - <span class="activity-time"><%= time_ago_in_words(activity.created_at) + " ago" %> (<%= activity.created_at.strftime("%e %b %Y, %l:%M %p") %>)</span></td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="span6">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="icon-bullhorn"></i>Global Activity</h3>
+          </div>
+          <div class="box-content nopadding scrollable" data-height="450" data-visible="true">
+            <table class="table table-nohead" id="randomFeed">
+              <tbody>
+                <% @activities.each do |activity| %>
+                <tr>
+                  <td><%= render_activity activity %> - <span class="activity-time"><%= time_ago_in_words(activity.created_at) + " ago" %> (<%= activity.created_at.strftime("%e %b %Y, %l:%M %p") %>)</span></td>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <% else %>
+
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <br>
+          <p>Welcome to the Bus 4x4 service manager. For support please contact <%= mail_to 'webmaster@bus4x4.com.au', 'webmaster@bus4x4.com.au', subject: "Support Request: Service Manager (User: #{current_user.name})" %></p>
+        </div>
+      </div>
+
+      <% end %>
+
+    </div>
+  </div>
+</div>

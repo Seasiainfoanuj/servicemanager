@@ -1,0 +1,34 @@
+<% present(@vehicle_model) do |vehicle_model| %>
+  <div class="box box-condensed box-color box-bordered">
+    <div class="box-title">
+      <h3><i class="glyphicon-link"></i>Associate add-ons with vehicle model</h3>
+      <%= manual_link('hire_addons') %>
+    </div>
+    <div class="box-content nopadding">
+      <table class="table table-hover table-nomargin dataTable dataTable-tools dataTable-colvis dataTable-scroll-x table-bordered">
+        <thead>
+          <tr>
+            <th>Hire Add-on Type</th>
+            <th>Add-on Model Name</th>
+            <th width="100">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% HireAddon.all.each do |addon| %>
+            <tr>
+              <% if vehicle_model.includes_addon?(addon) %>
+                <td><b><%= addon.hire_model_name %></b></td>
+                <td><b><%= addon.addon_type %></b></td>
+                <td><%= link_to 'Remove Add-on', remove_hire_addon_vehicle_model_path(vehicle_model, hire_addon_id: addon.id), method: :patch %></td>
+              <% else %>
+                <td><%= addon.hire_model_name %></td>
+                <td><%= addon.addon_type %></td>
+                <td><%= link_to 'Add Add-on', add_hire_addon_vehicle_model_path(vehicle_model, hire_addon_id: addon.id), method: :patch %></td>
+              <% end %>  
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>    
+  </div>
+<% end %>

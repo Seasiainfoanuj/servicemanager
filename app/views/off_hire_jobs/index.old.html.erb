@@ -1,0 +1,38 @@
+                <% @off_hire_jobs.each do |off_hire_job| %>
+                  <tr>
+                    <td><span class="label label-grey"><%= off_hire_job.uid %></span></td>
+                    <td><%= off_hire_job.name %></td>
+                    <td>
+                      <span class="hidden"><%= off_hire_job.off_hire_report.hire_agreement.vehicle.number unless off_hire_job.off_hire_report.hire_agreement.vehicle.number.nil? || off_hire_job.off_hire_report.hire_agreement.vehicle.number.blank? %></span>
+                      <% if can? :read, Vehicle %>
+                        <%= link_to off_hire_job.off_hire_report.hire_agreement.vehicle.name, off_hire_job.off_hire_report.hire_agreement.vehicle %>
+                      <% else %>
+                        <%= off_hire_job.off_hire_report.hire_agreement.vehicle.name %>
+                      <% end %>
+                      <br>
+                      <%= "<span class='label label-satblue'>#{off_hire_job.off_hire_report.hire_agreement.vehicle.number}</span>".html_safe unless off_hire_job.off_hire_report.hire_agreement.vehicle.number.nil? || off_hire_job.off_hire_report.hire_agreement.vehicle.number.blank? %>
+                      <%= "<span class='label label-green'>#{off_hire_job.off_hire_report.hire_agreement.vehicle.call_sign}</span>".html_safe unless off_hire_job.off_hire_report.hire_agreement.vehicle.call_sign.nil? || off_hire_job.off_hire_report.hire_agreement.vehicle.call_sign.blank? %>
+                      <%= "<span class='label label-grey'>#{off_hire_job.off_hire_report.hire_agreement.vehicle.rego_number}</span>".html_safe unless off_hire_job.off_hire_report.hire_agreement.vehicle.rego_number.nil? || off_hire_job.off_hire_report.hire_agreement.vehicle.rego_number.blank? %>
+                      <%= "<span class='label'>VIN #{off_hire_job.off_hire_report.hire_agreement.vehicle.vin_number.to_s}</span>".html_safe unless off_hire_job.off_hire_report.hire_agreement.vehicle.vin_number.nil? || off_hire_job.off_hire_report.hire_agreement.vehicle.vin_number.blank? %>
+                    </td>
+                    <td><%= off_hire_job_status_label(off_hire_job.status) %></td>
+                    <% unless current_user.has_role? :service_provider %>
+                      <% if can? :read, User %>
+                        <td><%= link_to off_hire_job.service_provider.company_name_short, user_url(off_hire_job.service_provider) if off_hire_job.service_provider %></td>
+                      <% else %>
+                        <td><%= off_hire_job.service_provider.company_name_short if off_hire_job.service_provider %></td>
+                      <% end %>
+                    <% end %>
+
+                    <td><span class="hidden"><%= off_hire_job.sched_time %></span> <%= off_hire_job.sched_date_field %> - <b><%= off_hire_job.sched_time_field %></b></td>
+                    <td><span class="hidden"><%= off_hire_job.etc %></span> <%= off_hire_job.etc_date_field %> - <b><%= off_hire_job.etc_time_field %></b></td>
+                    <td>
+                      <%= link_to '<i class="icon-search"></i>'.html_safe, off_hire_job, {:title => 'View', :class => 'btn', 'rel' => 'tooltip'} %>
+                      <% if current_user.has_role? :admin %>
+                        <% if can? :update, OffHireReport %>
+                          <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_off_hire_job_path(off_hire_job), {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip'} %>
+                        <% end %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>

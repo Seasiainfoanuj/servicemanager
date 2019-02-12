@@ -1,0 +1,113 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1><%= "#{@company.name}" %></h1>
+        <%= image_tag @company.logo.url(:small) unless @company.logo.blank? %>
+      </div>
+      <div class="pull-right">
+        <br>
+        <%= link_to '<i class="icon-list-alt"></i>'.html_safe, invoice_companies_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+
+        <% if can? :update, InvoiceCompany %>
+          <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_invoice_company_path, {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="icon-legal"></i>Internal Company Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="internal-company-table" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Internal Company name</td>
+                  <td><%= @company.name %></td>
+                </tr>
+                <tr>
+                  <td>Phone</td>
+                  <td><%= @company.phone %></td>
+                </tr>
+                <tr>
+                  <td>Fax</td>
+                  <td><%= @company.fax %></td>
+                </tr>
+                <tr>
+                  <td>Website</td>
+                  <td><%= @company.website %></td>
+                </tr>
+                <tr>
+                  <td>Address</td>
+                  <td>
+                    <%= @company.address_line_1 %>
+                    <%= ", #{@company.address_line_2}" if @company.address_line_2.present? %>
+                    <%= ", #{@company.suburb}" %>
+                    <%= ", #{@company.state}" %>
+                    <%= @company.postcode %>
+                    <%= ", #{@company.country}" %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>ABN</td>
+                  <td><%= @company.abn %></td>
+                </tr>
+                <tr>
+                  <td>ACN</td>
+                  <td><%= @company.acn %></td>
+                </tr>
+                <tr>
+                  <td>Accounts Admin</td>
+                  <td><%= link_to(@company.accounts_admin.name, @company.accounts_admin) %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="icon-group"></i>Employees</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="internal-company-employee-table" class="table table-bordered table-force-topborder" style="clear: both">
+              <thead>
+                <tr>
+                  <td>First name</td>
+                  <td>Last name</td>
+                  <td>Email</td>
+                  <td>System Access Roles</td>
+                </tr>
+              </thead>
+              <tbody>
+                <% @company.employees.each do |employee| %>
+                  <tr>
+                    <td><%= employee.first_name %></td>
+                    <td><%= employee.last_name %></td>
+                    <td><%= link_to(employee.email, employee) %></td>
+                    <td><%= employee.roles.map { |role| role.to_s.humanize }.flatten.join(', ') %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div> 
+      </div> 
+    </div>  
+  </div>
+</div>
+

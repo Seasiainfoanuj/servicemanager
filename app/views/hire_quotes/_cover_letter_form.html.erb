@@ -1,0 +1,27 @@
+<% present(cover_letter.object) do |letter| %>
+  <% if letter.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(cover_letter.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% cover_letter.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= cover_letter.hidden_field :covering_subject_id, value: letter.covering_subject.id %>
+  <%= cover_letter.hidden_field :covering_subject_type, value: letter.covering_subject.class.name %>
+
+  <div class="control-group">
+    <%= cover_letter.label :title, "Cover Letter Title", :class => "control-label" %>
+    <div class="controls">
+      * <%= cover_letter.text_field :title, :class => "span8" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= cover_letter.text_area :content, {:id => 'cover-letter-content', :class => "span12", 'rows' => 12, value: letter.content} %>
+  </div>
+<% end %>

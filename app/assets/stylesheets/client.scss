@@ -1,0 +1,11 @@
+.all-roles {
+  label, input { float: left; }
+  label.control-label { 
+    padding-top: 4px;
+  }
+  .controls {
+    padding-top: 5px !important;
+    display: inline-block;
+    margin-left: 50px;
+  }
+}

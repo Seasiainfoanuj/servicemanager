@@ -1,0 +1,31 @@
+<div class="box-title">
+  <h3><i class="icon-legal"></i>Vehicle Contract Details</h3>
+</div>
+<div class="box-content nopadding">
+  <table class="table table-bordered table-force-topborder contract-details" style="clear: both">
+    <tbody>
+      <tr>
+        <td>Registration cost</td>
+        <td><%= @view_contract.registration_total %></td>
+        <td>Stamp duty</td>
+        <td><%= @view_contract.stamp_duty_total %></td>
+      </tr>
+      <tr>
+        <td>CTP Insurance</td>
+        <td><%= @view_contract.ctp_insurance_total %></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Deposit received</td>
+        <td><%= @view_contract.deposit_received %></td>
+        <td>Deposit received on</td>
+        <td><%= @view_contract.deposit_received_date %></td>
+      </tr>
+      <tr>
+        <td>Special Conditions</td>
+        <td colspan="3"><%= @view_contract.special_conditions %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,2 @@
+<% activity.trackable ? uid = activity.parameters[:uid] || activity.trackable.uid : uid = activity.parameters[:uid] || "[now deleted]" %>
+<%= render 'public_activity/shared/activity.html.erb', activity: activity, display: display, action: "sent by email to #{link_to(activity.recipient.email, activity.recipient) if activity.recipient}".html_safe, uid: uid %>

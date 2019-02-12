@@ -1,0 +1,35 @@
+<div id="send-sales-order-model" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="model-label" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="model-label">Send Sales Order</h3>
+  </div>
+  <div class="modal-body">
+    <div style="padding: 20px; background: #fbfbfb; border: 1px dashed #DDDDDD;">
+      <div class="row-fluid">
+        <div class="control-group">
+          <p><b>Send to:</b> <%= @sales_order.customer.company_name_short unless @sales_order.customer.company_name_short == "[#{@sales_order.customer.email}]" %> (<%= @sales_order.customer.email %>)</p>
+        </div>
+        <div class="control-group">
+          <label for="email_message" id="message_label" class="control-label"><b>Optional Message</b></label>
+          <div class="controls">
+            <textarea name="email_message" id="email_message" class="span12" rows="5">Please review the following order.</textarea>
+          </div>
+        </div>
+        <div>
+          To access this order, go to: <br>
+          <%= sales_order_url(@sales_order) %>
+          <br>
+          <br>
+          Best Regards,
+          <br><br>
+          <%= current_user.name %> <br>
+          <%= current_user.phone if current_user.phone.present? %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-grey" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <%= link_to "Send", {:action => 'send_notification', :sales_order_id => @sales_order.id}, {:class => 'btn btn-satblue', :id => 'email_send_button'} %>
+  </div>
+</div>

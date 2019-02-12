@@ -1,0 +1,24 @@
+<% present(@client) do |client| %>
+  <%= form_for(@client, :html => {:id => "client-details-form"}) do |f| %>
+    <% if @client.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@client.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+        <ul>
+        <% @client.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="box-title">
+      <h3><i class="glyphicon-notes"></i>Edit Client Details</h3>
+    </div>
+    <div class="box-content">
+
+    </div>
+    <div class="actions">
+      <a href="#" class="btn btn-green submit-btn">Update Client</a>
+    </div>
+  <% end %>
+<% end %>

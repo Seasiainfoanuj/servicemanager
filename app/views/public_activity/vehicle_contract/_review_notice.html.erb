@@ -1,0 +1,2 @@
+<% activity.trackable ? uid = activity.parameters[:uid] || activity.trackable.uid : uid = activity.parameters[:uid] || "[now deleted]" %>
+<%= render 'public_activity/shared/activity.html.erb', activity: activity, display: display, action: 'Customer has accessed the Review page of the Vehicle Purchase Contract', uid: uid %>

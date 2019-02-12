@@ -1,0 +1,15 @@
+<tr>
+  <td colspan="2"><h3>Vehicle Details:</h3></td>
+</tr>
+<tr>
+  <td>Name:</td>
+  <td><%= object.vehicle.name %> <%= "##{object.vehicle.number}" if object.vehicle.number %></td>
+</tr>
+<tr>
+  <td>Vin:</td>
+  <td><%= object.vehicle.vin_number if object.vehicle.vin_number.present? %></td>
+</tr>
+<tr>
+  <td>Rego No:</td>
+  <td><%= object.vehicle.rego_number if object.vehicle.rego_number.present? %></td>
+</tr>

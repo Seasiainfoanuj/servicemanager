@@ -1,0 +1,124 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Stock Request - <%= @stock_request.uid %></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <a href="#" class="btn btn-green submit-btn">Complete</a>
+        <%= link_to '<i class="icon-list-alt"></i>'.html_safe, stock_requests_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+
+          <div class="box-title">
+            <h3><i class="glyphicon-notes"></i>Request Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="stock-request-details" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td width="15%">Vehicle Make</td>
+                  <td width="80%"><%= @stock_request.vehicle_make %></td>
+                </tr>
+                <tr>
+                  <td width="15%">Vehicle Model</td>
+                  <td width="80%"><%= @stock_request.vehicle_model %></td>
+                </tr>
+                <tr>
+                  <td width="15%">Transmission</td>
+                  <td width="80%"><%= @stock_request.transmission_type %></td>
+                </tr>
+                <tr>
+                  <td width="15%">Requested Delivery Date</td>
+                  <td width="80%"><span class="badge badge-warning"><%= @stock_request.requested_delivery_date.strftime("%a, %e %b %Y") %></span></td>
+                </tr>
+                <% if @stock_request.details.present? %>
+                  <tr>
+                    <td width="15%">Additional Details</td>
+                    <td width="80%"><%= @stock_request.details.html_safe %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+
+          <%= form_for @stock, :url => {:action => :create_stock}, :method => :post, :html => {:class => "form-horizontal form-validate", :id => "complete-stock-request-form"} do |f| %>
+
+            <% if @stock.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@stock.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+                <ul>
+                <% @stock.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <%= f.hidden_field :supplier_id %>
+
+            <div class="box-title">
+              <h3><span class="step">1</span>Enter Stock Details</h3>
+            </div>
+            <div class="box-content">
+              <div class="control-group">
+                <%= f.label :stock_number, "Stock Number", :class => "control-label" %>
+                <div class="controls">
+                  <%= f.text_field :stock_number, :class => "input-medium", 'data-rule-required' => true %>
+                </div>
+              </div>
+              <div class="control-group">
+                <%= f.label :name, "Make, Model", :class => "control-label" %>
+                <div class="controls">
+                  <%= collection_select(:stock, :vehicle_model_id, VehicleModel.where("name LIKE :vehicle_model", vehicle_model: @stock_request.vehicle_model), :id, :full_name, {prompt: true, search: "#{@stock_request.vehicle_make} #{@stock_request.vehicle_model}"}, {:class=>'select2-me span5', 'data-rule-required' => true}) %>
+                  <div style="clear:both"></div>
+                </div>
+              </div>
+              <div class="control-group">
+                <%= f.label :vin_number, "VIN Number", :class => "control-label" %>
+                <div class="controls">
+                  <%= f.text_field :vin_number, :class => "input-large", 'data-rule-required' => true %>
+                </div>
+              </div>
+              <div class="control-group">
+                <%= f.label :engine_number, "Engine Number", :class => "control-label" %>
+                <div class="controls">
+                  <%= f.text_field :engine_number, :class => "input-large" %>
+                </div>
+              </div>
+              <div class="control-group">
+                <%= f.label :transmission, "Transmission", :class => "control-label" %>
+                <div class="controls">
+                  <%= f.select(:transmission, Vehicle::TRANSMISSION_TYPES, {include_blank: 'Please select', selected: @stock_request.transmission_type}, {:class=>'input-xlarge', 'data-rule-required' => true}) %>
+                </div>
+              </div>
+              <div class="control-group">
+                <%= f.label :eta_date_field, "ETA", :class => "control-label" %>
+                <div class="controls">
+                  <%= f.text_field :eta_date_field, :class => "input-medium datepick", 'data-rule-required' => true %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+          <div class="actions">
+            <a href="#" class="btn btn-green submit-btn">Complete</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

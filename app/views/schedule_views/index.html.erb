@@ -1,0 +1,57 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Schedule Views</h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if can? :create, ScheduleView %>
+          <%= link_to '<i class="icon-plus-sign"></i> New Schedule View'.html_safe, new_schedule_view_path, {:class => 'btn btn-satgreen'} %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-calendar"></i>Schedule Views</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-hover table-nomargin dataTable dataTable-tools dataTable-colvis dataTable-scroll-x table-bordered">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th width="100">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @schedule_views.each do |schedule_view| %>
+                  <tr>
+                    <td><%= schedule_view.name %></td>
+                    <td>
+                    <% if can? :update, ScheduleView %>
+                      <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_schedule_view_path(schedule_view), {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip'} %>
+                    <% end %>
+                    <% if can? :destroy, ScheduleView %>
+                      <%= link_to '<i class="icon-ban-circle"></i>'.html_safe, schedule_view, method: :delete, :class => 'btn', :title => 'Destroy', 'rel' => 'tooltip', data: {confirm: "You are about to permanently delete #{schedule_view.name}. You cannot reverse this action. Are you sure you want to proceed?"} %>
+                    <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

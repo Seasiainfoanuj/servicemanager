@@ -1,0 +1,94 @@
+<%= form_for(@notification_type, :html => {:id => "notification-type-form", :class => "form-horizontal"}) do |f| %>
+  <% if @notification_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@notification_type.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+        <% @notification_type.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="box-title">
+    <h3><i class="icon-calendar"></i>Notification Type Details</h3><%= manual_link('notification_types') %>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :resource_name, "Resource Name", :class => "control-label" %>
+      <div class="controls">
+        <%= f.select :resource_name, options_for_select(options_for_resource_name, @notification_type.resource_name), prompt: 'Select Resource Name' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :event_name, "Event Name", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :event_name, :class => "input-xlarge" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :recurring, "Recurring?", :class => "control-label" %>
+      <div class="controls">
+        <%= f.check_box :recurring, {:class => "icheck-me", "data-skin" => "square", "data-color" => "orange", :id => "recurring-checkbox"} %>
+      </div>  
+    </div>
+
+    <div class="control-group">
+      <%= f.label :recur_period_days, "Recurring Period", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :recur_period_days, {:class => "input-small", 'data-rule-positiveNumber' => true} %>
+        <span class='add-on'>Days</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :emails_required, "Emails required?", :class => "control-label" %>
+      <div class="controls">
+        <%= f.check_box :emails_required, {:class => "icheck-me", "data-skin" => "square", "data-color" => "orange", :id => "recurring-checkbox"} %>
+      </div>  
+    </div>
+
+    <div class="control-group">
+      <%= f.label :upload_required, "Document upload required?", :class => "control-label" %>
+      <div class="controls">
+        <%= f.check_box :upload_required, {:class => "icheck-me", "data-skin" => "square", "data-color" => "orange", :id => "recurring-checkbox"} %>
+      </div>  
+    </div>
+
+    <div class="control-group">
+      <%= f.label :resource_document_type, "Resource document name", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :resource_document_type, :class => "input-xlarge" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :label_color, "Colour", :class => "control-label" %>
+      <div class="controls">
+        <div class="input-append color colorpick" data-color="<%= @notification_type.label_color.downcase if @notification_type.label_color %>" data-color-format="hex">
+          <%= f.text_field :label_color, :class => "input-small" %>
+          <span class="add-on"><i style="margin-top: 2px;"></i></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= label_tag :notify_periods, "Notify periods", :class => "control-label" %>
+      <div class="controls">
+        <%= text_field_tag :notify_periods, nil, :class => "input-large", :value => @notification_type.notification_period_list %>
+         <div class="help-block">(Comma-separated list of periods in days, in descending order. Example: 10, 4, 2)</div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :default_message, "Default message", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_area :default_message, {:id => 'notification-default-message', :class => "span12", 'rows' => 5} %>
+      </div>
+    </div>
+
+  </div>
+<% end %>
+

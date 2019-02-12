@@ -1,0 +1,33 @@
+<%= form_for EnquiryEmailUpload.new, :html => { :multipart => true, :id => "emailupload", "data-enquiry-id" => @enquiry.id  } do |f| %>
+<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+
+  <div class="span4 enquiry-attachment">
+    <!-- The fileinput-button span is used to style the file input field as button -->
+    <span class="btn btn-satblue fileinput-button" style="padding:3px 20px 0px 20px; margin-left:-15px;">
+      <i class="icon-plus icon-white"></i>
+      <span>Add files...</span>
+      <%= f.file_field :upload %>
+      <%= f.hidden_field :enquiry_id, :value => @enquiry.id, :id => "enquiry_id" %>
+     
+    </span>
+    
+  <div class="span2">
+    <!-- The global progress bar -->
+    <div class="progress progress-success progress-striped active fade">
+      <div class="bar" style="width:0%;"></div>
+    </div>
+  </div>
+</div>
+<!-- The loading indicator is shown during image processing -->
+<div class="fileupload-loading"></div>
+<br>
+<!-- The table listing the files available for upload/download -->
+<div class="box-content">
+    <table class="table table-striped email_attachment"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+    </table>
+</div>
+<% end %>
+<%= render 'shared/form_upload' %>
+<%= render 'shared/form_download' %>
+              
+         

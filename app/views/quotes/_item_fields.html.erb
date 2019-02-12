@@ -1,0 +1,51 @@
+<% if f.object.errors.any? %>
+  <tr>
+    <td colspan="8">
+      <div id="error_explanation">
+        <h2><%= pluralize(f.object.errors.count, "error") %> prohibited this page from being saved:</h2>
+        <ul>
+        <% f.object.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+      <br>
+    </td>
+  </tr>
+<% end %>
+
+<tr>
+  <td class="position"><%= f.text_field "position", class: "position_number" %></td>
+  <td class="name"><%= f.text_field "name" %></td>
+  <td class="description" colspan="2"><%= f.text_area "description", rows: 1, :class => 'auto-textarea' %></td>
+  <td class="cost right"><%= f.text_field "cost" %></td>
+  <td class="qty right"><%= f.text_field "quantity" %></td>
+  <td class="tax"><%= f.select :tax_id, options_for_select(options_for_tax, selected: f.object.tax_id), { prompt: false}, {:class=>'tax-select'} %></td>
+  <td class="line-total right">
+    <i class="hide_cost_handle icon-eye-open"></i><%= f.hidden_field "hide_cost", class: "hide_cost" %>
+    <span class="amount"></span>
+    <%= f.hidden_field :line_total, :class => "line_total_amount" %>
+    <%= f.hidden_field :tax_total, :class => "tax_total_amount" %>
+    <div class="pull-right remove_fields_box">
+      <%= f.hidden_field :_destroy %>
+      <%= link_to '<i class="icon-remove"></i>'.html_safe, '#', class: "remove_fields" %>
+    </div>
+  </td>
+
+  <%= f.hidden_field :supplier_id %>
+  <%= f.hidden_field :service_provider_id %>
+  <%= f.hidden_field :buy_price %>
+  <%= f.hidden_field :buy_price_tax_id %>
+</tr>
+<tr class="second">
+  <td></td>
+  <td>
+    <%= f.select :quote_item_type_id, options_for_select( options_for_quote_item_types, selected: f.object.quote_item_type_id ), { include_blank: "Select Quote Item Type" } %>
+  </td>
+  <% if current_user.admin? || current_user == f.object.manager %>
+    <td class="buy_price right"><%= f.text_field "buy_price" %></td>
+  <% else %>
+    <td></td>
+  <% end %>  
+  <td colspan="5"></td>
+</tr>

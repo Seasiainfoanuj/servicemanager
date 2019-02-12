@@ -1,0 +1,65 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1><%= @system_error.description.split("\n").first %></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <%= link_to '<i class="icon-list-alt"></i>'.html_safe, system_errors_log_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+
+        <% if can? :update, SystemError %>
+          <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_system_error_path, {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-warning_sign"></i>System Error Details - #<%= @system_error.id %></h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="system-error" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Resource Type</td>
+                  <td width="80%"><%= @system_error.resource_type_name %></td>
+                </tr>
+                <tr>
+                  <td>Error Status</td>
+                  <td width="80%"><%= @system_error.error_status_name %></td>
+                </tr>
+                <tr>
+                  <td>Status Date</td>
+                  <td width="80%"><%= @system_error.updated_at.strftime("%d/%m/%Y") %></td>
+                </tr>
+                <tr>
+                  <td>Actioned by</td>
+                  <td width="80%"><%= @system_error.actioned_by.email if @system_error.actioned_by %></td>
+                </tr>
+                <tr>
+                  <td>Description</td>
+                  <td>
+                    <% @system_error.description.split("\n").each do |line| %>
+                      <span width="80%"> <%= line %> </span><br>
+                    <% end %>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
