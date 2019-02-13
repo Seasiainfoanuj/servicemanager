@@ -1,0 +1,154 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Complete <%= @build_order.name %> <span class="label"><%= "REF# #{@build_order.uid}" %></span></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <a href="#" class="btn btn-green submit-btn">Next</a>
+
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+
+          <%= form_for(@build_order, :url => complete_submit_build_order_path(@build_order), :html => {:class => "form-horizontal form-validate", :id => "build-order-complete-form"}) do |f| %>
+
+            <% if @build_order.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@build_order.errors.count, "error") %> prohibited this page from being saved:</h2>
+                <ul>
+                <% @build_order.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <%= f.hidden_field :status, {value: 'complete'} %>
+
+            <div class="row-fluid">
+              <div class="span6">
+                <div class="box-title">
+                  <h3><i class="glyphicon-car"></i>Build Details</h3>
+                </div>
+                <div class="box-content nopadding">
+                  <table id="vehicle" class="table table-bordered table-force-topborder" style="clear: both">
+                    <tbody>
+                      <tr>
+                        <td>Build Number</td>
+                        <td width="80%"><%= @build.number %></td>
+                      </tr>
+                      <tr>
+                        <td>Vehicle</td>
+                        <td width="80%"><%= @build.vehicle.ref_name %></td>
+                      </tr>
+                      <% if @build.manager %>
+                        <tr>
+                          <td>Assigned to</td>
+                          <td width="80%"><%= @build.manager.name %></td>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="span6">
+                <div class="box-title">
+                  <h3><i class="glyphicon-notes"></i>Build Order Details</h3>
+                </div>
+                <div class="box-content nopadding">
+                  <table id="vehicle" class="table table-bordered table-force-topborder" style="clear: both">
+                    <tbody>
+                      <tr>
+                        <td>REF</td>
+                        <td width="80%"><span class="label label-grey"><%= @build_order.uid %></span></td>
+                      </tr>
+                      <tr>
+                        <td>Scheduled</td>
+                        <td width="80%"><%= @build_order.sched_date_field %> - <b><%= @build_order.sched_time_field %></b></td>
+                      </tr>
+                      <tr>
+                        <td>ETC</td>
+                        <td width="80%"><%= @build_order.etc_date_field %> - <b><%= @build_order.etc_time_field %></b></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="box-title">
+              <h3><span class="step">1</span>Add Notes</h3>
+            </div>
+            <div class="box-content">
+              <div class="control-group">
+                  <%= f.text_area :service_provider_notes, {:class => "editor span12", 'rows' => 5} %>
+              </div>
+            </div>
+          <% end %>
+
+          <div class="box-title">
+            <h3><span class="step">2</span>Add Attachments</h3>
+          </div>
+          <div class="box-content" style="padding: 30px 50px;">
+            <div id="file-uploads-container">
+              <%= form_for BuildOrderUpload.new, :html => { :multipart => true, :id => "build-order-upload", :class => "form-validate", "data-build-order-id" => @build_order.id  } do |f| %>
+                <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                <div class="row fileupload-buttonbar">
+                  <div class="span7">
+                    <!-- The fileinput-button span is used to style the file input field as button -->
+                    <span class="btn btn-success fileinput-button">
+                      <i class="icon-plus icon-white"></i>
+                      <span>Add files...</span>
+                      <%= f.file_field :upload %>
+                      <%= f.hidden_field :build_order_id, :value => @build_order.id, :id => "build_order_id" %>
+                    </span>
+                    <button type="submit" class="btn btn-primary start">
+                      <i class="icon-upload icon-white"></i>
+                      <span>Start upload</span>
+                    </button>
+                    <button type="reset" class="btn btn-orange cancel">
+                      <i class="icon-ban-circle icon-white"></i>
+                      <span>Cancel upload</span>
+                    </button>
+                  </div>
+                  <div class="span5">
+                    <!-- The global progress bar -->
+                    <div class="progress progress-success progress-striped active fade">
+                      <div class="bar" style="width:0%;"></div>
+                    </div>
+                  </div>
+                </div>
+                <!-- The loading indicator is shown during image processing -->
+                <div class="fileupload-loading"></div>
+                <br>
+                <!-- The table listing the files available for upload/download -->
+                <table class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+                </table>
+              <% end %>
+
+              <%= render 'shared/form_upload' %>
+              <%= render 'shared/form_download' %>
+            </div>
+          </div>
+
+          <div class="actions">
+            <a href="#" class="btn btn-green submit-btn">Next</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

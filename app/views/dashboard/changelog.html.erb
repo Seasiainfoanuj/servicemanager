@@ -1,0 +1,1761 @@
+<div id="left">
+  <%= render(:partial => 'layouts/left') %>
+</div>
+<div id="main" class="changelog">
+  <div class="container-fluid">
+
+    <%= render(:partial => 'layouts/notice') %>
+
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Changelog</h1>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.11.29 Version 8.5.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>New feature</h4>
+            <ul>
+              <li>Introduce Summary Page for Masterquotes and Quotes</li>
+              <li>Specification Sheet now has separate section and now added to Quote PDF</li>
+              <li>Title Page, Summary Page, Specification Sheet cannot be changed if created from Masterquote</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.10.31 Version 8.4.4</h3>
+          </div>
+          <div class="box-content">
+            <h4>New feature</h4>
+            <ul>
+              <li>Quote email now contains all files attached to quote.</li>
+            </ul>
+            <h4>Bug fix</h4>
+            <ul>
+              <li>Fix bug preventing viewing Quote PDF when there was another PDF attached.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.10.30 Version 8.4.3</h3>
+          </div>
+          <div class="box-content">
+            <h4>New feature</h4>
+            <ul>
+              <li>Uploaded file is automatically attached to email on notification completion.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.10.30 Version 8.4.2</h3>
+          </div>
+          <div class="box-content">
+            <h4>Hotfix</h4>
+            <ul>
+              <li>Fix an error that was preventing showing some Enquiry pages. An error was caused by data inconsistency in Activity log, that could appear after reassigning manager from enquiry update interface instead of "Reassign" popup.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.10.25 Version 8.4.1</h3>
+          </div>
+          <div class="box-content">
+            <h4>Hotfix</h4>
+            <ul>
+              <li>Minor visual enhancement for Quote PDF file.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.10.25 Version 8.4.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>New feature</h4>
+            <ul>
+              <li>Provide Quote Attachment Pictures in PDF file.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.10.06 Version 8.3.2</h3>
+          </div>
+          <div class="box-content">
+            <h4>Hotfix</h4>
+            <ul>
+              <li>Fix error that prevented master quote attachments from being deleted in edit mode.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.09.22 Version 8.3.1</h3>
+          </div>
+          <div class="box-content">
+            <h4>Hotfix</h4>
+            <ul>
+              <li>Fix error that could occur when doing searches in Enquiries, Quotes Queries and Hire Quote Queries. Incorrect format was used to delete a page parameter.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.09.11 Version 8.3.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>Changes</h4>
+            <ul>
+              <li>Update the seed files 01, 02, 03, 04. Update the creating of users, companies, clients, vehicle models, vehicles, workorders to be consistent with the latest database changes.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.09.06 Version 8.2.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>Changes</h4>
+            <ul>
+              <li>Replace references to VehicleModel.year with Vehicle.model_year because year is no longer an attribute of VehicleModel.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.09.05 Version 8.1.1</h3>
+          </div>
+          <div class="box-content">
+            <h4>Hotfix</h4>
+            <ul>
+              <li>Add validation for errors that may occur when an invalid contact is being added for a company on the Company show page.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.09.03 Version 8.1.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>Changes</h4>
+            <ul>
+              <li>Add validation on Vehicle Model to enforce uniqueness of Make name and Model name.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.09.03 Version 8.0.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>New features</h4>
+            <ul>
+              <li>Replace Hire Product Table with Vehicle Model.</li>
+              <li>Vehicle Model now has addons, product types, fees, quoted vehicles.</li>
+              <li>Add Model Year to Vehicle table.</li>
+              <li>Model Year is no longer read from Vehicle Model.</li>
+              <li>Manage Default contact on Company.</li>
+              <li>Manage Authorised Contact on Hire Quote.</li>
+              <li>Updated User Guides.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.08.30 Version 7.4.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>New features</h4>
+            <ul>
+              <li>Add attachments to Master Quotes.</li>
+              <li>When a new Quote is created from a Master Quote, copy the Master Quote attachments to the new Quote.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.08.30 Version 7.3.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>Changes</h4>
+            <ul>
+              <li>Remove unused Vehicle Attachments table from database.</li>
+              <li>Allow maintenance of Hire Fees at Hire product level. When a new Fee is introduced, it will be added to the Hire Product as soon as it is edited and updated.</li>
+              <li>Add new fields to vehicle table: Fuel type, Usage Status, Operational Status, Tags, Model Year</li>
+              <li>Add License Type to Hire Product table.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.08.25 Version 7.2.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>New features</h4>
+            <ul>
+              <li>Add subscribe to newsletter decision on enquiry form.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.08.25 Version 7.1.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>New features</h4>
+            <ul>
+              <li>Allow a manager to add and change a cover letter for a hire quote, which can be seen in the customer view for the quote.</li>
+              <li>Add printable version of hire quote and allow both manager and customer to download the PDF file.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.08.20 Version 7.0.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>New features</h4>
+            <ul>
+              <li>Add tables and forms to manage hire quotes.</li>
+              <li>Allow a Hire Quote to belong to either a company or a person.</li>
+              <li>Add the ability to create a hire quote directly from a hire enquiry.</li>
+              <li>Add tables and forms to manage add-ons.</li>
+              <li>Add forms to manage which add-ons are compatible with which hire products.</li>
+              <li>Add tables and forms to manage Hire Products and Hire Product Types.</li>
+              <li>Allow the selection or removal of hire products to and from a Hire Quote.</li>
+              <li>Add tables and forms to manage Hire Quote Vehicles.</li>
+              <li>Add tables and forms to manage Fees for Hire Products, Hire Add-ons and Hire Quote Vehicles.</li>
+              <li>Add tags to Hire Products.</li>
+              <li>Automatically reflect the creating and sending of a hire quote in the status of a Hire Enquiry.</li>
+              <li>Allow a manager to send a hire quote to a customer.</li>
+              <li>Allow a customer to accept a hire quote.</li>
+              <li>Allow a customer to request changes to a hire quote.</li>
+              <li>Allow a manager to create an amended version of a hire quote.</li>
+              <li>Create a special formatted view for the customer to view a hire quote and allow the manager to look at this view when they wish to do so.</li>
+              <li>Allow managers to manage the authorised contact for a company.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.07.21 Version 6.1.3</h3>
+          </div>
+          <div class="box-content">
+            <h4>Changes</h4>
+            <ul>
+              <li>Speedup data access on Schedule Views by making effective use of the includes method. There are no changes to the way Schedule Views function.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.07.12 Version 6.1.2</h3>
+          </div>
+          <div class="box-content">
+            <h4>Changes</h4>
+            <ul>
+              <li>When a duplicated quote is sent to a user, make sure the person is changed to a quote customer if their previous role was contact.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.07.11 Version 6.1.1</h3>
+          </div>
+          <div class="box-content">
+            <h4>Changes</h4>
+            <ul>
+              <li>Provide spell-checker for quote cover letter contents.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.07.08 Version 6.1.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>New features</h4>
+            <ul>
+              <li>Provide error messages when updating quote in an invalid state.</li>
+              <li>Prevent creating of Tax records with duplicate names. Two common Tax names are 'GST' or ''. This preserves the data integrity of fnancial records.</li>
+              <li>Remember the enquiry user when creating a quote from a master quote while on the enquiry page. The system remembers the enquiry that was last opened. A new button is available on the enquiry page: 'Create from Master Quote'. Choose the desired Master Quote from the list and click on 'New Quote'. You will see the enquiry user pre-selected in the customer dropdown list. The resultant new quote is linked to this user.</li>
+              <li>Introduce a Contact role for a new user, created as a result of an enquiry. This user will only become a quote customer when a quote is created for that user.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.07.06 Version 6.0.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>New features</h4>
+            <ul>
+              <li>Create a Client record for each user and each company and assign a Client Reference Number to each client. This allows service providers, suppliers or customers to be either a person or a company.</li>
+              <li>Provide a Client list, available from the Settings Menu, to be one searchable list for people and companies.</li>
+              <li>Provide View and Edit links on the Client list to open or edit the corresponding User or the Company record.</li>
+              <li>All admin users are now regarded as internal staff and can be linked to an Internal Company. Admin users can therefore be seen as employees of that Internal Company.</li>
+              <li>The Company view has been extended to list the users belonging to this company.</li>
+              <li>On the Company view page, a new contact may be added by selecting the person from a dropdown list, provided this person does not already belong to a different company.</li>
+              <li>From the contact list of a company, it is possible to access a 'company profile' view of each contact person</li>
+              <li>Create Contact Role Types which can be added, updated, viewed and listed.</li>
+              <li>Allow a contact role to be added or removed from a contact. This is helpful to know which person in the company to contact.</li>
+              <li>Add an employer id on the user table so they our employees may be associated with the correct internal company.</li>
+              <li>Create a Show page for Internal Companies which also list its employees.</li>
+              <li>Create Hire Products with Add, Update, View and list features.</li>
+              <li>Add attachments to Hire Products (Documents or Photos).</li>
+              <li>Prevent Customers from viewing their draft quotes.</li>
+              <li>Prevent cancelled workorders from being sent to customers.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.06.24 Version 5.5.6</h3>
+          </div>
+          <div class="box-content">
+            <h4>New features</h4>
+            <ul>
+              <li>Display Activity Log on User Show Page, visible to administrators only.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.06.22 Version 5.5.4</h3>
+          </div>
+          <div class="box-content">
+            <h4>New features</h4>
+            <ul>
+              <li>Provide CSV print facility for workorders.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.06.21 Version 5.5.3</h3>
+          </div>
+          <div class="box-content">
+            <h4>New features</h4>
+            <ul>
+              <li>Vehicle Contract forms have been updated to take Terms and Conditions into account.</li>
+              <li>The PDF version of the customer contract is updated to be similar to the HTML version of the contract.</li>
+              <li>Since the contract has not yet been finalised, the creating of the contract has been disabled on the quote show page.</li>
+              <li>The menu layout has been improved to be more responsive.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.06.04 Version 5.5.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>New features</h4>
+            <ul>
+              <li>Provided multiple tag select for quotes.</li>
+              <li>Remove quote search params from url by implementing a quote search session object.</li>
+              <li>Make main menu more responsive so that the menu height remains constant.</li>
+              <li>Introduce Notifications bar below the main menu and remove alerts from menu items.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.06.02 Version 5.4.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>New features</h4>
+            <ul>
+              <li>Changed new enquiry page to provide for hire enquiries.</li>
+              <li>Redesigned enquiry list to have customised search facility.</li>
+              <li>Changed enquiry API to receive Hire Enquiries from CMS website.</li>
+              <li>Allow for editing of hire enquiries.</li>
+              <li>Provide new enquiry show page.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.05.18 Version 5.3.5</h3>
+          </div>
+          <div class="box-content">
+            <h4>Changes</h4>
+            <ul>
+              <li>Provide dropdown list to select tags in the Quote Search.</li>
+              <li>Added user guide for vehicles.</li>
+              <li>Manager is now mandatory on Quote table.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.05.16 Version 5.3.4</h3>
+          </div>
+          <div class="box-content">
+            <h4>Changes</h4>
+            <ul>
+              <li>Make the selection of enquiries for the Dashboard more efficient.</li>
+              <li>Add two more indexes to the Enquiry table to make queries faster.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.05.15 Version 5.3.3</h3>
+          </div>
+          <div class="box-content">
+            <h4>Changes</h4>
+            <ul>
+              <li>Provide ability to enter user first and last name together under Customer name on Quotes list page.</li>
+              <li>Provide ability to choose rows per page on Quotes list page.</li>
+              <li>Implement user manual icon on several pages from where the user manual could be referenced.</li>
+              <li>Provide dropdown list for vehicle status on Vehicle Edit page.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.05.13 Version 5.3.1</h3>
+          </div>
+          <div class="box-content">
+            <h4>Changes</h4>
+            <ul>
+              <li>Provide defaults for Search Criteria on Quote Index Page.</li>
+              <li>Format Quote Totals.</li>
+              <li>Provide icon for user manual.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.05.11 Version 5.3.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>Changes</h4>
+            <ul>
+              <li>The Quotes List Page has been redesigned to make the searching of quotes faster and more flexible.</li>
+              <li>An issue with incorrect filtering in User lists has been corrected.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.05.05 Version 5.2.1</h3>
+          </div>
+          <div class="box-content">
+            <h4>Changes</h4>
+            <ul>
+              <li>To make quote searches faster, more indexes have been added on the quotes table.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.05.03 Version 5.2.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Added a Notification Type table and forms to manage the rules for related Notifications.</li>
+              <li>Added a Notification table and forms to create and manage Notifications for vehicles and potentially other resources.</li>
+              <li>Allow Notifications to be emailed to specified recipients at specified due dates.</li>
+              <li>Show upcoming and overdue Notification counts in the Menu.</li>
+              <li>Allow a staff member to complete a Notification and notify all recipients by email that the task is completed.</li>
+              <li>When completing a recurring Notification, the new notification is created based on the previous notification.</li>
+              <li>Display a Notification Summary on the vehicle show page and the ability to view or edit these notifications.</li>
+              <li>Expand the dashboard to display more detailed data on Customer enquiries. Include totals for Vehicle Notifications.</li>
+              <li>Add the first User Guides, accessable via the Settings Icon on the menu.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.04.07 Version 5.1.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>The On- and Off-Hire reports have been extended to include 7 additional check items: check_lights, check_horn, check_windscreen_washer_bottle, check_wiper_blades, check_service_sticker, check_windscreen_chips, check_vehicle_clean</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.04.06 Version 5.0.0</h3>
+          </div>
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>It is now mandatory for all invoice companies to have contact details.</li>
+              <li>It is now mandatory for all hire agreements to have an invoice company.</li>
+              <li>An Invoice Company dropdown has been added to the hire agreement form.</li>
+              <li>A Build Specification table and forms have been added.</li>
+              <li>A Build Specification can be downloaded in PDF format.</li>
+              <li>Invoice Company has been added to Build.</li>
+              <li>A table and forms have been added to manage Quote Item Types.</li>
+              <li>Master Quote Items and Quote Items now have Quote Item Type as a mandatory field. The default Quote Item Type on Quote Items will be "Other".</li>
+              <li>Quote validation has been restructured to solve bugs and improve the user experience of adding new quote items.</li>
+              <li>The changes below, affecting Vehicle Contracts will not take effect until the Create Contract button in the Quote Show page has been enabled. It is currently disabled.</li>
+              <li>A Vehicle Contract table and forms have been added.</li>
+              <li>A manager is able to "verify" a contract and "send" it to a customer.</li>
+              <li>A customer is notified per email when the manager "sends" a contract. The email contains a tokenised link for the contract so that the customer can click on the link without having to log in.</li>
+              <li>A customer can download a PDF version of the contract.</li>
+              <li>A customer can review and accept a new contract.</li>
+              <li>Managers can browse all vehicle contracts.</li>
+              <li>Customer can browse their own contracts.</li>
+              <li>The manager receives an email notification when the customer accepts a contract.</li>
+              <li>The vehicle contract can handle two sources for vehicle details: the Allocated Vehicle table and the Vehicle table.</li>
+              <li>When an Allocated Vehicle has been selected as source, a Vehicle will be created and the allocated vehicle deleted.</li>
+              <li>A 'Windscreen' options is added to Off- and On-Hire Reports</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.03.24 Version 4.2.1</h3>
+          </div>
+          <div class="box-content">
+            <h4>New feature</h4>
+            <ul>
+              <li>A new Workorder is now created with a 'Draft' status.</li>
+              <li>When a Workorder is sent, it's status changes to 'Confirmed'.</li>
+              <li>A new recurring Workorder is created with a 'Confirmed' status.</li>
+              <li>All Workorders that currently have a 'Pending' status are changed to 'Confirmed'.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.03.24 Version 4.2.1</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>Hotfix</h4>
+            <ul>
+              <li>Added bus number to PO Request view</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.02.18 Version 4.2.0</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Feature</h4>
+            <ul>
+              <li>Added Newsletter Subscription table. In response to an incoming API from IBUS, the details of the subscriber are added to this table.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2016.02.07 Version 4.1.0</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>Changes</h4>
+            <ul>
+              <li>Streamline capturing of new photo. Default photo name is automatically populated. Shorter Image name (3 characters) is allowed.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.12.10 Version 4.0.1</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>Changes</h4>
+            <ul>
+              <li>Enforce the presence for invoice company contact details.</li>
+              <li>Enforce the presence of invoice company for all hire agreements.</li>
+              <li>Create reusable modules from Hire Agreement email; Use these modules to format 3 emails.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.12.09 Version 4.0</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Feature</h4>
+            <ul>
+              <li>Add an Invoice Company to all Hire Agreements.</li>
+              <li>Create Hire Agreement Notification emails to notify interested parties one day and one week before before pickup and return.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.12.07 Version 3.11</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>Changes</h4>
+            <ul>
+              <li>When creating a quote from a master quote, do not allow the same line items to be counted twice.</li>
+              <li>Correctly format the quote amounts on the quote show page.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.12.03 Version 3.10</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Feature</h4>
+            <ul>
+              <li>Add customer company name to Sales Order table.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.12.03 Version 3.9.2</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Feature</h4>
+            <ul>
+              <li>Add email error detection for OffHireJob, PORequest, Quote, SalesOrder, SPInvoice, StockRequest and VehicleLog. Errors will be listed under Reports whenever there are any.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.12.02 Version 3.9.1</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Feature</h4>
+            <ul>
+              <li>Filter default quote list by quotes updated less than 6 months ago. The show-all checkbox will show all the quotes.</li>
+              <li>Detect errors in Build Orders, Hire Agreements, Notes and Enquiries.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.12.01 Version 3.9.0</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Feature</h4>
+            <ul>
+              <li>Add templates for System Errors.</li>
+              <li>Detect errors in WorkOrder notifications and create a System Error record for any error that is detected.</li>
+              <li>This new functionality can be applied to any other part of the code base to reveal helpful information when system errors (unexpected errors) occur.</li>
+              <li>Make business users aware of errors that require immediate action by showing a red error count for each new error on the left menu bar under REPORTS.</li>
+              <li>Allow business users to confirm that they have responded to errors. Also allow the web developer to confirm when a solution has been implemented for the root cause.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.11.30 Version 3.8.0</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Feature</h4>
+            <ul>
+              <li>A new model, SystemError, is added to be used for recording system errors.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.11.27 Version 3.7.0</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Feature</h4>
+            <ul>
+              <li>It is now possible to filter Schedule Reports that were time-consuming. Under the Schedule menu option, click on Search to select the desired view and provide wilcards for vehicle fields and a date range. Everything is optional.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.11.17 Version 3.6.0</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Feature</h4>
+            <ul>
+              <li>When a new workorder is sent, all email recipients will receive a token that will log them in. The generated email has been reworded.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.10.29 Version 3.5.19</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>Changes and new Features</h4>
+            <ul>
+              <li>Add origin attribute to Enquiries table to store the application from where an enquiry is initiated.</li>
+              <li>Show source application on Enquiry form.</li>
+              <li>Add validation to Notes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.10.06 Version 3.5.18</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>Changes and new Features</h4>
+            <ul>
+              <li>Remove the 'Enquiry Customer' role from the application.</li>
+              <li>When a new customer is create from an enquiry assign the role of 'Quote Customer' to that person'</li>
+              <li>Change the role of all existing enquiry customers to quote customers.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.10.05 Version 3.5.17</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>Changes and new Features</h4>
+            <ul>
+              <li>Enforce basic address validation for Australian addresses.</li>
+              <li>Do not allow an Accepted Quote to be edited.</li>
+              <li>Create task to replace Enquiry Customer role with Quote Customer role</li>
+              <li>Provide comprehensive model tests for Address table</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.10.03 Version 3.5.16</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>Changes and new Features</h4>
+            <ul>
+              <li>Allow user to have multiple addresses</li>
+              <li>Change user forms to update multiple addresses</li>
+              <li>Add new table, Customer Membership, to represent the internal company issuing an invoice to a customer</li>
+              <li>Add an ABN field to the user table</li>
+              <li>Clean up empty addresses</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.09.29 Version 3.5.15</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>Changes and new Features</h4>
+            <ul>
+              <li>Format address fields where possible. Use 2- or 3-letter State names. Use 'Australia' as country name if abbreviations were used.</li>
+              <li>Remove leading and trailing space characters from old address details.</li>
+              <li>Change user_id and enquiry_id in address table, using addressable_id and addressable_type instead.</li>
+              <li>Create company records from company fields in Users table. Link users to new 'Representing Company'.</li>
+              <li>Create company addresses from user addresses.</li>
+              <li>Create menu options and links to companies and between users and companies.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.09.22 Version 3.5.14</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Added Privacy Statement, visible to all users.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.09.06 Version 3.5.13</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>Changes and new Features</h4>
+            <ul>
+              <li>Provide fix for images that could not be deleted.</li>
+              <li>Remove old documents link for vehicles</li>
+              <li>Change Create and Update buttons on On Hire Report to be iPad-friendly</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.09.03 Version 3.5.12</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>Milestone Update Fix</h4>
+            <ul>
+              <li>Milestone dates could not be updated. Jamie provided a fix.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.09.02 Version 3.5.11</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>Technical Infrastructure</h4>
+            <ul>
+              <li>Provide different button for edit hire agreement</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.09.02 Version 3.5.10</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>Technical Infrastructure</h4>
+            <ul>
+              <li>Provide task to copy additional vehicle upload images to new images collection</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.08.26 Version 3.5.9</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Provide ability to maintain document types</li>
+              <li>Provide ability to maintain photo categories</li>
+              <li>Provide new shared document and photo upload facility</li>
+              <li>Implement this upload facility for vehicles</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.08.20 Version 3.5.8</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Add ability to amend reminders and recipients on Note forms</li>
+              <li>Add activity log when recipient list is created and reminders are sent</li>
+              <li>Add daily job to set status of completed Notes to 'completed'</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.08.19 Version 3.5.7</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Add Reminder facility to Note forms, including sceduled- and instant reminders</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.08.08 Version 3.5.6</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Permit the editing of an accepted quote from the quote list</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.08.05 Version 3.5.5</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Allow administrator to allocate multiple roles to a user</li>
+              <li>Include email, phone, mobile on quote pdf</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.07.28 Version 3.5.4</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Add customer phone and mobile to quote view page when present</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.07.27 Version 3.5.3</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Add menu option under settings icon (top right) to display change log</li>
+            </ul>
+
+            <h4>Bug Fixes</h4>
+            <ul>
+              <li>Remove 'Exclude from schedule' tick box section from vehicle create and update pages</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.07.26 Version 3.5.2</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Add ability to track code testing coverage</li>
+              <li>Restructure development seed files (does not affect system behaviour)</li>
+              <li>Add error detection to Workorder create and update</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.04.26 Version 3.5.1</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Show quote pricing button for admins</li>
+            </ul>
+
+            <h4>Bug Fixes</h4>
+            <ul>
+              <li>Quote item display cost icon now works properly</li>
+              <li>Quote pdfs now generate properly when prices are hidden</li>
+              <li>Disabled key navigation on schedule calendars that dislay with forms</li>
+              <li>Fixed color picker hue display image</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.03.27 Version 3.5.0</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Added sales order module</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2015.01.21 Version 3.4.9</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Added enquiry API for 3rd party enquiry submissions (I.E New Website Application)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2014.11.26 Version 3.4.8</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Quote amendments</li>
+              <li>Added notes to vehicle logs</li>
+              <li>Improved automated test suite</li>
+              <li>Po request send notification</li>
+              <li>Added day of week label to schedule timelines</li>
+              <li>Added service provider / customer to schedule view tooltips</li>
+              <li>Send notification to accounts admin when quote accepted</li>
+              <li>Added job scheduled date column to sp invoices datatable</li>
+            </ul>
+
+            <h4>Bug Fixes</h4>
+            <ul>
+              <li>Fixed schedule event links</li>
+              <li>Fixed issue creating blank sp invoices</li>
+              <li>Fixed issue causing error when updating vehicle log entries</li>
+              <li>Fixed schedule current time alignment</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2014.11.18 Version 3.4.7</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Added PO requests</li>
+              <li>Added service provider invoices and accounts section</li>
+              <li>You can now submit an invoice on completing a workorder, build order or off hire job</li>
+              <li>Invoice submission sends notification to accounts admin</li>
+              <li>Added rigid bus inspection sheet upload to vehicle attachments</li>
+              <li>Replaced full calendar schedule with dhtmlx scheduler</li>
+              <li>Tweaked dhtmlx schedule settings - now displays current time and 30 days in timeline view</li>
+              <li>Added dhtmlx schedule to vehicles, hire agreements, off hire jobs, builds and build orders</li>
+              <li>Tweaked dhtmlx schedules and removed full calendar plugin</li>
+              <li>Set default schedule view to timeline/vehicles tab</li>
+              <li>Added Master quote title pages</li>
+              <li>Added customer company to quotes datatable</li>
+              <li>Improved quotes datatable</li>
+              <li>Added top navigation menu to clean layout (viewing quotes/master quotes)</li>
+              <li>Added seating column to master quotes datatable</li>
+              <li>Added build orders datatable</li>
+              <li>Improved the way activity is displayed</li>
+              <li>Added activity datatable and improved dashboard</li>
+              <li>Added basic notifications to dashboard</li>
+              <li>Improved quote pdf layout</li>
+              <li>Tweaked responsive layout</li>
+              <li>You no longer can delete quotes, cancel quotes instead</li>
+              <li>Disabled apple mobile web app capability</li>
+              <li>Updated user abilities</li>
+            </ul>
+
+            <h4>Bug Fixes</h4>
+            <ul>
+              <li>Fixed an major issue causing quote items to delete when quote is duplicated</li>
+              <li>Fixed quote column sorting</li>
+              <li>Fixed jquery validation errors</li>
+            </ul>
+
+            <h4>Other Updates</h4>
+            <ul>
+              <li>Disabled monit control of delayed job on deployment</li>
+              <li>Fixed some out of date and failing specs/tests</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2014.10.30 Version 3.4.6</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>New schedule calendar with better interface and more features</li>
+              <li>Custom schedule views - vehicle selection and sorting</li>
+              <li>Schedule legend and filters</li>
+              <li>Improved colours for hire agreements, workorders, build orders and off hire jobs</li>
+              <li>Datatables now saves state - added reset filters button</li>
+              <li>Added table button to text editor</li>
+              <li>Mailgun integration - mailgun email log and bounce reports</li>
+              <li>Improved navigation styling</li>
+            </ul>
+
+            <h4>Bug Fixes</h4>
+            <ul>
+              <li>Fixed builds datatable - now shows builds with no build orders - also fixed default sorting</li>
+              <li>Fixed issue causing duplication when adding quote items</li>
+              <li>Fixed monit (background job monitoring service) configuration</li>
+              <li>Fixed page header margin</li>
+              <li>Fixed an issue with ckeditor - Rolled back creditor version to 4.2</li>
+              <li>Fixed enquiries datatable</li>
+              <li>Fixed a problem causing query validate error</li>
+            </ul>
+
+            <h4>Other Updates</h4>
+            <ul>
+              <li>Faster deployments - Skip asset compilation when assets are unchanged</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2014.10.15 Version 3.4.5</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Added stock requests</li>
+              <li>Added notes to stock requests</li>
+              <li>Added activity feed to stock requests</li>
+              <li>Added stock request notification emails</li>
+              <li>Suppliers can fulfil stock requests</li>
+              <li>Added accounts admin to invoice companies</li>
+              <li>Added addition details to user dropdown select fields</li>
+              <li>Translucent and fixed navigation menu</li>
+              <li>Workorders now only show existing vehicle details</li>
+              <li>Removed 'Pro' from Tips</li>
+              <li>Added accounts contact to work orders and build orders</li>
+              <li>Refined user interface</li>
+              <li>Improved model checkbox overflow styling</li>
+              <li>Improved display of information on builds</li>
+              <li>Improved datepicker - show today, auto close</li>
+              <li>Added invoice to company to workorders, build orders and off hire jobs</li>
+              <li>Improved page header label alignment</li>
+              <li>Added status to enquiries</li>
+              <li>Added tags to enquiries</li>
+              <li>You can now flag enquiries</li>
+              <li>Updated navigation menu items</li>
+              <li>Search builds by build order uid, name and status</li>
+              <li>Added show all feature to datatables</li>
+              <li>Add multiple hire agreement charges</li>
+              <li>Web app icons, startup images and full screen support</li>
+              <li>Added quote link to hire agreement</li>
+              <li>Quote manager select field now shows company, name and email</li>
+              <li>Added link to quote accepted notification email</li>
+              <li>Accounts contact now gets notified when quote accepted</li>
+              <li>Improved quote change notes</li>
+              <li>Updated quote tests/specs</li>
+            </ul>
+
+            <h4>Bug Fixes</h4>
+            <ul>
+              <li>Validate presence of master quote item cost</li>
+              <li>Changed hire agreement notes attribute and field to details</li>
+              <li>Fixed customer abilities for vehicles</li>
+              <li>Fixed enquiry datatable entries count</li>
+              <li>Fixed builds datatable</li>
+            </ul>
+
+            <h4>Other Updates</h4>
+            <ul>
+              <li>Better CKeditor - Updated to 4.4.3 and removed unnecessary functionality</li>
+              <li>Updated datatables 1.12.2 -> 2.2.3</li>
+              <li>Added monit support for monitoring delayed job</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2014.09.05 Version 3.4.4</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Added notes with multiple file upload to enquiries, workorders, hire agreements, users, vehicles, stocks, off hire jobs, builds, build orders and quotes</li>
+              <li>Renamed quote notes to quote comments</li>
+              <li>Enquiries are now marked as read/unread</li>
+              <li>Added unread enquiries label to navigation</li>
+              <li>Added new method for assigning enquiries which sends a notification email</li>
+              <li>Removed store links from left sidebar</li>
+              <li>Added activity feed to builds</li>
+              <li>Added activity feed to master quotes</li>
+              <li>When creating a build, vehicle dropdown list now only displays vehicles that don't already have a build</li>
+              <li>Added tags to master quote items</li>
+              <li>Added validation to invoice company and improved form</li>
+              <li>Added job subscriber unit tests</li>
+              <li>Improved test suite performance</li>
+            </ul>
+
+            <h4>Bug Fixes</h4>
+            <ul>
+              <li>Removed incorrect invoice company attribute causing errors</li>
+              <li>Corrected incorrect user attributes causing errors in quote emails</li>
+            </ul>
+
+            <h4>Other Updates</h4>
+            <ul>
+              <li>Added default setting parameters to delayed job (backgound job que)</li>
+            </ul>
+
+            <h4>Depreciated</h4>
+            <ul>
+              <li>Removed unused and depreciated notes column from users, vehicles and stocks database tables</li>
+              <li>Updated tax default scope (depreciated code)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2014.08.30 Version 3.4.3</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Improved Print CSS (Printer Friendly Pages)</li>
+              <li>Added 17 digit vin number validation to vehicles and stock</li>
+              <li>Added GST included message to hire agreements</li>
+              <li>Added email validation to enquiry form</li>
+              <li>Add extra manager details to quote emails</li>
+              <li>Reminders no longer send for complete or cancelled workorders, build orders or off hire jobs</li>
+              <li>Service providers can now update their associated vehicle log entries</li>
+              <li>You can now sort master quote items</li>
+              <li>Added vehicle quicklinks to workorders</li>
+              <li>Add seating numbers to Master Quotes</li>
+              <li>Add website field to users table</li>
+              <li>Added engine number to stock</li>
+              <li>Added subscribers to workorders, build orders and off hire jobs</li>
+              <li>Added validation to master quote seating number</li>
+              <li>Added supplier, service provider and buy price to master quote items and quote items</li>
+              <li>Added markup calculation functionality to master quote items</li>
+              <li>Tweaked master quote form styling</li>
+              <li>Added position to taxes for sorting</li>
+            </ul>
+
+            <h4>Bug Fixes</h4>
+            <ul>
+              <li>Fixed errors with send email popup js</li>
+              <li>Removed unnecessary vin check from receive stock action</li>
+              <li>You now cannot destroy a tax if it has associations i.e. is used by a quote item which would generate errors</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2014.07.12 Version 3.4.2</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>You can now sort quote line items</li>
+              <li>Hide quote cost details by line item</li>
+              <li>Advanced quote search - quotes now searchable by line item - add '#' to enable</li>
+              <li>Quotes now sortable by total</li>
+              <li>Quote PO file upload</li>
+              <li>Customers can submit PO when accepting quotes</li>
+              <li>Enquiry activity feed</li>
+              <li>Vehicle activity feed</li>
+              <li>Added hire agreements to vehicle sidebar - hire agreement vehicle scoped view</li>
+              <li>Service provider can now have hire agreements</li>
+            </ul>
+
+            <h4>Bug Fixes</h4>
+            <ul>
+              <li>Fixed a problem preventing quote totals from displaying properly</li>
+              <li>Vehicle logs can now sort by odometer reading</li>
+            </ul>
+
+            <h4>Other Updates</h4>
+            <ul>
+              <li>Added grand total to quotes table for better performance</li>
+              <li>Improved hire agreements datatable</li>
+              <li>Ref column in datatables are now hyperlinked</li>
+              <li>Improved tag fields</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2014.06.28 Version 3.4.1</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>Improved search functionality - you can now use multiple search terms</li>
+              <li>Vehicle schedule with day and week agenda views</li>
+              <li>You can now add tags to quotes</li>
+              <li>Creating quote from master automatically adds tags to quote</li>
+              <li>You can now flag vehicle logbook entries for review - admin recieves email notification</li>
+              <li>Flag for review and follow up message fields added to complete workorder form</li>
+              <li>Vehicle logbook ajax loading datatable</li>
+              <li>Added file uploads to build orders</li>
+              <li>Added SQL views for better datatable search performance</li>
+              <li>Added additional attributes to vehicle log search</li>
+              <li>Added vehicle log unit tests</li>
+              <li>Master quotes names no longer need to be unique</li>
+              <li>Service provider schedule now only shows vehicles with workorders, build orders and off hire jobs that are not complete or cancelled</li>
+            </ul>
+
+            <h4>Bug Fixes</h4>
+            <ul>
+              <li>Added missing validates_attachment_content_type required for paperclip 4.1 (file uploads)</li>
+              <li>Fixed datatable duplicates</li>
+              <li>Fixed issue preventing ability to update users when changing email</li>
+              <li>Fixed datatable search issues</li>
+              <li>Fixed bug in hire agreement activity feed causing activity to show as build order</li>
+              <li>Fixed issue where quote reference would not save to a hire agreement</li>
+              <li>Fixed issue preventing ability to change hirer of a hire agreement</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box">
+          <div class="box-title">
+            <h3>2014.06.17 Version 3.4</h3>
+          </div>
+
+          <div class="box-content">
+            <h4>New Features</h4>
+            <ul>
+              <li>User scoped views for associated resources - links added to user sidebar</li>
+              <li>Service provider schedule</li>
+              <li>Off hire job ajax loading datatable</li>
+              <li>Vehicle off hire jobs</li>
+              <li>Added manager details to text formated emails</li>
+              <li>Refacted ajax loading datatables</li>
+              <li>Datatables can now be sorted when searching</li>
+              <li>Workorders can now be sent to additional recipient emails</li>
+              <li>Added workorder mailer tests</li>
+              <li>Improved send workorder validation</li>
+              <li>Added build order unit and feature tests</li>
+              <li>Added changelog</li>
+            </ul>
+
+            <h4>Bug Fixes</h4>
+            <ul>
+              <li>Fixed hire agreement datatable search functionality</li>
+              <li>Fixed hire agreement activity feed</li>
+              <li>Fixed build order activity feed</li>
+              <li>Fixed off hire job acitivity feed</li>
+              <li>Fixed breadcrumbs (Vehicle for filtered classes)</li>
+              <li>Public activity hire agreement link fixes, id to uid</li>
+              <li>Users name now displays correctly if last name not provided</li>
+              <li>Mailer form can now click on manager label to activate checkbox</li>
+              <li>Fixed user avatar column width in users table</li>
+              <li>Enquiry customer now changes to quote customer when updating quote</li>
+            </ul>
+
+            <h4>Other Updates</h4>
+            <ul>
+              <li>Updated paperclip gem to version 4.1</li>
+            </ul>
+
+            <h4>Depreciated</h4>
+            <ul>
+              <li>Replaced activerecord find_by method depreciated in rails 4 - It will be removed as a dependency in Rails 4.1</li>
+            </ul>
+
+            -----------------------------------
+            <p>Changelog created 2014.06.17 version 3.4</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

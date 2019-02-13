@@ -1,0 +1,7 @@
+<% present(@quote) do |quote| %>
+  <div id="summary-page" class="a4-page">
+    <div class="content">
+      <%= quote.summary_page.text.html_safe %>
+    </div>
+  </div>
+<% end %>

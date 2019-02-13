@@ -1,0 +1,47 @@
+<tr>
+  <td>Company:</td>
+  <td><%= object.invoice_company.name %></td>
+</tr>
+<% if object.invoice_company.abn.present? %>
+  <tr>
+    <td>ABN:</td>
+    <td><%= object.invoice_company.abn %></td>
+  </tr>
+<% end %>
+<% if object.invoice_company.acn.present? %>
+  <tr>
+    <td>ACN:</td>
+    <td><%= object.invoice_company.acn %></td>
+  </tr>
+<% end %>
+<% if object.invoice_company.phone.present? %>
+  <tr>
+    <td>Phone:</td>
+    <td><%= object.invoice_company.phone %></td>
+  </tr>
+<% end %>
+<% if object.invoice_company.fax.present? %>
+  <tr>
+    <td>Fax:</td>
+    <td><%= object.invoice_company.fax %></td>
+  </tr>
+<% end %>
+<tr>
+  <td>Address:</td>
+  <td>
+    <%= object.invoice_company.address_line_1 %><br>
+    <%= "#{object.invoice_company.address_line_2}<br>".html_safe if object.invoice_company.address_line_2.present? %>
+    <%= object.invoice_company.suburb %><br>
+    <%= object.invoice_company.state %>
+    <%= object.invoice_company.postcode %><br>
+    <%= object.invoice_company.country %>
+  </td>
+</tr>
+<% if object.invoice_company.accounts_admin %>
+  <tr>
+    <td>Accounts Person:</td>
+    <td>
+      <%= object.invoice_company.accounts_admin.ref_name %>
+    </td>
+  </tr>
+<% end %>

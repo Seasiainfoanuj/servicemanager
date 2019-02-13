@@ -1,0 +1,185 @@
+<div id="main" class="page-container">
+  <div class="page-header">
+    <div class="pull-right">
+          <!-- <a href="#" class="btn" onclick="window.print();return false;"><i class="icon-print"></i> Print</a> -->
+       <% if current_user.has_role? :masteradmin , :superadmin %>
+        <% if can? :update, MasterQuote %>
+            <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_master_quote_path(@master_quote), {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <% end %>
+            <%= link_to '<i class="icon-list-alt"></i>'.html_safe, master_quotes_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+        <% if can? :duplicate, MasterQuote %>
+            <%= link_to "<i class='icon-copy'></i>".html_safe, {:action => 'duplicate', :master_quote_id => @master_quote.id}, {:title => 'Duplicate Master Quote', :id => 'duplicate-btn', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <% end %>
+       <% end %> 
+       <% if can? :create, Quote %>
+          <a href="#" id="create_quote_form_btn" class="btn btn-satgreen"><i class="icon-plus-sign"></i> New Quote</a>
+       <% end %>   
+    </div>
+  </div>
+
+  <%= render(:partial => 'create_quote_form') if can? :create, Quote %>
+
+  <%= render(:partial => 'layouts/notice') %>
+  <%= render(:partial => 'title_page') if @master_quote.title_page %>
+  <%= render(:partial => 'summary_page') if @master_quote.summary_page %>
+
+  <div id="master-quote" class="a4-page">
+    <div class="invoice-info">
+      <div class="invoice-name">
+        <div class="pull-left">
+          MASTER QUOTE
+        </div>
+      </div>
+
+      <div class="invoice-infos" style="float: left; margin-bottom: 20px; width: 100%;">
+        <table class="table">
+          <tr>
+            <th>Vehicle Make:</th>
+            <td><%= @master_quote.vehicle_make %></td>
+            <th>Vehicle Model:</th>
+            <td><%= @master_quote.vehicle_model %></td>
+            <th>Transmission Type:</th>
+            <td><%= @master_quote.transmission_type %></td>
+          </tr>
+          <tr class="tbr">
+            <th>Type:</th>
+            <td><%= @master_quote.type.name %></td>
+            <th>Master Quote Name:</th>
+            <td><%= @master_quote.name %></td>
+            <th>Seating Number:</td>
+            <td><%= @master_quote.seating_number %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <table class="table table-invoice">
+      <thead>
+        <tr>
+          <th class="item-type">Item type</th>
+          <th class="description">Description</th>
+          <th class="cost right">Cost</th>
+          <th class="qty right">Qty</th>
+          <th class="tax right">Tax</th>
+          <th class="line-total right">Line Total</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      <% previous_item_type_id = nil %>  
+      <% @master_quote.items.each do |item| %>
+        <% if item.quote_item_type.id == previous_item_type_id %>
+          <% display_item_type = "" %>
+        <% else %>
+          <% display_item_type = item.item_type_name(true) %>
+        <% end %>
+        <% previous_item_type_id = item.quote_item_type.id %>
+
+        <tr>
+          <td class="item-type"><%= display_item_type %></td>
+          <td class="description"><%=simple_format h item.description %></td>
+          <td class="cost right"><%= item.cost %></td>
+          <td class="qty right"><%= item.quantity %></td>
+          <td class="tax right"><%= item.cost_tax.name if item.cost_tax %></td>
+          <td class="line-total right">
+            <span class="amount"><%= item.line_total %></span>
+          </td>
+        </tr>
+      <% end %>
+        <tr id="form-table-bottom">
+          <td colspan="3" class="table-left"></td>
+          <td colspan="3" class='taxes'>
+            <div class="subtotal-container">
+              <span>Subtotal</span>
+              <span id="subtotal"><%= @master_quote.subtotal %></span>
+            </div>
+            <div class="taxtotal-container">
+              <span id="tax_name">Tax</span>
+              <span id="taxtotal"><%= @master_quote.tax_total %></span>
+            </div>
+            <div class="grandtotal-container">
+              <span>Quote Total</span>
+              <span id="grandtotal"><%= currency_symbol + @master_quote.grand_total %></span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="row-fluid">
+      <% if @master_quote.terms.present? %>
+        <div class="span6" style="border-right: 1px solid #ddd; padding: 0 20px;">
+          <h5>Terms</h5>
+          <%=simple_format h @master_quote.terms %>
+        </div>
+      <% end %>
+
+      <% if @master_quote.notes.present? %>
+        <div class="span6" style="padding: 0 20px;">
+          <h5>Notes</h5>
+          <%=simple_format h @master_quote.notes %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <% if @master_quote.specification_sheet %>
+    <div id="master-quote-specification-sheet-show">
+      <h3><i class="glyphicon-paperclip"></i>
+        Specification Sheet
+      </h3>
+      <table class="table table-hover table-nomargin">
+        <tr>
+          <td><a href="<%= @master_quote.specification_sheet.upload.url(:original) %>"><%= image_tag @master_quote.specification_sheet.upload.url(:medium) %></a></td>
+          <td>
+            <a href="<%= @master_quote.specification_sheet.upload.url(:original) %>" target="_blank"><%= @master_quote.specification_sheet.upload_file_name.humanize %></a>
+          </td>
+          <td><a class="btn" href="<%= @master_quote.specification_sheet.upload.url(:original) %>" target="_blank"><i class="icon-download-alt"></i> Download</a></td>
+        </tr>
+      </table>
+    </div>
+  <% end %>
+
+  <% unless @master_quote.attachments.empty? %>
+    <div id="master-quote-attachments">
+      <h3><i class="glyphicon-paperclip"></i>
+        <%= @master_quote.attachments.count > 1 ? "#{@master_quote.attachments.count} Attachments" : "#{@master_quote.attachments.count} Attachment" %>
+      </h3>
+      <table class="table table-hover table-nomargin">
+      <% @master_quote.attachments.each do |file| %>
+        <tr>
+          <td><a href="<%= file.upload.url(:original) %>"><%= image_tag file.upload.url(:medium) %></a></td>
+          <td>
+            <a href="<%= file.upload.url(:original) %>" target="_blank"><%= file.upload_file_name.humanize %></a>
+          </td>
+          <td><a class="btn" href="<%= file.upload.url(:original) %>" target="_blank"><i class="icon-download-alt"></i> Download</a></td>
+        </tr>
+      <% end %>
+      </table>
+    </div>
+  <% end %>
+
+  <% if current_user.has_role? :admin  %>
+    <div id="quote-activity">
+      <h3>
+        <i class="icon-rss"></i> History
+        <span class="pull-right">
+          <i class="icon-eye-close info-icon" title="Only viewable by admin" rel="tooltip" data-placement="left"></i>
+        </span>
+      </h3>
+      <div class="activities">
+        <% @activities.each do |activity| %>
+          <div class="activity">
+            <div class="details">
+              <%= render_activity activity, locals: {display: "simple"} %>
+              <span class="time"><%= time_ago_in_words(activity.created_at) + " ago" %></span>
+            </div>
+            <div class="date">
+              <%= activity.created_at.strftime("%e %b %Y, %l:%M %p") %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,98 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(partial: 'shared/page_legend', locals: {actions: [:view, :edit, :amendment, :cancel_quote]}) %>
+
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Quotes</h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if can? :create, Quote %>
+
+          <% if can? :create, MasterQuote %>
+            <%= link_to "Master Quotes", master_quotes_path, :class => "btn btn-lightgrey" %>
+          <% end %>
+
+          <a href="#create_customer_model" role="button" class="btn btn-satgreen" data-toggle="modal"><i class="icon-plus-sign"></i> New Quote</a>
+
+          <div id="create_customer_model" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">customer</h3>
+            </div>
+            <div class="modal-body">
+              <p>To create a quote you must select a pre existing customer. Do you need to create a new customer record first?</p>
+            </div>
+            <div class="modal-footer">
+              <%= link_to 'Existing Customer', {:action => 'new'}, {:class => 'btn btn-orange'} %>
+              <%= link_to '<i class="icon-plus-sign"></i> New Customer'.html_safe, {:controller => 'users', :action => 'customer'}, {:class => 'btn btn-satgreen'} %>
+            </div>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-notes"></i>Quotes</h3><%= manual_link('quotes') if current_user.admin? %>
+          </div>
+
+          <div class="box-content nopadding quotes">
+
+            <%= render('search_form') if current_user.has_role?(:admin) %>
+
+            <table id="quotes-table" class="table">
+              <thead>
+                <tr>
+                  <th>Number</th>
+                  <th>Quote Date</th>
+                  <th>Customer/Company</th>
+                  <th>Total ($)</th>
+                  <% if current_user.admin? %>
+                    <th>Status</th>
+                    <th>Tags</th>
+                  <% else %>
+                    <th></th>  
+                    <th></th>  
+                  <% end %>  
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if @quotes.total_entries > 0 %>
+                  <%= render @quotes %>
+                <% else %>
+                  <tr><td colspan="10" style="text-align: center;">No records matched your search criteria.</td></tr>
+                <% end %>
+              </tbody>
+            </table>
+            
+            <% if @quotes.total_entries > 0 %>
+              <table id="quotes-table-footer">
+                <thead>
+                  <tr>
+                    <th><%= query_totals(@quotes.total_entries, params[:page].to_i, @search.per_page.to_i) %></th>
+                  </tr>
+                </thead>
+              </table>  
+            <% end %>  
+
+            <%= will_paginate @quotes unless @quotes.none? %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

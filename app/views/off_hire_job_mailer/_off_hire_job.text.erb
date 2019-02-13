@@ -1,0 +1,66 @@
+Job Ref# <%= @off_hire_job.uid %>
+-----------------------------------------
+Ref Name: <%= @off_hire_job.name %>
+Status: <%= @off_hire_job.status.capitalize %>
+
+Scheduled: <%= @off_hire_job.sched_date_field %> - <%= @off_hire_job.sched_time_field %>
+Est Complete: <%= @off_hire_job.etc_date_field %> - <%= @off_hire_job.etc_time_field %>
+
+<% if @off_hire_job.invoice_company %>
+----------------------
+Invoice To:
+<%= @off_hire_job.invoice_company.name %>
+<% "ABN: #{@off_hire_job.invoice_company.abn}" if @off_hire_job.invoice_company.abn.present? %>
+<% "ACN: #{@off_hire_job.invoice_company.acn}" if @off_hire_job.invoice_company.acn.present? %>
+<% "Phone: #{@off_hire_job.invoice_company.phone}" if @off_hire_job.invoice_company.phone.present? %>
+<% "Fax: #{@off_hire_job.invoice_company.fax}" if @off_hire_job.invoice_company.fax.present? %>
+<% if @off_hire_job.invoice_company.address_line_1.present? || @off_hire_job.invoice_company.address_line_2.present? || @off_hire_job.invoice_company.suburb.present? || @off_hire_job.invoice_company.state.present? || @off_hire_job.invoice_company.postcode.present? || @off_hire_job.invoice_company.country.present? %>
+
+Address:
+<%= "#{@off_hire_job.invoice_company.address_line_1}" if @off_hire_job.invoice_company.address_line_1.present? %>
+<%= "#{@off_hire_job.invoice_company.address_line_2}" if @off_hire_job.invoice_company.address_line_2.present? %>
+<%= "#{@off_hire_job.invoice_company.suburb}, " if @off_hire_job.invoice_company.suburb.present? %><%= "#{@off_hire_job.invoice_company.state} " if @off_hire_job.invoice_company.state.present? %><%= "#{@off_hire_job.invoice_company.postcode} " if @off_hire_job.invoice_company.postcode.present? %>
+<%= "#{@off_hire_job.invoice_company.country}" if @off_hire_job.invoice_company.country.present? %>
+<% end %>
+<% end %>
+
+----------------------
+Vehicle Details:
+<%= @off_hire_report.hire_agreement.vehicle.name %> <%= "##{@off_hire_report.hire_agreement.vehicle.number}" if @off_hire_report.hire_agreement.vehicle.number %>
+<%= "Vin: #{@off_hire_report.hire_agreement.vehicle.vin_number}" unless @off_hire_report.hire_agreement.vehicle.vin_number.blank? %>
+<%= "Rego No: #{@off_hire_report.hire_agreement.vehicle.rego_number}" unless @off_hire_report.hire_agreement.vehicle.rego_number.blank? %>
+
+<% unless @user == @off_hire_job.service_provider %>
+----------------------
+Service Provider:
+<%= @off_hire_job.service_provider.company_name %>
+E: <%= @off_hire_job.service_provider.email %>
+<% unless @off_hire_job.service_provider.phone.blank? %>
+P: <%= @off_hire_job.service_provider.phone %>
+<% end %>
+<% unless @off_hire_job.service_provider.mobile.blank? %>
+M: <%= @off_hire_job.service_provider.mobile %>
+<% end %>
+<% end %>
+<% if @off_hire_job.manager.present? %>
+----------------------
+Manager:
+<% unless @off_hire_job.manager.name == @off_hire_job.manager.email %>
+<%= @off_hire_job.manager.name %>
+<% end %>
+E: <%= @off_hire_job.manager.email %>
+<% if @off_hire_job.manager.phone.present? %>
+P: <%= @off_hire_job.manager.phone %>
+<% end %>
+<% if @off_hire_job.manager.mobile.present? %>
+M: <%= @off_hire_job.manager.mobile %>
+<% end %>
+<% if @off_hire_job.manager.website.present? %>
+W: <%= @off_hire_job.manager.website %>
+<% end %>
+<% end %>
+
+<% unless @off_hire_job.uploads.empty? %>
+----------------------
+This off hire job has file attachments. You can login to view them here: <%= off_hire_job_url(@off_hire_job) %>
+<% end %>

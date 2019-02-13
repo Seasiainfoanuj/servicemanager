@@ -1,0 +1,128 @@
+<% present(@hire_quote) do |quote| %>
+
+  <div id="main" class="customer-hire-quote page-container">
+
+    <div class="page-header">
+      <div class="pull-right">
+        <% if current_user == quote.authorised_contact %>
+          <%= render 'accept_quote_decision' %>
+          <%= render 'request_change_form' %>
+
+          <%= link_to '<i class="icon-file"></i> Download PDF'.html_safe, view_customer_quote_hire_quote_path(@hire_quote, format: "pdf", :user_email => @hire_quote.authorised_contact.email, :user_token => @hire_quote.authorised_contact.authentication_token), {:title => 'Download PDF', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <% end %>
+      </div>
+    </div>
+
+    <%= render(:partial => 'layouts/notice') %>
+
+    <%= render 'cover_letter' if @hire_quote.cover_letter %>
+
+    <!--  render 'alert_messages'  -->
+
+    <div id="customer-hire-quote" class="a4-page">
+      <div class="form-header">
+        <div class="company-logo">
+          <%= image_tag quote.company_logo(:medium) %>
+        </div>
+        <div class="quote-reference">
+          Ref: <span><%= quote.reference %><span>
+        </div>
+        <div class="quote-status">
+          <% if quote.show_status_label? %>
+            <%= quote_status_label(quote.status) %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="sub-header">
+        <div class="quoting-company">
+          <%= render 'quoting_company_details' %>
+        </div>
+        <div class="customer-address">
+          <%= render 'customer_address_details' %>
+        </div>
+
+        <% if @hire_quote.quoted_date.present? %>
+          <div class="quote-date">
+            Quote Date: <%= @hire_quote.quoted_date.strftime("%-d %B %Y") %>
+          </div>
+        <% end %>
+      </div>
+
+      <table class="quote-vehicle table">
+        <thead>
+          <tr>
+            <td>Hire Start Date</td>
+            <td>Hire End Date</td>
+            <td>Hire Product</td>
+            <td>Mobilisation</td>
+            <td>Rate</td>
+            <td>Frequency</td>
+            <td>GST</td>
+            <td>Line Total</td>
+          </tr>
+        </thead>
+        <tbody>
+          <% @hire_quote.vehicles.each do |hire_quote_vehicle| %>
+            <% present(hire_quote_vehicle) do |vehicle| %>
+              <tr class="vehicle">
+                <td><%= display_date(vehicle.start_date, {format: :short}) %></td>
+                <td><%= display_date(vehicle.end_date, {format: :short}) %></td>
+                <td><%= vehicle.product_description %></td>
+                <td>
+                  <%= vehicle.mobilisation_requirements %></td>
+                </td>
+                <td>
+                  <%= number_to_currency((vehicle.daily_rate_cents.to_f / 100), precision: 2, separator: '.', unit: '') %>
+                </td>
+                <td>Daily</td>
+                <% gst_cents = quote.gst_percentage * vehicle.daily_rate_cents %>
+                <td><%= number_to_currency( gst_cents.to_f / 100, precision: 2, separator: '.', unit: '') %></td>
+                <td><%= number_to_currency( (vehicle.daily_rate_cents.to_f + gst_cents) / 100, precision: 2, separator: '.', unit: '$') %></td>
+              </tr>
+            <% end %>
+            <% hire_quote_vehicle.addons.each do |addon| %>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>
+                  <%= "#{addon.hire_addon.addon_type} - #{addon.hire_addon.hire_model_name}" %>
+                </td>
+                <td></td>
+                <td>
+                  <%= number_to_currency((addon.hire_price_cents.to_f / 100), precision: 2, separator: '.', unit: '') %>
+                </td>
+                <td><%= addon.hire_addon.billing_frequency.titleize %></td>
+                <% gst_cents = quote.gst_percentage * addon.hire_price_cents %>
+                <td><%= number_to_currency( gst_cents / 100, precision: 2, separator: '.', unit: '') %></td>
+                <td><%= number_to_currency( (addon.hire_price_cents.to_f + gst_cents) / 100, precision: 2, separator: '.', unit: '$') %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+     
+      <% if quote.vehicle_photos_exist? %>
+        <div class="vehicle-photos">
+        <% quote.vehicle_models.each do |vehicle_model| %>
+          <div class="product">
+            <h4><%= vehicle_model.full_name %></h4>
+            <% vehicle_model.images.photos.each do |photo| %>
+              <picture><%= image_tag photo.image.url(:medium) %></picture>
+            <% end %> 
+            <% if vehicle_model.images.documents.any? %>
+              <div class="brochure">
+                <% file = vehicle_model.images.documents.first %>
+                <a href="<%= file.image.url(:original) %>" class="btn btn-blue">
+                  Download Vehicle Brochure</a>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+

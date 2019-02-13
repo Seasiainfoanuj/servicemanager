@@ -1,0 +1,423 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Hire Agreement <span class="label"><%= "#{@hire_agreement.uid}" %></span></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+
+        <% if can? :send_hire_agreement, HireAgreement %>
+          <a href="#send-hire-agreement-model" role="button" class="btn btn-satblue" data-toggle="modal"><i class="icon-envelope"></i>
+            Send Hire Agreement
+          </a>
+          <%= render 'send_form' %>
+        <% end %>
+
+        <% if can? :update, HireAgreement %>
+          <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_hire_agreement_path, {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <% end %>
+
+        <%= link_to '<i class="icon-list-alt"></i>'.html_safe, hire_agreements_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="icon-cogs"></i>Administration</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-bordered" style="clear: both;">
+              <tbody>
+                <tr>
+                  <td><%= @hire_agreement.manager ? "Assigned to: #{@hire_agreement.manager.name}" : "Not assigned" %></td>
+                  <td>Status: <%= hire_status_label(@hire_agreement.status) if @hire_agreement.status %></td>
+                  <% if current_user.has_role?(:admin) && @hire_agreement.quote %>
+                    <td>Linked Quote: <%= link_to "<i class='icon-search'></i> #{@hire_agreement.quote.number}".html_safe, @hire_agreement.quote, class: 'btn btn-small' %></td>
+                  <% end %>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box-title">
+            <h3><i class="icon-user"></i>Hirer Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-bordered" style="clear: both;">
+              <tbody>
+                <tr>
+                  <td>
+                    <%= @hire_agreement.customer.name if @hire_agreement.customer %>
+                    <b><%= "(" + @hire_agreement.customer.company + ")" if @hire_agreement.customer && @hire_agreement.customer.company.present? %></b>
+                  </td>
+                  <td>
+                    DOB:
+                    <%= @hire_agreement.customer.dob_field %>
+                  </td>
+                  <td>
+                    PH: <%= @hire_agreement.customer.phone %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Licence Number:
+                    <%= @hire_agreement.customer.licence.number if @hire_agreement.customer.licence %>
+                  </td>
+                  <td>
+                    State of Issue:
+                    <%= @hire_agreement.customer.licence.state_of_issue if @hire_agreement.customer.licence %>
+                  </td>
+                  <td>
+                    Expiry Date:
+                    <%= @hire_agreement.customer.licence.expiry_date_field if @hire_agreement.customer.licence %>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="row-fluid">
+            <div class="span6">
+              <div class="box-title">
+                <h3><i class="icon-calendar"></i>Pickup Schedule</h3>
+              </div>
+              <div class="box-content nopadding">
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td>Date/Time</td>
+                      <td width="80%"><%= @hire_agreement.pickup_date_field %> <%= @hire_agreement.pickup_time_field %></td>
+                    </tr>
+                    <tr>
+                      <td>Location</td>
+                      <td width="80%"><%= @hire_agreement.pickup_location.titleize %></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="span6">
+              <div class="box-title">
+                <h3><i class="icon-calendar"></i>Return Schedule</h3>
+              </div>
+              <div class="box-content nopadding">
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td>Date/Time</td>
+                      <td width="80%"><%= @hire_agreement.return_date_field %> <%= @hire_agreement.return_time_field %></td>
+                    </tr>
+                    <tr>
+                      <td>Location</td>
+                      <td width="80%"><%= @hire_agreement.return_location.titleize %></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="box-title">
+            <h3><i class="glyphicon-keys"></i>Vehicle Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <div class="span6">
+              <table class="table table-bordered table-force-topborder" style="clear: both; border-right: 1px solid #ddd;">
+                <tbody>
+                  <tr>
+                    <td>Year, Make &amp; Model</td>
+                    <td width="70%"><%= @hire_agreement.vehicle.name %></td>
+                  </tr>
+                  <tr>
+                    <td>Vehicle Number</td>
+                    <td width="70%"><%= @hire_agreement.vehicle.number %></td>
+                  </tr>
+                  <tr>
+                    <td>VIN Number</td>
+                    <td width="70%"><%= @hire_agreement.vehicle.vin_number %></td>
+                  </tr>
+                  <tr>
+                    <td>Rego Number</td>
+                    <td width="70%"><%= @hire_agreement.vehicle.rego_number %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="span6" style="margin-left:0">
+              <table class="table table-bordered table-force-topborder" style="clear: both; border-bottom: 1px dotted #ddd;">
+                <tbody>
+                  <tr>
+                    <td>Transmission</td>
+                    <td width="70%"><%= @hire_agreement.vehicle.transmission %></td>
+                  </tr>
+                  <tr>
+                    <td>Seating Requirement</td>
+                    <td width="70%"><%= @hire_agreement.seating_requirement %></td>
+                  </tr>
+                  <tr>
+                    <td>Seating Capacity</td>
+                    <td width="70%"><%= @hire_agreement.vehicle.seating_capacity %></td>
+                  </tr>
+                  <tr>
+                    <td>Daily KM Allowance</td>
+                    <td width="70%"><%= @hire_agreement.daily_km_allowance %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+          <div class="box-title">
+            <h3><i class="glyphicon-usd"></i>Hire Rates</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-bordered table-force-topborder" style="clear: both">
+              <thead>
+                <tr>
+                  <th>Daily Rate</th>
+                  <% if @hire_agreement.demurrage_rate.present? %>
+                    <td>Demurrage Rate</th>
+                  <% end %>
+                  <th>Fuel Service Fee</th>
+                  <th>Excess KM Fee</th>
+                  <th>Damage Recovery Fee</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><%= number_to_currency(@hire_agreement.daily_rate) %></td>
+                  <% if @hire_agreement.demurrage_rate.present? %>
+                    <td><%= number_to_currency(@hire_agreement.demurrage_rate) %></td>
+                  <% end %>
+                  <td><%= "#{number_to_currency(@hire_agreement.fuel_service_fee)} / Litre" if @hire_agreement.fuel_service_fee.present? %></td>
+                  <td><%= "#{number_to_currency(@hire_agreement.excess_km_rate)} / KM" if @hire_agreement.excess_km_rate.present? %></td>
+                  <td><%= number_to_currency(@hire_agreement.damage_recovery_fee) %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <% unless @hire_agreement.hire_charges.empty? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-coins"></i>Rental Charges</h3>
+            </div>
+            <div class="box-content nopadding">
+              <table class="table table-bordered table-force-topborder" style="clear: both">
+                <thead>
+                  <tr>
+                    <th>Description</th>
+                    <th width="25%">Amount</th>
+                    <th class="align-center" width="5%">Qty</th>
+                    <th class="align-center" width="10%">Tax</th>
+                    <th class="align-right" width="10%">Line Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @hire_agreement.hire_charges.each do |charge| %>
+                    <tr>
+                      <td><%= charge.name %></td>
+                      <td width="25%"><%= number_to_currency(charge.amount) %> <%= charge.calculation_method %></td>
+                      <td class="align-center" width="5%"><%= charge.quantity %></td>
+                      <td class="align-center" width="10%"><%= charge.tax.name if charge.tax %></td>
+                      <td class="align-right" width="10%"><%= number_to_currency(charge.amount*charge.quantity) %></td>
+                    </tr>
+                  <% end %>
+                  <tr id="form-table-bottom">
+                    <td colspan="2" class="table-left" style="background: #f8f8f8;"></td>
+                    <td colspan="3" class='taxes'>
+                      <div class="subtotal-container">
+                        <span>Subtotal</span>
+                        <span id="subtotal"><%= number_to_currency(@hire_agreement.charges_subtotal) %></span>
+                      </div>
+                      <div class="taxtotal-container">
+                        <span id="tax_name">Taxes</span>
+                        <span id="taxtotal"><%= number_to_currency(@hire_agreement.charges_tax_total) %></span>
+                      </div>
+                      <div class="grandtotal-container">
+                        <span>Total</span>
+                        <span id="grandtotal"><%= number_to_currency(@hire_agreement.charges_grand_total) %></span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+
+          <% unless @hire_agreement.details.blank? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-notes"></i>Details</h3>
+            </div>
+            <div class="box-content">
+              <%= @hire_agreement.details.html_safe %>
+            </div>
+          <% end %>
+
+          <% unless  @hire_agreement.hire_uploads.empty? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-paperclip"></i>Attachments</h3>
+            </div>
+            <div class="box-content nopadding">
+              <table class="table table-bordered">
+              <% @hire_agreement.hire_uploads.each do |file| %>
+                <tr>
+                  <td>
+                    <a href="<%= file.upload.url(:original) %>"><%= file.upload_file_name %></a>
+                  </td>
+                  <td><a class="btn" href="<%= file.upload.url(:original) %>"><i class="icon-search"></i></a></td>
+                </tr>
+              <% end %>
+              </table>
+            </div>
+          <% end %>
+
+          <% if current_user.has_role? :admin %>
+
+            <div class="box-title">
+              <h3><i class="glyphicon-notes_2"></i>On Hire Report</h3>
+            </div>
+            <div class="box-content nopadding">
+              <% if @hire_agreement.on_hire_report %>
+                <table class="table">
+                  <tr>
+                    <td>
+                      <%= link_to '<i class="icon-search"></i> On Hire Report'.html_safe, {:controller => "on_hire_reports", :action => 'show', :id => @hire_agreement.on_hire_report, :hire_agreement_id => @hire_agreement.uid}, :class => 'btn btn-orange' %>
+                    </td>
+                    <td class="align-center">
+                      Pickup Date: <%= @hire_agreement.on_hire_report.report_date_field %> <%= @hire_agreement.on_hire_report.report_time_field %>
+                    </td>
+                    <td class="align-right">
+                      Completed by <%= @hire_agreement.on_hire_report.user.name %>
+                    </td>
+                  </tr>
+                </table>
+              <% else %>
+                <div style="padding: 20px;">
+                  <%= link_to "Create On Hire Report", {:controller => "on_hire_reports", :action => 'new', hire_agreement_id: @hire_agreement.uid}, :class => 'btn btn-satgreen', data: {confirm: "Create on hire report?"} %>
+                </div>
+              <% end %>
+            </div>
+
+            <div class="box-title">
+              <h3><i class="glyphicon-notes_2"></i>Off Hire Report</h3>
+            </div>
+            <div class="box-content nopadding">
+              <% if @hire_agreement.off_hire_report %>
+                <table class="table">
+                  <tr>
+                    <td>
+                      <%= link_to '<i class="icon-search"></i> Off Hire Report'.html_safe, {:controller => "off_hire_reports", :action => 'show', :id => @hire_agreement.off_hire_report, :hire_agreement_id => @hire_agreement.uid}, :class => 'btn btn-orange' %>
+                    </td>
+                    <td class="align-center">
+                      Return Date: <%= @hire_agreement.off_hire_report.report_date_field %> <%= @hire_agreement.off_hire_report.report_time_field %>
+                    </td>
+                    <td class="align-right">
+                      Completed by <%= @hire_agreement.off_hire_report.user.name %>
+                    </td>
+                  </tr>
+                </table>
+              <% else %>
+                <div style="padding: 20px;">
+                  <%= link_to "Create Off Hire Report", {:controller => "off_hire_reports", :action => 'new', hire_agreement_id: @hire_agreement.uid}, :class => 'btn btn-satgreen', data: {confirm: "Create off hire report?"} %>
+                </div>
+              <% end %>
+            </div>
+
+            <% if @hire_agreement.off_hire_report %>
+              <div class="box-title">
+                <h3>Off Hire Jobs</h3>
+              </div>
+              <div class="box-content nopadding">
+                <table class="progress-table clean">
+                  <tbody>
+                    <tr>
+                      <% @hire_agreement.off_hire_report.off_hire_jobs.where.not(:status => 'cancelled').sort { |a,b| a.sched_time <=> b.sched_time }.each do |off_hire_job| %>
+                      <td width="<%= number_to_percentage(100/@hire_agreement.off_hire_report.off_hire_jobs.length) %>">
+                        <%= link_to "", off_hire_job, {:class => "btn #{off_hire_job_progress_class(off_hire_job.status)} progress-link", 'rel' => 'popover', 'data-trigger' => 'hover', 'data-placement' => 'bottom', 'data-original-title' => "#{off_hire_job.name} ##{off_hire_job.uid}", 'data-content' => "Scheduled Start  #{off_hire_job.sched_time_field} - #{off_hire_job.service_provider.name} - Estimated to be complete at #{off_hire_job.etc_time_field} #{off_hire_job.etc_date_field}"} %>
+                      </td>
+                      <% end %>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <table class="table table-hover table-nomargin table-bordered">
+                  <thead>
+                    <tr>
+                      <th>REF</th>
+                      <th>Name</th>
+                      <th>Service Provider</th>
+                      <th>Scheduled</th>
+                      <th>ETC</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% @off_hire_jobs.each do |off_hire_job| %>
+                      <tr>
+                        <td><span class="label label-grey"><%= off_hire_job.uid %></span></td>
+                        <td><%= off_hire_job.name %></td>
+                        <td><%= off_hire_job.service_provider.company_name_short %></td>
+                        <td><%= off_hire_job.sched_date_field %> - <b><%= off_hire_job.sched_time_field %></b></td>
+                        <td><%= off_hire_job.etc_date_field %> - <b><%= off_hire_job.etc_time_field %></b></td>
+                        <td><%= off_hire_job_status_label(off_hire_job.status) %></td>
+                        <td>
+                          <%= link_to '<i class="icon-search"></i>'.html_safe, off_hire_job, {:title => 'View', :class => 'btn', 'rel' => 'tooltip'} %>
+                          <% if can? :update, OffHireJob %>
+                            <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_off_hire_job_path(off_hire_job), {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip'} %>
+                          <% end %>
+                          <% if can? :destroy, OffHireJob %>
+                            <%= link_to '<i class="icon-ban-circle"></i>'.html_safe, off_hire_job, method: :delete, :class => 'btn', :title => 'Destroy', 'rel' => 'tooltip', data: {confirm: "You are about to permanently delete off hire job ##{off_hire_job.uid}. You cannot reverse this action. Are you sure you want to proceed?"} %>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+
+              <div style="padding: 20px 0">
+                <%= link_to '<i class="icon-plus-sign"></i> Add Off Hire Job'.html_safe, new_off_hire_job_path(:off_hire_report_id => @hire_agreement.off_hire_report.id), {:class => 'btn btn-lightgrey'} %>
+              </div>
+
+            <% end %>
+          <% end %>
+
+          <%= render 'shared/notes/list', resource: @hire_agreement %>
+
+          <% if current_user.has_role? :admin %>
+            <div class="box-title">
+              <h3><i class="icon-bullhorn"></i>Hire Agreement Activity</h3>
+            </div>
+            <div id="activity-feed" class="box-content scrollable" data-height="300" data-visible="true">
+              <% @activities.each do |activity| %>
+                <div class="activity">
+                  <div class="details">
+                    <%= render_activity activity, locals: {display: "simple"} %>
+                    <span class="time"><%= time_ago_in_words(activity.created_at) + " ago" %></span>
+                  </div>
+                  <div class="date">
+                    <%= activity.created_at.strftime("%e %b %Y, %l:%M %p") %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

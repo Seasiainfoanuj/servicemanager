@@ -1,0 +1,63 @@
+<% present(@notification) do |notification| %>
+
+  <%= form_for(notification, :html => {:id => "notification-form", :class => "form-horizontal"}) do |f| %>
+
+    <% if notification.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(notification.errors.count, "error") %> prohibited this page from being saved:</h2>
+        <ul>
+          <% notification.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="box-title">
+      <h3><i class="icon-calendar"></i>Notification Details</h3><%= manual_link('notifications') %>
+    </div>
+    <div class="box-content">
+
+      <div class="control-group">
+        <%= label_tag :invoice_company_id, "Internal Company", class: "control-label" %>
+        <div class="controls">
+          <%= f.select :invoice_company_id, options_for_select(options_for_invoice_company_names, notification.invoice_company_id), prompt: 'Select Internal Company' %>
+        </div>
+      </div>    
+
+      <div class="control-group">
+        <%= label_tag :owner_id, "Business owner", class: "control-label" %>
+        <div class="controls">
+          <%= f.select :owner_id, options_for_select(options_for_admin_users, notification.owner_id), {include_blank: 'Select owner'}, class: 'select2-me span6' %>
+        </div>
+      </div>    
+
+      <% if notification.persisted? %>
+        <%= render 'notification_parent_data', f: f %>
+      <% else %>
+        <%= render 'notification_criteria', f: f %>
+      <% end %>  
+
+      <div class="control-group">
+        <%= f.label :due_date_field, "Due Date", :class => "control-label" %>
+        <div class="controls">
+          <div class="input-append">
+            <%= f.text_field :due_date_field, {:class => "input-small datepick mask_date", 'data-rule-required' => true} %>
+            <span class='add-on'><i class='icon-calendar'></i></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :comments, "Comments", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_area :comments, {:class => "span10", 'rows' => 5} %>
+        </div>
+      </div>
+
+      <% if notification.notifiable_id.present? %>
+        <%= render 'message_and_recipients', f:f %>
+      <% end %>  
+    </div>
+  <% end %>
+<% end %>

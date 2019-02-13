@@ -1,0 +1,47 @@
+#user-guide
+  .panel.panel-default
+    .panel-body
+      h1 Service Manager User Guide
+      h2 
+        i.glyphicon-flag
+        |  Notification Types
+
+  section.definition
+    h3 Definition
+    p.main-definition Notification Types define the rules for Notifications belonging to this type.
+    dl.dl-horizontal
+      dt Resource name
+      dd A table in Service Manager (e.g. Vehicle) for which Notifications can be created. A new table can be registered when requested from the web developer. 
+      dt Event name
+      dd The name of an action to be completed before a due date.
+      dt Recurring
+      dd Is this a recurring action? If not, is is a once-off task. 
+      dt Recur Period
+      dd The interval, in days, between this event.
+      dt Email required
+      dd When emails are required, the recipients of a Notification will receive reminders on the days specified in the Notify Period. When an email is not required, is is regarded as optional. This decision is made when a Notification is created.
+      dt Upload requied
+      dd Whether or not an upload is required. When not required, an upload facility is not provided.
+      dt Resource Document Type
+      dd The name of the document type associated with the uploaded image. For example, a vehicle may contain many uploaded images and documents. One of these documents is named Registration Renewal. This tells what kind of document is uploaded for the vehicle. The Notification Type needs to know the name of the related document type so that the uploaded document for the vehicle can be created correctly.
+      dt Label colour
+      dd This specified colour will be used to provide a coloured label on Notification forms. In this way, Rego Renewals, will be recognised by this colour.
+      dt Notify periods
+      dd One or more warning periods measured in days. A notification will be sent to the specified recipients when the warning period is due.
+      dt Default message
+      dd This is the standard message sent to the recipients on each day defined by the notify periods.  
+
+  = link_to '<span class="label label-info">back to Index</span>'.html_safe, user_guides_path
+
+  section
+    h3 Examples
+    p 
+      | A vehicle can have a Notification type of 
+      span.term Rego Renewal 
+      | or 
+      span.term Inspection Certificate. 
+      | Both these events are recurring. The rules may determine that the recipients assigned to Rego Renewals are notified 40 days before and 10 days before the vehicle registration is due. When a notification is created, a notification type is selected. This set of rules will govern the behaviour of the new notification.
+
+  section.change-history
+    h4 Change History
+    p Created by Francois van der Hoven on 22 April 2016

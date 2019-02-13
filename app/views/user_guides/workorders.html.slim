@@ -1,0 +1,44 @@
+#user-guide
+  .panel.panel-default
+    .panel-body
+      h1 Service Manager User Guide
+      h2 
+        i.glyphicon-notes
+        |  Workorders
+
+  section.definition
+    h3 Definition
+    p.main-definition A workorder defines a requested vehicle service from a Service Provider to be carried out on a scheduled date and time. 
+    dl.dl-horizontal
+      dt Vehicle
+      dd The vehicle for which the service is required.
+      dt Workorder Type
+      dd The workorder classification
+      dt UID
+      dd A unique identifier for the workorder
+      dt Service Provider
+      dd The Service Provider selected to do the work.
+      dt Customer
+      dd The owner or buyer of the specified vehicle.
+      dt Manager
+      dd The responsible person to ensure the work is carried out satisfactory.
+      dt Scheduled Time
+      dd The date and time when the work should be done.
+      dt ETC
+      dd The estimated time of completion advised by the service provider.
+      dt Details
+      dd The notes detailing the work to complete.
+
+  = link_to '<span class="label label-info">back to Index</span>'.html_safe, user_guides_path
+
+  section
+    h3 Data resources associated with a workorder.
+    p Notes, Messages, Uploads, Vehicle Log, Service Provider Invoice.     
+
+  section
+    h3 Significance of workorder statuses.
+    p A Workorder is created when ...
+
+  section.change-history
+    h4 Change History
+    p Created by Francois van der Hoven on 25 April 2016

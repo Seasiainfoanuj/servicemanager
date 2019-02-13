@@ -1,0 +1,87 @@
+#notification-form {
+  .xxlarge {
+    width: 500px;
+  }
+
+  select#notification_notifiable_id {
+    width: 550px;
+  }
+  select#notification_notification_type_id {
+    width: 280px;
+  }
+
+  table.recipients {
+    width: 100%;
+    tr {
+      td:nth-of-type(1) {
+        width: 155px;
+      }
+      td:nth-of-type(2) {
+        width: 10%;
+      } 
+      td:nth-of-type(3) {
+        width: 40%;
+      }
+      td:nth-of-type(4) {
+        width: 5%;
+      }
+    }
+    tr:first-of-type {
+      line-height: 40px;
+    }
+  }
+}
+
+#notification-complete-form {
+  margin-top: 20px;
+}
+
+#notification-activity {
+  margin-top: 20px;
+  border: 2px solid #333;
+  background: #fbfbfb;
+}
+
+#notification-activity h3 {
+  margin: 0;
+  padding: 6px 10px;
+  line-height: 24px;
+  font-weight: 400;
+  background: #333;
+  color: #fff;
+  font-size: 20px;
+}
+
+#notification-activity .activities {
+  padding: 20px;
+}
+
+#notification-activity .activity {
+  height: 38px;
+  border-top: 1px dashed #DDD;
+  margin: 0;
+  padding: 10px 0;
+}
+
+#notification-activity .activity .thumbnail {
+  float: left;
+  margin-right: 10px;
+}
+
+#notification-activity .activity .details {
+  float: left;
+  line-height: 18px;
+}
+
+#notification-activity .activity .time {
+  font-weight: bold;
+  display: block;
+}
+
+#notification-activity .activity .date {
+  float: right;
+  line-height: 38px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #BBB;
+}

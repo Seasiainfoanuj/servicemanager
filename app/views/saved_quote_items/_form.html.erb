@@ -1,0 +1,49 @@
+<%= form_for(@saved_quote_item, :html => {:class => "form-horizontal form-validate", :id => "saved_quote_item_form"}) do |f| %>
+  <% if @saved_quote_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@saved_quote_item.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @saved_quote_item.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="box-title">
+    <h3><i class="glyphicon-notes"></i>Quote Item Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :name, "Name", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name, :class => "input-xlarge", 'data-rule-required' => true %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :description, "Description", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_area :description, {:class => "span10", 'rows' => 5, 'data-rule-required' => true} %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :cost, "Cost", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :cost, :class => "input-medium", 'data-rule-required' => true %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :quantity, "Quantity", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :quantity, :class => "input-small", 'data-rule-positiveNumber' => true %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :tax_id, "Tax", :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select :tax_id, Tax.all, :id, :name, {prompt: true}, :class=>'select2-me input-medium', 'data-rule-required' => true %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+  </div>
+<% end %>

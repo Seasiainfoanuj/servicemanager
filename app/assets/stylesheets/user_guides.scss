@@ -1,0 +1,134 @@
+#user-guide {
+  margin: 20px auto;
+  max-width: 840px;
+  font-size: 14px;
+  background-color: #FFFFF0;
+  padding-left: 25px;
+  border-left: 2px solid #9CC7B3;
+  border-right: 2px solid #E4FF94;
+
+  .dl-horizontal dt {
+    width: 210px;
+  }
+  .dl-horizontal dd {
+    margin-left: 225px;
+    margin-bottom: 5px;
+  }
+
+  .panel {
+    padding-top: 10px;
+    padding-bottom: 12px;
+  }
+  .panel-default {
+    background-color: #B0E0CA;
+    margin-bottom: 15px;
+    margin-left: -25px;
+  }
+  .panel-body {
+    h2 {
+      text-align: center;
+    }
+  }
+
+  h1 {
+    text-align: center;
+  } 
+
+  h2, h3 {
+    margin-top: 20px;
+    i {
+      margin-right: 20px;
+    }
+  }
+
+  h3 {
+    font-size: 22.5px;
+  }
+
+  dd {
+    p {
+      margin: 0 0 2px;
+    }
+    span.table-name {
+      font-family: courier;
+      color: #5d5d5d;
+    }
+  }
+
+  section {
+    font-family: verdana;
+    padding-left: 10px;
+    padding-bottom: 10px;
+
+    span.glossary {
+      font-weight: 800;
+      font-family: courier;
+      color: #15883A;
+    }
+
+    span.term {
+      font-family: courier;
+      color: #BA4919;
+    }
+
+    li {
+      margin: 0;
+      padding: 0 20px 4px 50px;
+      list-style: none;
+      background: asset-url('listitem.png') no-repeat 0 2px;
+    }
+
+    p {
+      padding-right: 20px;
+    }
+    p.indent {
+      margin-left: 25px;
+    }
+  }
+
+  section.definition {
+    font-family: times;
+    margin: 10px 20px 10px 0;
+    background-color: #BAE0E6;    
+    padding: 2px 20px;
+    font-size: 16px;
+    border-radius: 10px;
+  }
+
+  section.change-history, section.corrections {
+    background-color: #B0E0CA;    
+    padding-top: 10px;    
+    padding-bottom: 10px;  
+    font-size: 0.9em;
+    margin-top: 20px;
+    margin-left: -25px;
+    h4 {
+      text-align: center;
+      padding-bottom: 10px;
+    }  
+  }
+
+  p.main-definition {
+    line-height: 150%;
+  }
+
+  .index-page {
+    a {
+      text-decoration: none;
+    }
+    section li a:hover {
+      font-weight: 600;
+    }
+  }
+}
+.manual {
+  border-radius: 20%;
+  margin: 2px 20px 2px 0;
+  background-color: white;
+  display: inline;
+  padding: 0 4px;
+  float: right;
+  img {
+    width: 25px;
+  }
+}

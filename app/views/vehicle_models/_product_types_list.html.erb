@@ -1,0 +1,30 @@
+<% present(@vehicle_model) do |vehicle_model| %>
+  <div class="box box-condensed box-color box-bordered">
+    <div class="box-title">
+      <h3><i class="glyphicon-link"></i>Associate product types with vehicle model</h3>
+    </div>
+    <div class="box-content nopadding">
+      <table class="table table-hover table-nomargin dataTable dataTable-tools dataTable-colvis dataTable-scroll-x table-bordered">
+        <thead>
+          <tr>
+            <th>Hire Product Type</th>
+            <th width="100">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% HireProductType.all.each do |type| %>
+            <tr>
+              <% if vehicle_model.includes_product_type?(type) %>
+                <td><b><%= type.name %></b></td>
+                <td><%= link_to 'Remove Product Type', remove_product_type_vehicle_model_path(vehicle_model, hire_product_type_id: type.id), method: :patch %></td>
+              <% else %>
+                <td><%= type.name %></td>
+                <td><%= link_to 'Add Product Type', add_product_type_vehicle_model_path(vehicle_model, hire_product_type_id: type.id), method: :patch %></td>
+              <% end %>  
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>    
+  </div>
+<% end %>

@@ -1,0 +1,34 @@
+.row-fluid
+  .span12
+    .box.box-condensed.box-color.box-bordered
+      .box-title
+        h3
+          i.glyphicon-camera
+            |  Photos
+      .box-content.nopadding
+        table#photos-table.table.table-hover.table-nomargin.dataTable.dataTable-tools.dataTable-scroll-x.table-bordered
+          thead
+            tr
+              th style="width: 120px;" Image
+              th Name
+              th Description
+              th style="width: 100px;" Actions
+
+          tbody
+            - @photos.each do |photo| 
+              tr
+                td 
+                  a href = photo.image.url(:original) target="_blank"
+                    = image_tag photo.image.url(:thumb)
+                td = photo.name
+                td = photo.description
+                td
+                  - if can? :update, Image
+                    - if @subject.is_a? Vehicle
+                      = link_to edit_vehicle_image_path(@subject.id,photo.id), { title: 'Edit', class: 'btn', 'rel' => 'tooltip' } do
+                        i.icon-edit
+
+                  - if can? :destroy, Image
+                    = link_to vehicle_image_path(@subject, photo), method: :delete, data: {confirm: "You are about to permanently delete this image. You cannot reverse this action. Are you sure you want to proceed?"}, title: 'Delete', class: 'btn', 'rel' => 'tooltip' do
+                      i.icon-trash
+

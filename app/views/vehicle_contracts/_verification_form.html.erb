@@ -1,0 +1,7 @@
+<div id="vehicle-contract-verification-form">
+  <p>To the manager of the contract:</p>
+  <h4>Would you like to verify the customer details for this contract?</h4>
+  <%= form_for @vehicle_contract, :url => verify_customer_info_vehicle_contract_path(@vehicle_contract) do |f| %>
+    <%= f.submit 'Verify', {:class => "btn btn-green"} %>
+  <% end %>
+</div>

@@ -1,0 +1,61 @@
+doctype html
+html
+  head
+    title Service Manager User Guide
+    meta name="keywords" content="quote item types"
+    meta name="author" content="Francois van der Hoven"
+
+  body
+
+    = render(:partial => 'layouts/notice')
+
+    #user-guide
+      .index-page
+        .panel.panel-default
+          .panel-body
+            h1 Service Manager User Guide
+
+        section
+          h3 Concepts and Terms
+          ol
+            li
+              = link_to 'Definitions of Terms', user_guides_terms_path
+
+        section
+          h3 Topics
+          ol
+            li
+              = link_to 'Quotes', '/user_guides/quotes'
+            li
+              = link_to 'Quote Item Types', '/user_guides/quote_item_types'
+            li
+              = link_to 'Notifications', '/user_guides/notifications'
+            li
+              = link_to 'Notification Types', '/user_guides/notification_types'
+            li
+              = link_to 'Workorder Types', '/user_guides/workorder_types'
+            li
+              = link_to 'Workorders', '/user_guides/workorders'
+            li
+              = link_to 'Vehicles', '/user_guides/vehicles'
+            li
+              = link_to 'Enquiries', '/user_guides/enquiries'
+            li
+              = link_to 'Hire Enquiries', '/user_guides/hire_enquiries' 
+            li
+              = link_to 'Vehicle Models', '/user_guides/vehicle_models'
+            li
+              = link_to 'Hire Add-ons', '/user_guides/hire_addons'
+            li
+              = link_to 'Clients', '/user_guides/clients' 
+            li
+              = link_to 'Hire Quotes', '/user_guides/hire_quotes'
+            li
+              = link_to 'Hire Quote Vehicles', '/user_guides/hire_quote_vehicles'
+            li
+              = link_to 'Hire Fees', '/user_guides/hire_fees'
+
+        section.corrections
+          h3 Corrections and Additions
+          p Please email a detailed description of proposed changes to webmaster@bus4x4.com.au
+

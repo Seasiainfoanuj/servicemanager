@@ -1,0 +1,112 @@
+<% if @build_specification.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@build_specification.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+    <ul>
+    <% @build_specification.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+<div class="box-title">
+  <h3><i class="glyphicon-qrcode"></i>Build Specification Details</h3>
+</div>
+<div class="box-content">
+  <%= f.hidden_field :build_id, :value => @build.id, :id => "build-id" %>
+
+  <div class="control-group">
+    <%= f.label :swing_type, "Swing type", class: "control-label" %>
+    <% BuildSpecification::SWING_TYPES.each_with_index do |type, inx| %>
+      <div class="controls">
+        <div class="check-line">
+          <%= radio_button(:build_specification, :swing_type, inx, {:class => "icheck-me", "data-skin" => "square", "data-color" => "orange", checked: inx == @build_specification.swing_type}) %>
+          <%= f.label "swing_type_#{type}".to_sym, type, :class => "inline" %>
+        </div>  
+      </div>
+    <% end %>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :paint, "Paint", :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_area :paint, {id: 'paint', class: "editor span12", 'rows' => 3} %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :heating_source, "Heating", class: "control-label" %>
+    <% BuildSpecification::HEATING_SOURCES.each_with_index do |heating, inx| %>
+      <div class="controls">
+        <div class="check-line">
+          <%= radio_button(:build_specification, :heating_source, inx, {:class => "icheck-me", "data-skin" => "square", "data-color" => "orange", checked: inx == @build_specification.heating_source}) %>
+          <%= f.label "heating_source_#{heating}".to_sym, heating, class: "inline" %>
+        </div>  
+      </div>
+    <% end %>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :total_seat_count, "Total seats", :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :total_seat_count, class: "input-large", style: "width: 100px;" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :seating_type, "Seating type", class: "control-label" %>
+    <% BuildSpecification::SEATING_TYPES.each_with_index do |type, inx| %>
+      <div class="controls">
+        <div class="check-line">
+          <%= radio_button(:build_specification, :seating_type, inx, {:class => "icheck-me", "data-skin" => "square", "data-color" => "orange", checked: inx == @build_specification.seating_type}) %>
+          <%= f.label "seating_type_#{type}".to_sym, type, class: "inline" %>
+        </div>  
+      </div>
+    <% end %>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :other_seating, "Other seating details", :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_area :other_seating, {id: 'other-seating', class: "editor span12", 'rows' => 3} %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :state_sign, "School bus signs", class: "control-label" %>
+    <% BuildSpecification::STATE_SIGNS.each_with_index do |type, inx| %>
+      <div class="controls">
+        <div class="check-line">
+          <%= radio_button(:build_specification, :state_sign, inx, {:class => "icheck-me", "data-skin" => "square", "data-color" => "orange", checked: inx == @build_specification.state_sign}) %>
+          <%= f.label "state_sign_type_#{type}".to_sym, type, class: "inline" %>
+        </div>  
+      </div>
+    <% end %>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :surveillance_system, "Surveillance System", :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_area :surveillance_system, {id: 'surveillance-system', class: "editor span12", 'rows' => 3} %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :lift_up_wheel_arches, "Lift up wheel arches", :class => "control-label" %>
+    <div class="controls">
+      <div class="check-line">
+        <%= f.check_box :lift_up_wheel_arches, {:class => "icheck-me", "data-skin" => "square", "data-color" => "blue"} %>
+        <%= label_tag "On all airbag models", nil, :class => "control-label" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :comments, "Comments", :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_area :comments, {class: "editor span12", 'rows' => 3} %>
+    </div>
+  </div>
+
+</div>
+

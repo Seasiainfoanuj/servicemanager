@@ -1,0 +1,590 @@
+// Place all the styles related to the Quotes controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.clear {
+  clear: both;
+}
+
+.cost {
+  width: 85px !important ;
+}
+
+.page-container {
+  width: 1004px;
+  margin: 0 auto 100px;
+}
+
+.page-container .page-header {
+  border: none;
+}
+
+.a4-page {
+  min-height: 1260px;
+  padding: 20px;
+  border: 2px solid #ddd;
+}
+
+#title-page {
+  padding: 0;
+  margin-bottom: 20px;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+#title-page .title-page-left {
+  width: 720px;
+  float: left;
+}
+
+#title-page .title-page-right {
+  height: 1220px;
+  width: 240px;
+  float: left;
+  padding: 20px;
+  background: #333;
+  text-align: center;
+  color: #fff;
+}
+
+#title-page .title-page-right hr {
+  border-top: 2px solid #888;
+  border-bottom: none;
+}
+
+#title-page .title-page-logo {
+  margin: 20px 20px 25px;
+}
+
+#title-page .title-page-image-top,
+#title-page .title-page-image-bottom {
+  margin: 0 20px 20px;
+  width: 680px;
+}
+
+#title-page .title-page-title {
+  font-size: 21px;
+  line-height: 1.8;
+  text-align: center;
+  margin: 20px 10px;
+}
+
+#title-page .title-page-recipient {
+  padding: 20px;
+  border-top: 1px dotted #ddd;
+  margin: 0 20px 0 30px;
+  font-size: 15px;
+}
+
+#title-page .title-page-recipient address {
+  margin: 4px 0;
+}
+
+#title-page .title-page-right-title-large {
+  display: block;
+  padding: 100px 20px 90px;
+  font-weight: bold;
+}
+
+#title-page .title-page-right-title {
+  display: block;
+  padding: 10px;
+  font-weight: bold;
+}
+
+#title-page .title-page-right-address {
+  margin-top: 120px;
+}
+
+#title-page .title-page-right hr {
+  width: 80px;
+  margin: 10px auto;
+}
+
+#cover-letter {
+  padding: 40px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+#cover-letter .cover-letter-logo {
+  margin: 20px 20px 25px;
+}
+
+#cover-letter .cover-letter-from-address {
+  margin: 30px 20px -50px;
+  text-align: right;
+}
+
+#cover-letter .cover-letter-date {
+  margin-bottom: 20px;
+}
+
+#cover-letter .cover-letter-recipient {
+  margin-bottom: 20px;
+}
+
+#cover-letter .cover-letter-recipient address {
+  margin: 0;
+}
+
+#cover-letter .cover-letter-title {
+  margin: 40px 0;
+  font-weight: 900;
+  text-align: center;
+  font-size: 16px;
+}
+
+#quote_cover_letter_text {
+  min-height: 400px;
+}
+
+#summary-page {
+  margin-bottom: 20px;
+}
+
+#quote.a4-page {
+  .box {
+    min-width: 940px;
+    min-height: 1000px;
+    border: 2px solid #ddd;
+  }
+  table td {
+    vertical-align: top;
+  }
+  .right {
+    text-align: right;
+  }
+  .center {
+    text-align: center;
+  }
+
+  .invoice-info {
+    margin-bottom: 20px;
+    .invoice-name {
+      line-height: 1.2;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 40px;
+
+      .invoice-logo {
+        display: inline-block;
+      }
+      #status-box {
+        display: inline-block;
+        width: 300px;
+        margin-left: 200px;
+        .label {
+          font-family: 'Ledger', serif;
+          text-transform: uppercase;
+          font-size: 25px;
+          padding: 10px;
+          behavior:url(-ms-transform.htc);
+            /* Firefox */
+            -moz-transform:rotate(-5deg);
+            /* Safari and Chrome */
+            -webkit-transform:rotate(-5deg);
+        }
+      }
+      .quote-reference {
+        float: right;
+      }
+    }
+    .invoice-from {
+      float: left;
+      margin-bottom: 30px;
+      margin-left: 20px;
+      display: inline-block;
+    }
+    .invoice-to {
+      margin-left: 100px;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .invoice-infos {
+      display: inline-block;
+      float: right;
+      table {
+        th {
+          font-weight: bold;
+          background: none;
+        }
+        th, td {
+          border-top: 1px dotted #DDD;
+        }
+      }
+    }
+  }
+}
+
+/*
+.invoice-info .invoice-from span, .invoice-info .invoice-to span {
+  color: #888;
+  display: block;
+}
+.invoice-info .invoice-infos {
+  float: right;
+  margin-right: 20px;
+}
+*/
+
+#quote_form table .position,
+#quote table .position {
+  width: 15px;
+  padding-left: 0;
+}
+
+#quote_form table .position .handle {
+  cursor: move;
+  font-size: 16px;
+  color: #aaa;
+}
+
+#quote_form table .name,
+#quote table .name { width: 180px; }
+
+#quote_form table td.name { padding-left: 0; }
+
+#quote_form table .description,
+#quote table .description {}
+
+#quote_form table .cost,
+#quote table .cost { width: 80px; }
+
+#quote_form table .buy_price,
+#quote_form .buy_price { width: 80px; }
+
+#quote_form table .qty,
+#quote table .qty { width: 50px; }
+
+#quote_form table .tax,
+#quote table .tax { width: 50px; }
+
+#quote_form table .line-total,
+#quote table .line-total { width: 130px; padding-left: 0; }
+
+#quote_form .hide-costs .cost input,
+#quote_form .hide-costs .line-total { color: #aaa; }
+
+#quote_form .hide_all_costs_handle.icon-eye-open,
+#quote_form .hide_cost_handle.icon-eye-open { color: #000; }
+
+#quote_form .hide_all_costs_handle {
+  cursor: pointer;
+  padding: 4px 0 0;
+  float: left;
+  color: #888;
+}
+
+#quote_form .hide_cost_handle {
+  cursor: pointer;
+  padding: 8px 0;
+  float: left;
+  color: #888;
+}
+
+#quote_form .line-total .amount {
+  line-height: 30px;
+  font-size: 14px;
+}
+
+.line-total .remove_fields_box {
+  line-height: 30px;
+}
+
+#quote_form table .tax .tax-select {
+  width: 75px;
+}
+
+#quote_form textarea {
+  background: #fff
+}
+
+#quote_form #po-upload-box { width: 50%; text-align: right; }
+#quote_form #po-upload-box label { font-size: 11px; display: inline; }
+#quote_form #po-upload-box input { margin: 0; }
+#quote_form #po_upload_link {
+  display: block;
+  max-width: 180px;
+  float: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+#quote_form #quote_po_upload { width: 180px; }
+
+#quote-po-form {
+  margin: 20px 0;
+  padding: 10px 20px 0;
+  border: 2px solid #ddd;
+}
+
+#quote-specification-sheet-show {
+  border: 2px solid #333;
+  margin-top: 20px;
+}
+
+#quote-specification-sheet-show h3 {
+  margin: 0;
+  padding: 6px 10px;
+  line-height: 24px;
+  font-weight: 400;
+  background: #333;
+  color: #fff;
+  font-size: 20px;
+}
+
+#quote-specification-sheet-show h3 i {
+  margin-right: 5px;
+}
+
+#quote-specification-sheet-show table {
+  margin-bottom: 0;
+}
+
+#quote-attachments {
+  border: 2px solid #333;
+  margin-top: 20px;
+}
+
+#quote-attachments h3 {
+  margin: 0;
+  padding: 6px 10px;
+  line-height: 24px;
+  font-weight: 400;
+  background: #333;
+  color: #fff;
+  font-size: 20px;
+}
+
+#quote-attachments h3 i {
+  margin-right: 5px;
+}
+
+#quote-attachments table {
+  margin-bottom: 0;
+}
+
+#quote-activity {
+  margin-top: 20px;
+  border: 2px solid #333;
+  background: #fbfbfb;
+}
+
+#quote-activity h3 {
+  margin: 0;
+  padding: 6px 10px;
+  line-height: 24px;
+  font-weight: 400;
+  background: #333;
+  color: #fff;
+  font-size: 20px;
+}
+
+#quote-activity .activities {
+  padding: 20px;
+}
+
+#quote-activity .activity {
+  height: 38px;
+  border-top: 1px dashed #DDD;
+  margin: 0;
+  padding: 10px 0;
+}
+
+#quote-activity .activity .thumbnail {
+  float: left;
+  margin-right: 10px;
+}
+
+#quote-activity .activity .details {
+  float: left;
+  line-height: 18px;
+}
+
+#quote-activity .activity .time {
+  font-weight: bold;
+  display: block;
+}
+
+#quote-activity .activity .date {
+  float: right;
+  line-height: 38px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #BBB;
+}
+
+.modal-body .chosen-single {
+  width: 50px;
+}
+.modal-body .chosen-drop {
+  display: block;
+  width: 60px !important;
+}
+.modal-body .chosen-results {
+  background: #fff;
+  width: 50px;
+}
+
+.pagination {
+  text-align: center;
+  display: block;
+  font-size: 1.2em;
+  font-weight: 400;
+
+  em.current {
+    font-weight: 800;
+    font-size: 1.1em;
+    color: #095559;
+  }
+  a {
+    margin-left: 2px;
+  }
+  a:not([class*="page"]) {
+    padding: 2px 4px;
+    background: #B0E5E8;
+  }
+  a.previous_page, a.next_page {
+    color: #095559;
+  }
+  a:hover {
+    color: orange;
+    text-decoration: none;
+  }
+}
+
+.box-content .quotes {
+  padding-top: 10px;
+}
+
+table#quotes-table {
+  padding: 10px;
+  thead tr {
+    th {
+      font-weight: 600;
+    }
+    th:nth-of-type(5) { text-align: middle; }
+  }
+  tr:hover {
+    background: #E9FFF9;
+  }
+  tbody tr {
+    td:nth-of-type(1) { width: 8%;}
+    td:nth-of-type(2) { width: 8%;}
+    td:nth-of-type(3) { width: 30%;}
+    td:nth-of-type(4) { 
+      width: 8%;
+      text-align: middle;
+    }
+    td:nth-of-type(5) { width: 8%;}
+    td:nth-of-type(6) { width: 22%;}
+    td:nth-of-type(7) { width: 16%;}
+  }
+  a.action-link {
+    margin-left: 3px;
+  }
+} 
+
+table#quotes-table-footer {
+  width: 100%;
+  background-color: #EEE;
+  tr th { 
+    padding-top: 5px; padding-bottom: 5px;
+    height: 20px;
+  }
+}
+
+form#quotes-search {
+  display: inline-block;
+  background-color: #B4D7D9;
+  padding: 5px 10px 10px;
+  margin: 0 auto;
+  border-bottom: 1px solid #88B8BA;
+
+  .control-group {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 0;
+  }
+
+  .control-group.per-page {
+    label {
+      margin-left: 8px;
+    }
+    select {
+      width: 50px;
+    }
+  }
+
+  label { 
+    display: inline-block;
+    vertical-align: top; 
+    padding-top: 4px;
+  }
+  .customer {
+    width: 150px;
+  }
+  label.select {
+    margin-left: 10px;
+  }
+  label.check {
+    vertical-align: top;
+    padding-bottom: 4px;
+  }
+  input.search-field { 
+    width: 110px;
+    display: inline-block; 
+    background: white;
+  }
+  input.check {
+    margin-bottom: 12px;
+  }
+  select {
+    margin-left: 8px;
+    margin-right: 10px;
+    width: 160px;
+  }
+  select#quote_search_direction {
+    width: 100px;
+  }
+  .control-group.tags-select {
+    margin-left: 8px;
+    margin-right: 10px;
+    
+    .select2-container {
+      width: 200px;
+      margin-right: 10px;
+      margin-bottom: 5px;
+    }
+  }
+
+  #add-tag-name, #remove-tag-name {
+    padding: 3px 6px;
+    font-size: 1.8em;
+    vertical-align: top;
+    margin-bottom: 10px;
+  }
+  #tag_ids {
+    width: 200px;
+  }
+
+  section.buttons .control-group {
+    text-align: center;
+    display: block;
+
+    input[type='submit'] {
+      width: 100px;
+      vertical-align: top;
+      margin-right: 14px;
+      display: inline-block;
+    }
+
+    button[type='submit'] {
+      width: 100px;
+      display: inline-block;
+    }
+  }
+}

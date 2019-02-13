@@ -1,0 +1,52 @@
+<%= form_for(@fee_type, :html => {:id => "fee-type-form", :class => "form-horizontal"}) do |f| %>
+  <% if @fee_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@fee_type.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+        <% @fee_type.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="box-title">
+    <h3><i class="icon-tag"></i>Fee Type Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :name, "Fee Type", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name, :class => "input-large" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= label_tag :category, "Category", class: "control-label" %>
+      <div class="controls">
+        <%= f.select :category, options_for_select(FeeType::CATEGORIES.collect { |cat| [cat.humanize.titleize, cat] }, @fee_type.category), prompt: 'Select Category' %>
+      </div>
+    </div>    
+
+    <div class="control-group">
+      <%= label_tag :charge_unit, "Charge Unit", class: "control-label" %>
+      <div class="controls">
+        <%= f.select :charge_unit, options_for_select(FeeType::CHARGE_UNITS.collect { |unit| [unit.humanize.titleize, unit] }, @fee_type.charge_unit), prompt: 'Select Charge Unit' %>
+      </div>
+    </div>    
+
+    <%= f.fields_for :standard_fee do |builder| %>
+      <%= builder.hidden_field :chargeable_id %>
+      <%= builder.hidden_field :chargeable_type %>
+      <%= builder.hidden_field :fee_type_id %>
+
+      <div class="control-group">
+        <%= builder.label :fee, "Standard Fee", :class => "control-label" %>
+        <div class="controls">
+          <%= builder.text_field :fee, :class => "input-medium" %>
+        </div>
+      </div>
+
+    <% end %>
+  </div>
+<% end %>

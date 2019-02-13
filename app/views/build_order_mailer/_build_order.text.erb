@@ -1,0 +1,63 @@
+Build Order Ref# <%= @build_order.uid %>
+-----------------------------------------
+Ref Name: <%= @build_order.name %>
+Status: <%= @build_order.status.capitalize %>
+
+Scheduled: <%= @build_order.sched_date_field %> - <%= @build_order.sched_time_field %>
+Est Complete: <%= @build_order.etc_date_field %> - <%= @build_order.etc_time_field %>
+
+<% if @build_order.invoice_company %>
+----------------------
+Invoice To:
+<%= @build_order.invoice_company.name %>
+<% "ABN: #{@build_order.invoice_company.abn}" if @build_order.invoice_company.abn.present? %>
+<% "ACN: #{@build_order.invoice_company.acn}" if @build_order.invoice_company.acn.present? %>
+<% "Phone: #{@build_order.invoice_company.phone}" if @build_order.invoice_company.phone.present? %>
+<% "Fax: #{@build_order.invoice_company.fax}" if @build_order.invoice_company.fax.present? %>
+<% if @build_order.invoice_company.address_line_1.present? || @build_order.invoice_company.address_line_2.present? || @build_order.invoice_company.suburb.present? || @build_order.invoice_company.state.present? || @build_order.invoice_company.postcode.present? || @build_order.invoice_company.country.present? %>
+
+Address:
+<%= "#{@build_order.invoice_company.address_line_1}" if @build_order.invoice_company.address_line_1.present? %>
+<%= "#{@build_order.invoice_company.address_line_2}" if @build_order.invoice_company.address_line_2.present? %>
+<%= "#{@build_order.invoice_company.suburb}, " if @build_order.invoice_company.suburb.present? %><%= "#{@build_order.invoice_company.state} " if @build_order.invoice_company.state.present? %><%= "#{@build_order.invoice_company.postcode} " if @build_order.invoice_company.postcode.present? %>
+<%= "#{@build_order.invoice_company.country}" if @build_order.invoice_company.country.present? %>
+<% end %>
+<% end %>
+
+----------------------
+Vehicle Details:
+<%= @build.vehicle.name %> <%= "##{@build.vehicle.number}" if @build.vehicle.number %>
+<%= "Vin: #{@build.vehicle.vin_number}" unless @build.vehicle.vin_number.blank? %>
+<%= "Rego No: #{@build.vehicle.rego_number}" unless @build.vehicle.rego_number.blank? %>
+
+<% unless @user == @build_order.service_provider %>
+----------------------
+Service Provider:
+<%= @build_order.service_provider.company_name %>
+E: <%= @build_order.service_provider.email %>
+<% unless @build_order.service_provider.phone.blank? %>
+P: <%= @build_order.service_provider.phone %>
+<% end %>
+<% unless @build_order.service_provider.mobile.blank? %>
+M: <%= @build_order.service_provider.mobile %>
+<% end %>
+<% end %>
+<% if @build_order.manager.present? %>
+----------------------
+Manager:
+<% unless @build_order.manager.name == @build_order.manager.email %>
+<%= @build_order.manager.name %>
+<% end %>
+E: <%= @build_order.manager.email %>
+<% if @build_order.manager.phone.present? %>
+P: <%= @build_order.manager.phone %>
+<% end %>
+<% if @build_order.manager.mobile.present? %>
+M: <%= @build_order.manager.mobile %>
+<% end %>
+<% end %>
+
+<% unless @build_order.build_order_uploads.empty? %>
+----------------------
+This build order has file attachments. You can login to view them here: <%= build_order_url(@build_order) %>
+<% end %>

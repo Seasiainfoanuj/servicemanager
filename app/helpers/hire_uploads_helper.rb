@@ -1,0 +1,2 @@
+module HireUploadsHelper
+end

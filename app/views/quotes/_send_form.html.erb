@@ -1,0 +1,37 @@
+<% present(@quote) do |quote| %>
+  <div id="send-quote-model" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel">Send Quote</h3>
+    </div>
+    <div class="modal-body">
+      <div style="padding: 20px; background: #fbfbfb; border: 1px dashed #DDDDDD;">
+        <div class="row-fluid">
+          <div class="control-group">
+            <p><b>Send to:</b> <%= quote.customer_email %></p>
+          </div>
+          <div class="control-group">
+            <label for="email_message" id="message_label" class="control-label"><b>Optional Message</b></label>
+            <div class="controls">
+              <textarea name="email_message" id="email_message" class="span12" rows="5"></textarea>
+            </div>
+          </div>
+          <div>
+            To access your quote from <%= quote.dealer_name %>, go to: <br>
+            <%= quote_url(quote) %>
+            <br>
+            <br>
+            Best Regards,
+            <br><br>
+            <%= "#{quote.manager_name} <br>".html_safe if quote.manager %>
+            <%= quote.dealer_name %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-grey" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      <%= link_to "Send", {:action => 'send_quote', :quote_id => quote.id}, {:class => 'btn btn-satblue', :id => 'email_send_button'} %>
+    </div>
+  </div>
+<% end %>

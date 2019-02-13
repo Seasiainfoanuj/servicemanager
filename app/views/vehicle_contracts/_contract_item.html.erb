@@ -1,0 +1,14 @@
+<tr>
+  <td><%= item[:quote_item_type].humanize.upcase unless hide_name %></td>
+  <td>
+    <% if ["Vehicle Registration", "CTP Insurance", "Stamp duty"].exclude?(item[:item_name]) %>
+      <b><%= item[:item_name] %><%= " (* #{item[:quantity]})" if item[:quantity] > 1 %></b>
+    <% end %>  
+    <%= simple_format h item[:description] %>
+  </td>
+  <% if item[:hidden] %>
+    <td>**package**</td>
+  <% else %>
+    <td><%= number_to_currency((item[:unit_cost] * item[:quantity] / 100), precision: 2) %></td>
+  <% end %>
+</tr>

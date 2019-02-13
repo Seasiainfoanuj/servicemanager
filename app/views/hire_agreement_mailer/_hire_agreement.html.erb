@@ -1,0 +1,49 @@
+<table border="0" cellpadding="3" cellspacing="0" class="email_hire_agreement_details">
+  <tr>
+    <td colspan="2"><h3>Hire Agreement <%= @hire_agreement.uid %>:</h3></td>
+  </tr>
+  <tr>
+    <td>Status:</td>
+    <td><%= @hire_agreement.status.capitalize %></td>
+  </tr>
+
+  <% if @user == @hire_agreement.manager %>
+    <tr>
+      <td colspan="2"><h3>Company:</h3></td>
+    </tr>
+    <%= render 'shared/mailer/invoice_company_details', object: @hire_agreement %>
+  <% end %>
+
+  <%= render 'shared/mailer/vehicle_details', object: @hire_agreement %> 
+
+  <% if @hire_agreement.customer.present? %>
+    <% unless @user == @hire_agreement.customer %>
+      <%= render 'shared/mailer/customer_details', object: @hire_agreement %>
+    <% end %>
+  <% end %>
+
+  <% if @hire_agreement.manager.present? %>
+    <%= render 'shared/mailer/manager_details', object: @hire_agreement %>
+  <% end %>
+
+  <tr>
+    <td colspan="2"><h3>Hire Schedule Details:</h3></td>
+  </tr>
+  <tr>
+    <td>Pickup:</td>
+    <td><%= @hire_agreement.pickup_datetime %> at <%= @hire_agreement.pickup_location %></td>
+  </tr>
+  <tr>
+    <td>Return:</td>
+    <td><%= @hire_agreement.return_datetime %> at <%= @hire_agreement.return_location %></td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      Would you perhaps like to make changes to this arrangement? Please contact
+      <%= @hire_agreement.manager.name %> at <%= BUS4X4_CONTACT_NUMBER %> and quote 
+      Hire Agreement number <%= @hire_agreement.uid %>.
+    </td>
+  </tr>
+</table>
+<br />
+

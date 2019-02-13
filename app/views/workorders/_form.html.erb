@@ -1,0 +1,259 @@
+<%= form_for(@workorder, :html => {:class => "form-horizontal form-validate", :id => "workorder-form", :multipart => true}) do |f| %>
+
+  <% if @workorder.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@workorder.errors.count, "error") %> prohibited this page from being saved:</h2>
+      <ul>
+      <% @workorder.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="box-title">
+    <h3><i class="glyphicon-car"></i>Vehicle Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :vehicle_id, "Vehicle", :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select :vehicle_id, Vehicle.all, :id, :ref_name, {prompt: true}, {:class=>'select2-me span8', 'data-rule-required' => true} %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+  </div>
+  <% unless current_user.has_role? :service_provider %>
+    <div class="box-title">
+      <h3><i class="glyphicon-group" style="position:relative; top:-3px;"></i>Contact Information</h3>
+    </div>
+    <div class="box-content">
+      <div class="control-group">
+        <%= f.label :service_provider_id, "Service Provider", :class => "control-label" %>
+        <div class="controls">
+          <%= f.collection_select :service_provider_id, User.filter_by_service_provider( {include_admin: true} ), :id, :company_name, {prompt: true}, {:id => 'supplier_select', :class=>'select2-me span6', 'data-rule-required' => true} %>
+          <a href="" id="supplier_details_link" class="btn btn-mini" style="margin:3px;"> <i class="icon-search"></i></a>
+          <div style="clear:both"></div>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :customer_id, "Customer", :class => "control-label" %>
+        <div class="controls">
+          <%= f.collection_select :customer_id, User.filter_by_customer, :id, :company_name, {prompt: true}, {:id => 'customer_select', :class=>'select2-me span6'} %>
+          <a href="" id="customer_details_link" class="btn btn-mini" style="margin:3px;"> <i class="icon-search"></i></a>
+          <div style="clear:both"></div>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :manager_id, "Assign to", :class => "control-label" %>
+        <div class="controls">
+          <%= f.collection_select :manager_id, User.filter_by_admin, :id, :name, {prompt: true}, {:id => 'admin_select', :class=>'select2-me span6'} %>
+          <a href="" id="admin_details_link" class="btn btn-mini" style="margin:3px;"> <i class="icon-search"></i></a>
+          <div style="clear:both"></div>
+        </div>
+      </div>
+
+      <hr>
+
+      <%= f.fields_for :job_subscribers do |builder| %>
+        <%= render 'job_subscriber_fields', f: builder %>
+      <% end %>
+
+      <div id="subscriber_fields_anchor"></div>
+
+      <%= link_to_add_fields '<i class="icon-plus-sign"></i> Add Subscriber', f, :job_subscribers %>
+    </div>
+  <% end %>
+
+  <div class="box-title">
+    <h3><i class="glyphicon-notes_2"></i>Invoice To</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :invoice_company_id, "Company", :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select :invoice_company_id, InvoiceCompany.all, :id, :name, {prompt: true}, {:class=>'select2-me span6', 'data-rule-required' => true} %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+  </div>
+
+  <%= f.fields_for :sp_invoice do |builder| %>
+    <div class="box-title">
+      <h3><i class="glyphicon-notes_2"></i>Service Provider Invoice</h3>
+    </div>
+    <div class="box-content">
+      <div class="control-group">
+        <%= builder.label :invoice_number, "Invoice Number", :class => "control-label" %>
+        <div class="controls">
+          <%= builder.text_field :invoice_number, :class => "input-small" %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= builder.label :upload, "Invoice Upload", :class => "control-label" %>
+        <div class="controls" style="padding: 5px;">
+          <% if @workorder.sp_invoice && @workorder.sp_invoice.upload.present? %>
+            <%= link_to @workorder.sp_invoice.upload_file_name, @workorder.sp_invoice.upload.url(:original) %>
+            <div class="upload-box">
+              <%= builder.check_box :delete_upload %>
+              <%= builder.label :delete_upload, "remove" %>
+            </div>
+          <% else %>
+            <%= builder.file_field :upload %> <br>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="box-title">
+    <h3><i class="icon-calendar"></i>Workorder Schedule</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :sched_date_field, "Scheduled Time", :class => "control-label" %>
+      <div class="controls">
+        <div class="input-append">
+          <%= f.text_field :sched_date_field, {:class => "input-small datepick mask_date", 'data-rule-required' => true} %>
+          <span class='add-on'><i class='icon-calendar'></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <div class="input-append">
+          <%= f.text_field :sched_time_field, {:class => "input-small timepick", 'data-rule-required' => true} %>
+          <span class='add-on'><i class='icon-time'></i></span>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <%= f.label :etc_date_field, "Complete Time", :class => "control-label" %>
+      <div class="controls">
+        <div class="input-append">
+          <%= f.text_field :etc_date_field, {:class => "input-small datepick mask_date", 'data-rule-required' => true} %>
+          <span class='add-on'><i class='icon-calendar'></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <div class="input-append">
+          <%= f.text_field :etc_time_field, {:class => "input-small timepick", 'data-rule-required' => true} %>
+          <span class='add-on'><i class='icon-time'></i></span>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div id="recurring_select" class="control-group">
+      <%= f.label :is_recurring, "Recurring", :class => "control-label" %>
+      <div class="controls input-mini">
+        <%= f.select(:is_recurring, [['Yes', true], ['No', false]], :id => 'recurring_select') %>
+      </div>
+    </div>
+    <div id="recurring_period_box" class="control-group">
+      <%= f.label :recurring_period_field, "Recurring Period", :class => "control-label" %>
+      <div class="controls">
+        <div class="input-append">
+          <%= f.text_field :recurring_period_field, {:id => 'recurring_period_field', :class => "input-mini", 'data-rule-positiveNumber' => true} %>
+          <span class='add-on'>Days</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-title">
+    <h3><i class="glyphicon-notes"></i>Workorder Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :workorder_type_id, "Workorder Type", :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select :workorder_type_id, WorkorderType.all, :id, :name, {prompt: true}, {:id => 'workorder_type_select', :class=>'input-xlarge', 'data-rule-required' => true} %><div style="clear:both"></div>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :status, "Status", :class => "control-label" %>
+      <div class="controls">
+        <div class="check-line">
+          <%= radio_button(:workorder, :status, "draft", {:class => "icheck-me", "data-skin" => "square", "data-color" => "orange", :checked => true}) %>
+          <%= f.label :status_draft, "Draft", :class => "inline" %>
+        </div>
+        <div class="check-line">
+          <%= radio_button(:workorder, :status, "confirmed", {:class => "icheck-me", "data-skin" => "square", "data-color" => "blue"}) %>
+          <%= f.label :status_confirmed, "Confirmed", :class => "inline" %>
+        </div>
+        <div class="check-line">
+          <%= radio_button(:workorder, :status, "complete", {:class => "icheck-me", "data-skin" => "square", "data-color" => "green"}) %>
+          <%= f.label :status_complete, "Complete", :class => "inline" %>
+        </div>
+        <div class="check-line">
+          <%= radio_button(:workorder, :status, "cancelled", {:class => "icheck-me", "data-skin" => "square", "data-color" => "red"}) %>
+          <%= f.label :status_cancelled, "Cancelled", :class => "inline" %>
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :details, "Details", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_area :details, {:id => 'workorder_details', :class => "editor span12", 'rows' => 5} %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="box-title">
+  <h3><i class="glyphicon-paperclip"></i>Attachments</h3>
+</div>
+<% if @workorder.id %>
+  <div class="box-content" style="padding: 30px 50px;">
+    <div id="file-uploads-container">
+      <%= form_for WorkorderUpload.new, :html => { :multipart => true, :id => "workorderupload", :class => "form-validate", "data-workorder-id" => @workorder.id  } do |f| %>
+        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+        <div class="row fileupload-buttonbar">
+          <div class="span7">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+            <span class="btn btn-success fileinput-button">
+              <i class="icon-plus icon-white"></i>
+              <span>Add files...</span>
+              <%= f.file_field :upload %>
+              <%= f.hidden_field :workorder_id, :value => @workorder.id, :id => "workorder_id" %>
+            </span>
+            <button type="submit" class="btn btn-primary start">
+              <i class="icon-upload icon-white"></i>
+              <span>Start upload</span>
+            </button>
+            <button type="reset" class="btn btn-orange cancel">
+              <i class="icon-ban-circle icon-white"></i>
+              <span>Cancel upload</span>
+            </button>
+          </div>
+          <div class="span5">
+            <!-- The global progress bar -->
+            <div class="progress progress-success progress-striped active fade">
+              <div class="bar" style="width:0%;"></div>
+            </div>
+          </div>
+        </div>
+        <!-- The loading indicator is shown during image processing -->
+        <div class="fileupload-loading"></div>
+        <br>
+        <!-- The table listing the files available for upload/download -->
+        <table class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+        </table>
+      <% end %>
+
+      <%= render 'shared/form_upload' %>
+      <%= render 'shared/form_download' %>
+    </div>
+  </div>
+<% else %>
+  <div class="box-content">
+    <span class="alert alert-warning"><i class="icon-warning-sign" style="margin-right:3px"></i> Create workorder to enable file attachments. </span>
+  </div>
+<% end %>

@@ -1,0 +1,62 @@
+#user-guide
+  .panel.panel-default
+    .panel-body
+      h1 Service Manager User Guide
+      h2 
+        i.glyphicon-list
+        |  Hire Quotes
+
+  section.definition
+    h3 Definition
+    p.main-definition A Hire Quote is an offer made to a customer for the rental of vehicle models and included add-ons for a specified period. The customer may be an individual or a company. The quote is prepared and sent by Service Manager when the manager decides to do so. An email is generated and sent to the customer's nominated email address. It includes references to supporting documents and photos.
+    dl.dl-horizontal
+      dt Uid
+      dd A system-generated number for the Hire Quote. 
+      dt Version Number
+      dd An amendment to a hire quote results in an increase of the version number. All the details in the previous version are preserved for future reference.
+      dt Reference
+      dd The reference combines the uid and version number to form a unique reference number for the Hire Quote in the format HQ-AAnnnn-1. The number at the end is the version number.
+      dt Customer
+      dd The client to whom the quote is presented.
+      dt Enquiry Reference
+      dd If the hire quote was created in response to an enquiry, a cross-reference to that enquiry will be available.
+
+  = link_to '<span class="label label-info">back to Index</span>'.html_safe, user_guides_path
+
+  section
+    h3 A Hire Quote includes:
+    ul
+      li A list of vehicle models and when they are required.
+      li Information about delivering and collecting the vehicle.
+      li Add-ons selected for each vehicle model and the cost involved.
+      li Customisable fees associated with each vehicle model. 
+      li References to vehicle model brochures and photos.
+      li References to Add-on brochures and photos (not yet available).
+
+  section
+    h3 How to prepare a Hire Quote
+    p It is assumed that the following items have already been defined:
+    p.indent  
+      span.glyphicon.glyphicon-ok 
+      |  Vehicle Models 
+      span.glyphicon.glyphicon-ok 
+      |  Hire Add-ons 
+      span.glyphicon.glyphicon-ok 
+      |  Hire Fee Types 
+      span.glyphicon.glyphicon-ok 
+      |  Brochures and photos that should accompany the quotes
+    p Create a Hire Quote. There are 3 ways to do this:
+    ul 
+      li The Hire Quotes List (https://secure.bus4x4.com.au/hire_quotes)
+      li The Quick Links on the left of the page
+      li Open the enquiry from the desired customer, provide all missing details and click on the Create Hire Quote button.
+    p Add vehicle model to the quote. 
+    ul 
+      li Define the Hire arrangements for each included vehicle model according to the preferences of the customer.
+      li Change the associated fees if necessary.
+      li Choose add-ons for the quoted vehicles, if required. 
+      li Review the content and send the completed quote to the customer.
+
+  section.change-history
+    h4 Change History
+    p Created by Francois van der Hoven on 16 July 2016

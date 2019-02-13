@@ -1,0 +1,22 @@
+<% if @customer.first_name %>
+Hi <%= @customer.first_name %>,
+
+<% end %>
+<% unless @message.nil? || @message.blank? %>
+
+<%= @message %>
+
+<% end %>
+A vehicle purchase contract has been prepared for you. To access the contract, go to: 
+<%= review_vehicle_contract_url(@vehicle_contract, :user_email => @customer.email, :user_token => @customer.authentication_token) %>. The terms and conditions also form part of the contract. You may download this document from this link: <%= link_to 'Download Terms and Conditions'.html_safe, download_terms_conditions_url(@vehicle_contract) %>
+
+Best Regards,
+<%= @quote.manager.name if @quote.manager %>
+<%= @quote.invoice_company.name %>
+<% if @quote.manager %>
+<%= "Phone: #{@quote.manager.phone}" if @quote.manager.phone.present? %>
+<%= "Mobile: #{@quote.manager.mobile}" if @quote.manager.mobile.present? %>
+<%= "Email: #{@quote.manager.email}" if @quote.manager.email.present? %>
+<%= "Fax: #{@quote.manager.fax}" if @quote.manager.fax.present? %>
+<%= "Website: #{@quote.manager.website}" if @quote.manager.website.present? %>
+<% end %>

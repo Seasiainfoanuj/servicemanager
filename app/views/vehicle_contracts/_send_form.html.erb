@@ -1,0 +1,35 @@
+<div id="send-vehicle-contract-model" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Send Vehicle Purchase Contract</h3>
+  </div>
+  <div class="modal-body">
+    <div style="padding: 20px; background: #fbfbfb; border: 1px dashed #DDDDDD;">
+      <div class="row-fluid">
+        <div class="control-group">
+          <p><b>Send to:</b> <%= @view_contract.quote.customer.email %></p>
+        </div>
+        <div class="control-group">
+          <label for="email_message" id="message_label" class="control-label"><b>Optional Message</b></label>
+          <div class="controls">
+            <textarea name="email_message" id="email_message" class="span12" rows="5"></textarea>
+          </div>
+        </div>
+        <div>
+          To access your vehicle purchase contract, go to: <br>
+          <%= review_vehicle_contract_url(@vehicle_contract) %>
+          <br>
+          <br>
+          Best Regards,
+          <br><br>
+          <%= "#{@view_contract.manager_name} <br>".html_safe %>
+          <%= @view_contract.dealer.name %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-grey" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <%= link_to "Send", {:action => 'send_contract', :vehicle_contract_id => @vehicle_contract.uid}, {:class => 'btn btn-satblue', :id => 'email_send_button'} %>
+  </div>
+</div>

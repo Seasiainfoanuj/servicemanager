@@ -1,0 +1,22 @@
+---
+stack:
+  name: Bus4x4
+  profile: bus4x4-sm
+  ordered: true
+  default_env: staging
+  environments:
+    - staging:
+        maintenance_role: web
+        region: ap-southeast-2
+        roles:
+          - name: web
+          - name: worker
+    - production:
+        roles:
+          - name: web
+          - name: worker
+
+# cp OpsCare.yml.example OpsCare.yml
+# sentinel deploy # => deploys staging web, worker and periodics
+# sentinel deploy production # => deploys production web, worker and periodics
+# sentinel deploy production --role web # => deploys production web

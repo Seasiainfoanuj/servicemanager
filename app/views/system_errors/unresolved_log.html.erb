@@ -1,0 +1,54 @@
+<div id="left">
+  <%= render(:partial => 'layouts/left') %>
+</div>
+<div id="main" class="changelog">
+  <div class="container-fluid">
+
+    <%= render(:partial => 'layouts/notice') %>
+
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Unhandled Exceptions</h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if can? :create, SystemError %>
+          <%= link_to '<i class="icon-list-alt"></i> Show all'.html_safe, "#{system_errors_unresolved_log_path}?scope=all", {:class => 'btn btn-lightgrey'} %>
+        <% end %>
+      </div>
+    </div>
+
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-warning_sign"></i> Unhandled Exceptions</h3>
+          </div>
+          <div class="box-content nopadding system_error">
+            <table class="table table-hover table-nomargin dataTable dataTable-tools table-bordered" data-default-sort-column="1" data-default-sort-direction="desc">
+              <thead>
+                <tr>
+                  <th>Error id</th>
+                  <th>Error Method</th>
+                  <th>Status Date</th>
+                  <th>Error Type</th>
+               </tr>
+              </thead>
+              <tbody>
+                <% @error_log.where.not(error: nil).each do |log_record| %>
+                  <tr>
+                    <td><%= log_record.id %></td>
+                    <td><%= log_record.error_method %></td>
+                    <td><%= log_record.updated_at.strftime("%d/%m/%Y") %></td>
+                    <td><%= log_record.error %></td>
+                   </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,88 @@
+.build-specification h3 {
+  // color: red;
+}
+
+table#build-specification-header {
+  margin-top: 20px;
+  td.vehicle-details {
+    background-color: #e3e3e3;
+  }
+  tr:first-of-type td {
+    padding-bottom: 10px;    
+  }
+  tr:last-of-type td { 
+    border: 1px solid black; 
+    padding: 10px;
+  } 
+  width: 100%;
+  h3 { 
+    margin: 0; 
+    padding: 0; 
+    color: red;
+  }
+
+  tbody>tr {
+    td:nth-child(1) {
+      width: 60%;
+    }
+    td:nth-child(2) {
+      width: 40%;
+      vertical-align: top;
+    }
+  } 
+
+  tbody tr:nth-child(2) {
+    td:nth-child(1) { 
+      width: 25%; 
+      vertical-align: middle;
+    }
+    td:nth-child(2) { width: 35%; }
+    td:nth-child(3) { width: 40%; }
+  }
+  img {
+    height: 50px;
+  }
+}
+
+table#standard-features, table#custom-features {
+  margin-top: 20px;
+  border: none;
+  width: 100%;
+  h3 { 
+    margin: 0; 
+    padding: 0; 
+    color: red;
+    font-style: normal;
+  }
+  tr>td { 
+    border-right: 1px solid black; 
+    padding-left: 10px;
+  }
+
+  tr {
+    height: 50px;
+    td:nth-child(1) { 
+      width: 20%; 
+    }
+    td:nth-child(2) { 
+      width: 80%; 
+      border: none;
+    }
+    p { margin: 0; }
+  }
+  tr.feature { border-bottom: 1px solid black; }
+  tr:first-of-type td { border-right: none; }
+  tr.feature > td:first-of-type {
+    font-style: italic;
+  }
+}
+
+table#inner {
+  width: 100%;
+  tr {
+    height: 30px;
+    td { 
+      border: none; 
+    }
+  }
+}

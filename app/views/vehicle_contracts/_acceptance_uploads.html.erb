@@ -1,0 +1,25 @@
+<div class="row-fluid">
+  <div style="margin:5px; min-height: 40px; float:left">
+    <%= form_for(@vehicle_contract, html: {id: "upload-signed-contract-form", class: "form-horizontal"}, url: {controller: "vehicle_contracts", action: "upload_contract"}) do |f| %>
+      <%= f.fields_for :signed_contract do |builder| %>
+        <div class="control-group">
+          <%= builder.label :upload, "Scanned contract", :class => "control-label" %>
+          <%= builder.file_field :upload %>
+        </div>
+      <% end %>
+
+      <div class="actions">
+        <%= f.submit "Upload Contract", :class => "btn btn-grey" %>
+      </div>
+    <% end %>
+  </div>
+
+  <table class="contract-download">
+    <% file = @vehicle_contract.signed_contract %>
+    <tr>
+      <td><a href="<%= file.upload.url(:original) %>"><%= image_tag file.upload.url(:large) %></a></td>
+      <td><a href="<%= file.upload.url(:original) %>" class="btn btn-satblue"> <i class="icon-download-alt"></i> Download Signed Contract</a><br>
+      <%= link_to '<i class="icon-download-alt"></i> Download Terms and Conditions in PDF format'.html_safe, download_terms_conditions_path(@vehicle_contract, :user_email => @vehicle_contract.customer.email, :user_token => @vehicle_contract.customer.authentication_token, format: "pdf"), {:title => 'Download Terms and Conditions', :class => 'btn btn-satblue', 'rel' => 'tooltip', "data-placement" => "bottom"} %></td>
+    </tr>
+  </table>
+</div> 

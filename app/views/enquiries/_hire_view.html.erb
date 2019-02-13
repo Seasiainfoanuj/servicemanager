@@ -1,0 +1,43 @@
+<% present(@enquiry) do |enquiry| %>
+  <div class="box-title">
+    <h3><i class="glyphicon-notes" style="position:relative; top:-3px;"></i>Hire Requirements</h3><%= manual_link('hire_enquiries') %>
+  </div>
+  <div class="box-content nopadding">
+    <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+      <tbody>
+        <tr>
+          <td>Hire Start Date</td>
+          <td width="80%"><%= enquiry.hire_start_date %></td>
+        </tr>
+        <tr>
+          <td>Ongoing contract?</td>
+          <td><%= enquiry.ongoing_contract %></td>
+        </tr>
+        <tr>
+          <td>Hire Period</td>
+          <td><%= enquiry.hire_period %></td>
+        </tr>
+        <tr>
+          <td>Number of vehicles</td>
+          <td><%= enquiry.number_of_vehicles %></td>
+        </tr>
+        <tr>
+          <td>Minimum Seats</td>
+          <td><%= enquiry.minimum_seats %></td>
+        </tr>
+        <tr>
+          <td>Transmission</td>
+          <td><%= enquiry.transmission_preference %></td>
+        </tr>
+        <tr>
+          <td>Delivery</td>
+          <td><%= enquiry.delivery %></td>
+        </tr>
+        <tr>
+          <td>Special requirements</td>
+          <td><%= enquiry.special_requirements %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<% end %>

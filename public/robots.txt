@@ -1,0 +1,4 @@
+# Ban all spiders from the entire site
+
+User-agent: *
+Disallow: /

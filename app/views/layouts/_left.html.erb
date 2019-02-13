@@ -1,0 +1,147 @@
+
+  <div id="left" class="sidebar-fixed hasScroll">
+    <div class="subnav">
+      <ul class="subnav-menu">
+        <li>
+          <%= link_to "<i class='icon-arrow-left' style='margin-right: 4px;'></i> Go Back".html_safe, "#", onclick: "history.back(); return false", style: 'padding-left: 25px;' %>
+        </li>
+      </ul>
+    </div>
+<% unless current_user.has_role? :dealer %>
+    <% if @associations %>
+      <%= render 'users/left' %>
+      <hr />
+    <% end %>
+
+    <% if @vehicle && @vehicle.id.present? %>
+      <%= render 'vehicles/left' %>
+      <hr />
+    <% end %>
+
+    <div class="subnav">
+
+      <div class="subnav-title">
+        <a href="#" class='toggle-subnav'><i class="icon-angle-down"></i><span>Quick Links</span></a>
+      </div>
+      <ul class="subnav-menu">
+
+        <% if can? :create, Quote %>
+          <li class="<%= 'active' if params[:controller] == 'quotes' && params[:action] == 'new' %>">
+            <%= link_to 'New Sales Quote', new_quote_path %>
+          </li>
+        <% end %>
+
+        <% if can? :create, HireQuote %>
+          <li class="<%= 'active' if params[:controller] == 'hire_quotes' && params[:action] == 'new' %>">
+            <%= link_to 'New Hire Quote', new_hire_quote_path %>
+          </li>
+        <% end %>
+
+        <% if can? :create, HireAddon %>
+          <li class="<%= 'active' if params[:controller] == 'hire_addons' && params[:action] == 'new' %>">
+            <%= link_to 'New Hire Add-on', new_hire_addon_path %>
+          </li>
+        <% end %>
+
+        <% if can? :create, PoRequest %>
+          <li class="<%= 'active' if params[:controller] == 'po_requests' && params[:action] == 'new' %>">
+            <%= link_to 'New PO Request', new_po_request_path %>
+          </li>
+        <% end %>
+
+        <% if can? :create, StockRequest %>
+          <li class="<%= 'active' if params[:controller] == 'stock_requests' && params[:action] == 'new' %>">
+            <%= link_to 'New Stock Request', new_stock_request_path %>
+          </li>
+        <% end %>
+
+        <% if can? :create, Stock %>
+          <li class="<%= 'active' if params[:controller] == 'stocks' && params[:action] == 'new' %>">
+            <%= link_to 'New Stock', new_stock_path %>
+          </li>
+        <% end %>
+
+        <% if can? :create, Vehicle %>
+          <li class="<%= 'active' if params[:controller] == 'vehicles' && params[:action] == 'new' %>">
+            <%= link_to 'New Vehicle', new_vehicle_path %>
+          </li>
+        <% end %>
+
+        <% if can? :create, Workorder %>
+          <li class="<%= 'active' if params[:controller] == 'workorders' && params[:action] == 'new' %>">
+            <%= link_to 'New Workorder', new_workorder_path %>
+          </li>
+        <% end %>
+
+        <% if can? :create, Build %>
+          <li class="<%= 'active' if params[:controller] == 'builds' && params[:action] == 'new' %>">
+            <%= link_to 'New Build', new_build_path %>
+          </li>
+        <% end %>
+
+        <% if can? :create, HireAgreement %>
+          <li class="<%= 'active' if params[:controller] == 'hire_agreements' && params[:action] == 'new' %>">
+            <%= link_to 'New Hire Agreement', new_hire_agreement_path %>
+          </li>
+        <% end %>
+
+        <% if can? :create, User %>
+          <li class="<%= 'active' if params[:controller] == 'users' && params[:action] == 'new' %>">
+            <%= link_to 'New User', new_user_path %>
+          </li>
+        <% end %>
+
+        <% if can? :create, Company %>
+          <li class="<%= 'active' if params[:controller] == 'companies' && params[:action] == 'new' %>">
+            <%= link_to 'New Company', new_company_path %>
+          </li>
+        <% end %>
+
+      </ul>
+    </div>
+
+    <% if current_user.has_role? :admin %>
+      <div class="subnav">
+        <div class="subnav-title">
+          <a href="#" class='toggle-subnav'><i class="icon-angle-down"></i><span>Reports</span></a>
+        </div>
+        <ul class="subnav-menu">
+          <li>
+            <%= link_to 'Mailgun Log', mailgun_log_path %>
+          </li>
+          <li>
+            <%= link_to "Mailgun Bounces", mailgun_bounces_path %>
+          </li>
+          <li>
+            <% error_count = SystemError.error_count(SystemError::ACTION_REQUIRED) %>
+            <a href="<%= system_errors_log_path %>">System Error Log
+              <% if error_count > 0 %>
+                <span class="label-lightred">&nbsp;<%= error_count %>&nbsp;</span>
+              <% end %>
+            </a>
+          </li>
+          <li>
+            <a href="<%= system_errors_unresolved_log_path %>">Unhandled Exceptions </a>
+        </li>
+        </ul>
+      </div>
+    <% end %>
+<% end %>
+    <% if user_signed_in? %>
+    <hr>
+      <div class="subnav">
+        <div class="subnav-title">
+          <a href="#" class='toggle-subnav'><i class="icon-angle-down"></i><span>My Profile</span></a>
+        </div>
+        <ul class="subnav-menu">
+          <li>
+            <%= link_to 'Edit Profile', edit_user_path(current_user) %>
+          </li>
+          <li>
+            <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+          </li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+

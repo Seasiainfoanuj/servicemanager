@@ -1,0 +1,42 @@
+<div id="left">
+  <%= render(:partial => 'layouts/left') %>
+</div>
+<div id="main" class="changelog">
+  <div class="container-fluid">
+
+    <%= render(:partial => 'layouts/notice') %>
+
+    <div class="page-header">
+      <div class="pull-left">
+        <section id="privacy-details">
+          <h1>Privacy Statement</h1>
+          <p class="logo"><%= image_tag('logo-black@2x.png') %></p>
+          <h4>Bus 4x4 Pty Ltd Privacy Policy</h4>
+          <p>This Privacy Policy was last modified on 22 Sept 2015.</p>
+          <p>Bus 4x4 Pty Ltd ("us", "we", or "our") operates h​ttp://www.bus4x4.com.au
+             (the "Site"). This page informs you of our policies regarding the 
+             collection, use and disclosure of Personal Information we receive from 
+             users of the Site.</p>
+          <p>We use your Personal Information only for providing and improving the 
+             Site. By using the Site, you agree to the collection and use of 
+             information in accordance with this policy.</p>
+
+          <h4>Information collection and use</h4>
+          <p>While using our Site, we may ask you to provide us with certain 
+             personally identifiable information that can be used to contact or 
+             identify you. Personally identifiable information may include, but is 
+             not limited to your name and contact details (<%= @user %>).</p>
+
+          <h4>Log data</h4>
+          <p>Like many site operators, we collect information that your browser 
+            sends whenever you visit our Site ("Log Data"). This Log Data may 
+            include information such as your computer's Internet Protocol ("IP") 
+            address, browser type, browser version, the pages of our Site that you 
+            visit, the time and date of your visit, the time spent on those pages 
+            and other statistics.</p>
+        </section>
+        <hr>
+      </div>
+    </div>
+  </div>
+</div>

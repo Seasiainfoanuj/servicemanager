@@ -1,0 +1,42 @@
+#user-guide
+  .panel.panel-default
+    .panel-body
+      h1 Service Manager User Guide
+      h2
+        i.glyphicon-car
+        | Vehicle Models
+        
+  section.definition
+    h3 Definition
+    p.main-definition A Vehicle Model is a Model and Make marketed for renting to customers.
+    dl.dl-horizontal
+      dt Vehicle Make
+      dd The vehicle manufacturer, e.g. Toyota or Isuzu.
+      dt Model Name
+      dd This refers to a particular shape and configuration of parts and accessories, e.g. Toyota Camry or Isuzu D-Max
+      dt Number of seats
+      dd The number of seats included for this model.
+      dt Tags
+      dd Labels assigned to Models to facilitate easier searching of listed vehicle models.
+      dt Daily Rate
+      dd The daily charge if such a vehicle model can be hired.
+      dt License Type
+      dd The type of license generally required to drive such a vehicle. The license may be changed for a specific vehicle.
+
+  = link_to '<span class="label label-info">back to Index</span>'.html_safe, user_guides_path
+
+  section
+    h3 How vehicle models are used in the system
+    p A Hire Quote is initially compiled for a vehicle model. This is not a specific vehicle in the 'show room'. The age of the vehicle does not affect its rental price. When the customer accepts the conditions of the quote and the start date of the hire period approaches, a specific vehicle is selected.
+    p A Vehicle Brochure describing the vehicle model may be uploaded, as well as some photos. The uploaded images could be included in a hire quote.
+    p Vehicle models are included in hire quotes as Hire Quote Vehicles. See the User Guide for Hire Quote Vehicles.
+
+  section
+    h3 Things associated with a vehicle model
+    ul
+      li To make it easier to manage a long list of vehicle models, you may associate one or more Product Types with a model. You may do this on the vehicle model page.
+      li Since a vehicle model may not be compatible with all add-ons, a decision must be made which addons are suitable. This is also done on the vehicle model page.
+
+  section.change-history
+    h4 Change History
+    p Created by Francois van der Hoven on 7 July 2016

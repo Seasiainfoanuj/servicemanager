@@ -1,0 +1,73 @@
+<table border="0" cellpadding="3" cellspacing="0" class="email_stock_request_details">
+  <tr><td colspan="2"><h3>Requested Stock:</h3></td></tr>
+
+  <tr><td>Vehicle Make:</td><td><%= @stock_request.vehicle_make %></td></tr>
+  <tr><td>Vehicle Model:</td><td><%= @stock_request.vehicle_model %></td></tr>
+  <tr><td>Transmission:</td><td><%= @stock_request.transmission_type %></td></tr>
+
+  <tr><td colspan="2"><h3>Requested Delivery Date:</h3></td></tr>
+  <tr><td colspan="2"><%= @stock_request.requested_delivery_date.strftime("%a, %e %b %Y") %></td></tr>
+
+  <% unless @user == @stock_request.supplier %>
+    <tr><td colspan="2"><h3>Service Provider:</h3></td></tr>
+
+    <% unless @stock_request.supplier.name == @stock_request.supplier.email %>
+      <tr><td>Name:</td><td><%= @stock_request.supplier.name %></td></tr>
+    <% end %>
+
+    <% if @stock_request.supplier.company.present? %>
+      <tr><td>Company:</td><td><%= @stock_request.supplier.company %></td></tr>
+    <% end %>
+
+    <tr><td>Email:</td><td><%= mail_to @stock_request.supplier.email %></td></tr>
+
+    <% if @stock_request.supplier.phone.present? %>
+      <tr><td>Phone:</td><td><%= @stock_request.supplier.phone %></td></tr>
+    <% end %>
+
+    <% if @stock_request.supplier.mobile.present? %>
+      <tr><td>Mobile:</td><td><%= @stock_request.supplier.mobile %></td></tr>
+    <% end %>
+
+    <% if @stock_request.supplier.website.present? %>
+      <tr><td>Website:</td><td><%= @stock_request.supplier.website %></td></tr>
+    <% end %>
+  <% end %>
+
+  <% if @stock_request.customer %>
+    <% unless @user == @stock_request.customer %>
+      <tr><td colspan="2"><h3>For Customer:</h3></td></tr>
+      <% unless @stock_request.customer.name == @stock_request.customer.email %>
+        <tr><td>Name:</td><td><%= @stock_request.customer.name %></td></tr>
+      <% end %>
+
+      <% if @stock_request.customer.company.present? %>
+        <tr><td>Company:</td><td><%= @stock_request.customer.company %></td></tr>
+      <% end %>
+
+      <tr><td>Email:</td><td><%= mail_to @stock_request.customer.email %></td></tr>
+
+      <% if @stock_request.customer.phone.present? %>
+        <tr><td>Phone:</td><td><%= @stock_request.customer.phone %></td></tr>
+      <% end %>
+
+      <% if @stock_request.customer.mobile.present? %>
+        <tr><td>Mobile:</td><td><%= @stock_request.customer.mobile %></td></tr>
+      <% end %>
+
+      <% if @stock_request.customer.website.present? %>
+        <tr><td>Website:</td><td><%= @stock_request.customer.website %></td></tr>
+      <% end %>
+    <% end %>
+  <% end %>
+</table>
+
+<br />
+
+Login to fulfil this stock request here: <%= stock_request_url(@stock_request) %>
+
+<br /><br />
+
+<%= link_to "Forgot your password?", root_url + 'users/password/new' %>
+
+<br /><br />

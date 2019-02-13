@@ -1,0 +1,53 @@
+#main.my-schedule-view {
+  padding-bottom: 0;
+}
+
+#my-schedule-container {}
+
+#main.my-schedule-view .box-title .vehicles-link {
+  font-size: 11px;
+}
+
+#main.my-schedule-view #my-schedule {
+  width: 100%;
+  height: 100%;
+}
+
+.dhx_cal_event_clear {
+  min-height: 20px;
+}
+
+#my-schedule-container .dhx_cal_event_clear {
+  color: #fff;
+  padding-left: 10px;
+}
+
+#my-schedule-container .dhx_month_link a {
+  color: #5780AD;
+}
+
+#my-schedule-footer {
+  position: absolute;
+  display: none;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-top: 2px solid rgba(0,0,0,0.8);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px 30px 40px;
+}
+
+#my-schedule-footer .filter-link {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 12px;
+  margin-right: 20px;
+}
+
+#my-schedule-footer .label input[type="checkbox"] {
+  margin: 0;
+}
+
+.dhx_marked_timespan {
+  margin: 0 !important;
+}

@@ -1,0 +1,55 @@
+<div id="left">
+  <%= render 'layouts/left' %>
+</div>
+<div id="main">
+  <div class="container-fluid">
+
+    <%= render(:partial => 'layouts/notice') %>
+
+    <div class="page-header">
+      <div class="pull-left">
+        <h1><%= "#{@vehicle.name}" %> <span class="label label-satblue"><%= @vehicle.number %></span> <span class="label label-green"><%= @vehicle.call_sign %></span> <span class="label label-grey"><%= @vehicle.rego_number %></span> <span class="label"><%= "VIN# #{@vehicle.vin_number}" %></span></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+
+      </div>
+    </div>
+
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="icon-calendar"></i>Schedule</h3>
+          </div>
+          <div id="vehicle_schedule_container" class="box-content nopadding" style="height: 300px;">
+            <div id="vehicle_schedule" class="dhx_cal_container" data-vehicle-id="<%= @vehicle.id %>" data-vehicle-name="<span class='label label-satblue'><%= @vehicle.number %></span> <span class='label label-green'><%= @vehicle.call_sign %></span> <span class='label'><%= @vehicle.rego_number %></span><br><a href='/vehicles/<%= @vehicle.id %>'><%= @vehicle.name %></a>" style="height: 100%">
+              <div class="dhx_cal_navline">
+                <div class="dhx_cal_prev_button">&nbsp;</div>
+                <div class="dhx_cal_next_button">&nbsp;</div>
+                <div class="dhx_cal_today_button"></div>
+                <div class="dhx_cal_date"></div>
+                <div class="dhx_minical_icon" id="dhx_minical_icon">&nbsp;</div>
+                <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+                <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+                <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+                <div class="dhx_cal_tab" name="vehicle_timeline_tab" style="right:200px;"></div>
+              </div>
+              <div class="dhx_cal_header">
+              </div>
+              <div class="dhx_cal_data">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

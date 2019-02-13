@@ -1,0 +1,17 @@
+<tr class="vehicle">
+  <td class="position">
+    <i class="handle icon-reorder"></i>
+    <%= f.hidden_field "position", class: "position_number" %>
+  </td>
+
+  <td>
+    <span class="vehicle-name">
+      <%= Vehicle.find(f.object.vehicle_id).ref_name if f.object && f.object.vehicle_id %>
+    </span>
+    <%= f.hidden_field :vehicle_id %>
+
+    <div class="pull-right">
+      <%= link_to '<i class="icon-ban-circle"></i> Remove'.html_safe,  {:controller => 'schedule_views', :action => 'destroy_vehicle',:id => @schedule_view.id , :vehicle_view_id =>f.object.id}, class: "remove_fields btn", data: { confirm: "Are you sure you want to remove this vehicle?", remote: true } %>
+    </div>
+  </td>
+</tr>

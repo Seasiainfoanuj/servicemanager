@@ -1,0 +1,25 @@
+<div id="modal-master-quote-items" class="modal hide" role="dialog" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>Master Quote Items</h3>
+  </div>
+  <div class="modal-body nopadding">
+    <table data-source="<%= master_quote_items_url(format: "json", mode: 'add_to_quote') %>" class="table table-bordered dataTable dataTable-ajax dataTable-popup">
+      <thead>
+        <tr>
+          <th>Item type</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Tags</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-grey" data-dismiss="modal">Finish</button>
+  </div>
+</div>

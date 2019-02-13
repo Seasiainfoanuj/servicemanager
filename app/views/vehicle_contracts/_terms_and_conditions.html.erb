@@ -1,0 +1,29 @@
+<section class="terms-and-conditions">
+  <h1>F - TERMS AND CONDITIONS</h1>
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="definition-of-terms">
+        <p>The Terms and Conditions form a part of the contract and require your acceptance.</p>
+        <h4>Definitions</h4>
+        <ul>
+          <ol>
+            <li><span class="term">Customer Name:</span><%= @view_contract.customer_name %></p><br>
+              <p><span class="term">Address:</span><%= @view_contract.customer_address_lines.join(", ") %></p>
+              <p><span class="term">Vehicle:</span></p>
+            </li>
+          </ol>
+        </ul>
+      </div>
+      <br>
+      <div>
+        <p>
+          <% if @vehicle_contract.current_status == 'signed' %>
+            We acknowledge that you have read and accepted the terms and conditions.
+          <% end %>  
+        </p>
+        <p><%= link_to '<i class="icon-legal"></i> Download Terms and Conditions'.html_safe, download_terms_conditions_url(@vehicle_contract), {class: 'btn', rel: 'tooltip', "data-placement" => "bottom"} %></p>
+      </div>
+    </div>
+  </div>    
+</section>  
+

@@ -1,0 +1,162 @@
+<%= form_for(@sales_order, :html => {:id => "sales-order-form", :class => "form-horizontal form-validate"}) do |f| %>
+  <% if @sales_order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sales_order.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @sales_order.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="box-title">
+    <h3><i class="glyphicon-notes"></i>Sales Order Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :invoice_company_id, "Company", :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select :invoice_company_id, InvoiceCompany.all, :id, :name, {prompt: true}, {:class=>'select2-me span6', 'data-rule-required' => true} %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <%= f.label :manager_id, "Manager", :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select :manager_id, User.filter_by_admin, :id, :company_name, {prompt: true}, {:id => 'manager_select', :class=>'select2-me span6'} %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :customer_id, "Customer", :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select :customer_id, User.all, :id, :company_name, {prompt: true}, {:class=>'select2-me span6', 'data-rule-required' => true} %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <%= f.label :quote_id, "Quote REF", :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select(:quote_id, Quote.all, :id, :number, {prompt: true, :include_blank => true}, {:class=>'select2-me span6'}) %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :build_id, "Build REF", :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select(:build_id, Build.all, :id, :number, {prompt: true, :include_blank => true}, {:class=>'select2-me span6'}) %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <%= f.label :order_date_field, "Order Date", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :order_date_field, {:class => "datepick", 'data-rule-required' => true} %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :number, "Order Number", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :number %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :deposit_required, "Deposit Required", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :deposit_required %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <div class="check-line">
+          <%= f.check_box :deposit_received, {:class => "icheck-me", "data-skin" => "square", "data-color" => "green"} %>
+          <%= f.label :deposit_received, "Deposit Received", :class => "inline" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :details, "Order Details", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_area :details, {:class => "editor span12", 'rows' => 5} %>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-title">
+    <h3><i class="glyphicon-notes"></i>Milestones</h3>
+  </div>
+  <div class="box-content">
+    <%= f.fields_for :milestones do |builder| %>
+      <%= render 'milestone_fields', f: builder %>
+    <% end %>
+
+    <%= link_to_add_fields '<i class="icon-plus-sign"></i> Add Milestone', f, :milestones %>
+  </div>
+<% end %>
+
+<div class="box-title">
+  <h3><i class="glyphicon-paperclip"></i>Attachments</h3>
+</div>
+<% if @sales_order.id %>
+  <div class="box-content" style="padding: 30px 50px;">
+    <div id="file-uploads-container">
+      <%= form_for SalesOrderUpload.new, :html => { :multipart => true, :id => "sales-order-upload", :class => "form-validate", "data-sales-order-id" => @sales_order.id  } do |f| %>
+        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+        <div class="row fileupload-buttonbar">
+          <div class="span7">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+            <span class="btn btn-success fileinput-button">
+              <i class="icon-plus icon-white"></i>
+              <span>Add files...</span>
+              <%= f.file_field :upload %>
+              <%= f.hidden_field :sales_order_id, :value => @sales_order.id, :id => "sales_order_id" %>
+            </span>
+            <button type="submit" class="btn btn-primary start">
+              <i class="icon-upload icon-white"></i>
+              <span>Start upload</span>
+            </button>
+            <button type="reset" class="btn btn-orange cancel">
+              <i class="icon-ban-circle icon-white"></i>
+              <span>Cancel upload</span>
+            </button>
+          </div>
+          <div class="span5">
+            <!-- The global progress bar -->
+            <div class="progress progress-success progress-striped active fade">
+              <div class="bar" style="width:0%;"></div>
+            </div>
+          </div>
+        </div>
+        <!-- The loading indicator is shown during image processing -->
+        <div class="fileupload-loading"></div>
+        <br>
+        <!-- The table listing the files available for upload/download -->
+        <table class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+        </table>
+      <% end %>
+
+      <%= render 'shared/form_upload' %>
+      <%= render 'shared/form_download' %>
+    </div>
+  </div>
+<% else %>
+  <div class="box-content">
+    <span class="alert alert-warning"><i class="icon-warning-sign" style="margin-right:3px"></i> Create sales order to enable file attachments. </span>
+  </div>
+<% end %>

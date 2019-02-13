@@ -1,0 +1,206 @@
+<%= form_for(@po_request, :html => {:id => "po-request-form", :class => "form-horizontal form-validate"}) do |f| %>
+  <% if @po_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@po_request.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @po_request.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="box-title">
+    <h3><i class="glyphicon-notes"></i>PO Request Form</h3>
+  </div>
+  <div class="box-content">
+    <% if current_user.has_role? :admin %>
+      <div class="control-group">
+        <%= f.label :service_provider_id, "Service Provider", :class => "control-label" %>
+        <div class="controls">
+          <%= f.collection_select :service_provider_id, User.filter_by_service_provider, :id, :company_name, {prompt: true}, {:id => 'customer_select', :class=>'select2-me span6', 'data-rule-required' => true} %>
+          <div style="clear:both"></div>
+        </div>
+      </div>
+      <hr>
+
+      <div class="control-group">
+        <%= f.label :status, "Status", :class => "control-label" %>
+        <div class="controls">
+          <%= f.select(:status, PoRequest::STATUSES, {include_blank: false}, {:class=>'select2 input-medium'}) %>
+        </div>
+      </div>
+
+      <div class="control-group" style="margin-bottom: 0;">
+        <div class="controls">
+          <div style="float: left; width: 100px;">
+            <div class="check-line" style="float: left;">
+              <%= f.check_box :flagged, {:class => "icheck-me", "data-skin" => "square", "data-color" => "orange"} %>
+              <%= f.label :flagged, "Flag", :class => "inline" %>
+            </div>
+          </div>
+
+          <div style="float: left; width: 150px;">
+            <div class="check-line">
+              <%= f.check_box :read, {:class => "icheck-me", "data-skin" => "square", "data-color" => "red"} %>
+              <%= f.label :read, "Mark as Read", :class => "inline" %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr style="margin-top: 10px;">
+
+      <div class="control-group">
+        <%= f.label :tag_list, "Tags", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :tag_list, {:class => "tagsinput span10", "data-default" => "Add Tags"} %>
+        </div>
+      </div>
+
+      <hr>
+
+    <% else %>
+      <%= f.hidden_field :service_provider_id, value: current_user.id %>
+    <% end %>
+
+    <div class="control-group">
+      <%= f.label :vehicle_make, "Vehicle Make", :class => "control-label" %>
+      <div class="controls">
+        <%= f.collection_select(:vehicle_make, VehicleMake.all, :name, :name, {:prompt => '', :include_blank => true}, {:class=>'select2-me input-xlarge', 'data-rule-required' => true}) %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :vehicle_model, "Vehicle Model", :class => "control-label" %>
+      <div class="controls">
+        <%= f.select(:vehicle_model, VehicleModel.uniq.pluck(:name), {:prompt => '', include_blank: true}, {class: "select2-me input-xlarge", 'data-rule-required' => true}) %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :vehicle_vin_number, "Vin Number", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :vehicle_vin_number, {:class => "input-xlarge", 'data-rule-required' => true} %>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <%= f.label :sched_date_field, "Scheduled Time", :class => "control-label" %>
+      <div class="controls">
+        <div class="input-append">
+          <%= f.text_field :sched_date_field, {:class => "input-small datepick mask_date", 'data-rule-required' => true} %>
+          <span class='add-on'><i class='icon-calendar'></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <div class="input-append">
+          <%= f.text_field :sched_time_field, {:class => "input-small timepick", 'data-rule-required' => true} %>
+          <span class='add-on'><i class='icon-time'></i></span>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="control-group">
+      <%= f.label :etc_date_field, "Complete Time", :class => "control-label" %>
+      <div class="controls">
+        <div class="input-append">
+          <%= f.text_field :etc_date_field, {:class => "input-small datepick mask_date", 'data-rule-required' => true} %>
+          <span class='add-on'><i class='icon-calendar'></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <div class="controls">
+        <div class="input-append">
+          <%= f.text_field :etc_time_field, {:class => "input-small timepick", 'data-rule-required' => true} %>
+          <span class='add-on'><i class='icon-time'></i></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :details, "Additional Details", :class => "control-label" %>
+      <div class="controls">
+        <div class="label label-warning" style="margin: 5px 0 10px 0;">Please specify parts needed.</div>
+        <%= f.text_area :details, {:class => "editor span12", 'rows' => 5} %>
+      </div>
+    </div>
+  </div>
+
+  <% unless @po_request.id %>
+    <div class="box-title">
+      <h3><i class="glyphicon-paperclip"></i>Attachments</h3>
+    </div>
+    <div class="box-content">
+      <%= f.fields_for :uploads do |builder| %>
+        <%= render 'upload_fields', f: builder %>
+      <% end %>
+
+      <%= link_to_add_fields '<i class="icon-plus-sign"></i> Attach File', f, :uploads %>
+      <br><br>
+    </div>
+  <% end %>
+
+  <% if mode == 'create' %>
+    <%= f.submit 'Submit PO Request', class: "form-submit-btn" %>
+  <% else %>
+    <%= f.submit 'Update PO Request', class: "form-submit-btn" %>
+  <% end %>
+
+<% end %>
+
+<% if @po_request.id %>
+<div class="box-title">
+  <h3><i class="glyphicon-paperclip"></i>Attachments</h3>
+</div>
+  <div class="box-content" style="padding: 30px 50px;">
+    <div id="file-uploads-container">
+      <%= form_for PoRequestUpload.new, :html => { :multipart => true, :id => "po_request_upload", :class => 'form-validate', "data-po-request-id" => @po_request.id } do |f| %>
+        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+        <div class="row fileupload-buttonbar">
+          <div class="span7">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+            <span class="btn btn-success fileinput-button">
+              <i class="icon-plus icon-white"></i>
+              <span>Add files...</span>
+              <%= f.file_field :upload %>
+              <%= f.hidden_field :po_request_id, :value => @po_request.id, :id => "po_request_id" %>
+            </span>
+            <button type="submit" class="btn btn-primary start">
+              <i class="icon-upload icon-white"></i>
+              <span>Start upload</span>
+            </button>
+            <button type="reset" class="btn btn-orange cancel">
+              <i class="icon-ban-circle icon-white"></i>
+              <span>Cancel upload</span>
+            </button>
+          </div>
+          <div class="span5">
+            <!-- The global progress bar -->
+            <div class="progress progress-success progress-striped active fade">
+              <div class="bar" style="width:0%;"></div>
+            </div>
+          </div>
+        </div>
+        <!-- The loading indicator is shown during image processing -->
+        <div class="fileupload-loading"></div>
+        <br>
+        <!-- The table listing the files available for upload/download -->
+        <table class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+        </table>
+      <% end %>
+
+      <%= render 'shared/form_upload' %>
+      <%= render 'shared/form_download' %>
+    </div>
+  </div>
+<% end %>

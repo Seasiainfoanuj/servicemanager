@@ -1,0 +1,34 @@
+<div id="title-page" class="a4-page">
+  <div class="title-page-left">
+    <div class="title-page-logo">
+
+    </div>
+
+    <div class="title-page-image-top">
+      <%= image_tag @master_quote.title_page.image_1.url(:title_page) %>
+    </div>
+
+    <div class="title-page-image-bottom">
+      <%= image_tag @master_quote.title_page.image_2.url(:title_page) %>
+    </div>
+
+    <h1 class="title-page-title">
+      <%= @master_quote.title_page.title %>
+    </h1>
+  </div>
+
+  <div class="title-page-right">
+    <span class="title-page-right-title-large">BUS 4x4 Group of Companies</span>
+    <hr>
+    <span class="title-page-right-title">Bus 4x4 Australia</span>
+    <hr>
+    <span class="title-page-right-title">Bus 4x4 Japan</span>
+    <hr>
+    <span class="title-page-right-title">4x4 Tour Bus Australia</span>
+    <hr>
+    <span class="title-page-right-title">4x4 Motorhomes Australia</span>
+    <hr>
+  </div>
+
+  <div class="clear"></div>
+</div>

@@ -1,0 +1,66 @@
+<div class="box box-condensed box-color box-bordered">
+  <div class="box-title">
+    <h3><i class="glyphicon-list" style="position:relative; top:-3px;"></i>Hire Quote Details</h3>
+    <%= manual_link('hire_quotes') if current_user.admin? %>
+  </div>
+  <div class="box-content nopadding">
+    <table id="hire-quote-heading-details" class="table table-bordered table-force-topborder" style="clear: both">
+      <tbody>
+        <tr>
+          <td>Quote Reference</td>
+          <td width="80%"><%= quote.reference %></td>
+        </tr>
+        <tr>
+          <td>Version</td>
+          <td width="80%"><%= quote.version %></td>
+        </tr>
+        <tr>
+          <td>Customer</td>
+          <td width="80%">
+            <%= quote.customer_name({email: true}) %>
+            <%= link_to(quote.client_details_link) %>
+          </td>
+        </tr>
+        <tr>
+          <td>Authorised Contact</td>
+          <td width="80%">
+            <%= "#{quote.authorised_contact.name} (#{quote.authorised_contact.email})" %>
+            <%= link_to(quote.authorised_contact_link) %>
+          </td>
+        </tr>
+        <tr>
+          <td>Manager</td>
+          <td width="80%">
+            <%= quote.manager_name %>
+          </td>
+        </tr>
+        <tr>
+          <td>Quote Status</td>
+          <td width="80%">
+            <%= quote.status_details %>
+          </td>
+        </tr>
+        <tr>
+          <td>Last viewed by customer</td>
+          <td width="80%">
+            <%= quote.last_viewed_display %>
+          </td>
+        </tr>
+        <tr>
+          <td>Tags</td>
+          <td width="80%">
+            <%= quote.tags %>
+          </td>
+        </tr>
+        <% if quote.enquiry.present? %>
+          <tr>
+            <td>Created from enquiry</td>
+            <td width="80%">
+              <%= link_to(quote.enquiry.uid, quote.enquiry) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

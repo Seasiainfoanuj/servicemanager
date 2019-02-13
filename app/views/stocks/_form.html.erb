@@ -1,0 +1,75 @@
+<%= form_for(@stock, :html => {:class => "form-horizontal form-validate", :id => "stock-form"}) do |f| %>
+  <% if @stock.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@stock.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @stock.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% unless current_user.has_role? :supplier %>
+  <div class="box-title">
+    <h3><i class="glyphicon-group" style="position:relative; top:-3px;"></i>Supplier Information</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :supplier_id, "Supplier", :class => "control-label" %>
+      <div class="controls">
+        <%= collection_select(:stock, :supplier_id, User.filter_by_supplier, :id, :company_name, {prompt: true}, {:class=>'select2-me span6', 'data-rule-required' => true}) %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+  <div class="box-title">
+    <h3><i class="glyphicon-barcode"></i>Stock Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :stock_number, "Stock Number", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :stock_number, :class => "input-medium", 'data-rule-required' => true %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :name, "Year, Make, Model", :class => "control-label" %>
+      <div class="controls">
+        <%= collection_select(:stock, :vehicle_model_id, VehicleModel.all, :id, :full_name, {prompt: true}, {:class=>'select2-me span5', 'data-rule-required' => true}) %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :vin_number, "VIN Number", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :vin_number, :class => "input-large" %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :engine_number, "Engine Number", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :engine_number, :class => "input-large" %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :transmission, "Transmission", :class => "control-label" %>
+      <div class="controls">
+        <%= f.select(:transmission, Vehicle::TRANSMISSION_TYPES, {include_blank: 'Please select'}, {:class=>'input-xlarge'}) %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :colour, "Colour", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field(:colour, :class=>'input-medium') %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :eta_date_field, "ETA", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :eta_date_field, :class => "input-medium datepick" %>
+      </div>
+    </div>
+  </div>
+<% end %>

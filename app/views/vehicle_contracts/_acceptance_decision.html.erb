@@ -1,0 +1,32 @@
+<div class="row-fluid">
+  <%= form_for(@vehicle_contract, :url => url_for(:action => 'accept', :vehicle_contract_id => @vehicle_contract.uid, :user_email => params[:user_email], :user_token => params[:user_token]), :html => {:multipart => :true, :id => "vehicle-contract-review-form", :class => "form-horizontal form-validate"}, :method => :POST) do |f| %>
+    <% if @vehicle_contract.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@vehicle_contract.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+        <ul>
+          <% @vehicle_contract.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>  
+
+    <div class="span5">
+      <% if current_user == @view_contract.customer %>
+        <button type="button" data-toggle="modal" data-target="#accept-vehicle-contract-model" class="btn btn-satgreen"><i class="icon-ok"></i> Accept Vehicle Purchase Contract</button>
+      <% else %>
+        <button type="button" class="btn btn-satgreen" disabled="true"><i class="icon-ok"></i> Accept Vehicle Purchase Contract</button>
+      <% end %>  
+    </div>
+    <div class="span7">
+      <p>When you need assitance, do not hesitate to call
+        <% if @view_contract.manager && @view_contract.manager.phone.present? %>
+          <%= @view_contract.manager_name %> on <b><%= @view_contract.manager.phone %></b>.
+        <% else %>
+          <%= @view_contract.manager_name %> on <b>1300 287 494</b>.
+        <% end %>
+      </p>  
+    </div>
+  <% end %>
+</div>

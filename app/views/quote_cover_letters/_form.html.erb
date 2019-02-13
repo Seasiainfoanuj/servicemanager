@@ -1,0 +1,53 @@
+<%= form_for(@quote_cover_letter, :html => {:class => "form-horizontal form-validate", :id => "quote-cover-letter-form"}) do |f| %>
+  <% if @quote_cover_letter.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@quote_cover_letter.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @quote_cover_letter.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :quote_id %>
+
+  <div class="box-title">
+    <h3><i class="icon-pencil"></i>Title</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :title, "Title", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :title, :class => "span8", 'data-rule-required' => true %>
+      </div>
+    </div>
+  </div>
+
+  <div class="box-title">
+    <h3><i class="icon-pencil"></i>Body Text</h3>
+  </div>
+  <div class="box-content">
+    <% if @quote_cover_letter.text.present? %>
+      <%= f.text_area :text, {:id => 'quote_cover_letter_text', :class => "span12", 'rows' => 10} %>
+    <% else %>
+      <% default_text = "Dear #{@quote_cover_letter.quote.customer.name},
+
+[...]
+
+
+Best Regards,
+
+#{@quote_cover_letter.quote.manager.name if @quote_cover_letter.quote.manager}
+#{@quote_cover_letter.quote.manager.job_title if @quote_cover_letter.quote.manager}
+#{@quote_cover_letter.quote.manager.company if @quote_cover_letter.quote.manager}
+#{@quote_cover_letter.quote.manager.postal_address.line_1 if @quote_cover_letter.quote.manager && @quote_cover_letter.quote.manager.postal_address}
+#{@quote_cover_letter.quote.manager.postal_address.line_2 if @quote_cover_letter.quote.manager && @quote_cover_letter.quote.manager.postal_address}
+#{@quote_cover_letter.quote.manager.postal_address.suburb if @quote_cover_letter.quote.manager && @quote_cover_letter.quote.manager.postal_address} #{@quote_cover_letter.quote.manager.postal_address.state if @quote_cover_letter.quote.manager && @quote_cover_letter.quote.manager.postal_address} #{@quote_cover_letter.quote.manager.postal_address.postcode if @quote_cover_letter.quote.manager && @quote_cover_letter.quote.manager.postal_address}" %>
+
+      <%= f.text_area :text, {:id => 'quote_cover_letter_text', :class => "span12", 'rows' => 30, value: default_text} %>
+
+    <% end %>
+  </div>
+<% end %>

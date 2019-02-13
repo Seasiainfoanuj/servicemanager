@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= render 'layouts/head', title: BUS4X4_ADMIN_APPL_NAME %>
+  <script type="text/javascript">
+    var $buoop = {}
+    $buoop.ol = window.onload;
+    window.onload=function(){
+     try {if ($buoop.ol) $buoop.ol();}catch (e) {}
+     var e = document.createElement("script");
+     e.setAttribute("type", "text/javascript");
+     e.setAttribute("src", "http://browser-update.org/update.js");
+     document.body.appendChild(e);
+    }
+  </script>
+</head>
+<body class="login theme-white">
+  <div class="wrapper">
+    <div class="login-body">
+      <%= yield %>
+    </div>
+  </div>
+  <div id="devise-footer">
+    <div class="credits pull-right">Cloud Software developed in-house by Bus4x4</div>
+  </div>
+</body>
+</html>

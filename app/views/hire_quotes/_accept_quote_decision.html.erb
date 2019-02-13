@@ -1,0 +1,24 @@
+<% present(@hire_quote) do |quote| %>
+  <% if quote.customer_may_perform_action?(:accept_quote) %>
+    <a href="#request-change-model" role="button" class="btn btn-grey" data-toggle="modal">
+      <%= quote.request_changes_text %>
+    </a>
+    <!-- = render 'request_change_form' -->
+
+    <a href="#accept_quote_model" role="button" class="btn btn-satgreen" data-toggle="modal"><i class="icon-ok"></i> Proceed with Order</a>
+
+    <div id="accept_quote_model" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Proceed with Reservation?</h3>
+      </div>
+      <div class="modal-body">
+        <p>By proceeding with this order you are accepting to reserve the vehicles and other listed items outlined in this quote REF#<%= quote.reference %>. Would you like to proceed?</p>
+      </div>
+      <div class="modal-footer">
+        <%= link_to "Cancel", '', {:class => 'btn btn-lightgrey', 'data-dismiss' => 'model'} %>
+        <%= link_to '<i class="icon-ok"></i> Proceed with Reservation'.html_safe, {:action => 'accept', :id => quote.reference, :user_email => quote.authorised_contact.email, :user_token => quote.authorised_contact.authentication_token}, {:class => 'btn btn-green'} %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,152 @@
+@media print {
+  body, p, label {
+    font-size: 11px !important;
+  }
+  #navigation, #left, .breadcrumbs, .invoice-payment,
+  .clean-page .page-header, .new-note, .note .edit, .page-header .btn, .box-title .btn, .btn-mini {
+    display: none !important;
+  }
+  #main {
+    margin-left: 0 !important;
+  }
+  #content, #main {
+    width: 100% !important;
+  }
+  .page-header h1 {
+    margin: 0 !important;
+  }
+  .box .box-title,
+  .box.box-bordered .box-title {
+    border-width: 1px !important;
+    border-bottom: none !important;
+    padding: 7px 0 7px 10px !important;
+    margin: 0 !important;
+  }
+  .box .box-title h3 {
+    font-size: 16px !important;
+    line-height: 18px !important;
+    margin: 0 !important;
+  }
+  .box .box-content, #activity-feed {
+    border: 1px solid #333 !important;
+    margin-bottom: 20px !important;
+  }
+  .box.box-bordered form .box-content {
+    border: 1px solid #333 !important;
+  }
+  .box .box-content.scrollable,
+  .slimScrollDiv {
+    height: auto !important;
+    border: none !important;
+  }
+  .label { font-weight: normal !important; }
+
+  table, .table, .table-bordered.table-force-topborder {
+    border-collapse: collapse !important;
+    border: none !important;
+  }
+  th, td {
+    border-collapse: collapse !important;
+    border-width: 1px !important;
+    border-color: #333 !important;
+  }
+  td {
+    border-top: 1px solid #333 !important;
+  }
+  table tr:first-child td {
+    border-top: none !important
+  }
+
+  #quote {
+    page-break-after: always !important;
+  }
+
+  #quote .box {
+    width: 100% !important;
+    min-height: 1400px !important;
+    border: none !important;
+  }
+  #quote-activity .box {
+    width: 100% !important;
+    border: none !important;
+  }
+  #quote #status-box {
+    display: none !important;
+  }
+  #quote .invoice-infos {
+    width: 300px !important;
+  }
+  .a4-page {
+    width: 100% !important;
+    min-height: 895px !important;
+    border: none !important;
+    padding: 0 !important;
+    font-size: 0.8em !important;
+  }
+  .invoice-container .invoice-header {
+    display: none !important;
+  }
+
+  #title-page {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    page-break-after: always !important;
+  }
+
+  #title-page .title-page-left {
+    width: 520px !important;
+    float: left !important;
+  }
+
+  #title-page .title-page-right {
+    width: 150px !important;
+    height: 895px !important;
+  }
+
+  #title-page .title-page-image-top,
+  #title-page .title-page-image-bottom {
+    width: 500px !important;
+  }
+
+  #title-page .title-page-right-address {
+    margin-top: 50px !important;
+  }
+
+  #cover-letter {
+    page-break-after: always !important;
+  }
+
+  #quote-attachments {
+    display: none !important;
+  }
+
+  #quote-specification-sheet-show {
+    display: none !important;
+  }
+
+  #quote-activity {
+    border: none !important;
+  }
+  #cover-letter {
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+  }
+  .calendar {
+    padding-top: 0 !important;
+  }
+  #footer {
+    display: none !important;
+  }
+  .fileupload-buttonbar {
+    display: none !important;
+  }
+  .thumbnail {
+    border: none !important;
+  }
+  .thumbnail a[href]:after {
+    content: none;
+  }
+  a[href]:after {
+    content: none;
+  }
+}

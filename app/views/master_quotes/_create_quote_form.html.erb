@@ -1,0 +1,8 @@
+<div id="create-quote-form">
+  <h4>Create New Quote</h4>
+  <p>To create a new quote you must select a pre existing customer.</p>
+  <%= select_tag "customer_select", options_for_select(options_for_customers, @current_customer), prompt: "Select customer", class: 'select2-me span6' %>
+  <br><br>
+  <a id="cancel_create_quote_link" href="#" role="button" class="btn">Cancel</a>
+  <%= link_to '<i class="icon-plus-sign"></i> Create Quote'.html_safe, {controller: 'quotes', action: 'create_from_master', master_quote_id: @master_quote.id}, {:id => 'create_quote_link', :class => 'btn btn-satgreen'} %>
+</div>

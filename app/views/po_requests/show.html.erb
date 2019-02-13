@@ -1,0 +1,198 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>
+          <%= content_tag(:i, nil, {class: 'glyphicon-flag', style: 'position: relative; top: -10px; margin-right: 10px; color: #D97A46'}) if @po_request.flagged? && can?(:view_flagged, @po_request) %>
+          PO Request <span class="label"><%= "REF# #{@po_request.uid}" %></span>
+        </h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if can? :send_notification, @po_request %>
+          <a href="#send-po-request-model" role="button" class="btn btn-satblue" data-toggle="modal"><i class="icon-envelope"></i> Send Request</a>
+          <%= render 'send_form' %>
+        <% end %>
+
+        <% if can? :create, Workorder %>
+          <%= link_to 'Create Workorder', {:controller => 'workorders', :action => 'new', :po_request_id => @po_request.id}, class: 'btn btn-green', data: {confirm: "Are you sure you want to close this po request and create a workorder?"} %>
+        <% end %>
+
+        <% if can? :update, @po_request %>
+          <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_po_request_path(@po_request), {:title => 'Edit', :class => 'btn', "data-placement" => "bottom", 'rel' => 'tooltip'} %>
+        <% end %>
+
+        <%= link_to '<i class="icon-list-alt"></i>'.html_safe, po_requests_path, {:title => "List All", :class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-notes"></i>PO Request Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="vehicle" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Status</td>
+                  <td width="75%"><%= po_request_status_label(@po_request.status) %></td>
+                </tr>
+                <tr>
+                  <td>Requested Schedule Date</td>
+                  <td width="80%"><%= @po_request.sched_date_field %> - <b><%= @po_request.sched_time_field %></b></td>
+                </tr>
+                <tr>
+                  <td>Estimated time of completion</td>
+                  <td width="80%"><%= @po_request.etc_date_field %> - <b><%= @po_request.etc_time_field %></b></td>
+                </tr>
+                <% if can? :view_tags, @po_request %>
+                  <% unless @po_request.tag_list.empty? %>
+                    <tr>
+                      <td>Tags</td>
+                      <td width="80%">
+                        <% @po_request.tag_list.each do |tag| %>
+                          <%= content_tag :span, tag, class: 'label label-satblue' %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box-title">
+            <h3 style="width: 100%">
+              <i class="glyphicon-car"></i>Vehicle Details
+              <%= link_to "<i class='icon-search'></i>Linked Vehicle".html_safe, @po_request.vehicle, :class => "btn pull-right" if @po_request.vehicle %>
+            </h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="vehicle" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Make &amp; Model</td>
+                  <td width="80%"><%= @po_request.vehicle_make %> <%= @po_request.vehicle_model %></td>
+                </tr>
+                <tr>
+                  <td>Vin Number</td>
+                  <td width="80%">
+                    <%= @po_request.vehicle_vin_number %>
+                    <% unless @po_request.vehicle %>
+                      <br>
+                      <%= content_tag(:span, content_tag(:i, nil, class: ' icon-warning-sign') + ' Vin number does not match any vehicles in system', class: 'label label-warning') %>
+                    <% end %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Vehicle Number</td>
+                  <td><%= @po_request.vehicle.vehicle_number if @po_request.vehicle %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <% if @po_request.details.present? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-notes"></i>Details</h3>
+            </div>
+            <div class="box-content">
+              <%= @po_request.details.html_safe %>
+            </div>
+          <% end %>
+
+          <% if current_user.has_role? :admin %>
+            <div class="box-title">
+              <h3><i class="glyphicon-user"></i>Service Provider Details</h3>
+            </div>
+            <div class="box-content nopadding">
+              <table id="po-request-details" class="table table-bordered table-force-topborder" style="clear: both">
+                <tbody>
+                  <tr>
+                    <td>Service Provider</td>
+                    <td width="80%"><%= @po_request.service_provider.company_name %></td>
+                  </tr>
+                  <tr>
+                    <td>Name</td>
+                    <td width="80%"><%= @po_request.service_provider.name %></td>
+                  </tr>
+                  <tr>
+                    <td>Company</td>
+                    <td width="80%"><%= @po_request.service_provider.company %></td>
+                  </tr>
+                  <tr>
+                    <td>Job Title</td>
+                    <td width="80%"><%= @po_request.service_provider.job_title %></td>
+                  </tr>
+                  <tr>
+                    <td>Email</td>
+                    <td width="80%"><%= @po_request.service_provider.email %></td>
+                  </tr>
+                  <tr>
+                    <td>Phone</td>
+                    <td width="80%"><%= @po_request.service_provider.phone %></td>
+                  </tr>
+                  <tr>
+                    <td>Fax</td>
+                    <td width="80%"><%= @po_request.service_provider.fax %></td>
+                  </tr>
+                  <tr>
+                    <td>Mobile</td>
+                    <td width="80%"><%= @po_request.service_provider.mobile %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          <% end %>
+
+          <% unless @po_request.uploads.empty? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-paperclip"></i>Attachments</h3>
+            </div>
+            <div class="box-content" style="padding: 20px 20px 50px;">
+              <% @po_request.uploads.each do |file| %>
+              <div style="margin:5px; height: 200px; float:left">
+                <div class="thumbnail" style="float: left; margin-right: 5px; text-align:center;">
+                  <a href="<%= file.upload.url(:original) %>"><%= image_tag file.upload.url(:medium) %></a><br>
+                  <a href="<%= file.upload.url(:original) %>" style="font-size:0.8em;padding:5px;"><%= file.upload_file_name %></a>
+                </div>
+              </div>
+              <% end %>
+            </div>
+          <% end %>
+
+          <%= render 'shared/notes/list', resource: @po_request %>
+
+          <% if current_user.has_role? :admin %>
+            <div class="box-title">
+              <h3><i class="icon-bullhorn"></i>Activity</h3>
+            </div>
+            <div id="activity-feed" class="box-content scrollable" data-height="300" data-visible="true">
+              <% @activities.each do |activity| %>
+                <div class="activity">
+                  <div class="details">
+                    <%= render_activity activity, locals: {display: "simple"} %>
+                    <span class="time"><%= time_ago_in_words(activity.created_at) + " ago" %></span>
+                  </div>
+                  <div class="date">
+                    <%= activity.created_at.strftime("%e %b %Y, %l:%M %p") %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

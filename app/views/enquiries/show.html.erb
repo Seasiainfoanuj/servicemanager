@@ -1,0 +1,223 @@
+<% present(@enquiry) do |enquiry| %>
+
+  <%= render(:partial => 'layouts/left') %>
+  <div id="main">
+    <div class="container-fluid">
+      <% if current_user.admin? %>
+        <%= render(partial: 'shared/page_legend', locals: {actions: [:assign, :edit, :list]}) %>
+      <% end %>
+      <%= render(:partial => 'layouts/notice') %>
+      <div class="page-header">
+        <div class="pull-left">
+          <h1>
+            <%= content_tag(:i, nil, {class: 'glyphicon-flag', style: 'position: relative; top: -10px; margin-right: 10px; color: #D97A46'}) if @enquiry.flagged? && can?(:view_flagged, @enquiry) %>
+            Enquiry <%= enquiry_reference_label(@enquiry) %> from <%= enquiry.customer_name %>
+          </h1>
+        </div>
+        <div class="pull-right">
+          <br>
+        <% unless current_user.has_role? :dealer %>
+          <% if enquiry.may_be_quoted? %>
+            <% if enquiry.hire_enquiry? %>
+              <%= form_for @enquiry, url: create_hire_quote_enquiry_path(@enquiry), html: {id: "create-hire-quote-from-enquiry"}  do |f| %>
+                <%= f.submit 'Create Hire Quote!', {:class => "btn btn-green"} %>
+              <% end %>
+            <% else %>
+              <!--<%= enquiry.create_from_master_quote_link %>-->
+              <%= enquiry.create_quote_link %>
+            <% end %>  
+          <% end %>
+          <a href="#send-workorder-model" role="button" class="btn btn-satblue" data-toggle="modal">
+          <i class="icon-envelope"></i> Send Email </a>
+          <div id = "send-enquiry"><%= render 'send_form' %></div>
+
+          <a href="#create_customer_model" role="button" class="btn btn-satgreen" data-toggle="modal">Master Quotes</a>
+          <div id="create_customer_model" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h3 id="myModalLabel">Master Quotes</h3>
+            </div>
+            <div class="modal-body">
+              <h5>Which page do you want - Master Quotes or Master Quotes International?</h5>
+            </div>
+            <div class="modal-footer">
+              <%= enquiry.create_from_master_quote_link %>
+              <%= enquiry.create_from_master_quote_international_link %>
+            </div>
+          </div>
+          <% if !@enquiry.manager.nil?  %>
+            <% manager_name = @enquiry.manager.id %>
+          <% else %>
+            <% manager_name = "" %> 
+          <% end %> 
+          <% user_name = enquiry.user.id if enquiry.user.present? %>
+          <% if current_user.has_role? :masteradmin ,:superadmin %>
+            <% if can? :assign, Enquiry %>
+              <a href="#assign-enquiry-model" role="button" class="btn btn-satblue" data-toggle="modal">
+                <%= @enquiry.manager ? "<i class='icon-share-alt'></i> Reassign".html_safe : "<i class='icon-share-alt'></i> Assign".html_safe %>
+              </a>
+              <%= render 'assign_form' %>
+            <% end %>
+          <% end %>
+
+          <% if (current_user.has_role? :admin) && ( !current_user.has_role? :employee, :masteradmin, :superadmin) && ((current_user.id == user_name) || (current_user.id == manager_name)) %>
+              <% if can? :assign, Enquiry %>
+                <a href="#assign-enquiry-model" role="button" class="btn btn-satblue" data-toggle="modal">
+                  <%= @enquiry.manager ? "<i class='icon-share-alt'></i> Reassign".html_safe : "<i class='icon-share-alt'></i> Assign".html_safe %>
+                </a>
+                <%= render 'assign_form' %>
+              <% end %>
+          <% end %>
+           
+          <% if  (current_user.has_role? :employee ) && ( current_user.name == enquiry.customer_name) %>
+            <% if can? :assign, Enquiry %>
+            <a href="#assign-enquiry-model" role="button" class="btn btn-satblue" data-toggle="modal">
+                <%= @enquiry.manager ? "<i class='icon-share-alt'></i> Reassign".html_safe : "<i class='icon-share-alt'></i> Assign".html_safe %>
+              </a>
+              <%= render 'assign_form' %>
+            <% end %>
+          <% end %> 
+         
+          <% if (current_user.has_role? :admin) && ( !current_user.has_role? :employee, :masteradmin, :superadmin) && ((current_user.id == user_name) || (current_user.id == manager_name)) %>
+              <% if can? :update, Enquiry %>
+                  <%= link_to '<i class="icon-edit"></i>'.html_safe, {:action => 'edit', :id => @enquiry.uid}, {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+              <% end %>
+          <% elsif current_user.has_role? :masteradmin, :superadmin %>
+            <% if can? :update, Enquiry %>
+                <%= link_to '<i class="icon-edit"></i>'.html_safe, {:action => 'edit', :id => @enquiry.uid}, {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+            <% end %>
+          <% end %>
+        <% end %>
+          <%= link_to '<i class="icon-list-alt"></i>'.html_safe, enquiries_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+        </div>
+      </div>
+
+      <div class="breadcrumbs">
+        <%= render_crumbs %>
+        <div class="close-bread">
+          <a href="#"><i class="icon-remove"></i></a>
+        </div>
+      </div>
+
+      <div class="row-fluid">
+        <div class="span12">
+          <% if current_user.admin? %>
+            <% unless @enquiry.hire_enquiry? %>
+              <div class="alert alert-info" style="margin-top:20px">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <i class="icon icon-info-sign"></i> Did you expect to see Hire Enquiry details, but it is missing? If the Enquiry Type is not 'Hire / Lease', first change this and update the record. Then, edit the record again and the Hire details will be visible.
+              </div>
+            <% end %>
+
+            <% if enquiry.manager.blank? %>
+              <div class="alert alert-warning" style="margin-top:20px">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <i class="icon icon-warning-sign"></i> A manager must be assigned to this enquiry. 
+              </div>
+            <% end %>  
+            <% if enquiry.invoice_company.blank? %>
+              <div class="alert alert-warning" style="margin-top:20px">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <i class="icon icon-warning-sign"></i> An Internal Company must be assigned to this enquiry. 
+              </div>
+            <% end %>  
+            <% unless enquiry.customer_details_verified %>
+              <div class="alert alert-warning" style="margin-top:20px">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <i class="icon icon-warning-sign"></i> Please confirm that you have inspected the customer's contact details and that the details currently on record (left column) are correct. 
+              </div>
+            <% end %>
+          <% end %>
+
+          <div class="box box-condensed box-color box-bordered">
+
+            <%= render 'enquiry_reference_details' %>
+
+            <% if current_user.admin? %>
+              <%= render 'enquirer_view_manager' %>
+            <% else %>
+              <%= render 'enquirer_view_customer' %>
+            <% end %>  
+
+            <% if @enquiry.hire_enquiry? %>
+              <%= render 'hire_view' %>
+            <% end %>  
+
+            <div class="box-title">
+              <h3><i class="glyphicon-notes" style="position:relative; top:-3px;"></i>Enquiry Message</h3>
+            </div>
+            <div class="box-content">
+              <%= simple_format @enquiry.details %>
+            </div>
+                 
+              <div class="box box-condensed box-color box-bordered"> 
+                <div class="box-title">
+                  <h3><i class="glyphicon-envelope" style="position:relative; top:-3px;"></i>Enquiry Emails</h3>
+                </div>
+                <div class="box-content">
+                <% if @enquiry.enquiry_email_messages.where(:enquiry_id => @enquiry.id).present? %>
+                  <%  @enquiry.enquiry_email_messages.order(created_at: :desc).where(:enquiry_id => @enquiry.id).each do |enquiry_message| %>
+                    <table id="message" class="table table-nohead table-bordered" style="clear: both" rules=rows>
+                         <tbody>
+                          <tr>
+                            <td>
+                              <% message_id = "enquiry_email_model" + enquiry_message.email_message.id.to_s %>
+                              <p> Email
+                                <a href="#<%= message_id -%>"  id="enquiry_email"  role="button"  data-toggle="modal" ><%=enquiry_message.email_message.uid %></a> 
+                                Sent to <%= enquiry_message.email_message.rerecipient %> at <%= enquiry_message.email_message.created_at.strftime("%e %b %Y, %l:%M %p") %>
+                              </p>
+                            </td>
+                          </tr>
+                        </tbody>
+                     </table>
+                     <div id="<%= message_id -%>" class="modal hide resend_email" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel">Enquiry Messages</h3>
+                      </div>
+                      <div class="modal-body">
+                        <%= simple_format enquiry_message.email_message.message %>
+                        <% @email_messages_id = enquiry_message.email_message %>
+                      </div> 
+                      <div class="modal-footer">
+                        <button class="btn btn-grey" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                        <a id="resend_mail" data-id = "<%=enquiry_message.email_message.message -%>" data-upload-id = "<%=@email_id -%>"
+                         data-enquiry-id = "<%=enquiry.id -%>" role="button" class="btn btn-satblue resend_email_btn">
+                        <i class="icon-envelope"></i> Resend Enquiry</a>
+                      </div>
+                     </div>
+                  <% end %>
+                <% else %>
+                  <p> No Emails Avaliable </p>
+                <% end %>
+                </div>
+              </div>
+
+            <%= render 'shared/notes/list', resource: @enquiry %>
+             
+            <% if current_user.has_role? :admin %>
+              <div class="box-title">
+                <h3><i class="icon-bullhorn"></i>Enquiry Activity</h3>
+              </div>
+              <div id="activity-feed" class="box-content scrollable" data-height="300" data-visible="true">
+              
+                <% @activities.each do |activity| %>
+                  <div class="activity">
+                    <div class="details">
+                      <%= render_activity activity, locals: {display: "simple"} %>
+                      <span class="time"><%= time_ago_in_words(activity.created_at) + " ago" %></span>
+                    </div>
+                    <div class="date">
+                      <%= activity.created_at.strftime("%e %b %Y, %l:%M %p") %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,4 @@
+Client id, Reference number, Client type, First name, Last name, Email, Phone, Mobile, Company field (obsolete), Company record
+<% @clients.each do |client| %>
+  <%= client[0] %>,<%= client[1] %>,<%= client[2] %>,<%= client[3] %>,<%= client[4] %>,<%= client[5] %>,<%= client[6] %>,<%= client[7] %>,<%= client[8] %>,<%= client[9] %>
+<% end %>  

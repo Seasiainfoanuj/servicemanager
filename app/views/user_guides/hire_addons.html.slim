@@ -1,0 +1,32 @@
+#user-guide
+  .panel.panel-default
+    .panel-body
+      h1 Service Manager User Guide
+      h2
+        i.glyphicon-link
+        |  Hire Add-Ons
+
+  section.definition
+    h3 Definition
+    p.main-definition Hire Add-ons, like GPS Navigation Systems or Seat Sense units, can optionally be fitted in a Hire Vehicle at an additional charge. An administrator may specify the add-ons suitable for a specific Hire Product. This will allow the selection of some add-ons for a Hire Quote Vehicle.
+
+    dl.dl-horizontal
+      dt Add-on Type
+      dd The two most obvious types are GPS or Seat Sense
+      dt Model Name
+      dd This is the brand name of a specific type of Add-on
+      dt Hire Price
+      dd This is the cost of providing this addon in a rental vehicle over 1 unit of the period indicated by Billing Frequency.
+      dt Billing Frequency
+      dd The period to which the Hire Price applies.
+
+  = link_to '<span class="label label-info">back to Index</span>'.html_safe, user_guides_path
+
+  section
+    h3 What happens next?
+    ul 
+      li After defining a new add-on, the application needs to know in which vehicles it can be fitted. Therefore, visit each of these Hire Products and select the new add-on in the section labelled Associate add-ons with hire product. 
+
+  section.change-history
+    h4 Change History
+    p Created by Francois van der Hoven on 29 July 2016

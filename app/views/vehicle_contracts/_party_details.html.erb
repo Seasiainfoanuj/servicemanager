@@ -1,0 +1,85 @@
+<hr class="header">
+<section class="parties">
+  <h1>A - THE PARTIES</h1>
+  <div class="row-fluid">
+    <div class="span2">
+      <p class="party-label">DEALER'S NAME AND ADDRESS</p>
+    </div>
+    <div class="span5">
+      <p>Here in referred to as 'The Dealer'<br>
+         <%= @view_contract.dealer.name %><br>
+         <%= @view_contract.dealer.address_line_1 %><br>
+         <%= @view_contract.dealer_suburb_line %><br>
+      </p>
+      <p>ph: <%= @view_contract.dealer.phone %><br>
+         fax: <%= @view_contract.dealer.fax %></p>
+      </p>
+    </div>
+    <div class="span5">
+      <table>
+        <tbody>
+          <tr>
+            <td>Sales Person</td>
+            <td><%= @view_contract.manager_name %></td>
+          </tr>
+          <tr>
+            <td>Order date</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <table>
+        <tbody>
+          <tr>
+            <td>Dealer ABN</td>
+            <td><%= @view_contract.dealer.abn %></td>
+          </tr>
+          <tr>
+            <td>Dealer Lic No.</td>
+            <td><%= BUS4X4_LICENCE_NUMBER %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <hr>
+
+  <div class="row-fluid">
+    <div class="span2">
+      <p class="party-label">PURCHASERS' NAME(s) AND ADDRESS(es)</p>
+    </div>
+    <div class="span5">
+      <p>Here in referred to as 'The Customer'<br>
+        <%= @view_contract.customer.name %><br>
+        <% @view_contract.customer_address_lines.each do |line| %>
+          <%= line %><br>
+        <% end %> 
+      </p>
+      <p>ph: <%= @view_contract.customer.phone %><br>
+         fax: <%= @view_contract.customer.fax %></p>
+      </p>
+    </div>
+    <div class="span5">
+      <table>
+        <tbody>
+          <tr>
+            <td>Customer name</td>
+            <td><%= @view_contract.customer.name %></td>
+          </tr>
+          <tr>
+            <td>Company name</td>
+            <td><%= @view_contract.customer_company_name %></td>
+          </tr>
+          <tr>
+            <td>Customer ABN</td>
+            <td><%= @view_contract.customer_abn %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <hr class="header">
+  <p>The Purchaser agrees to buy from the Dealer, and the Dealer agrees to sell 
+     the Purchaser the motor vehicle and accessories described in Sections B 
+     and C on the terms and conditions below and on the adjacent pages</p>
+</section>

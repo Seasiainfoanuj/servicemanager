@@ -1,0 +1,2 @@
+module HireAgreementTypesHelper
+end

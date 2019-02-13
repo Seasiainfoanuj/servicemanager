@@ -1,0 +1,99 @@
+<div id="left">
+  <%= render 'layouts/left' %>
+</div>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1><%= "#{@user.name}" %></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <%= link_to '<i class="icon-group"></i>'.html_safe, company_path(@user.representing_company), {:title => "Return to Company",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+
+        <% if can? :update, User %>
+          <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_company_profile_user_path(@user), {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div id="contact-company-profile-page" class="span12">
+
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-user"></i>Contact Company Profile Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Contact of</td>
+                  <td width="80%"><%= @user.representing_company.name %></td>
+                </tr>
+                <tr>
+                  <td>Job Title</td>
+                  <td width="80%"><%= @user.job_title %></td>
+                </tr>
+                <tr>
+                  <td>System Access Roles</td>
+                  <td width="80%"><%= @user.roles.map { |role| role.to_s.humanize }.flatten.join(', ') %></td>
+                </tr>
+                <tr>
+                  <td>Authorised to Receive Emails?</td>
+                  <td width="80%"><%= @user.receive_emails ? 'Yes' : 'No' %></td>
+                </tr>
+              </tbody>
+            </table> 
+          </div>
+        </div>
+
+        <div class="box box-condensed box-color box-bordered user-contact-roles span6">
+          <div class="box-title">
+            <h3><i class="glyphicon-user"></i><%= "The roles of #{@user.name} in the company" %></h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-bordered table-force-topborder" style="clear: both">
+              <thead>
+                <tr>
+                  <th>Contact Role</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @user.contact_role_types.each do |role| %>
+                  <tr>
+                    <td width="50%"><%= role.name %></td>
+                    <td><%= link_to("Remove Contact Role", remove_contact_role_user_path(@user, contact_role_type_id: role.id), method: :patch, data: { confirm: 'Are you sure?' } ) %></td>
+                  </tr>
+                <% end %>  
+              </tbody>
+            </table> 
+          </div>
+        </div>       
+
+        <div class="new-role span6">
+          <h4>Add Contact Role for <%= @user.name %></h4>
+
+          <%= form_tag add_contact_role_user_path(@user), id: "new-user-contact-role-form" do %>
+
+            <div class="control-group">
+              <%= label_tag nil, "Contact Role", :class => "control-label" %>
+              <div class="controls">
+                <%= select_tag 'contact_role_type_id', options_for_select(ContactRoleType.all.collect { |role| [role.name, role.id] }), class: 'select2-me span6 role-select' %>
+              </div>
+            </div>
+            <%= button_tag "Add Contact Role", class: "btn btn-blue", id: "create-contact-role" %> 
+          <% end %>  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

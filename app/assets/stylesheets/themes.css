@@ -1,0 +1,1494 @@
+.accordion-widget .accordion-group.blue {
+    border: 2px solid #368ee0;
+}
+.accordion-widget .accordion-group.blue:hover {
+    border-color: #1e74c5 !important;
+}
+.accordion-widget .accordion-group.blue .accordion-toggle {
+    background: #368ee0 !important;
+    color: #fff;
+}
+.accordion-widget .accordion-group.blue .accordion-toggle:hover {
+    background: #1e74c5 !important;
+}
+.font-blue {
+    color: #368ee0;
+}
+ul>li.blue, .label-blue {
+    background: #368ee0;
+}
+.progress .bar.bar-blue {
+    background: #368ee0;
+}
+.pricing-tables .pricing.blue>li.head {
+    background: #368ee0;
+}
+.pricing-tables .pricing.blue>li.head .info {
+    background: #4c9ae3;
+}
+.pricing-tables .pricing.blue>li.head .name {
+    background: #1e74c5;
+}
+.btn.btn-blue {
+    background: #368ee0;
+    color: #fff !important;
+}
+.btn.btn-blue:hover {
+    background: #1e74c5;
+}
+.box.box-color.blue .box-title {
+    background: #368ee0 !important;
+}
+.box.box-color.blue .box-title .actions>a:hover {
+    color: #368ee0;
+}
+.box.box-color.blue .form-wizard .wizard-steps li.active .single-step .title {
+    background: #368ee0;
+}
+.box.box-color.blue .btn.btn-primary {
+    background: #368ee0;
+}
+.box.box-bordered.box-color.blue .box-title {
+    border-color: #368ee0 !important;
+}
+.box.box-bordered.box-color.blue .box-content {
+    border-color: #368ee0 !important;
+}
+.box.box-bordered.box-color.blue .slimScrollDiv {
+    border-bottom: 2px solid #368ee0;
+}
+.timeline>li .timeline-content .left .icon.blue {
+    background: #368ee0;
+}
+.accordion-widget .accordion-group.orange {
+    border: 2px solid #f8a31f;
+}
+.accordion-widget .accordion-group.orange:hover {
+    border-color: #dd8907 !important;
+}
+.accordion-widget .accordion-group.orange .accordion-toggle {
+    background: #f8a31f !important;
+    color: #fff;
+}
+.accordion-widget .accordion-group.orange .accordion-toggle:hover {
+    background: #dd8907 !important;
+}
+.font-orange {
+    color: #f8a31f;
+}
+ul>li.orange, .label-orange {
+    background: #f8a31f;
+}
+.progress .bar.bar-orange {
+    background: #f8a31f;
+}
+.pricing-tables .pricing.orange>li.head {
+    background: #f8a31f;
+}
+.pricing-tables .pricing.orange>li.head .info {
+    background: #f9ad38;
+}
+.pricing-tables .pricing.orange>li.head .name {
+    background: #dd8907;
+}
+.btn.btn-orange {
+    background: #f8a31f;
+    color: #fff !important;
+}
+.btn.btn-orange:hover {
+    background: #dd8907;
+}
+.box.box-color.orange .box-title {
+    background: #f8a31f !important;
+}
+.box.box-color.orange .box-title .actions>a:hover {
+    color: #f8a31f;
+}
+.box.box-color.orange .form-wizard .wizard-steps li.active .single-step .title {
+    background: #f8a31f;
+}
+.box.box-color.orange .btn.btn-primary {
+    background: #f8a31f;
+}
+.box.box-bordered.box-color.orange .box-title {
+    border-color: #f8a31f !important;
+}
+.box.box-bordered.box-color.orange .box-content {
+    border-color: #f8a31f !important;
+}
+.box.box-bordered.box-color.orange .slimScrollDiv {
+    border-bottom: 2px solid #f8a31f;
+}
+.timeline>li .timeline-content .left .icon.orange {
+    background: #f8a31f;
+}
+.accordion-widget .accordion-group.red {
+    border: 2px solid #e51400;
+}
+.accordion-widget .accordion-group.red:hover {
+    border-color: #b21000 !important;
+}
+.accordion-widget .accordion-group.red .accordion-toggle {
+    background: #e51400 !important;
+    color: #fff;
+}
+.accordion-widget .accordion-group.red .accordion-toggle:hover {
+    background: #b21000 !important;
+}
+.font-red {
+    color: #e51400;
+}
+ul>li.red, .label-red {
+    background: #e51400;
+}
+.progress .bar.bar-red {
+    background: #e51400;
+}
+.pricing-tables .pricing.red>li.head {
+    background: #e51400;
+}
+.pricing-tables .pricing.red>li.head .info {
+    background: #ff1600;
+}
+.pricing-tables .pricing.red>li.head .name {
+    background: #b21000;
+}
+.btn.btn-red {
+    background: #e51400;
+    color: #fff !important;
+}
+.btn.btn-red:hover {
+    background: #b21000;
+}
+.box.box-color.red .box-title {
+    background: #e51400 !important;
+}
+.box.box-color.red .box-title .actions>a:hover {
+    color: #e51400;
+}
+.box.box-color.red .form-wizard .wizard-steps li.active .single-step .title {
+    background: #e51400;
+}
+.box.box-color.red .btn.btn-primary {
+    background: #e51400;
+}
+.box.box-bordered.box-color.red .box-title {
+    border-color: #e51400 !important;
+}
+.box.box-bordered.box-color.red .box-content {
+    border-color: #e51400 !important;
+}
+.box.box-bordered.box-color.red .slimScrollDiv {
+    border-bottom: 2px solid #e51400;
+}
+.timeline>li .timeline-content .left .icon.red {
+    background: #e51400;
+}
+.accordion-widget .accordion-group.green {
+    border: 2px solid #393;
+}
+.accordion-widget .accordion-group.green:hover {
+    border-color: #267326 !important;
+}
+.accordion-widget .accordion-group.green .accordion-toggle {
+    background: #393 !important;
+    color: #fff;
+}
+.accordion-widget .accordion-group.green .accordion-toggle:hover {
+    background: #267326 !important;
+}
+.font-green {
+    color: #393;
+}
+ul>li.green, .label-green {
+    background: #393;
+}
+.progress .bar.bar-green {
+    background: #393;
+}
+.pricing-tables .pricing.green>li.head {
+    background: #393;
+}
+.pricing-tables .pricing.green>li.head .info {
+    background: #39ac39;
+}
+.pricing-tables .pricing.green>li.head .name {
+    background: #267326;
+}
+.btn.btn-green {
+    background: #393;
+    color: #fff !important;
+}
+.btn.btn-green:hover {
+    background: #267326;
+}
+.box.box-color.green .box-title {
+    background: #393 !important;
+}
+.box.box-color.green .box-title .actions>a:hover {
+    color: #393;
+}
+.box.box-color.green .form-wizard .wizard-steps li.active .single-step .title {
+    background: #393;
+}
+.box.box-color.green .btn.btn-primary {
+    background: #393;
+}
+.box.box-bordered.box-color.green .box-title {
+    border-color: #393 !important;
+}
+.box.box-bordered.box-color.green .box-content {
+    border-color: #393 !important;
+}
+.box.box-bordered.box-color.green .slimScrollDiv {
+    border-bottom: 2px solid #393;
+}
+.timeline>li .timeline-content .left .icon.green {
+    background: #393;
+}
+.accordion-widget .accordion-group.lime {
+    border: 2px solid #8cbf26;
+}
+.accordion-widget .accordion-group.lime:hover {
+    border-color: #6d941e !important;
+}
+.accordion-widget .accordion-group.lime .accordion-toggle {
+    background: #8cbf26 !important;
+    color: #fff;
+}
+.accordion-widget .accordion-group.lime .accordion-toggle:hover {
+    background: #6d941e !important;
+}
+.font-lime {
+    color: #8cbf26;
+}
+ul>li.lime, .label-lime {
+    background: #8cbf26;
+}
+.progress .bar.bar-lime {
+    background: #8cbf26;
+}
+.pricing-tables .pricing.lime>li.head {
+    background: #8cbf26;
+}
+.pricing-tables .pricing.lime>li.head .info {
+    background: #9cd42a;
+}
+.pricing-tables .pricing.lime>li.head .name {
+    background: #6d941e;
+}
+.btn.btn-lime {
+    background: #8cbf26;
+    color: #fff !important;
+}
+.btn.btn-lime:hover {
+    background: #6d941e;
+}
+.box.box-color.lime .box-title {
+    background: #8cbf26 !important;
+}
+.box.box-color.lime .box-title .actions>a:hover {
+    color: #8cbf26;
+}
+.box.box-color.lime .form-wizard .wizard-steps li.active .single-step .title {
+    background: #8cbf26;
+}
+.box.box-color.lime .btn.btn-primary {
+    background: #8cbf26;
+}
+.box.box-bordered.box-color.lime .box-title {
+    border-color: #8cbf26 !important;
+}
+.box.box-bordered.box-color.lime .box-content {
+    border-color: #8cbf26 !important;
+}
+.box.box-bordered.box-color.lime .slimScrollDiv {
+    border-bottom: 2px solid #8cbf26;
+}
+.timeline>li .timeline-content .left .icon.lime {
+    background: #8cbf26;
+}
+.accordion-widget .accordion-group.teal {
+    border: 2px solid #00aba9;
+}
+.accordion-widget .accordion-group.teal:hover {
+    border-color: #007877 !important;
+}
+.accordion-widget .accordion-group.teal .accordion-toggle {
+    background: #00aba9 !important;
+    color: #fff;
+}
+.accordion-widget .accordion-group.teal .accordion-toggle:hover {
+    background: #007877 !important;
+}
+.font-teal {
+    color: #00aba9;
+}
+ul>li.teal, .label-teal {
+    background: #00aba9;
+}
+.progress .bar.bar-teal {
+    background: #00aba9;
+}
+.pricing-tables .pricing.teal>li.head {
+    background: #00aba9;
+}
+.pricing-tables .pricing.teal>li.head .info {
+    background: #00c4c2;
+}
+.pricing-tables .pricing.teal>li.head .name {
+    background: #007877;
+}
+.btn.btn-teal {
+    background: #00aba9;
+    color: #fff !important;
+}
+.btn.btn-teal:hover {
+    background: #007877;
+}
+.box.box-color.teal .box-title {
+    background: #00aba9 !important;
+}
+.box.box-color.teal .box-title .actions>a:hover {
+    color: #00aba9;
+}
+.box.box-color.teal .form-wizard .wizard-steps li.active .single-step .title {
+    background: #00aba9;
+}
+.box.box-color.teal .btn.btn-primary {
+    background: #00aba9;
+}
+.box.box-bordered.box-color.teal .box-title {
+    border-color: #00aba9 !important;
+}
+.box.box-bordered.box-color.teal .box-content {
+    border-color: #00aba9 !important;
+}
+.box.box-bordered.box-color.teal .slimScrollDiv {
+    border-bottom: 2px solid #00aba9;
+}
+.timeline>li .timeline-content .left .icon.teal {
+    background: #00aba9;
+}
+.accordion-widget .accordion-group.purple {
+    border: 2px solid #ff0097;
+}
+.accordion-widget .accordion-group.purple:hover {
+    border-color: #cc0079 !important;
+}
+.accordion-widget .accordion-group.purple .accordion-toggle {
+    background: #ff0097 !important;
+    color: #fff;
+}
+.accordion-widget .accordion-group.purple .accordion-toggle:hover {
+    background: #cc0079 !important;
+}
+.font-purple {
+    color: #ff0097;
+}
+ul>li.purple, .label-purple {
+    background: #ff0097;
+}
+.progress .bar.bar-purple {
+    background: #ff0097;
+}
+.pricing-tables .pricing.purple>li.head {
+    background: #ff0097;
+}
+.pricing-tables .pricing.purple>li.head .info {
+    background: #ff1aa1;
+}
+.pricing-tables .pricing.purple>li.head .name {
+    background: #cc0079;
+}
+.btn.btn-purple {
+    background: #ff0097;
+    color: #fff !important;
+}
+.btn.btn-purple:hover {
+    background: #cc0079;
+}
+.box.box-color.purple .box-title {
+    background: #ff0097 !important;
+}
+.box.box-color.purple .box-title .actions>a:hover {
+    color: #ff0097;
+}
+.box.box-color.purple .form-wizard .wizard-steps li.active .single-step .title {
+    background: #ff0097;
+}
+.box.box-color.purple .btn.btn-primary {
+    background: #ff0097;
+}
+.box.box-bordered.box-color.purple .box-title {
+    border-color: #ff0097 !important;
+}
+.box.box-bordered.box-color.purple .box-content {
+    border-color: #ff0097 !important;
+}
+.box.box-bordered.box-color.purple .slimScrollDiv {
+    border-bottom: 2px solid #ff0097;
+}
+.timeline>li .timeline-content .left .icon.purple {
+    background: #ff0097;
+}
+.accordion-widget .accordion-group.brown {
+    border: 2px solid #a05000;
+}
+.accordion-widget .accordion-group.brown:hover {
+    border-color: #6d3700 !important;
+}
+.accordion-widget .accordion-group.brown .accordion-toggle {
+    background: #a05000 !important;
+    color: #fff;
+}
+.accordion-widget .accordion-group.brown .accordion-toggle:hover {
+    background: #6d3700 !important;
+}
+.font-brown {
+    color: #a05000;
+}
+ul>li.brown, .label-brown {
+    background: #a05000;
+}
+.progress .bar.bar-brown {
+    background: #a05000;
+}
+.pricing-tables .pricing.brown>li.head {
+    background: #a05000;
+}
+.pricing-tables .pricing.brown>li.head .info {
+    background: #ba5d00;
+}
+.pricing-tables .pricing.brown>li.head .name {
+    background: #6d3700;
+}
+.btn.btn-brown {
+    background: #a05000;
+    color: #fff !important;
+}
+.btn.btn-brown:hover {
+    background: #6d3700;
+}
+.box.box-color.brown .box-title {
+    background: #a05000 !important;
+}
+.box.box-color.brown .box-title .actions>a:hover {
+    color: #a05000;
+}
+.box.box-color.brown .form-wizard .wizard-steps li.active .single-step .title {
+    background: #a05000;
+}
+.box.box-color.brown .btn.btn-primary {
+    background: #a05000;
+}
+.box.box-bordered.box-color.brown .box-title {
+    border-color: #a05000 !important;
+}
+.box.box-bordered.box-color.brown .box-content {
+    border-color: #a05000 !important;
+}
+.box.box-bordered.box-color.brown .slimScrollDiv {
+    border-bottom: 2px solid #a05000;
+}
+.timeline>li .timeline-content .left .icon.brown {
+    background: #a05000;
+}
+.accordion-widget .accordion-group.pink {
+    border: 2px solid #e671b8;
+}
+.accordion-widget .accordion-group.pink:hover {
+    border-color: #de46a2 !important;
+}
+.accordion-widget .accordion-group.pink .accordion-toggle {
+    background: #e671b8 !important;
+    color: #333;
+}
+.accordion-widget .accordion-group.pink .accordion-toggle:hover {
+    background: #de46a2 !important;
+}
+.font-pink {
+    color: #e671b8;
+}
+ul>li.pink, .label-pink {
+    background: #e671b8;
+}
+.progress .bar.bar-pink {
+    background: #e671b8;
+}
+.pricing-tables .pricing.pink>li.head {
+    background: #e671b8;
+}
+.pricing-tables .pricing.pink>li.head .info {
+    background: #ea87c3;
+}
+.pricing-tables .pricing.pink>li.head .name {
+    background: #de46a2;
+}
+.btn.btn-pink {
+    background: #e671b8;
+    color: #fff !important;
+}
+.btn.btn-pink:hover {
+    background: #de46a2;
+}
+.box.box-color.pink .box-title {
+    background: #e671b8 !important;
+}
+.box.box-color.pink .box-title h3 {
+    color: #333;
+}
+.box.box-color.pink .box-title .actions>a:hover {
+    color: #e671b8;
+}
+.box.box-color.pink .form-wizard .wizard-steps li.active .single-step .title {
+    background: #e671b8;
+}
+.box.box-color.pink .btn.btn-primary {
+    background: #e671b8;
+}
+.box.box-bordered.box-color.pink .box-title {
+    border-color: #e671b8 !important;
+}
+.box.box-bordered.box-color.pink .box-content {
+    border-color: #e671b8 !important;
+}
+.box.box-bordered.box-color.pink .slimScrollDiv {
+    border-bottom: 2px solid #e671b8;
+}
+.timeline>li .timeline-content .left .icon.pink {
+    background: #e671b8;
+}
+.accordion-widget .accordion-group.magenta {
+    border: 2px solid #a200ff;
+}
+.accordion-widget .accordion-group.magenta:hover {
+    border-color: #8200cc !important;
+}
+.accordion-widget .accordion-group.magenta .accordion-toggle {
+    background: #a200ff !important;
+    color: #fff;
+}
+.accordion-widget .accordion-group.magenta .accordion-toggle:hover {
+    background: #8200cc !important;
+}
+.font-magenta {
+    color: #a200ff;
+}
+ul>li.magenta, .label-magenta {
+    background: #a200ff;
+}
+.progress .bar.bar-magenta {
+    background: #a200ff;
+}
+.pricing-tables .pricing.magenta>li.head {
+    background: #a200ff;
+}
+.pricing-tables .pricing.magenta>li.head .info {
+    background: #ab1aff;
+}
+.pricing-tables .pricing.magenta>li.head .name {
+    background: #8200cc;
+}
+.btn.btn-magenta {
+    background: #a200ff;
+    color: #fff !important;
+}
+.btn.btn-magenta:hover {
+    background: #8200cc;
+}
+.box.box-color.magenta .box-title {
+    background: #a200ff !important;
+}
+.box.box-color.magenta .box-title .actions>a:hover {
+    color: #a200ff;
+}
+.box.box-color.magenta .form-wizard .wizard-steps li.active .single-step .title {
+    background: #a200ff;
+}
+.box.box-color.magenta .btn.btn-primary {
+    background: #a200ff;
+}
+.box.box-bordered.box-color.magenta .box-title {
+    border-color: #a200ff !important;
+}
+.box.box-bordered.box-color.magenta .box-content {
+    border-color: #a200ff !important;
+}
+.box.box-bordered.box-color.magenta .slimScrollDiv {
+    border-bottom: 2px solid #a200ff;
+}
+.timeline>li .timeline-content .left .icon.magenta {
+    background: #a200ff;
+}
+.accordion-widget .accordion-group.grey {
+    border: 2px solid #333;
+}
+.accordion-widget .accordion-group.grey:hover {
+    border-color: #1a1a1a !important;
+}
+.accordion-widget .accordion-group.grey .accordion-toggle {
+    background: #333 !important;
+    color: #fff;
+}
+.accordion-widget .accordion-group.grey .accordion-toggle:hover {
+    background: #1a1a1a !important;
+}
+.font-grey {
+    color: #333;
+}
+ul>li.grey, .label-grey {
+    background: #333;
+}
+.progress .bar.bar-grey {
+    background: #333;
+}
+.pricing-tables .pricing.grey>li.head {
+    background: #333;
+}
+.pricing-tables .pricing.grey>li.head .info {
+    background: #404040;
+}
+.pricing-tables .pricing.grey>li.head .name {
+    background: #1a1a1a;
+}
+.btn.btn-grey {
+    background: #333;
+    color: #fff !important;
+}
+.btn.btn-grey:hover {
+    background: #1a1a1a;
+}
+.box.box-color.grey .box-title {
+    background: #333 !important;
+}
+.box.box-color.grey .box-title .actions>a:hover {
+    color: #333;
+}
+.box.box-color.grey .form-wizard .wizard-steps li.active .single-step .title {
+    background: #333;
+}
+.box.box-color.grey .btn.btn-primary {
+    background: #333;
+}
+.box.box-bordered.box-color.grey .box-title {
+    border-color: #333 !important;
+}
+.box.box-bordered.box-color.grey .box-content {
+    border-color: #333 !important;
+}
+.box.box-bordered.box-color.grey .slimScrollDiv {
+    border-bottom: 2px solid #333;
+}
+.timeline>li .timeline-content .left .icon.grey {
+    background: #333;
+}
+.theme-grey .daterangepicker .active {
+    background: #999999;
+}
+.theme-grey .mobile-sidebar-toggle {
+    color: #fff;
+}
+.theme-grey .mobile-sidebar-toggle:hover {
+    background: none;
+}
+.theme-grey #navigation .dropdown-menu {
+    border-color: #333;
+}
+.theme-grey #navigation .dropdown-menu>li.dropdown-submenu .dropdown-menu {
+    border-top: 2px solid #333;
+}
+.theme-grey #navigation .dropdown-menu>li.dropdown-submenu:hover>a, .theme-grey #navigation .dropdown-menu>li.dropdown-submenu:focus>a {
+    background: #333;
+}
+.theme-grey #navigation .dropdown-menu>li>a:hover {
+    background: #333;
+}
+.theme-grey .datepicker.datepicker-dropdown .datepicker-days .active, .theme-grey .datepicker.datepicker-dropdown .datepicker-years .active, .theme-grey .datepicker.datepicker-dropdown .datepicker-months .active {
+    background: #333;
+}
+.theme-grey .datepicker.datepicker-dropdown .datepicker-days .active:hover, .theme-grey .datepicker.datepicker-dropdown .datepicker-years .active:hover, .theme-grey .datepicker.datepicker-dropdown .datepicker-months .active:hover {
+    background: #1a1a1a;
+}
+.theme-grey .form-wizard .wizard-steps li.active .single-step .title {
+    background: #333;
+}
+.theme-grey .btn.btn-primary {
+    background: #333;
+}
+.theme-grey.login {
+    background: #333;
+}
+.theme-grey a {
+    color: #333;
+}
+.theme-grey .btn {
+    color: #333;
+}
+.theme-grey .btn.btn-primary {
+    background: #333;
+    color: #fff;
+}
+.theme-grey .btn.btn-inverse, .theme-grey .btn.btn-success, .theme-grey .btn.btn-danger {
+    color: #fff;
+}
+.theme-grey.locked {
+    background: #333 !important;
+}
+.theme-grey.locked .pull-left a {
+    background: #0d0d0d;
+}
+.theme-grey.locked .pull-left a:hover {
+    background: #000;
+}
+.theme-grey #navigation {
+    background: rgba(0, 0, 0, 0.8);
+}
+.theme-grey #navigation .toggle-mobile {
+    background: #0d0d0d;
+}
+.theme-grey #navigation .mobile-nav.open {
+    background: #333;
+}
+.theme-grey #navigation .mobile-nav.open>li.active>a {
+    background: #000;
+}
+.theme-grey #navigation .mobile-nav.open>li.active>ul {
+    background: #000;
+}
+.theme-grey #navigation .mobile-nav.open>li>a {
+    background: #0d0d0d;
+}
+.theme-grey #navigation .mobile-nav.open>li>ul {
+    background: #0d0d0d;
+}
+.theme-grey #navigation .main-nav>li.active>a:hover {
+    background: #fff;
+}
+.theme-grey #navigation .main-nav>li.active.open>a {
+    background: #fff;
+}
+.theme-grey #navigation .main-nav>li.open>a {
+    background: #0d0d0d;
+}
+.theme-grey #navigation .main-nav>li>a:hover {
+    background: #0d0d0d;
+}
+.theme-grey #navigation .user .icon-nav>li>a:hover {
+    background: #0d0d0d;
+}
+.theme-grey #navigation .user .dropdown.open {
+    background: #0d0d0d;
+}
+.theme-grey #navigation .user .dropdown>a:hover {
+    background: #0d0d0d;
+}
+.theme-grey #navigation .dropdown-menu {
+    border-color: #333;
+}
+.theme-grey #navigation .dropdown-menu>li>a:hover {
+    background: #333;
+}
+.theme-grey .search-form .search-pane button[type="submit"] {
+    background: #333;
+}
+.theme-grey .messages>li.insert .submit button {
+    background: #333;
+}
+.theme-grey .messages>li.right .name {
+    color: #000;
+}
+.theme-grey .messages>li.right .message {
+    background: #999;
+}
+.theme-grey .messages>li.right .message p {
+    color: #000;
+}
+.theme-grey .messages>li.right .message .time {
+    color: #000;
+}
+.theme-grey .messages>li.right .message .caret {
+    border-left: 7px solid #999;
+}
+.theme-grey .letterbox .letter>li.active {
+    background: #333;
+}
+.theme-grey .calendar .fc-content .fc-event .fc-event-inner {
+    background: #333;
+}
+.theme-grey .calendar .fc-content .fc-event .fc-event-head {
+    background: #000;
+}
+
+.theme-grey .calendar .fc-content .fc-agenda .fc-event .fc-event-inner {
+    background: #fbfbfb;
+    color: #333;
+}
+.theme-grey .calendar .fc-content .fc-agenda .fc-event .fc-event-head {
+    background: #ddd;
+}
+
+.theme-grey .calendar .fc-button.fc-state-active {
+    background: #333;
+}
+.theme-grey .calendar .fc-button.fc-state-active:hover {
+    background: #333;
+}
+.theme-grey .table.table-user tr.alpha td.alpha-val span {
+    background: #333;
+}
+.theme-grey .tagsinput#textfield_tagsinput .tag, .theme-grey .ms-container .multi-custom-header, .theme-grey .slider .ui-slider-handle, .theme-grey .form-wizard .wizard-steps li.active .single-step .title, .theme-grey .user-list h4, .theme-grey .nav.nav-pills>li.active>a, .theme-grey .nav.nav-list>li.active>a, .theme-grey .table.table-colored-header thead th, .theme-grey .table.table-colored-header thead td, .theme-grey .dataTables_wrapper .dataTables_paginate>span>a.paginate_active, .theme-grey .elfinder-navbar .ui-state-active, .theme-grey .pagination.pagination-custom li.active a:hover, .theme-grey .pagination.pagination-custom li.active a {
+    background: #333;
+}
+.theme-grey .elfinder-navbar .ui-state-active {
+    border-color: #333;
+}
+.theme-grey #main .box .box-title .tabs>li.active>a {
+    background: #333;
+}
+.theme-grey #main .box.box-color .box-title {
+    background: #333;
+}
+.theme-grey #main .box.box-color .box-title .tabs>li.active>a {
+    background: #fff;
+    color: #333;
+}
+.theme-grey #main .box.box-color .box-title .tabs>li>a:hover {
+    color: #333;
+}
+.theme-grey #main .box.box-bordered.box-color .box-title {
+    border-color: #333;
+}
+.theme-grey #main .box.box-bordered.box-color .box-content {
+    border-color: #333;
+}
+.accordion-widget .accordion-group.darkblue {
+    border: 2px solid #204e81;
+}
+.accordion-widget .accordion-group.darkblue:hover {
+    border-color: #163558 !important;
+}
+.accordion-widget .accordion-group.darkblue .accordion-toggle {
+    background: #204e81 !important;
+    color: #fff;
+}
+.accordion-widget .accordion-group.darkblue .accordion-toggle:hover {
+    background: #163558 !important;
+}
+.font-darkblue {
+    color: #204e81;
+}
+ul>li.darkblue, .label-darkblue {
+    background: #204e81;
+}
+.progress .bar.bar-darkblue {
+    background: #204e81;
+}
+.pricing-tables .pricing.darkblue>li.head {
+    background: #204e81;
+}
+.pricing-tables .pricing.darkblue>li.head .info {
+    background: #255a95;
+}
+.pricing-tables .pricing.darkblue>li.head .name {
+    background: #163558;
+}
+.btn.btn-darkblue {
+    background: #204e81;
+    color: #fff !important;
+}
+.btn.btn-darkblue:hover {
+    background: #163558;
+}
+.box.box-color.darkblue .box-title {
+    background: #204e81 !important;
+}
+.box.box-color.darkblue .box-title .actions>a:hover {
+    color: #204e81;
+}
+.box.box-color.darkblue .form-wizard .wizard-steps li.active .single-step .title {
+    background: #204e81;
+}
+.box.box-color.darkblue .btn.btn-primary {
+    background: #204e81;
+}
+.box.box-bordered.box-color.darkblue .box-title {
+    border-color: #204e81 !important;
+}
+.box.box-bordered.box-color.darkblue .box-content {
+    border-color: #204e81 !important;
+}
+.box.box-bordered.box-color.darkblue .slimScrollDiv {
+    border-bottom: 2px solid #204e81;
+}
+.timeline>li .timeline-content .left .icon.darkblue {
+    background: #204e81;
+}
+.accordion-widget .accordion-group.lightred {
+    border: 2px solid #e63a3a;
+}
+.accordion-widget .accordion-group.lightred:hover {
+    border-color: #d21b1b !important;
+}
+.accordion-widget .accordion-group.lightred .accordion-toggle {
+    background: #e63a3a !important;
+    color: #fff;
+}
+.accordion-widget .accordion-group.lightred .accordion-toggle:hover {
+    background: #d21b1b !important;
+}
+.font-lightred {
+    color: #e63a3a;
+}
+ul>li.lightred, .label-lightred {
+    background: #e63a3a;
+    color: #ffffff;
+    font-weight: 600;
+}
+.progress .bar.bar-lightred {
+    background: #e63a3a;
+}
+.pricing-tables .pricing.lightred>li.head {
+    background: #e63a3a;
+}
+.pricing-tables .pricing.lightred>li.head .info {
+    background: #e95151;
+}
+.pricing-tables .pricing.lightred>li.head .name {
+    background: #d21b1b;
+}
+.btn.btn-lightred {
+    background: #e63a3a;
+    color: #fff !important;
+}
+.btn.btn-lightred:hover {
+    background: #d21b1b;
+}
+.box.box-color.lightred .box-title {
+    background: #e63a3a !important;
+}
+.box.box-color.lightred .box-title .actions>a:hover {
+    color: #e63a3a;
+}
+.box.box-color.lightred .form-wizard .wizard-steps li.active .single-step .title {
+    background: #e63a3a;
+}
+.box.box-color.lightred .btn.btn-primary {
+    background: #e63a3a;
+}
+.box.box-bordered.box-color.lightred .box-title {
+    border-color: #e63a3a !important;
+}
+.box.box-bordered.box-color.lightred .box-content {
+    border-color: #e63a3a !important;
+}
+.box.box-bordered.box-color.lightred .slimScrollDiv {
+    border-bottom: 2px solid #e63a3a;
+}
+.timeline>li .timeline-content .left .icon.lightred {
+    background: #e63a3a;
+}
+.accordion-widget .accordion-group.lightgrey {
+    border: 2px solid #666;
+}
+.accordion-widget .accordion-group.lightgrey:hover {
+    border-color: #4d4d4d !important;
+}
+.accordion-widget .accordion-group.lightgrey .accordion-toggle {
+    background: #666 !important;
+    color: #fff;
+}
+.accordion-widget .accordion-group.lightgrey .accordion-toggle:hover {
+    background: #4d4d4d !important;
+}
+.font-lightgrey {
+    color: #666;
+}
+ul>li.lightgrey, .label-lightgrey {
+    background: #666;
+}
+.progress .bar.bar-lightgrey {
+    background: #666;
+}
+.pricing-tables .pricing.lightgrey>li.head {
+    background: #666;
+}
+.pricing-tables .pricing.lightgrey>li.head .info {
+    background: #737373;
+}
+.pricing-tables .pricing.lightgrey>li.head .name {
+    background: #4d4d4d;
+}
+.btn.btn-lightgrey {
+    background: #666;
+    color: #fff !important;
+}
+.btn.btn-lightgrey:hover {
+    background: #4d4d4d;
+}
+.box.box-color.lightgrey .box-title {
+    background: #666 !important;
+}
+.box.box-color.lightgrey .box-title .actions>a:hover {
+    color: #666;
+}
+.box.box-color.lightgrey .form-wizard .wizard-steps li.active .single-step .title {
+    background: #666;
+}
+.box.box-color.lightgrey .btn.btn-primary {
+    background: #666;
+}
+.box.box-bordered.box-color.lightgrey .box-title {
+    border-color: #666 !important;
+}
+.box.box-bordered.box-color.lightgrey .box-content {
+    border-color: #666 !important;
+}
+.box.box-bordered.box-color.lightgrey .slimScrollDiv {
+    border-bottom: 2px solid #666;
+}
+.timeline>li .timeline-content .left .icon.lightgrey {
+    background: #666;
+}
+.theme-lightgrey .daterangepicker .active {
+    background: #666;
+}
+.theme-lightgrey .mobile-sidebar-toggle {
+    color: #fff;
+}
+.theme-lightgrey #navigation .dropdown-menu {
+    border-color: #666;
+}
+.theme-lightgrey #navigation .dropdown-menu>li.dropdown-submenu .dropdown-menu {
+    border-top: 2px solid #666;
+}
+.theme-lightgrey #navigation .dropdown-menu>li.dropdown-submenu:hover>a, .theme-lightgrey #navigation .dropdown-menu>li.dropdown-submenu:focus>a {
+    background: #666;
+}
+.theme-lightgrey #navigation .dropdown-menu>li>a:hover {
+    background: #666;
+}
+.theme-lightgrey .datepicker.datepicker-dropdown .datepicker-days .active, .theme-lightgrey .datepicker.datepicker-dropdown .datepicker-years .active, .theme-lightgrey .datepicker.datepicker-dropdown .datepicker-months .active {
+    background: #666;
+}
+.theme-lightgrey .datepicker.datepicker-dropdown .datepicker-days .active:hover, .theme-lightgrey .datepicker.datepicker-dropdown .datepicker-years .active:hover, .theme-lightgrey .datepicker.datepicker-dropdown .datepicker-months .active:hover {
+    background: #4d4d4d;
+}
+.theme-lightgrey .form-wizard .wizard-steps li.active .single-step .title {
+    background: #666;
+}
+.theme-lightgrey .btn.btn-primary {
+    background: #666;
+}
+.theme-lightgrey.login {
+    background: #666;
+}
+.theme-lightgrey a {
+    color: #666;
+}
+.theme-lightgrey .btn {
+    color: #333;
+}
+.theme-lightgrey .btn.btn-primary {
+    background: #666;
+    color: #fff;
+}
+.theme-lightgrey .btn.btn-inverse, .theme-lightgrey .btn.btn-success, .theme-lightgrey .btn.btn-danger {
+    color: #fff;
+}
+.theme-lightgrey.locked {
+    background: #666 !important;
+}
+.theme-lightgrey.locked .pull-left a {
+    background: #404040;
+}
+.theme-lightgrey.locked .pull-left a:hover {
+    background: #262626;
+}
+.theme-lightgrey #navigation {
+    background: #666;
+}
+.theme-lightgrey #navigation .toggle-mobile {
+    background: #404040;
+}
+.theme-lightgrey #navigation .mobile-nav.open {
+    background: #666;
+}
+.theme-lightgrey #navigation .mobile-nav.open>li.active>a {
+    background: #262626;
+}
+.theme-lightgrey #navigation .mobile-nav.open>li.active>ul {
+    background: #262626;
+}
+.theme-lightgrey #navigation .mobile-nav.open>li>a {
+    background: #404040;
+}
+.theme-lightgrey #navigation .mobile-nav.open>li>ul {
+    background: #404040;
+}
+.theme-lightgrey #navigation .main-nav>li.active>a:hover {
+    background: #fff;
+}
+.theme-lightgrey #navigation .main-nav>li.active.open>a {
+    background: #fff;
+}
+.theme-lightgrey #navigation .main-nav>li.open>a {
+    background: #404040;
+}
+.theme-lightgrey #navigation .main-nav>li>a:hover {
+    background: #404040;
+}
+.theme-lightgrey #navigation .user .icon-nav>li>a:hover {
+    background: #404040;
+}
+.theme-lightgrey #navigation .user .dropdown.open {
+    background: #404040;
+}
+.theme-lightgrey #navigation .user .dropdown>a:hover {
+    background: #404040;
+}
+.theme-lightgrey #navigation .dropdown-menu {
+    border-color: #666;
+}
+.theme-lightgrey #navigation .dropdown-menu>li>a:hover {
+    background: #666;
+}
+.theme-lightgrey .search-form .search-pane button[type="submit"] {
+    background: #666;
+}
+.theme-lightgrey .messages>li.insert .submit button {
+    background: #666;
+}
+.theme-lightgrey .messages>li.right .name {
+    color: #000;
+}
+.theme-lightgrey .messages>li.right .message {
+    background: #ccc;
+}
+.theme-lightgrey .messages>li.right .message p {
+    color: #1a1a1a;
+}
+.theme-lightgrey .messages>li.right .message .time {
+    color: #1a1a1a;
+}
+.theme-lightgrey .messages>li.right .message .caret {
+    border-left: 7px solid #ccc;
+}
+.theme-lightgrey .letterbox .letter>li.active {
+    background: #666;
+}
+.theme-lightgrey .calendar .fc-content .fc-event .fc-event-inner {
+    background: #666;
+}
+.theme-lightgrey .calendar .fc-button.fc-state-active {
+    background: #666;
+}
+.theme-lightgrey .calendar .fc-button.fc-state-active:hover {
+    background: #666;
+}
+.theme-lightgrey .table.table-user tr.alpha td.alpha-val span {
+    background: #666;
+}
+.theme-lightgrey .tagsinput#textfield_tagsinput .tag, .theme-lightgrey .ms-container .multi-custom-header, .theme-lightgrey .slider .ui-slider-handle, .theme-lightgrey .form-wizard .wizard-steps li.active .single-step .title, .theme-lightgrey .user-list h4, .theme-lightgrey .nav.nav-pills>li.active>a, .theme-lightgrey .nav.nav-list>li.active>a, .theme-lightgrey .table.table-colored-header thead th, .theme-lightgrey .table.table-colored-header thead td, .theme-lightgrey .dataTables_wrapper .dataTables_paginate>span>a.paginate_active, .theme-lightgrey .elfinder-navbar .ui-state-active, .theme-lightgrey .pagination.pagination-custom li.active a:hover, .theme-lightgrey .pagination.pagination-custom li.active a {
+    background: #666;
+}
+.theme-lightgrey .elfinder-navbar .ui-state-active {
+    border-color: #666;
+}
+.theme-lightgrey #main .box .box-title .tabs>li.active>a {
+    background: #666;
+}
+.theme-lightgrey #main .box.box-color .box-title {
+    background: #666;
+}
+.theme-lightgrey #main .box.box-color .box-title .tabs>li.active>a {
+    background: #fff;
+    color: #666;
+}
+.theme-lightgrey #main .box.box-color .box-title .tabs>li>a:hover {
+    color: #666;
+}
+.theme-lightgrey #main .box.box-bordered.box-color .box-title {
+    border-color: #666;
+}
+.theme-lightgrey #main .box.box-bordered.box-color .box-content {
+    border-color: #666;
+}
+.accordion-widget .accordion-group.satblue {
+    border: 2px solid #2c5e7b;
+}
+.accordion-widget .accordion-group.satblue:hover {
+    border-color: #1f4155 !important;
+}
+.accordion-widget .accordion-group.satblue .accordion-toggle {
+    background: #2c5e7b !important;
+    color: #fff;
+}
+.accordion-widget .accordion-group.satblue .accordion-toggle:hover {
+    background: #1f4155 !important;
+}
+.font-satblue {
+    color: #2c5e7b;
+}
+ul>li.satblue, .label-satblue {
+    background: #2c5e7b;
+}
+.progress .bar.bar-satblue {
+    background: #2c5e7b;
+}
+.pricing-tables .pricing.satblue>li.head {
+    background: #2c5e7b;
+}
+.pricing-tables .pricing.satblue>li.head .info {
+    background: #336c8e;
+}
+.pricing-tables .pricing.satblue>li.head .name {
+    background: #1f4155;
+}
+.btn.btn-lightblue {
+    background: #d9edf7;
+    color: #2c5e7b !important;
+    padding: 0 5px 4px 5px !important;
+    vertical-align: top !important;
+}
+.btn.btn-lightblue:hover {
+    text-decoration: underline;
+}
+.btn.btn-blue {
+    background: #368ee0;
+    color: #fff !important;
+    padding: 0 5px 4px 5px !important;
+    vertical-align: top !important;
+}
+.btn.btn-blue:hover {
+    text-decoration: underline;
+}
+.btn.btn-satblue {
+    background: #2c5e7b;
+    color: #fff !important;
+}
+.btn.btn-satblue:hover {
+    background: #1f4155;
+}
+.box.box-color.satblue .box-title {
+    background: #2c5e7b !important;
+}
+.box.box-color.satblue .box-title .actions>a:hover {
+    color: #2c5e7b;
+}
+.box.box-color.satblue .form-wizard .wizard-steps li.active .single-step .title {
+    background: #2c5e7b;
+}
+.box.box-color.satblue .btn.btn-primary {
+    background: #2c5e7b;
+}
+.box.box-bordered.box-color.satblue .box-title {
+    border-color: #2c5e7b !important;
+}
+.box.box-bordered.box-color.satblue .box-content {
+    border-color: #2c5e7b !important;
+}
+.box.box-bordered.box-color.satblue .slimScrollDiv {
+    border-bottom: 2px solid #2c5e7b;
+}
+.timeline>li .timeline-content .left .icon.satblue {
+    background: #2c5e7b;
+}
+.accordion-widget .accordion-group.satgreen {
+    border: 2px solid #56af45;
+}
+.accordion-widget .accordion-group.satgreen:hover {
+    border-color: #448a37 !important;
+}
+.accordion-widget .accordion-group.satgreen .accordion-toggle {
+    background: #56af45 !important;
+    color: #fff;
+}
+.accordion-widget .accordion-group.satgreen .accordion-toggle:hover {
+    background: #448a37 !important;
+}
+.font-satgreen {
+    color: #56af45;
+}
+ul>li.satgreen, .label-satgreen {
+    background: #56af45;
+}
+.progress .bar.bar-satgreen {
+    background: #56af45;
+}
+.pricing-tables .pricing.satgreen>li.head {
+    background: #56af45;
+}
+.pricing-tables .pricing.satgreen>li.head .info {
+    background: #63bb53;
+}
+.pricing-tables .pricing.satgreen>li.head .name {
+    background: #448a37;
+}
+.btn.btn-satgreen {
+    background: #56af45;
+    color: #fff !important;
+}
+.btn.btn-satgreen:hover {
+    background: #448a37;
+}
+.box.box-color.satgreen .box-title {
+    background: #56af45 !important;
+}
+.box.box-color.satgreen .box-title .actions>a:hover {
+    color: #56af45;
+}
+.box.box-color.satgreen .form-wizard .wizard-steps li.active .single-step .title {
+    background: #56af45;
+}
+.box.box-color.satgreen .btn.btn-primary {
+    background: #56af45;
+}
+.box.box-bordered.box-color.satgreen .box-title {
+    border-color: #56af45 !important;
+}
+.box.box-bordered.box-color.satgreen .box-content {
+    border-color: #56af45 !important;
+}
+.box.box-bordered.box-color.satgreen .slimScrollDiv {
+    border-bottom: 2px solid #56af45;
+}
+.timeline>li .timeline-content .left .icon.satgreen {
+    background: #56af45;
+}
+.accordion-widget .accordion-group.grey-3 {
+    border: 2px solid #eee;
+}
+.accordion-widget .accordion-group.grey-3:hover {
+    border-color: #d4d4d4 !important;
+}
+.accordion-widget .accordion-group.grey-3 .accordion-toggle {
+    background: #eee !important;
+    color: #333;
+}
+.accordion-widget .accordion-group.grey-3 .accordion-toggle:hover {
+    background: #d4d4d4 !important;
+}
+.font-grey-3 {
+    color: #eee;
+}
+ul>li.grey-3, .label-grey-3 {
+    background: #eee;
+}
+.progress .bar.bar-grey-3 {
+    background: #eee;
+}
+.pricing-tables .pricing.grey-3>li.head {
+    background: #eee;
+}
+.pricing-tables .pricing.grey-3>li.head .info {
+    background: #fbfbfb;
+}
+.pricing-tables .pricing.grey-3>li.head .name {
+    background: #d4d4d4;
+}
+.btn.btn-grey-3 {
+    background: #eee;
+    color: #fff !important;
+}
+.btn.btn-grey-3:hover {
+    background: #d4d4d4;
+}
+.box.box-color.grey-3 .box-title {
+    background: #eee !important;
+}
+.box.box-color.grey-3 .box-title h3 {
+    color: #333;
+}
+.box.box-color.grey-3 .box-title .actions>a:hover {
+    color: #eee;
+}
+.box.box-color.grey-3 .form-wizard .wizard-steps li.active .single-step .title {
+    background: #eee;
+}
+.box.box-color.grey-3 .btn.btn-primary {
+    background: #eee;
+}
+.box.box-bordered.box-color.grey-3 .box-title {
+    border-color: #eee !important;
+}
+.box.box-bordered.box-color.grey-3 .box-content {
+    border-color: #eee !important;
+}
+.box.box-bordered.box-color.grey-3 .slimScrollDiv {
+    border-bottom: 2px solid #eee;
+}
+.timeline>li .timeline-content .left .icon.grey-3 {
+    background: #eee;
+}
+.accordion-widget .accordion-group.grey-4 {
+    border: 2px solid #999;
+}
+.accordion-widget .accordion-group.grey-4:hover {
+    border-color: gray !important;
+}
+.accordion-widget .accordion-group.grey-4 .accordion-toggle {
+    background: #999 !important;
+    color: #fff;
+}
+.accordion-widget .accordion-group.grey-4 .accordion-toggle:hover {
+    background: gray !important;
+}
+.font-grey-4 {
+    color: #999;
+}
+ul>li.grey-4, .label-grey-4 {
+    background: #999;
+}
+.progress .bar.bar-grey-4 {
+    background: #999;
+}
+.pricing-tables .pricing.grey-4>li.head {
+    background: #999;
+}
+.pricing-tables .pricing.grey-4>li.head .info {
+    background: #a6a6a6;
+}
+.pricing-tables .pricing.grey-4>li.head .name {
+    background: gray;
+}
+.btn.btn-grey-4 {
+    background: #999;
+    color: #fff !important;
+}
+.btn.btn-grey-4:hover {
+    background: gray;
+}
+.box.box-color.grey-4 .box-title {
+    background: #999 !important;
+}
+.box.box-color.grey-4 .box-title .actions>a:hover {
+    color: #999;
+}
+.box.box-color.grey-4 .form-wizard .wizard-steps li.active .single-step .title {
+    background: #999;
+}
+.box.box-color.grey-4 .btn.btn-primary {
+    background: #999;
+}
+.box.box-bordered.box-color.grey-4 .box-title {
+    border-color: #999 !important;
+}
+.box.box-bordered.box-color.grey-4 .box-content {
+    border-color: #999 !important;
+}
+.box.box-bordered.box-color.grey-4 .slimScrollDiv {
+    border-bottom: 2px solid #999;
+}
+.timeline>li .timeline-content .left .icon.grey-4 {
+    background: #999;
+}
+.clean-page #left {
+    display: none !important;
+}
+.clean-page #main {
+    margin-left: auto;
+}
+/*.alert, .alert h4 {
+    color: #A9833F;
+}*/

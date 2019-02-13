@@ -1,0 +1,51 @@
+<% present(@hire_quote) do |quote| %>
+  <div id="cover-letter" class="a4-page">
+    <div class="page-content">
+      <div class="cover-letter-logo pull-left">
+        <%= image_tag quote.company_logo(:large) %>
+      </div>
+
+      <div class="cover-letter-from-address pull-right">
+        <address>
+          <%= quote.quoting_company_cover_letter_address.join.html_safe %><br>
+          <br>
+          <%= "ACN: #{quote.quoting_company_acn}<br>".html_safe if quote.quoting_company_acn %>
+          <%= "ABN: #{quote.quoting_company_abn}<br>".html_safe if quote.quoting_company_abn %>
+          <br>
+          <%= "Phone: #{quote.quoting_company_phone}<br>".html_safe if quote.quoting_company_phone %>
+          <%= "Fax: #{quote.quoting_company_fax}<br>".html_safe if quote.quoting_company_fax %>
+        </address>
+      </div>
+
+      <div class="clear"></div>
+
+      <div class="cover-letter-date">
+        <% if @hire_quote.quoted_date.present? %>
+          <%= @hire_quote.quoted_date.strftime("%-d %B %Y") %>
+        <% else %>
+          <%= Date.today.strftime("%-d %B %Y") %>
+        <% end %>
+      </div>
+
+      <div class="cover-letter-recipient">
+        <%= quote.authorised_contact.name %><br>
+        <%= "#{quote.customer_company_name}<br>".html_safe if quote.customer_company_name.present? %>
+
+        <address><%= quote.hire_quote_cover_letter_address %></address>
+        <div class="contact-details"><%= quote.customer_contact_details( {email: true, phone: true, mobile: true, website: true} ) %></div>
+      </div>
+
+      <% if (quote.cover_letter.present? and quote.cover_letter.title.present?) %>
+        <div class="cover-letter-title">
+          <%= quote.cover_letter.title %>
+        </div>
+      <% end %>
+
+      <% if (quote.cover_letter.present? and quote.cover_letter.content.present?) %>
+        <div class="cover-letter-text">
+          <%= simple_format quote.cover_letter.content %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

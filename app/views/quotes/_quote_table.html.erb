@@ -1,0 +1,54 @@
+<% present(@quote) do |quote| %>
+
+  <table class="table table-invoice">
+    <thead>
+      <tr>
+        <th class="item-type">Item type</th>
+        <th class="description">Description</th>
+        <% unless @hide_all_cost_columns ==  true %>
+          <th class="cost right">Cost</th>
+          <th class="qty right">Qty</th>
+          <th class="tax right">Tax</th>
+          <th class="line-total right">Line Total</th>
+        <% else %>
+          <th class="qty right" style="width:190px">Qty</th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% quote.items.each do |item| %>
+        <tr>
+          <td class="item-type"><%= item.item_type_name %></td>
+          <td class="description"><%=simple_format h item.description %></td>
+          <% unless @hide_all_cost_columns == true %>
+            <td class="cost right"><%= item.cost unless item.hide_cost == true %></td>
+            <td class="qty right"><%= item.quantity %></td>
+            <td class="tax right"><%= item.tax.name unless item.tax.blank? || item.hide_cost == true %></td>
+            <td class="line-total right">
+              <span class="amount"><%= number_to_currency(item.line_total, precision: 2) unless item.hide_cost == true %></span>
+            </td>
+          <% else %>
+            <td class="qty right" style="width:190px"><%= item.quantity %></td>
+          <% end %>
+        </tr>
+      <% end %>
+      <tr id="form-table-bottom">
+        <td colspan="<%= @hide_all_cost_columns == true ? 2 : 3 %>" class="table-left"></td>
+        <td colspan="<%= @hide_all_cost_columns == true ? 1 : 3 %>" class='taxes'>
+          <div class="subtotal-container">
+            <span>Subtotal</span>
+            <span id="subtotal"><%= number_to_currency(quote.subtotal, precision: 2) %></span>
+          </div>
+          <div class="taxtotal-container">
+            <span id="tax_name">Tax</span>
+            <span id="taxtotal"><%= number_to_currency(quote.tax_total, precision: 2) %></span>
+          </div>
+          <div class="grandtotal-container">
+            <span>Quote Total</span>
+            <span id="grandtotal"><%= number_to_currency(quote.grand_total, precision: 2) %></span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<% end %>

@@ -1,0 +1,316 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>On Hire Report <span class="label"><%= "Hire Agreement REF# #{@hire_agreement.uid}" %></span></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <%= link_to "Back to Hire Agreement", hire_agreement_url(@hire_agreement), :class => "btn btn-grey" %>
+        <% if can? :update, OnHireReport %>
+        <%= link_to '<i class="icon-edit"></i>'.html_safe, {:action => 'edit', :id => @on_hire_report.id, hire_agreement_id: @hire_agreement.uid}, {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered on-hire-report">
+
+
+          <div class="row-fluid">
+            <div class="span6">
+              <div class="box-title">
+                <h3><i class="icon-user"></i>Pickup Driver</h3>
+              </div>
+              <div class="box-content nopadding">
+                <table class="table table-bordered table-force-topborder" style="clear: both">
+                  <tbody>
+                    <tr>
+                      <td>First Name</td>
+                      <td width="65%"><%= @on_hire_report.pickup_person_first_name %></td>
+                    </tr>
+                    <tr>
+                      <td>Last Name</td>
+                      <td width="65%"><%= @on_hire_report.pickup_person_last_name %></td>
+                    </tr>
+                    <tr>
+                      <td>Phone</td>
+                      <td width="65%"><%= @on_hire_report.pickup_person_phone %></td>
+                    </tr>
+                    <tr>
+                      <td>Licence Number</td>
+                      <td width="65%"><%= @on_hire_report.pickup_person_licence_number %></td>
+                    </tr>
+                    <tr>
+                      <td>Date</td>
+                      <td width="65%"><%= @on_hire_report.report_date_field %></td>
+                    </tr>
+                    <tr>
+                      <td>Time</td>
+                      <td width="65%"><%= @on_hire_report.report_time_field %></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="span6">
+              <div class="box-title">
+                <h3><i class="glyphicon-car"></i>Vehicle Details</h3>
+              </div>
+              <div class="box-content nopadding">
+                <table class="table table-bordered table-force-topborder" style="clear: both">
+                  <tbody>
+                    <tr>
+                      <td>Year, Make &amp; Model</td>
+                      <td width="65%"><%= @hire_agreement.vehicle.name %></td>
+                    </tr>
+                    <tr>
+                      <td>Vehicle Number</td>
+                      <td width="65%"><%= @hire_agreement.vehicle.number %></td>
+                    </tr>
+                    <tr>
+                      <td>Transmission</td>
+                      <td width="65%"><%= @hire_agreement.vehicle.transmission %></td>
+                    </tr>
+                    <tr>
+                      <td>Rego Number</td>
+                      <td width="65%"><%= @hire_agreement.vehicle.rego_number %></td>
+                    </tr>
+                    <tr>
+                      <td>Seating Capacity</td>
+                      <td width="65%"><%= @hire_agreement.vehicle.seating_capacity %></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="box-title">
+            <h3><i class="icon-dashboard"></i>Odometer Reading</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Odometer Reading</td>
+                  <td width="80%"><%= @on_hire_report.odometer_reading %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box-title">
+            <h3><i class="icon-edit"></i>Inspection Notes</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Exterior Details</td>
+                  <td width="80%"><%= @on_hire_report.notes_exterior.html_safe if @on_hire_report.notes_exterior %></td>
+                </tr>
+                <tr>
+                  <td>Interior Details</td>
+                  <td width="80%"><%= @on_hire_report.notes_interior.html_safe if @on_hire_report.notes_interior %></td>
+                </tr>
+                <tr>
+                  <td>Other Details</td>
+                  <td width="80%"><%= @on_hire_report.notes_other.html_safe if @on_hire_report.notes_other %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box-title">
+            <h3><i class="icon-ok-sign"></i>Mine Spec &amp; Gear Checklist</h3>
+          </div>
+          <div class="box-content checklist">
+
+            <div class="row-fluid">
+              <div class="span4">
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.spare_tyre_check) %>
+                  <label class='inline'>Spare Tyre</label>
+                </div>
+
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.tool_check) %>
+                  <label class='inline'>Wheel Jack and Tools</label>
+                </div>
+
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.wheel_nut_indicator_check) %>
+                  <label class='inline'>Wheel Nut Indicators</label>
+                </div>
+              </div>
+
+              <div class="span4">
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.triangle_stand_reflector_check) %>
+                  <label class='inline'>Triangle Stand Reflectors</label>
+                </div>
+
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.first_aid_kit_check) %>
+                  <label class='inline'>First Aid Kit</label>
+                </div>
+
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.wheel_chock_check) %>
+                  <label class='inline'>Wheel Chocks</label>
+                </div>
+              </div>
+
+              <div class="span4">
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.jump_start_lead_check) %>
+                  <label class='inline'>Jump Start Leads</label>
+                </div>
+
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.fire_extinguisher_check) %>
+                  <label class='inline'>Fire Extinguisher</label>
+                </div>
+
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.mine_flag_check) %>
+                  <label class='inline'>Mine Flag</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="box-title">
+            <h3><i class="glyphicon-tint"></i>Vehicle Check</h3>
+          </div>
+          <div class="box-content checklist">
+            <div class="row-fluid">
+              <div class="span4">
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.fuel_check) %>
+                  <label class='inline'>Fuel Tank Is Full</label>
+                </div>
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.check_lights) %>
+                  <label class='inline'>All Lights Are Working?</label>
+                </div>
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.check_horn) %>
+                  <label class='inline'>Horn Sounds Clearly?</label>
+                </div>
+              </div>
+
+              <div class="span4">
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.check_windscreen_washer_bottle) %>
+                  <label class='inline'>Windscreen Washer Bottle is Full?</label>
+                </div>
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.check_wiper_blades) %>
+                  <label class='inline'>Wiper Blades are Working?</label>
+                </div>
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.check_service_sticker) %>
+                  <label class='inline'>Service Sticker on Windscreen?</label>
+                </div>
+              </div>
+
+              <div class="span4">
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.check_windscreen_chips) %>
+                  <label class='inline'>Does Windscreen have Stone Chips?</label>
+                </div>
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.check_vehicle_clean) %>
+                  <label class='inline'>Is Vehicle Clean?</label>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="box-title">
+            <h3><i class="icon-ok-sign"></i>Photo Checklist</h3>
+          </div>
+          <div class="box-content checklist">
+            <div class="row-fluid">
+              <div class="span4">
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.photo_check_front) %>
+                  <label class='inline'>Front</label>
+                </div>
+
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.photo_check_passenger_side) %>
+                  <label class='inline'>Passenger Side</label>
+                </div>
+
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.photo_check_all_damages) %>
+                  <label class='inline'>All Damages</label>
+                </div>
+              </div>
+
+              <div class="span4">
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.photo_check_rear) %>
+                  <label class='inline'>Rear</label>
+                </div>
+
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.photo_check_driver_side) %>
+                  <label class='inline'>Driver Side</label>
+                </div>
+
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.photo_check_windscreen) %>
+                  <label class='inline'>Windscreen</label>
+                </div>
+              </div>
+
+              <div class="span4">
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.photo_check_fuel_gauge) %>
+                  <label class='inline'>Fuel Gauge</label>
+                </div>
+
+                <div class="check-line">
+                  <%= display_checkbox(@on_hire_report.photo_check_rego_label) %>
+                  <label class='inline'>Rego Label</label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <% unless  @on_hire_report.uploads.empty? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-paperclip"></i>Photos &amp; Attachments</h3>
+            </div>
+            <div class="box-content" style="padding: 20px 20px 50px;">
+              <% @on_hire_report.uploads.each do |file| %>
+              <div style="margin:5px; min-height: 200px; float:left">
+                <div class="thumbnail" style="float: left; margin: 5px; text-align:center;">
+                  <a href="<%= file.upload.url(:original) %>"><%= image_tag file.upload.url(:medium) %></a><br>
+                  <a href="<%= file.upload.url(:original) %>" style="font-size:0.8em;padding:5px;"><%= file.upload_file_name %></a>
+                </div>
+              </div>
+              <% end %>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

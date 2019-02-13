@@ -1,0 +1,39 @@
+<div class="alert alert-info" style="margin-top:20px">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <i class="icon icon-info-sign"></i> 
+  <span><b>LEGEND:</b>
+    <% if actions.include?(:view) %>
+      &nbsp;&nbsp;<i class="icon-search"></i> View
+    <% end %>
+    <% if actions.include?(:assign) %>
+      &nbsp;&nbsp;<i class="icon-share-alt"></i> Assign
+    <% end %>
+    <% if actions.include?(:edit) %>
+      &nbsp;&nbsp;<i class="icon-edit"></i> Edit
+    <% end %>
+    <% if actions.include?(:list) %>
+      &nbsp;&nbsp;<i class="icon-list-alt"></i> List all
+    <% end %>
+    <% if actions.include?(:amendment) %>
+      &nbsp;&nbsp;<i class="icon-paste"></i> Create amendment
+    <% end %>
+    <% if actions.include?(:duplicate) %>
+      &nbsp;&nbsp;<i class="icon-copy"></i> Duplicate quote
+    <% end %>
+    <% if actions.include?(:customer_quote) %>
+      &nbsp;&nbsp;<i class="icon-user"></i> Customer quote view
+    <% end %>
+    <% if actions.include?(:download_pdf) %>
+      &nbsp;&nbsp;<i class="icon-file"></i>PDF Download in PDF format
+    <% end %>
+    <% if actions.include?(:delete) %>
+      &nbsp;&nbsp;<i class="icon-ban-circle"></i> Delete this record
+    <% end %>
+    <% if actions.include?(:cancel_quote) %>
+      &nbsp;&nbsp;<i class="icon-ban-circle"></i> Cancel this quote
+    <% end %>
+    <% if actions.include?(:return_to_hire_quote) %>
+      &nbsp;&nbsp;<i class="icon-list-alt"></i> Return to the Hire Quote page
+    <% end %>
+  </span>
+</div>

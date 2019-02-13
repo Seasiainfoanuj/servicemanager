@@ -1,0 +1,56 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Master Quotes</h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if current_user.has_role? :masteradmin, :superadmin %>
+        <% if can? :create, Quote %>
+          <%= link_to "<i class='icon-plus-sign'></i> New Master Quote".html_safe, {:action => 'new'}, {:class => 'btn btn-satgreen'} %>
+        <% end %>
+        <% end %>
+        
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-notes"></i>Master Quotes</h3>
+          </div>
+
+          <div class="box-content nopadding">
+            <table class="table table-hover table-nomargin dataTable dataTable-ajax dataTable-tools dataTable-colvis dataTable-scroll-x table-bordered" data-source="<%= master_quotes_url(format: "json") %>">
+              <thead>
+                <tr>
+                  <th>REF</th>
+                  <th>Quote Type</th>
+                  <th>Vehicle Make</th>
+                  <th>Vehicle Model</th>
+                  <th>Seating</th>
+                  <th>Transmission</th>
+                  <th data-orderable="false">Total</th>
+                  <th data-orderable="false" width="100">Actions</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="milestone">
+
+  <div class="pull-right">
+    <%= f.hidden_field :_destroy %>
+    <%= link_to '<i class="icon-ban-circle"></i>'.html_safe, '#', class: "remove_fields btn" %>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :milestone_date_field, "Milestone Date/Time", :class => "control-label" %>
+    <div class="controls" style="float: left; margin-left: 20px;">
+      <div class="input-append">
+        <%= f.text_field :milestone_date_field, {:class => "input-small datepick mask_date", 'data-rule-required' => true} %>
+        <span class='add-on'><i class='icon-calendar'></i></span>
+      </div>
+    </div>
+
+    <div class="controls" style="float: left; margin-left: 20px;">
+      <div class="input-append">
+        <%= f.text_field :milestone_time_field, {:class => "input-small timepick", 'data-rule-required' => true} %>
+        <span class='add-on'><i class='icon-time'></i></span>
+      </div>
+    </div>
+
+    <div class="controls" style="float: left; margin-left: 20px;">
+      <div class="check-line">
+        <%= f.check_box :completed, {:class => "icheck-me", "data-skin" => "square", "data-color" => "green"} %>
+        <%= f.label :completed, "Completed", :class => "inline" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :description, "Description", :class => "control-label" %>
+    <div class="controls">
+      <%= f.text_field :description, :class => "input-xlarge name-field span12", 'data-rule-required' => true %>
+    </div>
+  </div>
+
+</div>
+
+<hr>

@@ -1,0 +1,46 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Saved Quote Items</h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if can? :create, SavedQuoteItem %>
+          <%= link_to '<i class="icon-plus-sign"></i> New Quote Item'.html_safe, new_saved_quote_item_path, {:class => 'btn btn-grey'} %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-notes"></i>Saved Quote Items</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table data-source="<%= saved_quote_items_url(format: "json") %>" class="table table-hover table-nomargin dataTable dataTable-ajax dataTable-tools dataTable-colvis dataTable-scroll-x table-bordered">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Cost</th>
+                  <th width="100">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

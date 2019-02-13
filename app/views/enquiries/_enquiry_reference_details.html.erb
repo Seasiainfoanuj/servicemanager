@@ -1,0 +1,73 @@
+<% present(@enquiry) do |enquiry| %>
+  <div class="box-title">
+    <h3><i class="glyphicon-notes" style="position:relative; top:-3px;"></i>Enquiry Details</h3><%= manual_link('enquiries') if current_user.admin? %>
+  </div>
+  <div class="box-content nopadding">
+    <table id="user" class="table table-bordered table-force-topborder" style="clear: both">
+      <tbody>
+        <tr>
+          <td>Type</td>
+          <td width="80%">
+            <%= @enquiry.enquiry_type.name if @enquiry.enquiry_type %>
+          </td>
+        </tr>
+        
+        <tr>
+          <td>Status</td>
+          <td width="80%">
+            <%= enquiry_status_label(@enquiry.status) if @enquiry.status.present? %>
+          </td>
+        </tr>
+        
+        <tr>
+          <td>Quotes</td>
+          <td width="80%">
+            <%= link_to "Customer All Quotes",quotes_path(:user_id => @enquiry.user.id), :class => "btn btn-lightblue" %>
+            <% if @enquiry.enquiry_quotes.where(:enquiry_id => @enquiry.id).present? %>
+              <%  @enquiry.enquiry_quotes.where(:enquiry_id => @enquiry.id).each do |enquiry_quote| %>
+                <%=  link_to enquiry_quote.quote.number, enquiry_quote.quote, {:class => 'btn btn-blue'} %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+        
+        <tr>
+          <td>Score</td>
+          <td width="80%">
+            <%= enquiry_score_label(@enquiry.score) if @enquiry.score.present? %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>How did you find us</td>
+          <td width="80%">
+            <%= @enquiry.find_us if @enquiry.find_us.present? %>
+          </td>
+        </tr>
+         
+        <tr>
+          <td>REF</td>
+          <td width="80%"><span class="label label-grey"><%= @enquiry.uid %></span></td>
+        </tr>
+
+        <% if current_user.admin? %>
+          <tr>
+            <td>Origin</td>
+            <td><%= @enquiry.source_application %></td>
+          </tr>
+          <tr>
+            <td>Internal Company</td>
+            <td><%= @enquiry.invoice_company.name if @enquiry.invoice_company %></td>
+          </tr>
+        <% end %>
+
+        <tr>
+          <td>Manager</td>
+          <td width="80%">
+            <%= @enquiry.manager.company_name if @enquiry.manager.present? %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<% end %>

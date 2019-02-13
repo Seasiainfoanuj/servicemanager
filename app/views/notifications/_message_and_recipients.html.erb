@@ -1,0 +1,44 @@
+<% present(@notification) do |notification| %>
+
+  <%= f.hidden_field :recipients, id: "notification-recipients" %>
+
+  <div class="control-group" style="margin-bottom: 0;">
+    <%= f.label :send_emails, "Emails required?", :class => "control-label" %>
+    <div class="controls check-box send-emails">
+      <% if notification.notification_type.emails_required %>
+        <%= f.check_box :send_emails, { checked: true, value: "1" } %> 
+      <% else %>
+        <%= f.check_box :send_emails, { id: "send-emails-checkbox" }, "1", "0" %>
+      <% end %>   
+    </div>  
+  </div>
+
+  <div id="email-message" class="control-group <%= notification_visibility_class(notification) %>">
+    <%= f.label :email_message, "Email Message", :class => "control-label" %>
+    <div class="controls message">
+      <%= f.text_area :email_message, {:class => "span10", 'rows' => 5} %>
+    </div>
+  </div>
+
+  <table class="recipients <%= notification_visibility_class(notification) %>">
+    <tbody>
+      <tr>  
+        <td></td>
+        <td>Recipients</td>
+        <td><%= select_tag :recipient_list, options_for_select(options_for_users({id: :email})), class: "select2-me span11", prompt: 'Choose user', id: 'all-users-list' %></td>
+         <td></td>
+        <td><a class="btn btn-primary add-recipient"><i class="icon-plus-sign"></i>Add recipient</a></td>
+      </tr>
+        <td></td>
+        <td>Select Users</td>
+        <td><%= select_tag :selected_users, options_for_select(notification.options_for_recipients), class: "input-xlarge selected-users", size: 4, id: 'selected-users-list' %>
+        </td> 
+        <td></td>
+        <td><a class="btn btn-primary remove-recipient"><i class="icon-plus-sign"></i>Remove recipient</a></td>
+        <td></td>
+      <tr>
+
+      </tr>
+    </tbody>
+  </table>
+<% end %>

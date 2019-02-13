@@ -1,0 +1,23 @@
+<% if @quote.customer.first_name %>
+Hi <%= @quote.customer.first_name %>,
+
+<% end %>
+<% unless @message.nil? || @message.blank? %>
+
+<%= @message %>
+
+<% end %>
+To access your quote from <%= @quote.invoice_company.name %>, go to:
+
+<%= quote_url(@quote, :user_email => @quote.customer.email, :user_token => @quote.customer.authentication_token) %>
+
+Best Regards,
+<%= @quote.manager.name if @quote.manager %>
+<%= @quote.invoice_company.name %>
+<% if @quote.manager %>
+<%= "Phone: #{@quote.manager.phone}" if @quote.manager.phone.present? %>
+<%= "Mobile: #{@quote.manager.mobile}" if @quote.manager.mobile.present? %>
+<%= "Email: #{@quote.manager.email}" if @quote.manager.email.present? %>
+<%= "Fax: #{@quote.manager.fax}" if @quote.manager.fax.present? %>
+<%= "Website: #{@quote.manager.website}" if @quote.manager.website.present? %>
+<% end %>

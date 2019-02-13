@@ -1,0 +1,43 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <% if current_user.has_role? :admin %>
+      <div class="page-header">
+        <div class="pull-left">
+          <h1><%= "#{@user.name}" %> <%= "#{@user.company}" if @user.company && @user.name.blank? %></h1>
+        </div>
+        <div class="pull-right">
+          <br>
+          <% if @user.has_role? :admin %>
+            <% @list_path = administrators_path %>
+          <% elsif @user.has_role? :supplier %>
+            <% @list_path = suppliers_path %>
+          <% elsif @user.has_role? :service_provider %>
+            <% @list_path = service_providers_path %>
+          <% elsif @user.has_role? :customer %>
+            <% @list_path = customers_path %>
+          <% elsif @user.has_role? :quote_customer %>
+            <% @list_path = quote_customers_path %>
+          <% else %>
+            <% @list_path = users_path %>
+          <% end %>
+          <%= link_to '<i class="icon-list-alt"></i>'.html_safe, @list_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+        </div>
+      </div>
+      <div class="breadcrumbs">
+        <%= render_crumbs %>
+        <div class="close-bread">
+          <a href="#"><i class="icon-remove"></i></a>
+        </div>
+      </div>
+    <% end %>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <%= render 'form', mode: 'update' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

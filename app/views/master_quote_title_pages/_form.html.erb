@@ -1,0 +1,73 @@
+<%= form_for(@master_quote_title_page, :html => {:class => "form-horizontal form-validate", :id => "quote-title-page-form", :multipart => true}) do |f| %>
+  <% if @master_quote_title_page.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@master_quote_title_page.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @master_quote_title_page.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="box-title">
+    <h3><i class="icon-pencil"></i>Title</h3>
+  </div>
+  <div class="box-content">
+    <%= f.hidden_field :master_quote_id %>
+
+    <div class="control-group">
+      <%= f.label :title, "Title", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :title, :class => "span8", 'data-rule-required' => true %>
+      </div>
+    </div>
+  </div>
+  <div class="box-title">
+    <h3><i class="icon-picture"></i>Images</h3>
+  </div>
+  <div class="box-content">
+    <% if @master_quote_title_page.image_1.present? %>
+      <div class="control-group">
+        <%= f.label :image_1, "Image 1 (Top)", :class => "control-label" %>
+        <div class="controls">
+          <a href="<%=  @master_quote_title_page.image_1.url(:original) %>">
+            <%= image_tag @master_quote_title_page.image_1.url(:thumb) %>
+          </a>
+          <br>
+          Replace with <%= f.file_field :image_1 %>
+        </div>
+      </div>
+    <% else %>
+      <div class="control-group">
+        <%= f.label :image_1, "Image 1 (Top)", :class => "control-label" %>
+        <div class="controls">
+          <%= f.file_field :image_1, 'data-rule-required' => true %>
+        </div>
+      </div>
+    <% end %>
+
+    <hr>
+
+    <% if @master_quote_title_page.image_2.present? %>
+      <div class="control-group">
+        <%= f.label :image_2, "Image 2 (Bottom)", :class => "control-label" %>
+        <div class="controls">
+          <a href="<%=  @master_quote_title_page.image_2.url(:original) %>">
+            <%= image_tag @master_quote_title_page.image_2.url(:thumb) %>
+          </a>
+          <br>
+          Replace with <%= f.file_field :image_2 %>
+        </div>
+      </div>
+    <% else %>
+      <div class="control-group">
+        <%= f.label :image_2, "Image 2 (Bottom)", :class => "control-label" %>
+        <div class="controls">
+          <%= f.file_field :image_2, 'data-rule-required' => true %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

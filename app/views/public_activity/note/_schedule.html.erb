@@ -1,0 +1,2 @@
+<% note = Note.find(activity.trackable_id) %>
+Scheduled for <%= display_date(note.sched_time) %> for the attention of <%= note.recipients.collect { |nr| nr.user.email }.join(', ') %>

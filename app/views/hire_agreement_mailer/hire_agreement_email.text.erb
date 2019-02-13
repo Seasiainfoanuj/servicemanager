@@ -1,0 +1,20 @@
+<% if @hire_agreement.customer.first_name %>
+Hi <%= @hire_agreement.customer.first_name %>,
+
+<% end %>
+<% unless @message.nil? || @message.blank? %>
+
+<%= @message.html_safe %>
+
+<% end %>
+To access your hire agreement, go to:
+
+<% if @hire_agreement.status == "awaiting confirmation" %>
+  <%= review_hire_agreement_url(@hire_agreement, :user_email => @hire_agreement.customer.email, :user_token => @hire_agreement.customer.authentication_token) %>
+<% else %>
+  <%= hire_agreement_url(@hire_agreement, :user_email => @hire_agreement.customer.email, :user_token => @hire_agreement.customer.authentication_token) %>
+<% end %>
+
+Best Regards,
+<%= @hire_agreement.manager.name if @hire_agreement.manager %>
+Bus 4x4 Pty Ltd

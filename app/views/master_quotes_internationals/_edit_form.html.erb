@@ -1,0 +1,156 @@
+<%= content_tag :div, class: "tax_data", data: {taxes: Tax.all} do %>
+<% end %>
+
+
+<%= form_for(@master_quote, :url => master_quotes_international_path(@master_quote), :html => {:id => "master-quote-form", :class => "form-vertical form-validate"}) do |f| %>
+
+  <% if @master_quote.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@master_quote.errors.count, "error") %> prohibited this page from being saved:</h2>
+      <ul>
+      <% @master_quote.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+    <br>
+  <% end %>
+
+  <%= render 'master_quote_items', f: f %>
+
+  <div class="row-fluid">
+    <div class="span4">
+      <div class="control-group">
+        <%= f.label :vehicle_make, "Vehicle Make", :class => "control-label" %>
+        <%= collection_select(:master_quote, :vehicle_make, VehicleMake.all, :name, :name, {:prompt => '', :include_blank => true}, {:class=>'select2-me span11', :style => "margin-left:0"}) %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+    <div class="span4">
+      <div class="control-group">
+        <%= f.label :vehicle_model, "Vehicle Model", :class => "control-label" %>
+        <div class="controls">
+        <%= f.select(:vehicle_model, VehicleModel.uniq.pluck(:name), {:prompt => '', include_blank: true}, class: "select2-me span11") %>
+        </div>
+      </div>
+    </div>
+    <div class="span4">
+      <div class="control-group">
+        <%= f.label :transmission_type, "Transmission Type", :class => "control-label" %>
+        <%= f.select(:transmission_type, Vehicle::TRANSMISSION_TYPES, {:prompt => '', include_blank: true}, class: "select2-me span11") %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+   <div class="row-fluid">
+    <div class="span3">
+      <div class="control-group">
+        <%= f.label :master_quote_type_id, "Quote Type", :class => "control-label" %>
+        <%= collection_select(:master_quote, :master_quote_type_id, MasterQuoteType.all, :id, :name, {:prompt => ''}, {:class=>'select2-me span11', :style => "margin-left:0", 'data-rule-required' => true}) %>
+        <div style="clear:both"></div>
+      </div>
+    </div>
+    <div class="span3">
+      <div class="control-group">
+        <%= f.label :name, "Master Quote REF Name", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :name, {:class => "master-quote-text", 'data-rule-required' => true} %>
+        </div>
+      </div>
+    </div>
+    <div class="span3">
+      <div class="control-group">
+        <%= f.label :seating_number, "Seating Number + Driver", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :seating_number, {:class => "master-quote-text", 'data-rule-positiveNumber' => true} %>
+        </div>
+      </div>
+    </div>
+    <div class="span3">
+      <div class="control-group">
+        <%= f.label :international, "Master Quote Type", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :international, {:class => "master-quote-text", :value => 'international', :readonly => true } %>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="form-table-container international_table">
+    <table id="form-table" class="table" style="margin-top:30px;">
+      <thead>
+        <tr>
+          <th class="position"></th>
+          <th class="name">Item / Item type</th>
+          <th class="description">Description</th>
+          <th class="buy-price right">Buy Price</th>
+          <th class="markup center">Markup</th>
+          <th class="cost right">Sell Price</th>
+          <th class="qty right">Qty</th>
+          <th class="tax gst">Tax</th>
+          <th class="line-total right">Line Total</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <%= f.fields_for :items do |builder| %>
+          <%= render 'item_fields', f: builder %>
+        <% end %>
+
+        <tr id="bottom_anchor"></tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <table id="form-table-bottom" class="table">
+    <tbody>
+      <tr>
+        <td colspan="4" class="table-left">
+          <%= link_to_add_fields '<i class="icon-plus-sign"></i> Add Line', f, :items %>
+          <a href="#modal-master-quote-items" role="button" id="add_saved_items" class="btn btn-lightgrey" data-toggle="modal"><i class="icon-plus-sign"></i> Add Master Quote Items</a>
+        </td>
+          <td colspan="2" class='taxes'>
+          <div class="subtotal-container">
+            <span>Subtotal</span>
+            <span id="subtotal">$0.00</span>
+          </div>
+          <div class="taxtotal-container">
+            <span id="tax_name">Tax</span>
+            <span id="taxtotal">$0.00</span>
+          </div>
+          <div class="grandtotal-container">
+            <span>Total</span>
+            <span id="grandtotal">$0.00</span>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="row-fluid">
+    <div class="span6">
+      <%= f.label :terms, "Terms", :class => "control-label" %>
+      <div class="control-group">
+        <%= f.text_area :terms, rows: 5, :class => 'auto-textarea span12' %>
+      </div>
+    </div>
+    <div class="span6">
+      <%= f.label :notes, "Notes (Visible to customer)", {:class => "control-label", 'style' => 'width:100%'} %>
+      <div class="control-group">
+        <%= f.text_area :notes, rows: 5, :class => 'auto-textarea span12' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions pull-right">
+    <% if @master_quote.id %>
+      <%= f.submit 'Update', :class => "btn btn-large btn-green" %>
+    <% else %>
+      <%= f.submit 'Create', :class => "btn btn-large btn-green" %>
+    <% end %>
+  </div>
+<% end %>

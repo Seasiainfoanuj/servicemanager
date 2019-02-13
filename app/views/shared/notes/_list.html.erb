@@ -1,0 +1,100 @@
+<% if current_user.has_role? :admin %>
+  <% @notes = resource.notes %>
+<% else %>
+  <% @notes = resource.notes.where(public: true) %>
+<% end %>
+
+<% if can?(:create, Note) && @notes.any? %>
+  <div class="box-title">
+    <h3><i class="glyphicon-notes" style="position:relative; top:-3px;"></i>Notes</h3>
+  </div>
+  <div class="box-content">
+    <div id="notes">
+      <% if can? :create, Note %>
+        <div class="new-note">
+          <h4>New Note</h4>
+          <%= render 'shared/notes/form', note: Note.new(resource: resource), index: 0 %>
+        </div>
+      <% end %>
+
+      <% if @notes.any? %>
+        <% @notes.each_with_index do |note, index| %>
+          <div id="note-<%= note.id %>" class="note <%= "owned" if note.author_id == current_user.id %>">
+            <div class="note-meta">
+              <span class="date">
+                <i class="icon-calendar"></i> <%= note.updated_at.strftime("%e %b %Y, %l:%M %p") %>
+              </span>
+              <% if current_user.has_role? :admin %>
+                <span class="scope">
+                  <i class="icon-eye-open"></i> <%= note.public ? "Public" : "Admin Only" %>
+                </span>
+              <% end %>
+              <span class="author">
+                <i class="icon-user"></i><%= note.author.name%>
+              </span>
+              <% reminder_status = note.reminder_status_display%>
+              <span class="reminder-status">
+                <%= "Status: " + reminder_status %>
+              </span>
+              <% if note.sched_time && (reminder_status == 'Scheduled' || reminder_status == 'Completed') %>
+                <span class="reminder-date">
+                  <%= "Due on: " + note.sched_time.strftime("%e %b %Y") %>
+                </span>
+                <% if can?(:update, note) && note.sched_time && note.sched_time.to_date >= Time.now.to_date %>
+                  <span class="email-notification">
+                    <% formId = "send-email-notification-" + index.to_s %>
+                    <%= form_for(note, :html => {:class => "form-horizontal", :id => formId}, :method => :post, :url => send_notifications_path(note)) do |f| %>
+                      <%= f.hidden_field :note_id, :value => note.id %>
+                      <button type="submit" class="btn btn-satblue">
+                        <i class="icon-envelope"></i>
+                        <span>Send Reminders</span>
+                      </button>
+                    <% end %>  
+                  </span>  
+                <% end %>
+              <% end %>
+              <span class="edit">
+                <% if can? :update, note %>
+                  <a class="edit-link" href="#"><i class="icon-edit"></i></a>
+                <% end %>
+                <% if can? :destroy, note %>
+                  <%= link_to '<i class="icon-trash"></i>'.html_safe, note, method: :delete, data: {confirm: "You are about to permanently delete this note. You cannot reverse this action. Are you sure you want to proceed?"} %>
+                <% end %>
+              </span>
+            </div>
+
+            <div class="note-text">
+              <%= simple_format h note.comments.html_safe %>
+            </div>
+
+            <div class="note-uploads">
+              <ul>
+                <% note.uploads.each do |file| %>
+                  <li><i class="icon-paper-clip"></i> <%= link_to file.upload_file_name, file.upload.url(:original), target: "_blank" %></li>
+                <% end %>
+              </ul>
+            </div>
+
+            <% if can? :update, note %>
+              <div class="note-update-form" style="display: none;">
+                <%= render 'shared/notes/form', note: note, index: index + 1 %>
+              </div>
+            <% end %>
+
+            <% if current_user.admin? %>
+              <div class="note-activity">
+                <ul class="activity-list">
+                  <% PublicActivity::Activity.order("created_at desc").where(:trackable_type => "Note", :trackable_id => note.id).each do |activity| %>
+                      <li>
+                        <%= render_activity activity, locals: {display: "simple"} %>- <span class="activity-time"><%= time_ago_in_words(activity.created_at) + " ago" %> (<%= activity.created_at.strftime("%e %b %Y, %l:%M %p") %>)</span>
+                      </li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

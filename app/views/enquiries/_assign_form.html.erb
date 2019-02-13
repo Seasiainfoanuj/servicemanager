@@ -1,0 +1,69 @@
+<div id="assign-enquiry-model" class="modal hide" role="dialog" aria-hidden="true">
+  <%= form_for @enquiry, :url => assign_enquiry_path(@enquiry), :html => {:id => "assign-enquiry-form", :class => "form-vertical form-validate"} do |f| %>
+    <div class="modal-body">
+      <div class="row-fluid">
+        <div class="span12">
+          <div class="control-group">
+            <%= f.label :manager_id, "Assign to", :class => "control-label" %>
+              <% if current_user.has_role? :employee  %>
+                <div class="controls">
+                    <% if  @enquiry.manager_id.present? %>
+                      <%= f.select :manager_id, options_for_select(options_for_enquiriers(@enquiry.manager_id), @enquiry.manager_id), {include_blank: 'Assign to a manager'}, {class: "select2-me ", :style => "margin-left:0; width: 300px !important", 'data-rule-required' => true} %>
+                    <% else %>  
+                      <%= f.select :manager_id, options_for_select(option_for_dealer, @enquiry.manager_id), {include_blank: 'Assign to a manager'}, {class: "select2-me ", :style => "margin-left:0; width: 300px !important", 'data-rule-required' => true} %>
+                    <% end %> 
+                  <div style="clear:both"></div>
+                </div>
+              <% end %>
+                
+              <% if !@enquiry.manager.nil?  %>
+                <% manager_name = @enquiry.manager.id %>
+              <% else %>
+                <% manager_name = "" %> 
+              <% end %>  
+              <% user_name = @enquiry.user.id if @enquiry.user.present? %>
+              <% if current_user.has_role?:masteradmin , :superadmin %>
+                <div class="controls">
+                  <%= f.select :manager_id, options_for_select(admin_managers, @enquiry.manager_id), {include_blank: 'Assign to a manager'}, {class: "select2-me ", :style => "margin-left:0; width: 300px !important", 'data-rule-required' => true} %>
+                  <div style="clear:both"></div>
+                </div>
+                  
+              <% elsif (current_user.has_role? :admin) && (!current_user.has_role? :employee, :masteradmin, :superadmin, :dealer) && ((current_user.id == user_name) || (current_user.id == manager_name))%>
+                <div class="controls">
+                  <%= f.select :manager_id, options_for_select(admin_managers, @enquiry.manager_id), {include_blank: 'Assign to a manager'}, {class: "select2-me ", :style => "margin-left:0; width: 300px !important", 'data-rule-required' => true} %>
+                  <div style="clear:both"></div>
+                </div>
+              
+              <% elsif (current_user.has_role? :dealer) && (!current_user.has_role? :employee, :masteradmin, :superadmin ) && ((current_user.id == user_name) || (current_user.id == manager_name))%>
+                <div class="controls">
+                  <% if  enquiry.manager_id.present? %>
+                    <%= f.select :manager_id, options_for_select(options_for_enquiriers(@enquiry.manager_id), @enquiry.manager_id), {include_blank: 'Assign to a manager'}, {class: "select2-me ", :style => "margin-left:0; width: 300px !important", 'data-rule-required' => true} %>
+                  <% else %>  
+                    <%= f.select :manager_id, options_for_select(option_for_dealer, @enquiry.manager_id), {include_blank: 'Assign to a manager'}, {class: "select2-me ", :style => "margin-left:0; width: 300px !important", 'data-rule-required' => true} %>
+                  <% end %>  
+                  <div style="clear:both"></div>
+                </div>
+          <% end %>
+          </div>
+
+          <div class="control-group">
+            <%= f.label :invoice_company, "Internal Company", :class => "control-label" %>
+             <div class="controls">
+              <% invoice_company_id = @enquiry.invoice_company ? @enquiry.invoice_company.id : "" %>
+              <%= f.select :invoice_company_id, options_for_select(options_for_invoice_company_names, invoice_company_id), {include_blank: 'Assign to an Internal Company'}, {:class=> 'select2-me', 'data-rule-required' => true} %>
+             </div>
+          </div>
+
+          <div class="check-line">
+            <%= f.check_box :seen, {:class => "icheck-me", "data-skin" => "square", "data-color" => "red"} %>
+            <%= f.label :seen, "Mark as Read", :class => "inline" %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+      <%= f.submit 'Assign', {:class => "btn btn-green"} %>
+    </div>
+  <% end %>
+</div>

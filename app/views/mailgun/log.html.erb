@@ -1,0 +1,54 @@
+<div id="left">
+  <%= render(:partial => 'layouts/left') %>
+</div>
+<div id="main" class="changelog">
+  <div class="container-fluid">
+
+    <%= render(:partial => 'layouts/notice') %>
+
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Mailgun Log</h1>
+      </div>
+    </div>
+
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-message_out"></i> Mailgun Log</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table table-hover table-nomargin dataTable dataTable-tools" data-default-sort-column="3" data-default-sort-direction="desc">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>ID</th>
+                  <th>Message</th>
+                  <th width="100">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @mailgun_log['items'].each do |log_record| %>
+                  <tr>
+                    <td><%= mailgun_hap_label(log_record['hap']) %></td>
+                    <td><%= log_record['message_id'] %></td>
+                    <td><%= log_record['message'] %></td>
+                    <td width="100"><%= Time.parse(log_record['created_at']).strftime("%Y-%m-%d %H:%M:%S") %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

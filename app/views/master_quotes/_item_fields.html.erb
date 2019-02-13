@@ -1,0 +1,30 @@
+<tr>
+  <td class="position"><%= f.text_field :position, class: "position_number" %></td>
+  <td class="name"><%= f.text_field :name %></td>
+  <td class="description"><%= f.text_area :description, rows: 1, :class => 'auto-textarea' %></td>
+  <td class="buy-price right"><%= f.text_field :buy_price %></td>
+  <td class="markup right">
+    <div class="input-prepend">
+      <input type="text" class="markup_field">
+      <span class="add-on">%</span>
+    </div>
+  </td>
+  <td class="cost right"><%= f.text_field :cost %></td>
+  <td class="qty right"><%= f.text_field :quantity %></td>
+  <td class="tax"><%= f.collection_select(:cost_tax_id, Tax.all, :id, :name, {:prompt => false}, {:class=>'tax-select'}) %>
+  <td class="line-total right">
+    <span class="amount"></span>
+    <%= f.hidden_field :line_total, :class => "line_total_amount" %>
+    <%= f.hidden_field :tax_total, :class => "tax_total_amount" %>
+    <div class="pull-right remove_fields_box">
+      <%= f.hidden_field :_destroy %>
+      <%= link_to '<i class="icon-remove"></i>'.html_safe, '#', class: "remove_fields" %>
+    </div>
+  </td>
+</tr>
+<tr class="second">
+  <td></td>
+  <td class="tax"><%= f.collection_select(:quote_item_type_id, QuoteItemType.all, :id, :name, {:prompt => false}, {:class=>'quote-item-type-select'}) %></td>
+  <td colspan="7">
+  </td>  
+</tr>

@@ -1,0 +1,146 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1><%= "#{@company.name}" %></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <%= link_to '<i class="icon-list-alt"></i>'.html_safe, companies_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+
+        <% if can? :update, Company %>
+          <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_company_path, {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <% end %>
+
+        <% if can? :destroy, Company %>
+          <%= link_to '<i class="icon-ban-circle"></i>'.html_safe, @company, method: :delete, :class => 'btn', :title => 'Destroy', 'rel' => 'tooltip', data: {confirm: "You are about to permanently delete the company, #{@company.name}. You cannot reverse this action. Are you sure you want to proceed?"} %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div id="company-details" class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="icon-group"></i>Company Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="company" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Client Reference</td>
+                  <td width="80%"><%= @company.client.reference_number %></td>
+                </tr>
+                <tr>
+                  <td>Company name</td>
+                  <td width="80%"><%= @company.name %></td>
+                </tr>
+                <tr>
+                  <td>Trading name</td>
+                  <td width="80%"><%= @company.trading_name %></td>
+                </tr>
+                <tr>
+                  <td>Website</td>
+                  <td width="80%"><%= @company.website %></td>
+                </tr>
+                <tr>
+                  <td>ABN</td>
+                  <td width="80%"><%= @company.abn %></td>
+                </tr>
+                <% if @company.vendor_number.present? %>
+                  <tr>
+                    <td>Vendor number</td>
+                    <td width="80%"><%= @company.vendor_number %></td>
+                  </tr>
+                <% end %>  
+                <% @company.addresses.each do |address| %>
+                  <% if address.postal? %>
+                    <tr>
+                      <td>Postal address</td>
+                      <td width="80%"><%= @company.postal_address %>
+                    </tr>
+                  <% end %>
+                  <% if address.physical? %>
+                    <tr>
+                      <td>Physical address</td>
+                      <td width="80%"><%= @company.physical_address %>
+                    </tr>
+                  <% end %>  
+                  <% if address.billing? %>
+                    <tr>
+                      <td>Billing address</td>
+                      <td width="80%"><%= @company.billing_address %>
+                    </tr>
+                  <% end %>
+                <% end %>  
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3 class="contacts"><i class="icon-user"></i>Contact people</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="company-contact-table" class="table table-bordered table-force-topborder" style="clear: both">
+              <thead>
+                <tr>
+                  <th>Client Ref</th>
+                  <th>Job Title</th>
+                  <th>Contact Role(s)</th>
+                  <th>Authorisation</th>
+                  <th>Contact Name and Email</th>
+                  <th>System Access Role(s)</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @company.contacts.each_with_index do |contact, index| %>
+                  <tr>
+                    <td><%= contact.client.reference_number %></td>
+                    <td><%= contact.job_title.blank? ? 'Contact' : contact.job_title %></td>
+                    <td><%= contact.contact_role_types.map(&:name).join(', ') %></td>
+                    <td><%= contact_authorisation_details(@company, contact) %>
+                    <td>
+                      <%= render 'shared/contact_info_model', user: contact, model_name: "contact-#{index}" %>
+                      <% href_id = "#modal-contact-#{index}" %>
+                      <%= link_to("#{contact.contact_details[:name]} - #{contact.contact_details[:email]}", contact) %>
+                    </td>
+                    <td><%= contact.roles.map { |role| role.to_s.humanize }.flatten.join(', ') %></td>
+                    <td>  
+                      <i class="icon-search"></i></a>
+                      <%= link_to("Profile", show_company_profile_user_path(contact)) %>
+                      <%= " (archived)" if contact.archived? %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="new-contact">
+          <h3>Add Contact for Company</h3>
+          <%= form_tag add_contact_company_path(@company), class: "new-company-contact-form" do %>
+            <div class="control-group">
+              <%= label_tag nil, "Select Contact:", :class => "control-label" %>
+              <div class="controls">
+                <%= select_tag 'user_id', options_for_select(options_for_users_with_company), prompt: 'Select Contact', class: 'select2-me span7 role-select' %>
+              </div>
+            </div>
+            <%= button_tag "Add Contact to Company", class: "btn btn-blue", id: "add-user-to-company" %> 
+          <% end %>  
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

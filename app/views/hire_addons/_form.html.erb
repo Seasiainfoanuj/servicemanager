@@ -1,0 +1,50 @@
+<% present(@hire_addon) do |addon| %>
+  <%= form_for(@hire_addon, :html => {:id => "hire-addon-form", :class => "form-horizontal"}) do |f| %>
+    <% if @hire_addon.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@hire_addon.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+        <ul>
+          <% @hire_addon.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="box-title">
+      <h3><i class="glyphicon-link"></i>Hire Add-on Details</h3>
+    </div>
+    <div class="box-content">
+      <div class="control-group">
+        <%= f.label :addon_type, "Add-on Type", class: "control-label" %>
+        <div class="controls">
+          <%= f.select :addon_type, options_for_select( addon.options_for_addon_types, addon.addon_type ), prompt: 'Select Add-on Type' %>
+        </div>
+      </div> 
+
+      <div class="control-group">
+        <%= f.label :hire_model_name, "Add-on Model Name", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :hire_model_name, :class => "input-xlarge" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :hire_price, "Hire Price", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :hire_price, :class => "input-medium" %>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <%= f.label :billing_frequency, "Billing Frequency", class: "control-label" %>
+        <div class="controls">
+          <%= f.select :billing_frequency, options_for_select( addon.options_for_billing_frequencies, addon.billing_frequency ), {include_blank: 'Select Billing Frequency'} %>
+        </div>
+      </div> 
+
+    </div>
+
+  <% end %>
+<% end %>

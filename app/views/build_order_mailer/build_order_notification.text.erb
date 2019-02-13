@@ -1,0 +1,5 @@
+Hi<%= " #{@user.first_name}" %>,
+
+The following build order has been <%= @action_type %>. You can login and view this build order here: <%= build_order_url(@build_order) %>
+
+<%= render 'build_order' %>

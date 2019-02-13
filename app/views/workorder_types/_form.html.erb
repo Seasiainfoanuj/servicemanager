@@ -1,0 +1,90 @@
+<%= form_for(@workorder_type, :html => {:id => "workorder-type-form", :class => "form-horizontal"}) do |f| %>
+  <% if @workorder_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@workorder_type.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @workorder_type.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="box-title">
+    <h3><i class="glyphicon-notes"></i>Workorder Type Details</h3><%= manual_link('workorder_types') %>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :name, "Name", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name, :class => "input-xlarge" %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :label_color, "Colour", :class => "control-label" %>
+      <div class="controls">
+        <div class="input-append color colorpick" data-color="<%= @workorder_type.label_color.downcase if @workorder_type.label_color %>" data-color-format="hex">
+          <%= f.text_field :label_color, :class => "input-small" %>
+          <span class="add-on"><i style="margin-top: 2px;"></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label :notes, "Default Notes", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_area :notes, {:class => "editor span12", 'rows' => 5} %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="box-title">
+  <h3><i class="glyphicon-paperclip"></i>Attachments</h3>
+</div>
+<% if @workorder_type.id %>
+  <div class="box-content" style="padding: 30px 50px;">
+    <div id="file-uploads-container">
+      <%= form_for WorkorderTypeUpload.new, :html => { :multipart => true, :id => "workordertypeupload", "data-workorder-type-id" => @workorder_type.id  } do |f| %>
+        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+        <div class="row fileupload-buttonbar">
+          <div class="span7">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+            <span class="btn btn-success fileinput-button">
+              <i class="icon-plus icon-white"></i>
+              <span>Add files...</span>
+              <%= f.file_field :upload %>
+              <%= f.hidden_field :workorder_type_id, :value => @workorder_type.id, :id => "workorder_type_id" %>
+            </span>
+            <button type="submit" class="btn btn-primary start">
+              <i class="icon-upload icon-white"></i>
+              <span>Start upload</span>
+            </button>
+            <button type="reset" class="btn btn-orange cancel">
+              <i class="icon-ban-circle icon-white"></i>
+              <span>Cancel upload</span>
+            </button>
+          </div>
+          <div class="span5">
+            <!-- The global progress bar -->
+            <div class="progress progress-success progress-striped active fade">
+              <div class="bar" style="width:0%;"></div>
+            </div>
+          </div>
+        </div>
+        <!-- The loading indicator is shown during image processing -->
+        <div class="fileupload-loading"></div>
+        <br>
+        <!-- The table listing the files available for upload/download -->
+        <table class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+        </table>
+      <% end %>
+
+      <%= render 'shared/form_upload' %>
+      <%= render 'shared/form_download' %>
+    </div>
+  </div>
+<% else %>
+  <div class="box-content">
+    <span class="alert alert-warning"><i class="icon-warning-sign" style="margin-right:3px"></i> Create workorder type to enable file attachments. </span>
+  </div>
+<% end %>

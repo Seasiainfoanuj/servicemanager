@@ -1,0 +1,372 @@
+<div id="main">
+  <div id="hire-agreement-review" class="container-fluid">
+    <%= render(:partial => 'review_notice') %>
+    <%= render(:partial => 'accept_notice') %>
+
+    <div class="page-header">
+      <div class="row-fluid">
+        <div class="span6">
+          <a href="/" id="branding"></a>
+        </div>
+        <div class="span6 align-right">
+          <button type="button" data-toggle="modal" data-target="#accept-notice-model" class="btn btn-satgreen"><i class="icon-ok"></i> Accept Hire Agreement</button>
+          <button type="button" data-toggle="modal" data-target="#review-notice-model" class="btn"><i class="icon-question-sign"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+
+        <div class="hire-company-details">
+          <div class="row-fluid">
+            <div class="span4">
+              <b><%= BUS4X4_HIRE_COMPANY_NAME %></b>
+            </div>
+            <div class="span4 align-center">
+              <%= BUS4X4_ABN_ACN %>
+            </div>
+            <div class="span4 align-right">
+              <b>
+                HIRE AGREEMENT #<%= @hire_agreement.uid %>
+              </b>
+            </div>
+          </div>
+        </div>
+        <div class="box box-condensed box-color box-bordered">
+
+          <%= form_for(@hire_agreement, :url => url_for(:action => 'accept', :hire_agreement_id => @hire_agreement.uid, :user_email => params[:user_email], :user_token => params[:user_token]), :html => {:multipart => :true, :id => "hire-agreement-review-form", :class => "form-horizontal form-validate"}, :method => :POST) do |f| %>
+            <% if @hire_agreement.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@hire_agreement.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+                <ul>
+                <% @hire_agreement.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="box-title" style="margin-top: 0;">
+              <h3><span class="step">1</span> Enter your contact and drivers licence details</h3>
+            </div>
+            <div class="box-content">
+              <%= f.fields_for :customer do |builder| %>
+
+                <div class="span6">
+                  <div class="control-group">
+                    <%= builder.label :first_name, "First Name*", :class => "control-label" %>
+                    <div class="controls">
+                      <%= builder.text_field :first_name, {:class => "input-large", 'data-rule-required' => true} %>
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <%= builder.label :last_name, "Last Name*", :class => "control-label" %>
+                    <div class="controls">
+                      <%= builder.text_field :last_name, {:class => "input-large", 'data-rule-required' => true} %>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="span6">
+                  <div class="control-group">
+                    <%= builder.label :company, "Company", :class => "control-label" %>
+                    <div class="controls">
+                      <%= builder.text_field :company, {:class => "input-large"} %>
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <%= builder.label :job_title, "Job Title", :class => "control-label" %>
+                    <div class="controls">
+                      <%= builder.text_field :job_title, {:class => "input-large"} %>
+                    </div>
+                  </div>
+                </div>
+
+                <hr>
+
+                <div class="row-fluid">
+                  <div class="span12">
+                    <div class="control-group">
+                      <%= builder.label :phone, "Phone", :class => "control-label" %>
+                      <div class="controls">
+                        <%= builder.text_field :phone, {:class => "input-large", 'data-rule-required' => true} %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <hr>
+
+                <%= builder.fields_for :licence do |lf| %>
+
+                <div class="row-fluid">
+                  <div class="span6">
+                    <div class="control-group">
+                      <%= lf.label :number, "Licence Number*", :class => "control-label" %>
+                      <div class="controls">
+                        <%= lf.text_field :number, {:id => "customer_licence_number", :class => "input-large", 'data-rule-required' => true} %>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <%= lf.label :state_of_issue, "State Of Issue*", :class => "control-label" %>
+                      <div class="controls">
+                        <%= lf.text_field :state_of_issue, {:id => "customer_licence_state", :class => "input-large", 'data-rule-required' => true} %>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="span6">
+                    <div class="control-group">
+                      <%= lf.label :expiry_date_field, "Expiry Date*", :class => "control-label" %>
+                      <div class="controls">
+                        <%= lf.text_field :expiry_date_field, {:id => "customer_licence_expiry", :class => "input-small mask_date", 'data-rule-required' => true} %>
+                        <div class="help-block">dd/mm/yyyy</div>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <%= builder.label :driver_dob_field, "Date of Birth*", :class => "control-label" %>
+                      <div class="controls">
+                        <%= builder.text_field :dob_field, {:id => "customer_dob", :class => "input-small mask_date", 'data-rule-required' => true} %>
+                        <div class="help-block">dd/mm/yyyy</div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row-fluid">
+                  <div class="span12">
+                    <div class="control-group">
+                      <%= lf.label :upload, "Upload Licence Photocopy*", :class => "control-label" %>
+                      <div class="controls">
+                        <%= lf.file_field :upload, 'data-rule-required' => true %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+
+          <div class="box-title">
+            <h3><span class="step">2</span> Download and review all attached documents</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table class="table">
+            <% @hire_agreement.hire_uploads.each do |file| %>
+              <tr>
+                <td>
+                  <a href="<%= file.upload.url(:original) %>" target="_blank"><%= file.upload_file_name %></a>
+                </td>
+                <td class="align-right"><a class="btn" href="<%= file.upload.url(:original) %>" target="_blank"><i class="icon-download-alt"></i></a></td>
+              </tr>
+            <% end %>
+            </table>
+          </div>
+
+          <div class="box-title">
+            <h3><span class="step">3</span> Review Hire Agreement and Vehicle Details Below <i class="icon-arrow-down"></i></h3>
+          </div>
+
+          <div class="row-fluid">
+            <div class="span6">
+              <div class="box-title">
+                <h3><i class="icon-calendar"></i>Pickup Schedule</h3>
+              </div>
+              <div class="box-content nopadding">
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td>Date/Time</td>
+                      <td width="80%"><%= @hire_agreement.pickup_date_field %> <%= @hire_agreement.pickup_time_field %></td>
+                    </tr>
+                    <tr>
+                      <td>Location</td>
+                      <td width="80%"><%= @hire_agreement.pickup_location.capitalize %></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="span6">
+              <div class="box-title">
+                <h3><i class="icon-calendar"></i>Return Schedule</h3>
+              </div>
+              <div class="box-content nopadding">
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td>Date/Time</td>
+                      <td width="80%"><%= @hire_agreement.return_date_field %> <%= @hire_agreement.return_time_field %></td>
+                    </tr>
+                    <tr>
+                      <td>Location</td>
+                      <td width="80%"><%= @hire_agreement.return_location.capitalize %></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="box-title">
+            <h3><i class="glyphicon-keys"></i>Vehicle Details</h3>
+          </div>
+          <div class="box-content nopadding">
+            <div class="span6">
+              <table class="table table-bordered table-force-topborder" style="clear: both; border-right: 1px solid #ddd;">
+                <tbody>
+                  <tr>
+                    <td>Year, Make &amp; Model</td>
+                    <td width="70%"><%= @vehicle.name %></td>
+                  </tr>
+                  <tr>
+                    <td>Vehicle Number</td>
+                    <td width="70%"><%= @vehicle.number %></td>
+                  </tr>
+                  <tr>
+                    <td>VIN Number</td>
+                    <td width="70%"><%= @vehicle.vin_number %></td>
+                  </tr>
+                  <tr>
+                    <td>Transmission</td>
+                    <td width="70%"><%= @vehicle.transmission %></td>
+                  </tr>
+                  <tr>
+                    <td>Rego Number</td>
+                    <td width="70%"><%= @vehicle.rego_number %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="span6" style="margin-left:0">
+              <table class="table table-bordered table-force-topborder" style="clear: both; border-bottom: 1px dotted #ddd;">
+                <tbody>
+                  <tr>
+                    <td>Seating Requirement</td>
+                    <td width="70%"><%= @hire_agreement.seating_requirement %></td>
+                  </tr>
+                  <tr>
+                    <td>Seating Capacity</td>
+                    <td width="70%"><%= @vehicle.seating_capacity %></td>
+                  </tr>
+                  <tr>
+                    <td>Daily KM Allowance</td>
+                    <td width="70%"><%= @hire_agreement.daily_km_allowance %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+          <div class="row-fluid">
+            <div class="span6">
+              <div class="box-title">
+                <h3><i class="glyphicon-usd"></i>Hire Rates</h3>
+              </div>
+              <div class="box-content nopadding">
+                <table class="table table-bordered table-force-topborder" style="clear: both">
+                  <tbody>
+                    <tr>
+                      <td>Daily Rate</td>
+                      <td width="70%">$<%= @hire_agreement.daily_rate %></td>
+                    </tr>
+                    <tr>
+                      <td>Fuel Service Fee </td>
+                      <td width="70%">$<%= @hire_agreement.fuel_service_fee %> / Litre</td>
+                    </tr>
+                    <tr>
+                      <td>Excess Km Fee </td>
+                      <td width="70%">$<%= @hire_agreement.excess_km_rate %> / KM</td>
+                    </tr>
+                    <tr>
+                      <td>Damage recovery fee</td>
+                      <td width="70%">$<%= @hire_agreement.damage_recovery_fee %></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="span6">
+              <div class="box-title">
+                <h3><i class="glyphicon-usd"></i>Estimated Rental Charges</h3>
+              </div>
+              <div class="box-content nopadding">
+                <table class="table table-bordered table-force-topborder" style="clear: both">
+                  <tbody>
+                    <tr>
+                      <td>Rental Fee</td>
+                      <td width="70%">
+                        <%= number_to_currency(@hire_agreement.rental_fee) %> (<%= @hire_agreement.number_of_days %> day agreement)
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Excess Km Fee </td>
+                      <td width="60%">
+                        <%= number_to_currency(@hire_agreement.excess_km_fee) %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Fuel Service Fee </td>
+                      <td width="60%">
+                        <%= number_to_currency(@hire_agreement.fuel_service_charge) %>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>GST </td>
+                      <td width="70%">
+                        10%
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <% unless @hire_agreement.details.blank? %>
+            <div class="box-title">
+              <h3><i class="glyphicon-notes"></i>Details</h3>
+            </div>
+            <div class="box-content">
+              <%= @hire_agreement.details.html_safe %>
+            </div>
+          <% end %>
+
+          <div class="box-title">
+            <h3><span class="step">4</span> Accept Hire Agreement</h3>
+          </div>
+          <div class="box-content">
+            <div class="row-fluid">
+              <div class="span5">
+                <button type="button" data-toggle="modal" data-target="#accept-notice-model" class="btn btn-satgreen"><i class="icon-ok"></i> Accept Hire Agreement</button>
+              </div>
+              <div class="span2 align-center">
+                <span style="font-size: 1.5em; font-weight: bold; line-height: 30px;">OR</span>
+              </div>
+              <div class="span5 align-right" style="font-size: 1.2em;; line-height: 30px;">
+                <% if @hire_agreement.manager && @hire_agreement.manager.phone.present? %>
+                  Phone <%= @hire_agreement.manager.name %> on <b><%= @hire_agreement.manager.phone %></b>
+                <% elsif @hire_agreement.manager && @hire_agreement.manager.name != @hire_agreement.manager.email %>
+                  Phone <%= @hire_agreement.manager.name %> on <b>1300 287 494</b>
+                <% else %>
+                  Phone <b>1300 287 494</b>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

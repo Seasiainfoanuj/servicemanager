@@ -1,0 +1,209 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Hi<%= ", #{current_user.first_name}" %></h1>
+      </div>
+      <div class="pull-right">
+        <ul class="stats">
+          <li class='grey'>
+            <i class="icon-calendar"></i>
+            <div id="clock" class="details"></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+
+      <% if current_user.has_role? :admin %>
+      <% if current_user.has_role? :dealer %>
+         <div class="span12">
+          <div class="box box-condensed box-color box-bordered">
+            <div class="box-title">
+              <h3><i class="icon-bullhorn"></i>Activity</h3>
+            </div>
+            <div class="box-content nopadding">
+              <table class="table table-hover table-bordered table-nomargin dataTable dataTable-ajax" data-source="<%= activities_url(format: "json") %>" data-default-sort-column="0" data-default-sort-direction="desc">
+                <thead>
+                  <tr>
+                    <th>Activity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <div class="span6">
+          <div class="box box-condensed box-color box-bordered">
+            <div class="box-title">
+              <h3><i class="icon-bullhorn"></i>Activity</h3>
+            </div>
+            <div class="box-content nopadding">
+              <table class="table table-hover table-bordered table-nomargin dataTable dataTable-ajax" data-source="<%= activities_url(format: "json") %>" data-default-sort-column="0" data-default-sort-direction="desc">
+                <thead>
+                  <tr>
+                    <th>Activity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <% unless current_user.has_role? :dealer %>
+        <div class="span6">
+          <div class="box box-condensed box-color box-bordered">
+            <div class="box-title">
+              <h3><i class="icon-bullhorn"></i>Customer Enquiries</h3>
+            </div>
+            <div class="box-content nopadding">
+              <table class="table table-nohead" id="randomFeed">
+                <tbody>
+                  <tr>
+                    <td>
+                      <% totals = @enquiry_stats[:new_not_read].values.sum %>
+                      <%= link_to "#{enquiries_label(totals, {filter: :new_not_read})} New Enquiries Not Read".html_safe, enquiries_path %>
+                      <%= enquiries_label( "Service Manager: #{@enquiry_stats[:new_not_read]['Service Manager'].to_i}", {filter: :new_not_read} ) %>
+                      <%= enquiries_label( "CMS: #{@enquiry_stats[:new_not_read]['CMS'].to_i}", {filter: :new_not_read} ) %>
+                      <%= enquiries_label( "IBUS: #{@enquiry_stats[:new_not_read]['IBUS'].to_i}", {filter: :new_not_read} ) %>
+                    </td>
+                  </tr>
+                  <tr>  
+                    <td>  
+                      <% totals = @enquiry_stats[:new_but_read].values.sum %>
+                      <%= link_to "#{enquiries_label(totals, {filter: :new_but_read})} New Enquiries But Read".html_safe, enquiries_path %>
+                      <%= enquiries_label( "Service Manager: #{@enquiry_stats[:new_but_read]['Service Manager'].to_i}", {filter: :new_but_read} ) %>
+                      <%= enquiries_label( "CMS: #{@enquiry_stats[:new_but_read]['CMS'].to_i}", {filter: :new_but_read} ) %>
+                      <%= enquiries_label( "IBUS: #{@enquiry_stats[:new_but_read]['IBUS'].to_i}", {filter: :new_but_read} ) %>
+                    </td>  
+                  </tr>
+                  <tr>  
+                    <td>  
+                      <% totals = @enquiry_stats[:pending].values.sum %>
+                      <%= link_to "#{enquiries_label(totals, {filter: :pending})} Pending Enquiries".html_safe, enquiries_path %>
+                      <%= enquiries_label( "Service Manager: #{@enquiry_stats[:pending]['Service Manager'].to_i}", {filter: :pending} ) %>
+                      <%= enquiries_label( "CMS: #{@enquiry_stats[:pending]['CMS'].to_i}", {filter: :pending} ) %>
+                      <%= enquiries_label( "IBUS: #{@enquiry_stats[:pending]['IBUS'].to_i}", {filter: :pending} ) %>
+                    </td>  
+                  </tr>
+                  <tr>  
+                    <td>  
+                      <% totals = @enquiry_stats[:awaiting_response].values.sum %>
+                      <%= link_to "#{enquiries_label(totals, {filter: :awaiting_response})} Enquiries Awaiting Response".html_safe, enquiries_path %>
+                      <%= enquiries_label( "Service Manager: #{@enquiry_stats[:awaiting_response]['Service Manager'].to_i}", {filter: :awaiting_response} ) %>
+                      <%= enquiries_label( "CMS: #{@enquiry_stats[:awaiting_response]['CMS'].to_i}", {filter: :awaiting_response} ) %>
+                      <%= enquiries_label( "IBUS: #{@enquiry_stats[:awaiting_response]['IBUS'].to_i}", {filter: :awaiting_response} ) %>
+                    </td>  
+                  </tr>
+                  <tr>  
+                    <td>  
+                      <% totals = @enquiry_stats[:quoted].values.sum %>
+                      <%= link_to "#{enquiries_label(totals, {filter: :quoted})} Enquiries resulting in Quotes".html_safe, enquiries_path %>
+                      <%= enquiries_label( "Service Manager: #{@enquiry_stats[:quoted]['Service Manager'].to_i}", {filter: :quoted} ) %>
+                      <%= enquiries_label( "CMS: #{@enquiry_stats[:quoted]['CMS'].to_i}", {filter: :quoted} ) %>
+                      <%= enquiries_label( "IBUS: #{@enquiry_stats[:quoted]['IBUS'].to_i}", {filter: :quoted} ) %>
+                    </td>  
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="box box-condensed box-color box-bordered">
+            <div class="box-title">
+              <h3><i class="icon-bullhorn"></i>New Purchase Orders</h3>
+            </div>
+            <div class="box-content nopadding">
+              <table class="table table-nohead" id="randomFeed">
+                <tbody>
+                  <% if new_po_requests_count > 0 || flagged_po_requests_count > 0 %>
+                    <tr>
+                      <td>
+                        <%= link_to "#{new_po_requests_label_small(new_po_requests_count)}#{flagged_po_requests_label_small(flagged_po_requests_count)}PO Requests".html_safe, po_requests_path %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="box box-condensed box-color box-bordered">
+            <div class="box-title">
+              <h3><i class="icon-bullhorn"></i>Vehicle Log Entries</h3>
+            </div>
+            <div class="box-content nopadding">
+              <table class="table table-nohead" id="randomFeed">
+                <tbody>
+                  <% if flagged_vehicle_log_entries_count > 0 %>
+                    <tr>
+                      <td>
+                        <%= link_to "#{flagged_vehicle_log_entries_label_small(flagged_vehicle_log_entries_count)}Vehicle Log Entries".html_safe, vehicle_logs_path %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="box box-condensed box-color box-bordered">
+            <div class="box-title">
+              <h3><i class="icon-bullhorn"></i>Vehicle Notifications</h3>
+            </div>
+            <div class="box-content nopadding">
+              <table class="table table-nohead" id="randomFeed">
+                <tbody>
+                  <tr>
+                    <td>
+                      <% total = notifications_count( {filter: :overdue_count} ) %>
+                      <%= link_to "#{notifications_label( total, {filter: :overdue_count} )} Overdue Notifications".html_safe, notifications_path %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <% total = notifications_count( {filter: :due_in_30_days} ) %>
+                      <%= link_to "#{notifications_label( total, {filter: :due_in_30_days} )} Due in 30 days".html_safe, notifications_path %>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+
+      <% else %>
+
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <br>
+          <p>Welcome to the Bus 4x4 service manager. For support please contact <%= mail_to 'webmaster@bus4x4.com.au', 'webmaster@bus4x4.com.au', subject: "Support Request: Service Manager (User: #{current_user.name})" %></p>
+        </div>
+      </div>
+
+      <% end %>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1>Edit Workorder <span class="label"><%= "REF# #{@workorder.uid}" %></span></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <a href="#" class="btn btn-green submit-btn">Update Workorder</a>
+        <% if @vehicle %>
+          <%= link_to '<i class="icon-search"></i>'.html_safe, {:action => 'show', :id => @workorder.id, :vehicle_id => @workorder.vehicle.id}, {:title => 'View', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+          <%= link_to '<i class="icon-list-alt"></i>'.html_safe, {:action => 'index', :vehicle_id => @workorder.vehicle.id}, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+        <% else %>
+          <%= link_to '<i class="icon-search"></i>'.html_safe, @workorder, {:title => 'View', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+          <%= link_to '<i class="icon-list-alt"></i>'.html_safe, workorders_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+        <% end %>
+      </div>
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <%= render 'form' %>
+          <div class="actions">
+            <a href="#" class="btn btn-green submit-btn">Update Workorder</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,225 @@
+<% present(@quote) do |quote| %>
+
+  <div id="main" class="page-container">
+
+    <%= render(partial: 'shared/page_legend', locals: {actions: [:edit, :list, :amendment, :duplicate, :download_pdf]}) %>
+
+    <div class="page-header">
+      <div class="pull-left">
+        <% unless quote.attachments.empty? %>
+          <%= link_to quote.attachments.count > 1 ? "<i class='icon-paper-clip'></i> #{quote.attachments.count} Attachments".html_safe : "<i class='icon-paper-clip'></i> #{quote.attachments.count} Attachment".html_safe, "#quote-attachments", class: "btn" %>
+        <% end %>
+
+        <% if quote.show_cost_to_admin?(params[:show_costs]) %>
+          <%= link_to "(Showing Pricing) - Revert", quote_path(quote), class: "btn btn-lightgrey" %>
+        <% elsif quote.hide_cost_from_admin?(params[:show_costs]) %>
+          <%= link_to "Pricing", quote_path(quote, show_costs: true), class: "btn btn-lightgrey" %>
+        <% end %>
+      </div>
+      <div class="pull-right">
+        <% if quote.show_linked_order? %>
+          <%= link_to 'View Linked Order', quote.sales_order, class: "btn btn-grey" %>
+        <% elsif quote.show_create_sales_order_link? %>
+            <%= link_to 'Create Sales Order', new_sales_order_path(quote_id: quote.id), class: "btn btn-satgreen" %>
+        <% end %>
+
+        <% if can? :send_quote, Quote %>
+          <a href="#send-quote-model" role="button" class="btn btn-satblue" data-toggle="modal"><i class="icon-envelope"></i>
+            <% if QuoteStatus.send_or_resend(quote.status) == 'resend' %>
+              Resend
+            <% else %>
+              Send
+            <% end %>
+          </a>
+          <%= render 'send_form' %>
+        <% end %>
+
+        <% if current_user == quote.customer %>
+          <%= link_to '<i class="icon-file"></i> PDF'.html_safe, quote_path(quote, format: "pdf", :user_email => quote.customer.email, :user_token => quote.customer.authentication_token), {:title => 'Download PDF', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <% else %>
+          <%= link_to '<i class="icon-file"></i> PDF'.html_safe, quote_path(quote, format: "pdf"), {:title => 'Download PDF', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <% end %>
+
+        <% if false and quote.vehicle_contract %>
+           <% if current_user.admin? %>
+             <%= link_to '<i class="icon-legal"></i> Contract'.html_safe, quote.quote_contract_path, {title: 'View contract', class: 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+             <%= link_to '<i class="icon-download"></i>'.html_safe, vehicle_contract_path(quote, format: "pdf"), {:title => 'Download Contract', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+           <% end %>
+        <% elsif false %>
+          <% if (can? :create, VehicleContract) && QuoteStatus.action_permitted?(:create_contract, quote.status) %>
+            <%= link_to '<i class="icon-legal"></i> Contract'.html_safe, {action: 'create_contract', :quote_id => quote.number}, {id: "vehicle-contract-link", title: 'Create contract', class: 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+          <% end %>  
+        <% end %>
+
+        <!-- <a href="#" class="btn" onclick="window.print();return false;"><i class="icon-print"></i> Print</a> -->
+
+        <% if current_user == quote.customer %>
+          <%= render 'accept_quote_decision' %>
+        <% end %>
+
+        <% if can? :update, Quote %>
+          <% if QuoteStatus.action_permitted?(:update, quote.status) %>
+            <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_quote_path(quote), {:title => 'Edit', :class => 'btn edit-quote', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+          <% end %>
+        <% end %>
+
+        <% if can? :create_amendment, Quote %>
+          <%= link_to '<i class="icon-paste"></i>'.html_safe, {:action => 'create_amendment', :quote_id => quote.id}, {:title => 'Create Amendment', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom", data: {confirm: "You are about to cancel this quote and create an ammended copy. Are you sure you want to do this?"}} %>
+        <% end %>
+
+        <%= render 'duplicate_quote_decision' %>
+
+        <% if current_user.admin?  %>
+          <%= link_to '<i class="icon-list-alt"></i>'.html_safe, quotes_path, {:title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+        <% end %>
+      </div>
+    </div>
+
+    <%= render(:partial => 'layouts/notice') %>
+
+    <% if quote.status == "accepted" %>
+      <%= render(:partial => 'po_upload_form') unless quote.po_number.present? || quote.po_upload.present? %>
+    <% end %>
+
+    <%= render 'title_page' if quote.title_page %>
+    <%= render 'cover_letter' if quote.cover_letter %>
+    <%= render 'summary_page' if quote.summary_page %>
+    <%= render 'alert_messages' %>
+
+    <div id="quote" class="a4-page">
+      <div class="invoice-info">
+        <div class="invoice-name">
+
+          <div class="invoice-logo">
+            <%= image_tag quote.dealer_logo(:medium) %>
+          </div>
+
+          <div id="status-box">
+            <% if quote.show_status_label? %>
+              <%= quote_status_label(quote.status) %>
+            <% end %>
+          </div>
+
+          <div class="quote-reference">
+            Quote <%= quote.number %>
+          </div>
+        </div>
+
+        <%= render 'invoice_from_details' %>
+
+        <%= render 'invoice_to_details' %>
+
+        <div class="invoice-infos">
+          <table class="table">
+            <tr>
+              <th>Quote #:</th>
+              <td class="right"><%= quote.number %></td>
+            </tr>
+            <tr>
+              <th>Quote Date:</th>
+              <td class="right"><%= quote.date_field %></td>
+            </tr>
+            <% unless quote.po_number.nil? || quote.po_number.blank? %>
+            <tr>
+              <th>PO Number:</th>
+              <td class="right"><%= quote.po_number %></td>
+            </tr>
+            <% end %>
+            <tr>
+              <th>&nbsp;</th>
+              <td>&nbsp;</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <%= render 'quote_table' %>
+
+      <% if quote.terms.present? || quote.comments.present? %>
+        <div class="row-fluid">
+          <% if quote.terms.present? %>
+            <div class="span6" style="border-right: 1px solid #ddd; padding: 0 20px;">
+              <h5>Terms</h5>
+              <%=simple_format h quote.terms %>
+            </div>
+          <% end %>
+
+          <% if quote.comments.present? %>
+            <div class="span6" style="padding: 0 20px;">
+              <h5>Comments</h5>
+              <%=simple_format h quote.comments %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <% if quote.specification_sheet %>
+      <div id="quote-specification-sheet-show">
+        <h3><i class="glyphicon-paperclip"></i>
+          Specification Sheet
+        </h3>
+        <table class="table table-hover table-nomargin">
+          <tr>
+            <td><a href="<%= quote.specification_sheet.upload.url(:original) %>"><%= image_tag quote.specification_sheet.upload.url(:medium) %></a></td>
+            <td>
+              <a href="<%= quote.specification_sheet.upload.url(:original) %>" target="_blank"><%= quote.specification_sheet.upload_file_name.humanize %></a>
+            </td>
+            <td><a class="btn" href="<%= quote.specification_sheet.upload.url(:original) %>" target="_blank"><i class="icon-download-alt"></i> Download</a></td>
+          </tr>
+        </table>
+      </div>
+    <% end %>
+
+    <% unless quote.attachments.empty? %>
+      <div id="quote-attachments">
+        <h3><i class="glyphicon-paperclip"></i>
+          <%= quote.attachments.count > 1 ? "#{quote.attachments.count} Attachments" : "#{quote.attachments.count} Attachment" %>
+        </h3>
+        <table class="table table-hover table-nomargin">
+        <% quote.attachments.each do |file| %>
+          <tr>
+            <td><a href="<%= file.upload.url(:original) %>"><%= image_tag file.upload.url(:medium) %></a></td>
+            <td>
+              <a href="<%= file.upload.url(:original) %>" target="_blank"><%= file.upload_file_name.humanize %></a>
+            </td>
+            <td><a class="btn" href="<%= file.upload.url(:original) %>" target="_blank"><i class="icon-download-alt"></i> Download</a></td>
+          </tr>
+        <% end %>
+        </table>
+      </div>
+    <% end %>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <%= render 'shared/notes/list', resource: @quote %>
+        </div>
+      </div>
+    </div>
+
+    <% if current_user.admin? %>
+      <div id="quote-activity">
+        <h3>
+          <i class="icon-rss"></i> Quote History
+          <span class="pull-right">
+            <i class="icon-eye-close info-icon" title="Only viewable by admin" rel="tooltip" data-placement="left"></i>
+          </span>
+        </h3>
+        <div class="activities">
+          <% @activities.each do |activity| %>
+            <div class="activity">
+              <div class="details">
+                <%= render_activity activity, locals: {display: "simple"} %>
+                <span class="time"><%= time_ago_in_words(activity.created_at) + " ago" %></span>
+              </div>
+              <div class="date">
+                <%= activity.created_at.strftime("%e %b %Y, %l:%M %p") %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

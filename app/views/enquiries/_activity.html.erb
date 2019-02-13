@@ -1,0 +1,4 @@
+<% @activities.each do |activity| %>
+    <%= render partial: "activities/#{activity.targetable_type.underscore}/#{activity.action}", locals: { activity: activity } %>
+<% end %> 
+

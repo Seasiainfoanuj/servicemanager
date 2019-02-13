@@ -1,0 +1,22 @@
+<% present(@quote) do |quote| %>
+  <% if quote.update_permitted? && current_user.admin? %>
+    <% if quote.items.vehicle_registration.none? %>
+      <div class="alert alert-warning" style="margin-top:20px">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="icon icon-warning-sign"></i> A quote item for vehicle registration is not included. If required, add this before accepting the quote. 
+      </div>
+    <% end %>
+    <% if quote.items.stamp_duty.none? %>
+      <div class="alert alert-warning" style="margin-top:20px">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="icon icon-warning-sign"></i> A quote item for stamp duty is not included. If required, add this before accepting the quote. 
+      </div>
+    <% end %>
+    <% if quote.items.ctp_insurance.none? %>
+      <div class="alert alert-warning" style="margin-top:20px">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="icon icon-warning-sign"></i> A quote item for CTP insurance is not included. If required, add this before accepting the quote. 
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

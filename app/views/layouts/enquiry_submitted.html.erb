@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= render 'layouts/head', title: 'Success - Bus 4x4' %>
+</head>
+<body class="enquiry theme-white">
+  <div class="wrapper">
+    <div class="row-fluid">
+      <div class="span8 offset2">
+        <div class="enquiry-header">
+          <span id="branding" class="pull-left"></span>
+        </div>
+        <div class="enquiry-body">
+          <%= yield %>
+        </div>
+        <div class="enquiry-footer">
+          <div class="credits">Cloud Software by <a href="http://intuis.com.au" target="_blank" id="author-logo" style="float:none;"></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

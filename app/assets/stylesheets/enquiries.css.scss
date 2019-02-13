@@ -1,0 +1,285 @@
+.theme-white.enquiry .wrapper {
+  margin-top: 50px;
+}
+
+.theme-white.enquiry .enquiry-header {
+  height: 50px;
+}
+#send-enquiry{
+  float: left;
+}
+#send-enquiry .modal{
+  width: 720px ;
+}
+#send-enquiry .modal-body{
+  max-height: 475px;
+}
+
+
+table.email_attachment { table-layout:fixed; }
+table.email_attachment td { overflow: hidden; }
+
+.theme-white.enquiry .page-header {
+  margin: 0 0 40px;
+}
+
+.theme-white.enquiry .page-header h1 {
+  margin-top: 0;
+  font-size: 32px;
+}
+
+.theme-white.enquiry .enquiry-body {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 30px;
+}
+
+.theme-white.enquiry .enquiry-footer {
+  margin: 30px 0 20px;
+  text-align: center;
+}
+
+.theme-white.enquiry #branding {
+  display: block;
+  width: 220px;
+  height: 22px;
+  background: image-url('logo-black.png') no-repeat;
+}
+
+form#enquiry-form {
+  h3 {
+    font-size: 16px;
+    background: #FFE4C4;
+    padding-left: 10px;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+}
+#enquiry_manager_id {    
+.select2-container {
+  width: 100% !important;   
+    }
+    }
+#hire-details {
+  .control-group {
+    span {
+      display: inline-block;
+    }
+    .controls {
+      .control-label.mobilisation {
+        display: inline;
+      }
+      input.mobilisation {
+        width: 100%;
+      }
+      input.numeric {
+        text-align: center;
+        width: 50px;
+      }
+    }
+    #datepick.controls {
+      input {
+        width: 80px;
+        display: inline;
+      }
+    }
+    #counts.controls {
+      label, input {
+        float: none;
+        display: inline;
+      }
+      input {
+        text-align: center;
+      }
+      label {
+        margin-left: 40px;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+table#enquiry-user {
+  tr {
+    td:first-of-type {
+      width: 20%;
+    }
+  }
+}
+
+table#enquiry-user.manager-view {
+  tr {
+    td:last-of-type {
+      width: 40%;
+    }
+  }
+  tr:nth-of-type(2) {
+    background: #EEE;
+    font-weight: bold;
+  }
+}
+
+#update-enquirer-details {
+  margin-left: 10px;
+}
+
+table#enquiries-table {
+  padding: 10px;
+  thead tr {
+    th {
+      font-weight: 600;
+    }
+  }
+  tr:hover {
+    background: #E9FFF9;
+  }
+ 
+  
+  tbody tr { 
+    td:nth-of-type(1) { width: 3% !important;}
+    td:nth-of-type(2) { width: 3% !important;}
+    td:nth-of-type(3) { width: 10% !important;}    /*REF*/
+    td:nth-of-type(4) { width: 8% !important;}     /*Status*/
+    td:nth-of-type(5) { width: 12% !important; }   /*Type*/
+    td:nth-of-type(6) { width: 28% !important; }   /*Enquirer/Company*/
+    td:nth-of-type(7) { width: 12% !important;}    /*Assigned to*/
+    td:nth-of-type(8) { width: 10% !important;}    /*Enquiry Date*/
+    td:nth-of-type(9) { width: 28% !important;}
+    td:nth-of-type(10) { float: left;width: 120px;};
+    
+  }
+
+  table#enquiries-table tbody .action_tab  {
+    float: left;
+    width: 120px;
+
+  }
+
+
+  a.action-link {
+    margin-left: 3px;
+  }
+} 
+
+table#enquiries-table-footer {
+  width: 100%;
+  background-color: #EEE;
+  tr th { 
+    padding-top: 5px; padding-bottom: 5px;
+    height: 20px;
+  }
+}
+
+
+form#enquiries-search {
+  display: block;
+  background-color: #B4D7D9;
+  padding: 5px 10px 10px;
+  margin: 0 auto;
+  border-bottom: 1px solid #88B8BA;
+
+  .control-group {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 0;
+  }
+
+  .control-group.per-page {
+    label {
+      margin-left: 8px;
+    }
+    select {
+      width: 50px;
+    }
+  }
+
+  label { 
+    display: inline-block;
+    vertical-align: top; 
+    padding-top: 4px;
+  }
+  .enquirer {
+    width: 150px;
+  }
+  label.select {
+    margin-left: 10px;
+  }
+  label.check {
+    vertical-align: top;
+    padding-bottom: 4px;
+  }
+  input.search-field { 
+    width: 110px;
+    display: inline-block; 
+    margin-right: 8px;
+    background: white;
+  }
+  input.check {
+    margin-bottom: 12px;
+  }
+  select {
+    margin-left: 8px;
+    margin-right: 10px;
+    width: 160px;
+  }
+  .control-group.tags-select {
+    margin-left: 8px;
+    margin-right: 10px;
+    
+    .select2-container {
+      width: 200px;
+      height: 40px;
+      margin-right: 10px;
+    }
+  }
+
+  section.buttons .control-group {
+    text-align: center;
+    display: block;
+
+    input[type='submit'] {
+      width: 100px;
+      vertical-align: top;
+      margin-right: 14px;
+      display: inline-block;
+    }
+
+    button[type='submit'] {
+      width: 100px;
+      display: inline-block;
+    }
+  }
+}
+form#verify-enquiry-customer-info {
+  display: inline-block;
+  margin-bottom: 0;
+}
+form#create-hire-quote-from-enquiry {
+  display: inline-block;
+  margin-bottom: 0;
+}
+form#enquire-form {
+  .hire-period input {
+    background: lightblue;
+  }
+  #datepick input {
+    background: lightblue;
+  }
+  .newsletter-subscription {
+    padding-left: 90px;
+
+    .icheckbox_square-orange { 
+      margin-left: 10px;
+      float: left;
+    }
+    label { 
+      float: left;
+    }
+  }
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .theme-white.enquiry #branding {
+    background: image-url('logo-black@2x.png') no-repeat;
+    background-size: 220px 22px;
+  }
+}

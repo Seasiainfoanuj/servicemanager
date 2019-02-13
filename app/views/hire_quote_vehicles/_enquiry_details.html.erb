@@ -1,0 +1,40 @@
+<% present(@hire_quote_vehicle) do |vehicle| %>
+
+  <div class="box box-condensed box-color box-bordered">
+    <div class="box-title">
+      <h3><i class="glyphicon-inbox" style="position:relative; top: -2px;"></i>Original Enquiry</h3>
+      <%= manual_link('enquiries') %>
+    </div>
+    <div class="box-content nopadding">
+      <table id="hire-quote-vehicle-enquiry-details" class="table table-bordered table-force-topborder" style="clear: both">
+        <tbody>
+          <tr>
+            <td>Enquiry Reference</td>
+            <td><%= vehicle.enquiry_reference %></td>
+          </tr>
+          <tr>
+            <td>Vehicle Transmission</td>
+            <td><%= vehicle.enquiry_transmission %></td>
+          </tr>
+          <tr>
+            <td>Minimum Seat Capacity</td>
+            <td><%= vehicle.enquiry_seat_capacity %></td>
+          </tr>
+          <tr>
+            <td>Number of Vehicles</td>
+            <td><%= vehicle.enquiry_number_of_vehicles %></td>
+          </tr>
+          <tr>
+            <td>Enquiry Message</td>
+            <td><%= vehicle.enquiry_details %></td>
+          </tr>
+          <tr>
+            <td>Special Requirements</td>
+            <td><%= vehicle.enquiry_special_requirements %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<% end %>

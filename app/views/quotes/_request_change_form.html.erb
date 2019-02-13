@@ -1,0 +1,50 @@
+<% present(@quote) do |quote| %>
+
+  <div id="request-change-model" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel">Request Changes</h3>
+    </div>
+    <div class="modal-body">
+      <div style="padding: 20px; background: #fbfbfb; border: 1px dashed #DDDDDD;">
+        <div class="row-fluid">
+          <div class="span6">
+            <input type="hidden" id="customer_email" value="<%= quote.customer.email %>">
+            <input type="hidden" id="customer_token" value="<%= quote.customer.authentication_token %>">
+            <div class="control-group">
+              <label for="customer_first_name" class="control-label"><b>First Name:</b></label>
+              <div class="controls">
+                <input type="text" name="customer_first_name" class="required" id="customer_first_name" value="<%= quote.customer.first_name if quote.customer.first_name %>">
+              </div>
+            </div>
+          </div>
+          <div class="span6">
+            <div class="control-group">
+              <label for="customer_last_name" class="control-label"><b>Last Name:</b></label>
+              <div class="controls">
+                <input type="text" name="customer_last_name" class="required" id="customer_last_name" value="<%= quote.customer.last_name if quote.customer.last_name %>">
+              </div>
+            </div>
+          </div>
+          <div class="control-group">
+            <label for="customer_mobile_number" id="mobile_number_label" class="control-label"><b>Mobile Number:</b></label>
+            <div class="controls">
+              <input type="text" name="customer_mobile_number" class="required" id="customer_mobile_number" value="<%= quote.customer.mobile if quote.customer.mobile %>">
+            </div>
+          </div>
+          <div class="control-group">
+            <label for="changes_message" id="message_label" class="control-label"><b>Requested Changes:</b></label>
+            <div class="controls">
+              <textarea name="changes_message" id="changes_message" class="span12" rows="5"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-grey" data-dismiss="modal" aria-hidden="true">Cancel</button>
+      <%= link_to "Send", {:action => 'request_change', :quote_id => quote.number}, {:class => 'btn btn-green', :id => 'request_change_button'} %>
+    </div>
+  </div>
+
+<% end %>  

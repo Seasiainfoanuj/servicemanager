@@ -1,0 +1,24 @@
+<div id="hire-fees-list">
+  <div class="box-title">
+    <h3><i class="icon-dollar" style="position:relative; top: -2px;"></i>Hire Fees</h3>
+    <%= manual_link('hire_fees') %>
+  </div>
+  <div class="box-content nopadding">
+    <table id="hire-fees" class="table table-bordered table-force-topborder" style="clear: both">
+      <tbody>
+        <!-- table shows 6 columns (2 fees) per row -->
+        <% fee_count = chargeable.fees.count %>
+        <% chargeable.fees.each_with_index do |fee, inx| %>
+          <% if inx.even? %><tr><% end %>
+            <td><%= fee.fee_type.name %></td>
+            <td><%= fee.fee_type.charge_unit.titleize %></td>
+            <td><%= number_to_currency((fee.fee_cents.to_f / 100), precision: 2, separator: '.', unit: '$') %></td>
+          <% if inx.odd? %></tr><% end %>
+        <% end %>
+        <% if fee_count.even? %>
+          <td></td><td></td><td></td></tr>
+        <% end %>
+      </tbody>
+    </table>    
+  </div>  
+</div>

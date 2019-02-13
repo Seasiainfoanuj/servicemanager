@@ -1,0 +1,23 @@
+<div class="form-table-container">
+  <table id="hire-addons-form-table" class="table vehicle-addons">
+    <thead>
+      <tr>
+        <th>Add-on Type</th>
+        <th>Model Name</th>
+        <th>Billing Frequency</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= f.fields_for :addons do |addon| %>
+        <%= addon.hidden_field :hire_addon_id, value: addon.object.hire_addon_id %>
+        <tr>
+          <td><%= addon.object.hire_addon.addon_type %></td>
+          <td><%= addon.object.hire_addon.model_name %></td>
+          <td><%= addon.object.hire_addon.billing_frequency.titleize %></td>
+          <td class="addon-hire-price"><%= addon.text_field :hire_price %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>  

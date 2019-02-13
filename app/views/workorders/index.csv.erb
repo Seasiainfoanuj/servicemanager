@@ -1,0 +1,4 @@
+REF, Type, Vehicle Name, Rego, Vehicle Number, Scheduled Time, ETC
+<% @workorders.each do |wo| %>
+  <%= wo[0] %>,<%= wo[1] %>,<%= wo[2] %>,<%= wo[3] %>,<%= wo[4] %>,<%= wo[5].strftime("%d/%m/%Y %H:%M") %>,<%= wo[6].strftime("%d/%m/%Y %H:%M") %>
+<% end %>

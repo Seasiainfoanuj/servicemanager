@@ -1,0 +1,45 @@
+#user-guide
+  .panel.panel-default
+    .panel-body
+      h1 Service Manager User Guide
+      h2 Quote Item Types
+
+  section.definition
+    h3 Definition
+    p.main-definition Quote Item Types is a classification of a Quote Item or Master Quote Item. It applies a set of rules to be enforced for all quote items belonging to this type.
+    dl.dl-horizontal
+      dt Sort order
+      dd Whenever quote items are listed in a form or report, they are ordered by this value. A sort order of 1 means they will appear on top of the list.
+      dt Item type 
+      dd The name of the rule.
+      dt Allow many per quote
+      dd A value of true means that a quote may contain many quote items of this type. This rule is not yet enforced.
+      dt Taxable Rule
+      dd 
+        p This rule is enforced! 
+        p ALWAYS TAXED: In order for the quote item to be valid, GST must be selected. 
+        p NOT TAXED: In order for the quote item to be valid, GST may not be selected. 
+        p MAY BE TAXED: GST may or may not be selected
+
+  = link_to '<span class="label label-info">back to Index</span>'.html_safe, user_guides_path
+
+  section
+    h3 Examples
+    p The application already contains these values: #{@quote_item_type_names.join(', ')}.
+
+  section
+    h3 Where Quote Item Types are used
+    p Quote Item and Master Quote Item forms have a dropdown list where the most suitable Quote Item Type may be selected. When not specified, the application will automatically assign the Quote Item Type, called "Other".
+    p Specific Quote Item Types are reserved for Stamp duty, Vehicle Registration and CTP Insurance. Quote items carrying this label will be specified explicitly in Vehicle Purchase Contracts, but are not required.
+
+  section
+    h3 When a Quote Item Type is added or discontinued  
+    p The administrator of Service Manager MUST be informed because of its impact to other parts of the application, for example, the scope definitions in the QuoteItem model.  
+
+  section
+    h3 More Information
+    p See Quotes --> More --> Quote Item Types
+
+  section.change-history
+    h4 Change History
+    p Created by Francois van der Hoven on 2 April 2016

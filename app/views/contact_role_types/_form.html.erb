@@ -1,0 +1,26 @@
+<%= form_for(@contact_role_type, :html => {:id => "contact-role-type-form", :class => "form-horizontal"}) do |f| %>
+  <% if @contact_role_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@contact_role_type.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+        <% @contact_role_type.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="box-title">
+    <h3><i class="glyphicon-user"></i>Contact Role Type Details</h3>
+  </div>
+  <div class="box-content">
+    <div class="control-group">
+      <%= f.label :name, "Name", :class => "control-label" %>
+      <div class="controls">
+        <%= f.text_field :name, :class => "input-xlarge" %>
+      </div>
+    </div>
+
+  </div>
+<% end %>
+

@@ -1,0 +1,33 @@
+<% present(@hire_quote) do |quote| %>
+
+  <%= render(:partial => 'layouts/left') %>
+  <div id="main">
+    <div class="container-fluid">
+      <%= render(:partial => 'layouts/notice') %>
+      <div class="page-header">
+        <div class="pull-left">
+          <h1>Hire Quote</h1>
+        </div>
+        <div class="pull-right">
+          <br>
+          <%= link_to '<i class="icon-list-alt"></i>'.html_safe, hire_quotes_path, {:title => "Cancel",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom"} %>
+        </div>
+      </div>
+
+      <div class="breadcrumbs">
+        <%= render_crumbs %>
+        <div class="close-bread">
+          <a href="#"><i class="icon-remove"></i></a>
+        </div>
+      </div>
+
+      <br>
+      <div class="row-fluid">
+        <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <%= render 'form' %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

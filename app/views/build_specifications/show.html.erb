@@ -1,0 +1,109 @@
+<%= render(:partial => 'layouts/left') %>
+<div id="main">
+  <div class="container-fluid">
+    <%= render(:partial => 'layouts/notice') %>
+    <div class="page-header">
+      <div class="pull-left">
+        <h1><%= "Build Specification for #{@build.number}" %></h1>
+      </div>
+      <div class="pull-right">
+        <br>
+        <% if can? :update, BuildSpecification %>
+          <%= link_to '<i class="icon-edit"></i>'.html_safe, edit_build_build_specification_path(@build), {:title => 'Edit', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <% end %>
+        <%= link_to '<i class="glyphicon-car"></i>'.html_safe, build_path(@build), {:title => 'Return to Vehicle Build', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+        <%= link_to '<i class="icon-book"></i>'.html_safe + ' Complete summary', complete_build_build_specification_path(@build), {:title => 'Build Specification - complete summary', :class => 'btn', 'rel' => 'tooltip', "data-placement" => "bottom"} %>
+      </div>  
+    </div>
+    <div class="breadcrumbs">
+      <%= render_crumbs %>
+      <div class="close-bread">
+        <a href="#"><i class="icon-remove"></i></a>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="glyphicon-cars"></i>Vehicle</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="vehicle" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Model</td>
+                  <td width="80%"><%= @build_specification.build.vehicle.name %></td>
+                </tr>
+                <tr>
+                  <td>VIN #</td>
+                  <td width="80%"><%= @build_specification.build.vehicle.vin_number %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="box box-condensed box-color box-bordered">
+          <div class="box-title">
+            <h3><i class="icon-book"></i>Vehicle Build Specification</h3>
+          </div>
+          <div class="box-content nopadding">
+            <table id="build-specification" class="table table-bordered table-force-topborder" style="clear: both">
+              <tbody>
+                <tr>
+                  <td>Passenger Door</td>
+                  <td width="80%"><%= @spec_presenter.passenger_door %></td>
+                </tr>
+                <tr>
+                  <td>Paint</td>
+                  <td width="80%"><%= @spec_presenter.paint %></td>
+                </tr>
+                <tr>
+                  <td>Heating</td>
+                  <td width="80%"><%= @spec_presenter.heating %></td>
+                </tr>
+                <tr>
+                  <td>No of seats</td>
+                  <td width="80%"><%= "#{@build_specification.total_seat_count} (including driver seat)" %></td>
+                </tr>
+                <tr>
+                  <td>Seating</td>
+                  <td width="80%"><%= @spec_presenter.seating %></td>
+                </tr>
+                <% if @build_specification.seating_type == BuildSpecification::OTHER_SEATING %>
+                  <tr>
+                    <td>Seating details</td>
+                    <td width="80%"><%= @spec_presenter.other_seating %></td>
+                  </tr>
+                <% end %>
+                <tr>
+                  <td>School Bus Signs</td>
+                  <td width="80%">
+                    <p>(including relevant regulations)</p>
+                    <%= @spec_presenter.school_bus_signs %>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Surveillance System</td>
+                  <td width="80%"><%= @spec_presenter.surveillance_system %></td>
+                </tr>
+                <tr>
+                  <td>Lift up wheel arches</td>
+                  <td width="80%"><%= @spec_presenter.lift_up_wheel_arches %></td>
+                </tr>
+                <tr>
+                  <td>Other comments</td>
+                  <td width="80%"><%= @spec_presenter.other_comments %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,29 @@
+- if @image_type == Image::DOCUMENT
+  - images = DocumentType.all
+  - subject_name = 'Document'
+- else
+  - images = PhotoCategory.all
+  - subject_name = 'Photo'
+
+== render 'layouts/left'
+#main
+  .container-fluid
+    == render :partial => 'layouts/notice'
+    .page-header
+      .pull-left
+        h1 = "New #{subject_name}"
+      .pull-right
+        br
+        - if can? :view, Image
+          - if @subject.is_a? Vehicle
+            = link_to vehicle_images_path(@subject), { :title => "List All",:class => 'btn', "rel" => "tooltip", "data-placement" => "bottom" } do
+              i.icon-list-alt
+
+    = render partial: 'shared/crumbs'
+
+    = form_for([@subject, @image], html: { multipart: true, class: "form-horizontal", id: "images-form" }) do |f|
+      = f.hidden_field :image_type, value: @image_type
+      = render 'fields', f: f, images: images, image_type: @image_type
+
+      .actions
+        = f.submit "Create #{subject_name}", class: 'btn btn-green submit-btn'

@@ -1,0 +1,25 @@
+<tr>
+  <% if current_user.admin? %>
+  <td><%= content_tag(:i, "", class: 'icon-circle', style: "color: red; font-size: 10px;") unless enquiry.seen %></td>
+    <td><%= content_tag(:i, nil, class: 'glyphicon-flag', style: 'color: #D97A46') if enquiry.flagged %></td>
+  <% end %>  
+  <td><%= link_to(enquiry.uid, enquiry_path(enquiry.uid)) %></td>
+  <% if current_user.admin? %>
+    <td><%= enquiry_status_label(enquiry.status) %></td>
+  <% end %>  
+  <td><%= enquiry.enquiry_type_name %></td>
+  <td>
+  <% if enquiry.user_id.present? %>
+    <%= link_to("#{enquiry.enquirer_first_name} #{enquiry.enquirer_last_name}", user_path(enquiry.user_id)) %>
+    <%= " (#{enquiry.enquirer_email})" %>
+    <%= link_to(enquiry.enquirer_company_name, company_path(enquiry.enquirer_company_id)) if enquiry.enquirer_company_id %>
+  <% else %>
+    <p> User not Present </p>
+  <% end %>
+  </td>
+  <td><%= enquiry.manager_name %></td>
+  <td><%= enquiry_score_label(enquiry.enquiry_score) %></td>
+  <td><%= enquiry.enquiry_date %></td>
+  <td><%= enquiry_action_links(enquiry) %></td>
+
+</tr>

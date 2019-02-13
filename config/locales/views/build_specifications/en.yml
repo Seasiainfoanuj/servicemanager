@@ -1,0 +1,41 @@
+en:
+  build_specifications:
+    complete:
+      doors:
+        line1: 1 x Battery compartment door
+        line2: 1 x Fuel tank door
+        line3: 1 x Engine hatch
+      windows:
+        line1: "Front windscreen: (a) 1 piece fixed glass in clear laminated safety glass"
+        line2: "Front windscreen: (b) Left & right electric blinds"
+        line3: "Side glass:  Fixed glass + 2 hopper windows per side"
+        line4: "Driver's window:   Portal toll window with manual blind"
+      roof_hatches: 2 emergency exit hatches to roof
+      bumper_bars: Front fiberglass - Rear with reflective decals
+      mirrors:
+        line1: "Exterior: 2 factory Isuzu mirrors supplied"
+        line2: "Interior: 1 Rappard mirror fitted to centre windscreen pillar"
+      stepwell: Heavy duty steel with vinyl sides & risers & heavy duty studded rubber
+      floor: Waterproof plywood flooring bonded and screwed to frame
+      floor_covering: "Grey vinyl"
+      interior_panelling: 
+        line1: "Side linings: Mica - light grey"
+        line2: "Pillars: Alluminium covered with light grey vinyl"
+        line3: "Centre ceiling: Mica - white"
+        line4: "Front and rear headers: standard fibreglass"
+      airconditioning: Thermoking - cool with fixed vents
+      exterior_lights: 
+        line1: "Head lamps: Isuzu factory supplied"
+        line2: "Reverse lamps: LED"
+        line3: "Reflectors where required"
+      speakers: 6 x standard speakers
+      stickers: 4 x Emergency exit - 1 large, 1 small, 1 stone, 1 hammer - 1 x Diesel
+      modesty_panel: Mica & Aluminium tube partition
+      reverse_camera: 
+        line1: Supplied to operate with standard Isuzu multimedia system.
+        line2: 1 x reverse buzzer
+      accessories: 1 x public address system with drivers microphone on arm
+      storage: 
+        line1: Through bin at rear with both sides lockable lift up access
+        line2: Left hand side toolbox
+

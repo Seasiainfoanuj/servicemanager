@@ -1,0 +1,101 @@
+<div id="main">
+  <div id="vehicle-contract-review" class="container-fluid">
+    <% if current_user == @view_contract.customer %>
+      <%= render(:partial => 'review_notice') %>
+      <%= render(:partial => 'accept_notice') %>
+    <% end %>  
+
+    <div class="page-header">
+      <div class="row-fluid">
+        <div class="pull-left">
+          <h1>Review Vehicle Contract <span class="label"><%= "#{@vehicle_contract.uid}" %></span></h1>
+        </div>
+        <div class="pull-right">
+          <% if current_user.admin? %>
+            <%= link_to "Back to Vehicle Contract", vehicle_contract_url(@vehicle_contract), :class => "btn btn-grey" %>
+          <% end %>  
+          <% if current_user == @view_contract.customer %>
+            <button type="button" data-toggle="modal" data-target="#accept-vehicle-contract-model" class="btn btn-satgreen"><i class="icon-ok"></i> Accept Vehicle Purchase Contract</button>
+            <%= link_to "Back to Vehicle Contract", view_customer_contract_path(@vehicle_contract), :class => "btn btn-grey" %>
+          <% end %>
+        </div>  
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="panel panel-default" id="dealer-heading">
+          <div class="panel-heading">Dealer</div>
+          <div class="panel-body">
+            <div class="vehicle-contract-details">
+              <div class="row-fluid">
+                <div class="span4">
+                  <b><%= @view_contract.dealer.name %></b>
+                </div>
+                <div class="span4 align-center">
+                  <%= BUS4X4_ABN_ACN %>
+                </div>
+                <div class="span4 align-right">
+                  CONTRACT#
+                  <b>
+                    <%= @vehicle_contract.uid %>
+                  </b>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <% if @vehicle_contract.current_status == "presented_to_customer" %>
+          <div class="alert alert-info" style="margin-top:20px">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <i class="icon icon-info-sign"></i> Please follow the steps below to accept the contract. 
+          </div>
+        <% end %>
+
+        <div class="box box-condensed box-color box-bordered">
+
+          <!-- STEP 1: CUSTOMER DETAILS -->
+          <%= render(partial: 'review_customer') %>
+
+          <!-- STEP 2: DOWNLOAD CONTRACT AND TERMS & CONDITIONS -->
+          <%= render(partial: 'review_downloads') %>
+
+          <!-- STEP 3: VEHICLE AND CONTRACT DETAILS -->
+          <div class="box-title">
+            <h3><span class="step">3</span> Review the Vehicle Details and Contract details below <i class="icon-arrow-down"></i></h3>
+          </div>
+
+          <%= render(partial: 'review_vehicle') %>
+
+          <%= render(partial: 'review_contract') %>
+
+          <!-- STEP 4: ACCEPT CONTRACT ONLINE OR SIGN AND UPLOAD CONTRACT-->
+          <% if (current_user == @view_contract.customer) || current_user.admin? %>
+            <div class="acceptance-instructions">
+              <div class="box-title">
+                <h3><span class="step">4</span> Accept Vehicle Purchase Contract</h3>
+              </div>
+              <div class="box-content">
+
+                <%= render(partial: 'acceptance_instructions') %>
+
+                <hr>
+                <h3>1. Accept the contract by clicking this button</h3>
+
+                <%= render(partial: 'acceptance_decision') %>
+
+                <hr>
+                <h3>2. Accept the contract by uploading a signed contract document.</h3>
+
+                <%= render(partial: 'acceptance_uploads') %>
+              </div>
+            </div>  
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
