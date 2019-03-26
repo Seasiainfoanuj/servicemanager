@@ -128,7 +128,7 @@ class QuotePdf
       move_down 10
 
       if @quote.invoice_company.logo
-        image open(@quote.invoice_company.logo.url(:large), width: 180
+        image open(@quote.invoice_company.logo.url(:large)), width: 180
       end
 
       bounding_box([20, cursor], :width => bounds.width-40) do
