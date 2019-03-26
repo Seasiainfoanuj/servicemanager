@@ -9,7 +9,7 @@
 # https://github.com/mileszs/wicked_pdf/blob/master/README.md
 
 WickedPdf.config = {
-  :exe_path => "/usr/local/rvm/gems/ruby-2.3.3/bin/wkhtmltopdf"
+  # :exe_path => "/usr/local/rvm/gems/ruby-2.3.3/bin/wkhtmltopdf"
   # Path to the wkhtmltopdf executable: This usually isn't needed if using
   # one of the wkhtmltopdf-binary family of gems.
   # exe_path: '/usr/local/bin/wkhtmltopdf',

@@ -25,7 +25,7 @@ class QuotePdf
     def quote_header
       if @quote.invoice_company.logo.present?
         begin
-          image @quote.invoice_company.logo.path(:large), width: 120
+          image open(@quote.invoice_company.logo.url(:large)), width: 120
         rescue
           nil
         end

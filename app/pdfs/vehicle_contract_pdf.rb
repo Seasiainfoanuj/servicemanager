@@ -57,7 +57,7 @@ class VehicleContractPdf < Prawn::Document
       begin
         move_down 15
         if @dealer.logo
-          image @dealer.logo.path(:large), width: 160, align: :right
+          image open(@dealer.logo.url(:large)), width: 160, align: :right
         end
       rescue
         nil

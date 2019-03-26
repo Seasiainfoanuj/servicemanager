@@ -26,7 +26,7 @@ class QuotePdf
         else
           pos = [8.5.cm, y_pos]
         end  
-        image file.upload.path(:medium), width: 8.25.cm, at: pos
+        image open(file.upload.url(:medium)), width: 8.25.cm, at: pos
         move_down 6.5.cm unless next_line
       end
     end

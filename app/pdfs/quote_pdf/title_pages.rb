@@ -17,18 +17,18 @@ class QuotePdf
       fill_color "000000"
       fill
       begin
-        image @quote.invoice_company.logo.path(:large), width: 220 if @quote.invoice_company.logo.present?
+        image open(@quote.invoice_company.logo.url(:large)), width: 220 if @quote.invoice_company.logo.present?
       rescue
         nil
       end  
 
       move_down 5
 
-      image @quote.title_page.image_1.path(:title_page), width: 390 if @quote.title_page.image_1.present?
+      image open(@quote.title_page.image_1.url(:title_page)), width: 390 if @quote.title_page.image_1.present?
 
       move_down 5
 
-      image @quote.title_page.image_2.path(:title_page), width: 390 if @quote.title_page.image_2.present?
+      image open(@quote.title_page.image_2.path(:title_page)), width: 390 if @quote.title_page.image_2.present?
 
       move_down 12
 
@@ -128,7 +128,7 @@ class QuotePdf
       move_down 10
 
       if @quote.invoice_company.logo
-        image @quote.invoice_company.logo.path(:large), width: 180
+        image open(@quote.invoice_company.logo.url(:large), width: 180
       end
 
       bounding_box([20, cursor], :width => bounds.width-40) do

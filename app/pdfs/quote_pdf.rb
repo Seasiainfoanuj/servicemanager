@@ -41,7 +41,7 @@ class QuotePdf
   end
 
   def specification_sheet
-    load(quote.specification_sheet.upload.path) if quote.specification_sheet
+    load(quote.specification_sheet.upload.url) if quote.specification_sheet
   end
 
   def images_page
@@ -61,6 +61,10 @@ class QuotePdf
   end
 
   def load pdf_file_path
-    pdf << CombinePDF.load(pdf_file_path)
+    tmpname = Dir::Tmpname.create(['specsheet','.pdf'])
+    IO.binwrite(tmpname, Net::HTTP.get_response(URI.parse(pdf_file_path)).body)
+    pdf << CombinePDF.load(tmpname)
+    File.rm(tmpname)
+    pdf
   end
 end
