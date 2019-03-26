@@ -64,7 +64,7 @@ class QuotePdf
     tmpname = Dir::Tmpname.create(['specsheet','.pdf']){}
     IO.binwrite(tmpname, Net::HTTP.get_response(URI.parse(pdf_file_path)).body)
     pdf << CombinePDF.load(tmpname)
-    File.rm(tmpname)
+    FileUtils.rm(tmpname)
     pdf
   end
 end
