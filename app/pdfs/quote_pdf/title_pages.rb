@@ -28,7 +28,7 @@ class QuotePdf
 
       move_down 5
 
-      image open(@quote.title_page.image_2.path(:title_page)), width: 390 if @quote.title_page.image_2.present?
+      image open(@quote.title_page.image_2.url(:title_page)), width: 390 if @quote.title_page.image_2.present?
 
       move_down 12
 
